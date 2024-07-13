@@ -18,30 +18,7 @@ gnome=1
 
 sudo pacman -Syyu
 
-if [ ${vmware} -eq 1 ]; 
-then
-    echo -e "Configuring VMware stuffs..."
-    sudo pacman -Sy --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
-    sudo systemctl enable --now vmtoolsd.service
-    sudo systemctl enable --now vmware-vmblock-fuse.service
-fi
-
-if [ ${vbox} -eq 1 ]; 
-then
-    echo -e "Configuring VirtualBox stuffs..."
-    sudo pacman -Sy --needed virtualbox-guest-utils
-    sudo systemctl enable --now vboxservice.service
-fi
-
-if [ ${hyperv} -eq 1 ]; 
-then
-    echo -e "Configuring Hyper-V stuffs..."
-    sudo pacman -Sy --needed hyperv
-    sudo systemctl enable --now hv_fcopy_daemon.service
-    sudo systemctl enable --now hv_kvp_daemon.service
-    sudo systemctl enable --now hv_vss_daemon.service
-
-fi
+setup-vm
 
 echo -e "Installing fonts..."
 sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
@@ -64,9 +41,36 @@ echo -e "Installing some more needed stuffs..."
 sudo pacman -Sy --needed yay rate-mirrors
 
 configure-bash
-source ~/.bashrc
 
 echo -e "Done...Reboot..."
+
+setup-vm()
+{
+    if [ ${vmware} -eq 1 ]; 
+    then
+        echo -e "Configuring VMware stuffs..."
+        sudo pacman -Sy --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
+        sudo systemctl enable --now vmtoolsd.service
+        sudo systemctl enable --now vmware-vmblock-fuse.service
+    fi
+
+    if [ ${vbox} -eq 1 ]; 
+    then
+        echo -e "Configuring VirtualBox stuffs..."
+        sudo pacman -Sy --needed virtualbox-guest-utils
+        sudo systemctl enable --now vboxservice.service
+    fi
+
+    if [ ${hyperv} -eq 1 ]; 
+    then
+        echo -e "Configuring Hyper-V stuffs..."
+        sudo pacman -Sy --needed hyperv
+        sudo systemctl enable --now hv_fcopy_daemon.service
+        sudo systemctl enable --now hv_kvp_daemon.service
+        sudo systemctl enable --now hv_vss_daemon.service
+
+    fi
+}
 
 configure-bash()
 {
@@ -77,6 +81,7 @@ configure-bash()
     then
         wget -q -a ~/.bashrc https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc
     fi
+    source ~/.bashrc
 }
 
 pacman-configure-chaotic-aur()
