@@ -15,6 +15,7 @@ vmware=1
 vbox=0
 hyperv=0
 gnome=1
+chaoticaur=1
 
 sudo pacman -Syyu
 setup-vm
@@ -23,7 +24,8 @@ tweak-system
 echo -e "Installing some needed stuffs..."
 sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git wget vulkan-mesa-layers vulkan-swrast
 
-pacman-configure-chaotic-aur
+if [ ${chaoticaur} -eq 1 ];then
+    pacman-configure-chaotic-aur
 
 echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
 sudo sed -i "/^#Color/c\Color\nILoveCandy
@@ -80,10 +82,9 @@ setup-vm()
 tweak-system()
 {
     echo -e "Tweaking some system stuffs..."
-    sudo mkdir -p /etc/sysctl.d
+    sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
     wget -q -o 99-sysctl.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/sysctl.d/99-sysctl.conf
     sudo mv -f 99-sysctl.conf /etc/sysctl.d/
-    sudo mkdir -p /etc/systemd/journald.conf.d
     wget -q -o 00-journal-size.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
@@ -94,9 +95,8 @@ improve-font()
     echo -e "Installing fonts..."
     sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
     echo -e "Making font look better..."
-    mkdir -p ~/.config/fontconfig
-    wget -q -o ~/.config/fontconfig/fonts.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/fonts.conf
     mkdir -p ~/.config/fontconfig/conf.d
+    wget -q -o ~/.config/fontconfig/fonts.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/fonts.conf
     wget -q -o ~/.config/fontconfig/conf.d/20-no-embedded.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/conf.d/20-no-embedded.conf
     wget -q -o .Xresources https://raw.githubusercontent.com/krish-gh/linux-setup/main/.Xresources
     sudo pacman -Sy --needed xorg-xrdb
@@ -159,5 +159,9 @@ setup-gtk()
     echo > ~/.gtkrc-2.0
     echo "[Settings]\r\ngtk-application-prefer-dark-theme=1" > ~/.config/gtk-3.0/settings.ini
     echo "[Settings]\r\ngtk-hint-font-metrics=1" > ~/.config/gtk-4.0/settings.ini
+
+    mkdir -p ~/.local/share/gtksourceview-{4,5}/styles
+    wget -q -p ~/.local/share/gtksourceview-4/styles https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    wget -q -p ~/.local/share/gtksourceview-5/styles https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
 }
 
