@@ -17,7 +17,7 @@ echo -e "Installing fonts..."
 sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel git
+sudo pacman -Sy --needed pacman-contrib firefox base-devel git wget vulkan-mesa-layers vulkan-swrast
 
 pacman-configure-chaotic-aur
 
@@ -32,6 +32,22 @@ sudo pacman -Fy
 
 echo -e "Installing some more needed stuffs..."
 sudo pacman -Sy --needed yay rate-mirrors
+
+configure-bash
+source ~/.bashrc
+
+echo -e "Done...Reboot..."
+
+configure-bash()
+{
+    echo -e "Configuring bash..."
+    wget -q -o ~/.aliases https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/arch/.aliases
+    bashrcAppend="$(grep ".aliases" ~/.bashrc > /dev/null 2>&1 ; echo $?)"
+    if [ "${bashrcAppend}" -ne 0 ]; 
+    then
+        wget -a ~/.bashrc https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc
+    fi
+}
 
 pacman-configure-chaotic-aur()
 {
