@@ -22,7 +22,7 @@ setup-vm
 tweak-system
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git wget vulkan-mesa-layers vulkan-swrast
+sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git wget vulkan-mesa-layers vulkan-swrast starship
 
 if [ ${chaoticaur} -eq 1 ];then
     pacman-configure-chaotic-aur
