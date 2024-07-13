@@ -21,7 +21,7 @@ setup-vm
 tweak-system
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel git wget vulkan-mesa-layers vulkan-swrast
+sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git wget vulkan-mesa-layers vulkan-swrast
 
 pacman-configure-chaotic-aur
 
@@ -138,7 +138,9 @@ pacman-configure-chaotic-aur()
 setup-gnome()
 {
     echo -e "Configuring gnome stuffs..."
-    sudo pacman -Sy --needed gnome-tweaks ibus extension-manager
-    sudo pacman -Rns snapshot gnome-calculator gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab gnome-font-viewer simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
+    sudo pacman -Rnsy snapshot gnome-calculator gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab gnome-font-viewer simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
+    sudo pacman -Sy --needed gnome-tweaks ibus kvantum-qt5 qt5-wayland qt5ct qt6ct vlc
+    gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+    #flatpak install flathub com.mattjakeman.ExtensionManager
 }
 
