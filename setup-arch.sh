@@ -20,6 +20,8 @@ sudo pacman -Syyu
 
 setup-vm
 
+tweak-system
+
 echo -e "Installing fonts..."
 sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
 
@@ -70,6 +72,16 @@ setup-vm()
         sudo systemctl enable --now hv_vss_daemon.service
 
     fi
+}
+
+tweak-system()
+{
+    echo -e "Tweaking some system stuffs..."
+    wget -q -o 99-sysctl.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/sysctl.d/99-sysctl.conf
+    sudo mv -f 99-sysctl.conf /etc/sysctl.d/99-sysctl.conf
+    wget -q -o 00-journal-size.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/systemd/journald.conf.d/00-journal-size.conf
+    sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/00-journal-size.conf
+    sudo journalctl --rotate --vacuum-size=10M
 }
 
 configure-bash()
