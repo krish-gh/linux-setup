@@ -11,7 +11,18 @@ fi
 
 unset isArch
 
+vmware=1
+gnome=1
+
 sudo pacman -Syyu
+
+if [ ${vmware} -eq 1 ]; 
+then
+    echo -e "Configuring VMware stuffs..."
+    sudo pacman -Sy --needed xf86-video-vmware xf86-input-vmmouse open-vm-tools
+    sudo systemctl enable --now vmtoolsd.service
+    sudo systemctl enable --now vmware-vmblock-fuse.service
+fi
 
 echo -e "Installing fonts..."
 sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
