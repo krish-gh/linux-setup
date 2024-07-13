@@ -1,12 +1,23 @@
+#!/usr/bin/env bash
 
+# Check if the distro is (based on) Arch Linux
+isArch="$(command -v pacman > /dev/null 2>&1 ; echo $?)"
 
+if [ "${isArch}" -ne 0 ];
+then
+     echo "You do not run an Arch-based Linux distrbution ..."
+     exit 1
+fi
+
+unset isArch
+
+sudo pacman -Syyu
 
 echo -e "Installing fonts..."
 sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
 
 echo -e "Installing some needed stuffs..."
 sudo pacman -Sy --needed pacman-contrib firefox base-devel git
-
 
 pacman-configure-chaotic-aur
 
@@ -24,21 +35,19 @@ sudo pacman -Sy --needed yay rate-mirrors
 
 pacman-configure-chaotic-aur()
 {
-    if [ ! -f /etc/pacman.d/chaotic-mirrorlist ]
+    if [ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ];
     then
         echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
         sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
         sudo pacman-key --lsign-key 3056513887B78AEB
-        sudo pacman -Uy 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-        sudo pacman -Uy 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
     fi
 
-    if ! grep --quiet -x '\[chaotic-aur\]' '/etc/pacman.conf'
-    then
-        sudo echo -e "#Chaotic-AUR" >> /etc/pacman.conf
-        sudo echo -e "" >> /etc/pacman.conf
-        sudo echo -e "[chaotic-aur]" >> /etc/pacman.conf
-        sudo echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+    chaoticAurAppend="$(grep "chaotic-aur" /etc/pacman.conf > /dev/null 2>&1 ; echo $?)"
+    if [ "${chaoticAurAppend}" -ne 0 ]; then
+        echo "Appending Chaotic-AUR in pacman.conf..."
+        sudo echo -e "\r\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
     fi
 }
 
