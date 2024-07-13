@@ -40,6 +40,9 @@ sudo pacman -Sy --needed yay rate-mirrors
 improve-font
 configure-bash
 
+if [ ${gnome} -eq 1 ];then
+    setup-gnome
+
 echo -e "Done...Reboot..."
 
 setup-vm()
@@ -130,5 +133,12 @@ pacman-configure-chaotic-aur()
         echo "Appending Chaotic-AUR in pacman.conf..."
         sudo echo -e "\r\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
     fi
+}
+
+setup-gnome()
+{
+    echo -e "Configuring gnome stuffs..."
+    sudo pacman -Sy --needed gnome-tweaks ibus extension-manager
+    sudo pacman -Rns snapshot gnome-calculator gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab gnome-font-viewer simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
 }
 
