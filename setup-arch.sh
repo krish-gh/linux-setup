@@ -43,6 +43,9 @@ configure-bash
 if [ ${gnome} -eq 1 ];then
     setup-gnome
 
+mkdir -p ~/.config/environment.d
+wget -q -o ~/.config/environment.d/10-defaults.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/environment.d/10-defaults.conf
+
 echo -e "Done...Reboot..."
 
 setup-vm()
@@ -139,8 +142,11 @@ setup-gnome()
 {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rnsy snapshot gnome-calculator gnome-characters gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab gnome-font-viewer simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -Sy --needed gnome-tweaks ibus kvantum-qt5 qt5-wayland qt5ct qt6ct vlc
+    sudo pacman -Sy --needed gnome-tweaks kvantum-qt5 qt5-wayland qt5ct qt6ct vlc
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     yay -Sy --needed extension-manager
+    gnome-extensions install AlphabeticalAppGrid@stuarthayhurst
+    gnome-extensions install dash-to-dock@micxgx.gmail.com
+    gnome-extensions install appindicatorsupport@rgcjonas.gmail.com
 }
 
