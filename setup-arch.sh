@@ -153,6 +153,8 @@ setup-gnome()
 
 setup-gtk()
 {
+    gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
     echo > ~/.gtkrc-2.0
     echo "[Settings]\r\ngtk-application-prefer-dark-theme=1" > ~/.config/gtk-3.0/settings.ini
