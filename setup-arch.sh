@@ -39,6 +39,7 @@ sudo pacman -Sy --needed yay rate-mirrors
 
 improve-font
 configure-bash
+setup-gtk
 
 if [ ${gnome} -eq 1 ];then
     setup-gnome
@@ -148,5 +149,13 @@ setup-gnome()
     gnome-extensions install AlphabeticalAppGrid@stuarthayhurst
     gnome-extensions install dash-to-dock@micxgx.gmail.com
     gnome-extensions install appindicatorsupport@rgcjonas.gmail.com
+}
+
+setup-gtk()
+{
+    gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+    echo > ~/.gtkrc-2.0
+    echo "[Settings]\r\ngtk-application-prefer-dark-theme=1" > ~/.config/gtk-3.0/settings.ini
+    echo "[Settings]\r\ngtk-hint-font-metrics=1" > ~/.config/gtk-4.0/settings.ini
 }
 
