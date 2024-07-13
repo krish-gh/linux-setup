@@ -45,7 +45,7 @@ configure-bash()
     bashrcAppend="$(grep ".aliases" ~/.bashrc > /dev/null 2>&1 ; echo $?)"
     if [ "${bashrcAppend}" -ne 0 ]; 
     then
-        wget -a ~/.bashrc https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc
+        wget -q -a ~/.bashrc https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc
     fi
 }
 
