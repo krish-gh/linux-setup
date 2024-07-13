@@ -1,3 +1,6 @@
+
+
+# Shell customization
 HISTSIZE=20
 HISTFILESIZE=20
 
