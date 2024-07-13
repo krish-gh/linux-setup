@@ -17,13 +17,8 @@ hyperv=0
 gnome=1
 
 sudo pacman -Syyu
-
 setup-vm
-
 tweak-system
-
-echo -e "Installing fonts..."
-sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
 
 echo -e "Installing some needed stuffs..."
 sudo pacman -Sy --needed pacman-contrib firefox base-devel git wget vulkan-mesa-layers vulkan-swrast
@@ -42,6 +37,7 @@ sudo pacman -Fy
 echo -e "Installing some more needed stuffs..."
 sudo pacman -Sy --needed yay rate-mirrors
 
+improve-font
 configure-bash
 
 echo -e "Done...Reboot..."
@@ -77,11 +73,33 @@ setup-vm()
 tweak-system()
 {
     echo -e "Tweaking some system stuffs..."
+    sudo mkdir -p /etc/sysctl.d
     wget -q -o 99-sysctl.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/sysctl.d/99-sysctl.conf
-    sudo mv -f 99-sysctl.conf /etc/sysctl.d/99-sysctl.conf
+    sudo mv -f 99-sysctl.conf /etc/sysctl.d/
+    sudo mkdir -p /etc/systemd/journald.conf.d
     wget -q -o 00-journal-size.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/systemd/journald.conf.d/00-journal-size.conf
-    sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/00-journal-size.conf
+    sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
+}
+
+improve-font()
+{
+    echo -e "Installing fonts..."
+    sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
+    echo -e "Making font look better..."
+    mkdir -p ~/.config/fontconfig
+    wget -q -o ~/.config/fontconfig/fonts.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/fonts.conf
+    mkdir -p ~/.config/fontconfig/conf.d
+    wget -q -o ~/.config/fontconfig/conf.d/20-no-embedded.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/conf.d/20-no-embedded.conf
+    wget -q -o .Xresources https://raw.githubusercontent.com/krish-gh/linux-setup/main/.Xresources
+    sudo pacman -Sy --needed xorg-xrdb
+    xrdb -merge ~/.Xresources
+    sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
+    sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
+    sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
+    sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
+    sudo fc-cache -fv
+    fc-cache -fv
 }
 
 configure-bash()
