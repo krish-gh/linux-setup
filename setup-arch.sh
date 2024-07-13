@@ -12,6 +12,8 @@ fi
 unset isArch
 
 vmware=1
+vbox=0
+hyperv=0
 gnome=1
 
 sudo pacman -Syyu
@@ -19,9 +21,26 @@ sudo pacman -Syyu
 if [ ${vmware} -eq 1 ]; 
 then
     echo -e "Configuring VMware stuffs..."
-    sudo pacman -Sy --needed xf86-video-vmware xf86-input-vmmouse open-vm-tools
+    sudo pacman -Sy --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
     sudo systemctl enable --now vmtoolsd.service
     sudo systemctl enable --now vmware-vmblock-fuse.service
+fi
+
+if [ ${vbox} -eq 1 ]; 
+then
+    echo -e "Configuring VirtualBox stuffs..."
+    sudo pacman -Sy --needed virtualbox-guest-utils
+    sudo systemctl enable --now vboxservice.service
+fi
+
+if [ ${hyperv} -eq 1 ]; 
+then
+    echo -e "Configuring Hyper-V stuffs..."
+    sudo pacman -Sy --needed hyperv
+    sudo systemctl enable --now hv_fcopy_daemon.service
+    sudo systemctl enable --now hv_kvp_daemon.service
+    sudo systemctl enable --now hv_vss_daemon.service
+
 fi
 
 echo -e "Installing fonts..."
