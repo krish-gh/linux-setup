@@ -22,7 +22,7 @@ setup-vm
 tweak-system
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli wget vulkan-mesa-layers vulkan-swrast starship
+sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl wget vulkan-mesa-layers vulkan-swrast starship
 
 if [ ${chaoticaur} -eq 1 ];then
     pacman-configure-chaotic-aur
@@ -41,7 +41,7 @@ if [ ${gnome} -eq 1 ];then
     setup-gnome
 
 mkdir -p ~/.config/environment.d
-wget -q -o ~/.config/environment.d/10-defaults.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/environment.d/10-defaults.conf
+curl -o ~/.config/environment.d/10-defaults.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/environment.d/10-defaults.conf
 
 echo -e "Done...Reboot..."
 
@@ -77,9 +77,9 @@ tweak-system()
 {
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
-    wget -q -o 99-sysctl.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/sysctl.d/99-sysctl.conf
+    curl -o 99-sysctl.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/sysctl.d/99-sysctl.conf
     sudo mv -f 99-sysctl.conf /etc/sysctl.d/
-    wget -q -o 00-journal-size.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/systemd/journald.conf.d/00-journal-size.conf
+    curl -o 00-journal-size.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 }
@@ -90,9 +90,9 @@ improve-font()
     sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
-    wget -q -o ~/.config/fontconfig/fonts.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/fonts.conf
-    wget -q -o ~/.config/fontconfig/conf.d/20-no-embedded.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/conf.d/20-no-embedded.conf
-    wget -q -o .Xresources https://raw.githubusercontent.com/krish-gh/linux-setup/main/.Xresources
+    curl -o ~/.config/fontconfig/fonts.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/fonts.conf
+    curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/conf.d/20-no-embedded.conf
+    curl -o .Xresources https://raw.githubusercontent.com/krish-gh/linux-setup/main/.Xresources
     sudo pacman -Sy --needed xorg-xrdb
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
@@ -106,11 +106,11 @@ improve-font()
 configure-bash()
 {
     echo -e "Configuring bash..."
-    wget -q -o ~/.aliases https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/arch/.aliases
+    curl -o ~/.aliases https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/arch/.aliases
     bashrcAppend="$(grep ".aliases" ~/.bashrc > /dev/null 2>&1 ; echo $?)"
     if [ "${bashrcAppend}" -ne 0 ]; 
     then
-        wget -q -a ~/.bashrc https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc
+        curl https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc >> ~/.bashrc
     fi
     starship preset no-nerd-font -o ~/.config/starship.toml
     source ~/.bashrc
@@ -164,7 +164,7 @@ setup-gtk()
     echo -e "[Settings]" > ~/.config/gtk-4.0/settings.ini && echo -e "gtk-hint-font-metrics=1" >> ~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{4,5}/styles
-    wget -q -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
-    wget -q -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    curl -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
 }
 
