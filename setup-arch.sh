@@ -22,7 +22,7 @@ setup-vm
 tweak-system
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl vulkan-mesa-layers vulkan-swrast starship
+sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl vulkan-mesa-layers vulkan-swrast
 
 if [ ${chaoticaur} -eq 1 ];then
     pacman-configure-chaotic-aur
@@ -92,7 +92,7 @@ tweak-system()
 improve-font()
 {
     echo -e "Installing fonts..."
-    sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
+    sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/fonts.conf
@@ -111,6 +111,7 @@ improve-font()
 configure-bash()
 {
     echo -e "Configuring bash..."
+    sudo pacman -Sy --needed ttf-jetbrains-mono-nerd starship
     curl -o ~/.aliases https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/arch/.aliases
     bashrcAppend="$(grep ".aliases" ~/.bashrc > /dev/null 2>&1 ; echo $?)"
     if [ "${bashrcAppend}" -ne 0 ]; 
