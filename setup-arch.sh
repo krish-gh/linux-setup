@@ -153,7 +153,7 @@ setup-gnome()
 {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rnsy snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -Sy --needed gnome-tweaks kvantum-qt5 qt5-wayland qt5ct qt6ct vlc
+    sudo pacman -Sy --needed gnome-tweaks vlc
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     if [ ${chaoticaur} -eq 1 ];then
         sudo pacman -Sy --needed extension-manager
@@ -165,6 +165,7 @@ setup-gnome()
 
 setup-gtk()
 {
+    sudo pacman -Sy --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
