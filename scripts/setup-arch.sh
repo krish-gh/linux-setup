@@ -267,12 +267,12 @@ curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
 curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
 
 sudoAppend="$(
-    sudo grep "Defaults:krish" /etc/sudoers >/dev/null 2>&1
+    sudo grep "Defaults:${whoami}" /etc/sudoers >/dev/null 2>&1
     echo $?
 )"
 if [ "${sudoAppend}" -ne 0 ]; then
     echo -e | sudo tee -a /etc/sudoers
-    echo -e "Defaults:krish      !authenticate" | sudo tee -a /etc/sudoers
+    echo -e "Defaults:${whoami}      !authenticate" | sudo tee -a /etc/sudoers
 fi
 
 setup_apps
