@@ -11,6 +11,8 @@ fi
 
 unset isArch
 
+baseRepoUrl = "https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
+
 vmware=1
 vbox=0
 hyperv=0
@@ -41,12 +43,12 @@ if [ ${gnome} -eq 1 ];then
     setup-gnome
 
 mkdir -p ~/.config/environment.d
-curl -o ~/.config/environment.d/10-defaults.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/environment.d/10-defaults.conf
+curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
 
-curl -o ~/.config/chromium-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/chromium-flags.conf
-curl -o ~/.config/chrome-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/chrome-flags.conf
-curl -o ~/.config/code-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/code-flags.conf
-curl -o ~/.config/electron-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/electron-flags.conf
+curl -o ~/.config/chromium-flags.conf ${baseRepoUrl}home/.config/chromium-flags.conf
+curl -o ~/.config/chrome-flags.conf ${baseRepoUrl}home/.config/chrome-flags.conf
+curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
+curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
 
 echo -e "Done...Reboot..."
 
@@ -84,9 +86,9 @@ tweak-system()
 {
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
-    curl -o 99-sysctl.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/sysctl.d/99-sysctl.conf
+    curl -o 99-sysctl.conf ${baseRepoUrl}system/etc/sysctl.d/99-sysctl.conf
     sudo mv -f 99-sysctl.conf /etc/sysctl.d/
-    curl -o 00-journal-size.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/system/etc/systemd/journald.conf.d/00-journal-size.conf
+    curl -o 00-journal-size.conf ${baseRepoUrl}system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 }
@@ -97,9 +99,9 @@ improve-font()
     sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
-    curl -o ~/.config/fontconfig/fonts.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/fonts.conf
-    curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/fontconfig/conf.d/20-no-embedded.conf
-    curl -o .Xresources https://raw.githubusercontent.com/krish-gh/linux-setup/main/.Xresources
+    curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
+    curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf ${baseRepoUrl}home/.config/fontconfig/conf.d/20-no-embedded.conf
+    curl -o .Xresources ${baseRepoUrl}.Xresources
     sudo pacman -Sy --needed xorg-xrdb
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
@@ -114,11 +116,11 @@ configure-bash()
 {
     echo -e "Configuring bash..."
     sudo pacman -Sy --needed ttf-jetbrains-mono-nerd starship
-    curl -o ~/.aliases https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/arch/.aliases
+    curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(grep ".aliases" ~/.bashrc > /dev/null 2>&1 ; echo $?)"
     if [ "${bashrcAppend}" -ne 0 ]; 
     then
-        curl https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc >> ~/.bashrc
+        curl ${baseRepoUrl}home/.bashrc >> ~/.bashrc
     fi
     starship preset no-nerd-font -o ~/.config/starship.toml
     source ~/.bashrc
