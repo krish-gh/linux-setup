@@ -71,6 +71,8 @@ improve_font() {
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
     sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
+    gsettings set org.gnome.desktop.interface font-antialiasing rgba
+    gsettings set org.gnome.desktop.interface font-hinting slight
     sudo fc-cache -fv
     fc-cache -fv
 }
@@ -116,26 +118,13 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Sy --noconfirm --needed yay rate-mirrors
 }
 
-setup_gnome() {
-    echo -e "Configuring gnome stuffs..."
-    sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks vlc python-pipx
-    gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
-    if [ ${chaoticaur} -eq 1 ]; then
-        sudo pacman -Sy --noconfirm --needed extension-manager
-    fi
-
-    echo -e "Installing some extensions..."
-    pipx ensurepath
-    pipx install gnome-extensions-cli --system-site-packages
-    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com
-}
-
 setup_gtk() {
     sudo pacman -Sy --noconfirm --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
-    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+    gsettings set org.gtk.Settings.FileChooser show-hidden true
+    gsettings set org.gtk.gtk4.Settings.FileChooser show-hidden true
     mkdir -p ~/.config/gtk-{3,4}.0
     echo >~/.gtkrc-2.0
     echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
@@ -144,6 +133,44 @@ setup_gtk() {
     mkdir -p ~/.local/share/gtksourceview-{4,5}/styles
     curl -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+}
+
+setup_gnome() {
+    echo -e "Configuring gnome stuffs..."
+    sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
+    sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks vlc python-pipx
+    
+    gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+    
+    # console
+    gsettings set org.gnome.Console audible-bell false
+    gsettings set org.gnome.Console custom-font 'JetBrainsMono Nerd Font 12'
+    gsettings set org.gnome.Console use-system-font false
+
+    # text editor
+    gsettings set org.gnome.TextEditor restore-session false
+    gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font 12'
+    gsettings set org.gnome.TextEditor use-system-font false
+    gsettings set org.gnome.TextEditor show-line-numbers true
+    gsettings set org.gnome.TextEditor style-scheme catppuccin_mocha
+
+    # files
+    gsettings set org.gnome.nautilus.preferences show-image-thumbnails never
+    gsettings set org.gnome.nautilus.preferences show-directory-item-counts never
+    gsettings set org.gnome.nautilus.preferences show-hidden-files true
+    gsettings set org.gnome.nautilus.preferences show-create-link true
+    gsettings set org.gnome.nautilus.preferences show-delete-permanently true
+
+
+    
+    if [ ${chaoticaur} -eq 1 ]; then
+        sudo pacman -Sy --noconfirm --needed extension-manager
+    fi
+
+    echo -e "Installing some extensions..."
+    pipx ensurepath
+    pipx install gnome-extensions-cli --system-site-packages
+    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com
 }
 
 sudo pacman -Syyu
