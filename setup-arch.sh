@@ -137,6 +137,12 @@ setup_gtk() {
     curl -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
 
+    echo -e "Setting up QT apps to look like GTK.."
+    mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
+    curl -o ~/.config/Kvantum/kvantum.kvconfig ${baseRepoUrl}home/.config/Kvantum/kvantum.kvconfig
+    curl -o ~/.config/qt5ct/qt5ct.conf ${baseRepoUrl}home/.config/qt5ct/qt5ct.conf
+    curl -o ~/.config/qt6ct/qt6ct.conf ${baseRepoUrl}home/.config/qt6ct/qt6ct.conf
+
 }
 
 setup_gnome() {
