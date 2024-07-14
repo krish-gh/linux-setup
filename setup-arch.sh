@@ -11,52 +11,13 @@ fi
 
 unset isArch
 
-baseRepoUrl = "https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
+baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
 vmware=1
 vbox=0
 hyperv=0
 gnome=1
 chaoticaur=1
-
-sudo pacman -Syyu
-setup-vm
-tweak-system
-
-echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl
-
-if [ ${chaoticaur} -eq 1 ];then
-    pacman-configure-chaotic-aur
-
-echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
-sudo sed -i "/^#Color/c\Color\nILoveCandy
-    /^#VerbosePkgLists/c\VerbosePkgLists
-    /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
-sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
-
-improve-font
-configure-bash
-setup-gtk
-
-if [ ${gnome} -eq 1 ];then
-    setup-gnome
-
-mkdir -p ~/.config/environment.d
-curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
-
-curl -o ~/.config/chromium-flags.conf ${baseRepoUrl}home/.config/chromium-flags.conf
-curl -o ~/.config/chrome-flags.conf ${baseRepoUrl}home/.config/chrome-flags.conf
-curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
-curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
-
-sudoAppend="$(grep "Defaults:krish      !authenticate" /etc/sudoers > /dev/null 2>&1 ; echo $?)"
-if [ "${sudoAppend}" -ne 0 ]; 
-then
-    sudo echo -e "Defaults:krish      !authenticate" >> /etc/sudoers
-fi
-
-echo -e "Done...Reboot..."
 
 setup-vm()
 {
@@ -144,7 +105,8 @@ pacman-configure-chaotic-aur()
     fi
 
     chaoticAurAppend="$(grep "chaotic-aur" /etc/pacman.conf > /dev/null 2>&1 ; echo $?)"
-    if [ "${chaoticAurAppend}" -ne 0 ]; then
+    if [ "${chaoticAurAppend}" -ne 0 ];
+    then
         echo "Appending Chaotic-AUR in pacman.conf..."
         sudo echo -e "[chaotic-aur]" >> /etc/pacman.conf
         sudo echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
@@ -163,8 +125,10 @@ setup-gnome()
     sudo pacman -Rnsy snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
     sudo pacman -Sy --needed gnome-tweaks vlc python-pipx
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
-    if [ ${chaoticaur} -eq 1 ];then
+    if [ ${chaoticaur} -eq 1 ];
+    then
         sudo pacman -Sy --needed extension-manager
+    fi
     
     echo -e "Installing some extensions..."
     pipx ensurepath
@@ -187,3 +151,45 @@ setup-gtk()
     curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
 }
 
+sudo pacman -Syyu
+setup-vm
+tweak-system
+
+echo -e "Installing some needed stuffs..."
+sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl
+
+if [ ${chaoticaur} -eq 1 ];
+then
+    pacman-configure-chaotic-aur
+fi
+
+echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
+sudo sed -i "/^#Color/c\Color\nILoveCandy
+    /^#VerbosePkgLists/c\VerbosePkgLists
+    /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
+sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+
+improve-font
+configure-bash
+setup-gtk
+
+if [ ${gnome} -eq 1 ];
+then
+    setup-gnome
+fi
+
+mkdir -p ~/.config/environment.d
+curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
+
+curl -o ~/.config/chromium-flags.conf ${baseRepoUrl}home/.config/chromium-flags.conf
+curl -o ~/.config/chrome-flags.conf ${baseRepoUrl}home/.config/chrome-flags.conf
+curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
+curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
+
+sudoAppend="$(grep "Defaults:krish      !authenticate" /etc/sudoers > /dev/null 2>&1 ; echo $?)"
+if [ "${sudoAppend}" -ne 0 ]; 
+then
+    sudo echo -e "Defaults:krish      !authenticate" >> /etc/sudoers
+fi
+
+echo -e "Done...Reboot..."
