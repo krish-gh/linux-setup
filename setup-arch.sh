@@ -145,7 +145,9 @@ setup-gnome()
     sudo pacman -Rnsy snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
     sudo pacman -Sy --needed gnome-tweaks kvantum-qt5 qt5-wayland qt5ct qt6ct vlc
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
-    yay -Sy --needed extension-manager
+    if [ ${chaoticaur} -eq 1 ];then
+        sudo pacman -Sy --needed extension-manager
+        
     #gnome-extensions install AlphabeticalAppGrid@stuarthayhurst
     #gnome-extensions install dash-to-dock@micxgx.gmail.com
     #gnome-extensions install appindicatorsupport@rgcjonas.gmail.com
