@@ -147,6 +147,8 @@ setup_gnome() {
     sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks vlc python-pipx
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+    gsettings set org.gnome.desktop.wm.preferences audible-bell false
+    gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
     gsettings set org.gnome.system.location enabled true
     gsettings set org.gnome.desktop.privacy old-files-age 0
     gsettings set org.gnome.desktop.privacy recent-files-max-age 1
@@ -156,6 +158,13 @@ setup_gnome() {
     gsettings set org.gnome.desktop.privacy remove-old-trash-files true
     gsettings set org.gnome.desktop.privacy report-technical-problems false
     gsettings set org.gnome.desktop.privacy send-software-usage-stats false
+    gsettings set org.gnome.desktop.screensaver lock-enabled false
+    gsettings set org.gnome.desktop.session idle-delay 0
+    gsettings set org.gnome.desktop.search-providers disable-external true
+    gsettings set org.gnome.desktop.sound event-sounds false
+    gsettings set org.gnome.desktop.thumbnailers disable-all true
+    gsettings set org.gnome.desktop.peripherals.mouse speed 1
+    gsettings set org.gnome.desktop.notifications show-in-lock-screen false
 
     
     # console
