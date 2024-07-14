@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Check if the distro is (based on) Arch Linux
 isArch="$(
@@ -21,7 +21,7 @@ hyperv=0
 gnome=1
 chaoticaur=1
 
-setup-vm() {
+setup_vm() {
     if [ ${vmware} -eq 1 ]; then
         echo -e "Configuring VMware stuffs..."
         sudo pacman -Sy --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
@@ -47,7 +47,7 @@ setup-vm() {
     sudo pacman -Sy --needed vulkan-mesa-layers vulkan-swrast
 }
 
-tweak-system() {
+tweak_system() {
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
     curl -o 99-sysctl.conf ${baseRepoUrl}system/etc/sysctl.d/99-sysctl.conf
@@ -57,7 +57,7 @@ tweak-system() {
     sudo journalctl --rotate --vacuum-size=10M
 }
 
-improve-font() {
+improve_font() {
     echo -e "Installing fonts..."
     sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
     echo -e "Making font look better..."
@@ -75,7 +75,7 @@ improve-font() {
     fc-cache -fv
 }
 
-configure-bash() {
+configure_bash() {
     echo -e "Configuring bash..."
     sudo pacman -Sy --needed ttf-jetbrains-mono-nerd starship
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
@@ -90,7 +90,7 @@ configure-bash() {
     source ~/.bashrc
 }
 
-pacman-configure-chaotic-aur() {
+pacman_configure_chaotic_aur() {
     if [ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ]; then
         echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
         sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
@@ -116,7 +116,7 @@ pacman-configure-chaotic-aur() {
     sudo pacman -Sy --needed yay rate-mirrors
 }
 
-setup-gnome() {
+setup_gnome() {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rnsy snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
     sudo pacman -Sy --needed gnome-tweaks vlc python-pipx
@@ -131,7 +131,7 @@ setup-gnome() {
     gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com
 }
 
-setup-gtk() {
+setup_gtk() {
     sudo pacman -Sy --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
@@ -146,14 +146,14 @@ setup-gtk() {
 }
 
 sudo pacman -Syyu
-setup-vm
-tweak-system
+setup_vm
+tweak_system
 
 echo -e "Installing some needed stuffs..."
 sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl
 
 if [ ${chaoticaur} -eq 1 ]; then
-    pacman-configure-chaotic-aur
+    pacman_configure_chaotic_aur
 fi
 
 echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
@@ -162,12 +162,12 @@ sudo sed -i "/^#Color/c\Color\nILoveCandy
     /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
 sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 
-improve-font
-configure-bash
-setup-gtk
+improve_font
+configure_bash
+setup_gtk
 
 if [ ${gnome} -eq 1 ]; then
-    setup-gnome
+    setup_gnome
 fi
 
 mkdir -p ~/.config/environment.d
