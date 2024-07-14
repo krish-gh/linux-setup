@@ -125,6 +125,9 @@ setup_gtk() {
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
     gsettings set org.gtk.Settings.FileChooser show-hidden true
     gsettings set org.gtk.gtk4.Settings.FileChooser show-hidden true
+    gsettings set org.gtk.Settings.FileChooser sort-directories-first true
+    gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
+
     mkdir -p ~/.config/gtk-{3,4}.0
     echo >~/.gtkrc-2.0
     echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
@@ -191,7 +194,7 @@ setup_gnome() {
     gsettings set org.gnome.nautilus.preferences show-hidden-files true
     gsettings set org.gnome.nautilus.preferences show-create-link true
     gsettings set org.gnome.nautilus.preferences show-delete-permanently true
-
+    #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     
     if [ ${chaoticaur} -eq 1 ]; then
