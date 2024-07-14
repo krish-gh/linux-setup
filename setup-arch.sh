@@ -119,7 +119,7 @@ pacman_configure_chaotic_aur() {
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -Sy --noconfirm --needed gnome-tweaks vlc python-pipx
+    sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks vlc python-pipx
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     if [ ${chaoticaur} -eq 1 ]; then
         sudo pacman -Sy --noconfirm --needed extension-manager
