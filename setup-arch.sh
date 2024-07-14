@@ -141,6 +141,7 @@ setup_gnome() {
     sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks vlc python-pipx
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
+    gsettings set org.gnome.system.location enabled true
     
     # console
     gsettings set org.gnome.Console audible-bell false
