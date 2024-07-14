@@ -160,8 +160,8 @@ setup-gtk()
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
     echo > ~/.gtkrc-2.0
-    echo "[Settings]\r\ngtk-application-prefer-dark-theme=1" > ~/.config/gtk-3.0/settings.ini
-    echo "[Settings]\r\ngtk-hint-font-metrics=1" > ~/.config/gtk-4.0/settings.ini
+    echo -e "[Settings]" > ~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >> ~/.config/gtk-3.0/settings.ini
+    echo -e "[Settings]" > ~/.config/gtk-4.0/settings.ini && echo -e "gtk-hint-font-metrics=1" >> ~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{4,5}/styles
     wget -q -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
