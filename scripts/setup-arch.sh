@@ -107,6 +107,7 @@ pacman_configure_chaotic_aur() {
     )"
     if [ "${chaoticAurAppend}" -ne 0 ]; then
         echo "Appending Chaotic-AUR in pacman.conf..."
+        echo -e | sudo tee -a /etc/pacman.conf
         echo -e "[chaotic-aur]" | sudo tee -a /etc/pacman.conf
         echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
     fi
@@ -268,6 +269,7 @@ sudoAppend="$(
     echo $?
 )"
 if [ "${sudoAppend}" -ne 0 ]; then
+    echo -e | sudo tee -a /etc/sudoers
     echo -e "Defaults:krish      !authenticate" | sudo tee -a /etc/sudoers
 fi
 
