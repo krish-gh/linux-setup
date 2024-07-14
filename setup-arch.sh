@@ -50,6 +50,12 @@ curl -o ~/.config/chrome-flags.conf ${baseRepoUrl}home/.config/chrome-flags.conf
 curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
 curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
 
+sudoAppend="$(grep "Defaults:krish      !authenticate" /etc/sudoers > /dev/null 2>&1 ; echo $?)"
+if [ "${sudoAppend}" -ne 0 ]; 
+then
+    sudo echo -e "Defaults:krish      !authenticate" >> /etc/sudoers
+fi
+
 echo -e "Done...Reboot..."
 
 setup-vm()
