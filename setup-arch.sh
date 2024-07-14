@@ -112,6 +112,7 @@ configure-bash()
     then
         wget -q -a ~/.bashrc https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.bashrc
     fi
+    starship preset no-nerd-font -o ~/.config/starship.toml
     source ~/.bashrc
 }
 
