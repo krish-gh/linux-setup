@@ -176,6 +176,7 @@ setup_gnome() {
     gsettings set org.gnome.gnome-system-monitor show-dependencies true
     gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Console.desktop', 'firefox.desktop']"
     gsettings set org.gnome.shell.weather automatic-location true
+    gsettings set org.gnome.tweaks show-extensions-notice false
 
     
     # console
@@ -209,6 +210,7 @@ setup_gnome() {
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com
     gnome-extensions enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
+    # dash to dock
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock apply-custom-theme true
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen true
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock click-action minimize
