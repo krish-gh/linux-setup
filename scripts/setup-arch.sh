@@ -130,7 +130,7 @@ setup_gtk() {
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
 
     mkdir -p ~/.config/gtk-{3,4}.0
-    echo >~/.gtkrc-2.0
+    #echo >~/.gtkrc-2.0
     echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
     echo -e "[Settings]" >~/.config/gtk-4.0/settings.ini && echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
