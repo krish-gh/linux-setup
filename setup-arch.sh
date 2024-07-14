@@ -137,17 +137,12 @@ setup_gtk() {
     curl -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
 
-    # meld
-    gsettings set org.gnome.meld prefer-dark-theme true
-    gsettings set org.gnome.meld show-line-numbers true
-    gsettings set org.gnome.meld style-scheme catppuccin_mocha
-
 }
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks gnome-shell-extensions vlc python-pipx
+    sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks gnome-shell-extensions python-pipx
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
@@ -214,6 +209,18 @@ setup_gnome() {
     
 }
 
+setup_apps() {
+    echo -e "Installing some apps..."
+    sudo pacman -Sy --noconfirm --needed vlc meld firefox seahorse
+
+    # meld
+    gsettings set org.gnome.meld prefer-dark-theme true
+    gsettings set org.gnome.meld show-line-numbers true
+    gsettings set org.gnome.meld style-scheme catppuccin_mocha
+
+
+}
+
 sudo pacman -Syyu
 setup_vm
 tweak_system
@@ -221,7 +228,7 @@ tweak_system
 improve_font
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --noconfirm --needed pacman-contrib meld firefox base-devel nano git github-cli curl seahorse
+sudo pacman -Sy --noconfirm --needed pacman-contrib base-devel nano git github-cli curl
 
 if [ ${chaoticaur} -eq 1 ]; then
     pacman_configure_chaotic_aur
@@ -255,5 +262,7 @@ sudoAppend="$(
 if [ "${sudoAppend}" -ne 0 ]; then
     echo -e "Defaults:krish      !authenticate" | sudo tee -a /etc/sudoers
 fi
+
+setup_apps
 
 echo -e "Done...Reboot..."
