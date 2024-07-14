@@ -165,6 +165,9 @@ setup_gnome() {
     gsettings set org.gnome.desktop.thumbnailers disable-all true
     gsettings set org.gnome.desktop.peripherals.mouse speed 1
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
+    gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/gnome/vnc-l.png'
+    gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/gnome/vnc-d.png'
+
 
     
     # console
