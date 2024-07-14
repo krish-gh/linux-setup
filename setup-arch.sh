@@ -22,7 +22,7 @@ setup-vm
 tweak-system
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git wget vulkan-mesa-layers vulkan-swrast starship
+sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli wget vulkan-mesa-layers vulkan-swrast starship
 
 if [ ${chaoticaur} -eq 1 ];then
     pacman-configure-chaotic-aur
@@ -32,12 +32,6 @@ sudo sed -i "/^#Color/c\Color\nILoveCandy
     /^#VerbosePkgLists/c\VerbosePkgLists
     /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
 sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
-
-sudo pacman -Syyu
-sudo pacman -Fy
-
-echo -e "Installing some more needed stuffs..."
-sudo pacman -Sy --needed yay rate-mirrors
 
 improve-font
 configure-bash
@@ -136,7 +130,13 @@ pacman-configure-chaotic-aur()
     if [ "${chaoticAurAppend}" -ne 0 ]; then
         echo "Appending Chaotic-AUR in pacman.conf..."
         sudo echo -e "\r\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
-    fi
+    fi    
+
+    sudo pacman -Syyu
+    sudo pacman -Fy
+
+    echo -e "Installing some more needed stuffs..."
+    sudo pacman -Sy --needed yay rate-mirrors
 }
 
 setup-gnome()
@@ -146,9 +146,9 @@ setup-gnome()
     sudo pacman -Sy --needed gnome-tweaks kvantum-qt5 qt5-wayland qt5ct qt6ct vlc
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     yay -Sy --needed extension-manager
-    gnome-extensions install AlphabeticalAppGrid@stuarthayhurst
-    gnome-extensions install dash-to-dock@micxgx.gmail.com
-    gnome-extensions install appindicatorsupport@rgcjonas.gmail.com
+    #gnome-extensions install AlphabeticalAppGrid@stuarthayhurst
+    #gnome-extensions install dash-to-dock@micxgx.gmail.com
+    #gnome-extensions install appindicatorsupport@rgcjonas.gmail.com
 }
 
 setup-gtk()
