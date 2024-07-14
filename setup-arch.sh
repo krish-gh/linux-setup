@@ -24,27 +24,27 @@ chaoticaur=1
 setup_vm() {
     if [ ${vmware} -eq 1 ]; then
         echo -e "Configuring VMware stuffs..."
-        sudo pacman -Sy --noconfirm --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
+        sudo pacman -S --noconfirm --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
         sudo systemctl enable --now vmtoolsd.service
         sudo systemctl enable --now vmware-vmblock-fuse.service
     fi
 
     if [ ${vbox} -eq 1 ]; then
         echo -e "Configuring VirtualBox stuffs..."
-        sudo pacman -Sy --noconfirm --needed virtualbox-guest-utils
+        sudo pacman -S --noconfirm --needed virtualbox-guest-utils
         sudo systemctl enable --now vboxservice.service
     fi
 
     if [ ${hyperv} -eq 1 ]; then
         echo -e "Configuring Hyper-V stuffs..."
-        sudo pacman -Sy --noconfirm --needed hyperv
+        sudo pacman -S --noconfirm --needed hyperv
         sudo systemctl enable --now hv_fcopy_daemon.service
         sudo systemctl enable --now hv_kvp_daemon.service
         sudo systemctl enable --now hv_vss_daemon.service
 
     fi
 
-    sudo pacman -Sy --noconfirm --needed vulkan-mesa-layers vulkan-swrast
+    sudo pacman -S --noconfirm --needed vulkan-mesa-layers vulkan-swrast
 }
 
 tweak_system() {
@@ -59,13 +59,13 @@ tweak_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    sudo pacman -Sy --noconfirm --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
+    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
     curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf ${baseRepoUrl}home/.config/fontconfig/conf.d/20-no-embedded.conf
     curl -o .Xresources ${baseRepoUrl}home/.Xresources
-    sudo pacman -Sy --noconfirm --needed xorg-xrdb
+    sudo pacman -S --noconfirm --needed xorg-xrdb
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
@@ -79,7 +79,7 @@ improve_font() {
 
 configure_bash() {
     echo -e "Configuring bash..."
-    sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono-nerd starship
+    sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd starship
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
@@ -115,11 +115,11 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more needed stuffs..."
-    sudo pacman -Sy --noconfirm --needed yay rate-mirrors
+    sudo pacman -S --noconfirm --needed yay rate-mirrors
 }
 
 setup_gtk() {
-    sudo pacman -Sy --noconfirm --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
+    sudo pacman -S --noconfirm --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
@@ -148,7 +148,7 @@ setup_gtk() {
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -Sy --noconfirm --needed gnome-themes-extra gnome-tweaks gnome-shell-extensions python-pipx
+    sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-tweaks gnome-shell-extensions python-pipx
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
@@ -199,7 +199,7 @@ setup_gnome() {
 
     
     if [ ${chaoticaur} -eq 1 ]; then
-        sudo pacman -Sy --noconfirm --needed extension-manager
+        sudo pacman -S --noconfirm --needed extension-manager
     fi
 
     echo -e "Installing some extensions..."
@@ -217,7 +217,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -Sy --noconfirm --needed vlc meld firefox seahorse
+    sudo pacman -S --noconfirm --needed vlc meld firefox seahorse
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
@@ -236,7 +236,7 @@ tweak_system
 improve_font
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --noconfirm --needed pacman-contrib base-devel nano git github-cli curl
+sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli curl
 
 if [ ${chaoticaur} -eq 1 ]; then
     pacman_configure_chaotic_aur
