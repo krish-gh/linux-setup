@@ -178,6 +178,11 @@ setup_gnome() {
     gsettings set org.gnome.shell.weather automatic-location true
     gsettings set org.gnome.tweaks show-extensions-notice false
 
+    # organize in app folder
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'vim.desktop']"
+    gsettings set org.gnome.desktop.app-folders folder-children "['Utilities','zzz']"
+
     
     # console
     gsettings set org.gnome.Console audible-bell false
