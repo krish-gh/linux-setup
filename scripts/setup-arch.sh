@@ -207,7 +207,7 @@ setup_gnome() {
     echo -e "Installing some extensions..."
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
-    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com
+    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com arch-update@RaphaelRochet
     gnome-extensions enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
     # dash to dock
@@ -217,6 +217,12 @@ setup_gnome() {
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock require-pressure-to-show false
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock hot-keys false
+
+    # arch update
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update always-visible false
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update check-cmd '/bin/sh -c "(/usr/bin/checkupdates; /usr/bin/yay -Qu --color never | sed '\''s/Get .*//'\'') | sort -u -t'\'' '\'' -k1,1"'
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update update-cmd 'kgx -e '\''/bin/sh -c "yay ; echo Done - Press enter to exit; read"'\'''
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update use-buildin-icons true
     
 }
 
