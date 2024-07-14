@@ -218,7 +218,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed vlc meld firefox seahorse
+    sudo pacman -S --noconfirm --needed vlc meld firefox seahorse neofetch fastfetch screenfetch
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
