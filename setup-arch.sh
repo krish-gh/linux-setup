@@ -118,7 +118,7 @@ pacman_configure_chaotic_aur() {
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
-    sudo pacman -Rnsy snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
+    sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
     sudo pacman -Sy --noconfirm --needed gnome-tweaks vlc python-pipx
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     if [ ${chaoticaur} -eq 1 ]; then
@@ -136,6 +136,7 @@ setup_gtk() {
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
+    mkdir -p ~/.config/gtk-{3,4}.0
     echo >~/.gtkrc-2.0
     echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
     echo -e "[Settings]" >~/.config/gtk-4.0/settings.ini && echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
