@@ -1,3 +1,6 @@
 #!/bin/bash
 
-wget -nd -np -o setup-arch.sh https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-arch.sh
+wget -nd -np https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-arch.sh
+chmod +x setup-arch.sh
+./setup-arch.sh
+rm setup-arch.sh
