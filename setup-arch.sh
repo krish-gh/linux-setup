@@ -153,7 +153,7 @@ tweak_system
 improve_font
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --noconfirm --needed pacman-contrib firefox base-devel nano git github-cli curl
+sudo pacman -Sy --noconfirm --needed pacman-contrib meld firefox base-devel nano git github-cli curl seahorse
 
 if [ ${chaoticaur} -eq 1 ]; then
     pacman_configure_chaotic_aur
