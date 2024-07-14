@@ -130,7 +130,8 @@ pacman-configure-chaotic-aur()
     chaoticAurAppend="$(grep "chaotic-aur" /etc/pacman.conf > /dev/null 2>&1 ; echo $?)"
     if [ "${chaoticAurAppend}" -ne 0 ]; then
         echo "Appending Chaotic-AUR in pacman.conf..."
-        sudo echo -e "\r\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
+        sudo echo -e "[chaotic-aur]" >> /etc/pacman.conf
+        sudo echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
     fi    
 
     sudo pacman -Syyu
