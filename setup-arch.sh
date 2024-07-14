@@ -24,27 +24,27 @@ chaoticaur=1
 setup_vm() {
     if [ ${vmware} -eq 1 ]; then
         echo -e "Configuring VMware stuffs..."
-        sudo pacman -Sy --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
+        sudo pacman -Sy --noconfirm --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
         sudo systemctl enable --now vmtoolsd.service
         sudo systemctl enable --now vmware-vmblock-fuse.service
     fi
 
     if [ ${vbox} -eq 1 ]; then
         echo -e "Configuring VirtualBox stuffs..."
-        sudo pacman -Sy --needed virtualbox-guest-utils
+        sudo pacman -Sy --noconfirm --needed virtualbox-guest-utils
         sudo systemctl enable --now vboxservice.service
     fi
 
     if [ ${hyperv} -eq 1 ]; then
         echo -e "Configuring Hyper-V stuffs..."
-        sudo pacman -Sy --needed hyperv
+        sudo pacman -Sy --noconfirm --needed hyperv
         sudo systemctl enable --now hv_fcopy_daemon.service
         sudo systemctl enable --now hv_kvp_daemon.service
         sudo systemctl enable --now hv_vss_daemon.service
 
     fi
 
-    sudo pacman -Sy --needed vulkan-mesa-layers vulkan-swrast
+    sudo pacman -Sy --noconfirm --needed vulkan-mesa-layers vulkan-swrast
 }
 
 tweak_system() {
@@ -59,13 +59,13 @@ tweak_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    sudo pacman -Sy --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
+    sudo pacman -Sy --noconfirm --needed noto-fonts noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
     curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf ${baseRepoUrl}home/.config/fontconfig/conf.d/20-no-embedded.conf
     curl -o .Xresources ${baseRepoUrl}.Xresources
-    sudo pacman -Sy --needed xorg-xrdb
+    sudo pacman -Sy --noconfirm --needed xorg-xrdb
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
@@ -77,7 +77,7 @@ improve_font() {
 
 configure_bash() {
     echo -e "Configuring bash..."
-    sudo pacman -Sy --needed ttf-jetbrains-mono-nerd starship
+    sudo pacman -Sy --noconfirm --needed ttf-jetbrains-mono-nerd starship
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
@@ -113,26 +113,26 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more needed stuffs..."
-    sudo pacman -Sy --needed yay rate-mirrors
+    sudo pacman -Sy --noconfirm --needed yay rate-mirrors
 }
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rnsy snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -Sy --needed gnome-tweaks vlc python-pipx
+    sudo pacman -Sy --noconfirm --needed gnome-tweaks vlc python-pipx
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     if [ ${chaoticaur} -eq 1 ]; then
-        sudo pacman -Sy --needed extension-manager
+        sudo pacman -Sy --noconfirm --needed extension-manager
     fi
 
     echo -e "Installing some extensions..."
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
-    gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com
+    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com
 }
 
 setup_gtk() {
-    sudo pacman -Sy --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
+    sudo pacman -Sy --noconfirm --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
@@ -149,8 +149,10 @@ sudo pacman -Syyu
 setup_vm
 tweak_system
 
+improve_font
+
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl
+sudo pacman -Sy --noconfirm --needed pacman-contrib firefox base-devel nano git github-cli curl
 
 if [ ${chaoticaur} -eq 1 ]; then
     pacman_configure_chaotic_aur
@@ -162,7 +164,6 @@ sudo sed -i "/^#Color/c\Color\nILoveCandy
     /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
 sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 
-improve_font
 configure_bash
 setup_gtk
 
