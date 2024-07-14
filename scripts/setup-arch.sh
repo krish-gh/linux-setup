@@ -240,7 +240,7 @@ setup_apps() {
     curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlc/vlcrc
 }
 
-sudo pacman -Syyu
+sudo pacman -Syu
 setup_vm
 tweak_system
 
