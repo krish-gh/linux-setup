@@ -164,7 +164,7 @@ setup-gtk()
     echo "[Settings]\r\ngtk-hint-font-metrics=1" > ~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{4,5}/styles
-    wget -q -p ~/.local/share/gtksourceview-4/styles https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
-    wget -q -p ~/.local/share/gtksourceview-5/styles https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    wget -q -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    wget -q -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
 }
 
