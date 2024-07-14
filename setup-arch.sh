@@ -218,7 +218,9 @@ setup_apps() {
     gsettings set org.gnome.meld show-line-numbers true
     gsettings set org.gnome.meld style-scheme catppuccin_mocha
 
-
+    # vlc
+    mkdir -p ~/.config/vlc
+    curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlcrc
 }
 
 sudo pacman -Syyu
