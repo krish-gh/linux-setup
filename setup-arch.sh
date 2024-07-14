@@ -148,6 +148,15 @@ setup_gnome() {
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.system.location enabled true
+    gsettings set org.gnome.desktop.privacy old-files-age 0
+    gsettings set org.gnome.desktop.privacy recent-files-max-age 1
+    gsettings set org.gnome.desktop.privacy remember-recent-files false
+    gsettings set org.gnome.desktop.privacy remember-app-usage false
+    gsettings set org.gnome.desktop.privacy remove-old-temp-files true
+    gsettings set org.gnome.desktop.privacy remove-old-trash-files true
+    gsettings set org.gnome.desktop.privacy report-technical-problems false
+    gsettings set org.gnome.desktop.privacy send-software-usage-stats false
+
     
     # console
     gsettings set org.gnome.Console audible-bell false
