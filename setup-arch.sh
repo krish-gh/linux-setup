@@ -167,6 +167,9 @@ setup_gnome() {
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
     gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/gnome/vnc-l.png'
     gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/gnome/vnc-d.png'
+    gsettings set org.gnome.software screenshot-cache-age-maximum 60
+    gsettings set org.gnome.gnome-system-monitor show-dependencies true
+    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Console.desktop', 'firefox.desktop']"
 
 
     
