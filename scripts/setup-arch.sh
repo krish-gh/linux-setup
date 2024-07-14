@@ -227,7 +227,7 @@ setup_apps() {
 
     # vlc
     mkdir -p ~/.config/vlc
-    curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlcrc
+    curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlc/vlcrc
 }
 
 sudo pacman -Syyu
