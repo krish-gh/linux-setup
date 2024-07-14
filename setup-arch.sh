@@ -133,6 +133,12 @@ setup_gtk() {
     mkdir -p ~/.local/share/gtksourceview-{4,5}/styles
     curl -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+
+    # meld
+    gsettings set org.gnome.meld prefer-dark-theme true
+    gsettings set org.gnome.meld show-line-numbers true
+    gsettings set org.gnome.meld style-scheme catppuccin_mocha
+
 }
 
 setup_gnome() {
