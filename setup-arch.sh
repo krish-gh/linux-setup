@@ -170,7 +170,7 @@ setup_gnome() {
     gsettings set org.gnome.software screenshot-cache-age-maximum 60
     gsettings set org.gnome.gnome-system-monitor show-dependencies true
     gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Console.desktop', 'firefox.desktop']"
-
+    gsettings set org.gnome.shell.weather automatic-location true
 
     
     # console
