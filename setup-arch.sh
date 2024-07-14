@@ -22,7 +22,7 @@ setup-vm
 tweak-system
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl wget vulkan-mesa-layers vulkan-swrast starship
+sudo pacman -Sy --needed pacman-contrib firefox base-devel nano git github-cli curl vulkan-mesa-layers vulkan-swrast starship
 
 if [ ${chaoticaur} -eq 1 ];then
     pacman-configure-chaotic-aur
@@ -42,6 +42,11 @@ if [ ${gnome} -eq 1 ];then
 
 mkdir -p ~/.config/environment.d
 curl -o ~/.config/environment.d/10-defaults.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/environment.d/10-defaults.conf
+
+curl -o ~/.config/chromium-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/chromium-flags.conf
+curl -o ~/.config/chrome-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/chrome-flags.conf
+curl -o ~/.config/code-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/code-flags.conf
+curl -o ~/.config/electron-flags.conf https://raw.githubusercontent.com/krish-gh/linux-setup/main/home/.config/electron-flags.conf
 
 echo -e "Done...Reboot..."
 
