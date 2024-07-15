@@ -143,8 +143,7 @@ setup_gtk() {
     echo -e "Setting up QT apps to look like GTK.."
     mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
     curl -o ~/.config/Kvantum/kvantum.kvconfig ${baseRepoUrl}home/.config/Kvantum/kvantum.kvconfig
-    curl -o ~/.config/qt5ct/qt5ct.conf ${baseRepoUrl}home/.config/qt5ct/qt5ct.conf
-    curl -o ~/.config/qt6ct/qt6ct.conf ${baseRepoUrl}home/.config/qt6ct/qt6ct.conf
+    for i in 5 6; do curl -o ~/.config/qt${i}ct/qt${i}ct.conf ${baseRepoUrl}home/.config/qt${i}ct/qt${i}ct.conf; done
 
 }
 
