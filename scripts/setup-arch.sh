@@ -132,8 +132,9 @@ setup_gtk() {
 
     mkdir -p ~/.config/gtk-{3,4}.0
     #echo >~/.gtkrc-2.0
-    echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
-    echo -e "[Settings]" >~/.config/gtk-4.0/settings.ini && echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
+    echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "#gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
+    cp -f ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/
+    echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
     curl -o ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
