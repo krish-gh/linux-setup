@@ -285,7 +285,7 @@ sudoAppend="$(
 )"
 if [ "${sudoAppend}" -ne 0 ]; then
     echo -e | sudo tee -a /etc/sudoers
-    echo -e "Defaults:$(whoami)      !authenticate" | sudo tee -a /etc/sudoers
+    echo -e Defaults:$(whoami)      \!authenticate | sudo tee -a /etc/sudoers
 fi
 
 setup_apps
