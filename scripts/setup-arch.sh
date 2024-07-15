@@ -115,8 +115,8 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Syyu
     sudo pacman -Fy
 
-    echo -e "Installing some more needed stuffs..."
-    sudo pacman -S --noconfirm --needed yay rate-mirrors
+    echo -e "Installing some more stuffs..."
+    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple
 }
 
 setup_gtk() {
@@ -134,7 +134,8 @@ setup_gtk() {
     echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
     echo -e "[Settings]" >~/.config/gtk-4.0/settings.ini && echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
-    mkdir -p ~/.local/share/gtksourceview-{4,5}/styles
+    mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
+    curl -o ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     curl -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
 
@@ -180,7 +181,7 @@ setup_gnome() {
 
     # organize in app folder
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'vim.desktop']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'vim.desktop', 'yad-settings.desktop']"
     gsettings set org.gnome.desktop.app-folders folder-children "['Utilities','zzz']"
 
     
@@ -243,6 +244,12 @@ setup_apps() {
     # vlc
     mkdir -p ~/.config/vlc
     curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlc/vlcrc
+
+    # misc
+    #curl -o ~/.config/chromium-flags.conf ${baseRepoUrl}home/.config/chromium-flags.conf
+    curl -o ~/.config/chrome-flags.conf ${baseRepoUrl}home/.config/chrome-flags.conf
+    curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
+    curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
 }
 
 sudo pacman -Syu
@@ -267,17 +274,12 @@ sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 configure_bash
 setup_gtk
 
-if [ ${gnome} -eq 1 ]; then
-    setup_gnome
-fi
-
 mkdir -p ~/.config/environment.d
 curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
 
-curl -o ~/.config/chromium-flags.conf ${baseRepoUrl}home/.config/chromium-flags.conf
-curl -o ~/.config/chrome-flags.conf ${baseRepoUrl}home/.config/chrome-flags.conf
-curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
-curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
+if [ ${gnome} -eq 1 ]; then
+    setup_gnome
+fi
 
 sudoAppend="$(
     sudo grep "Defaults:$(whoami)" /etc/sudoers >/dev/null 2>&1
