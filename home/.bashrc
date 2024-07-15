@@ -10,4 +10,4 @@ export SYSTEMD_PAGER=
 [[ -f ~/.aliases ]] && . ~/.aliases
 
 # Cool shell prompt
-eval "$(starship init bash)"
+command -v starship &> /dev/null && eval "$(starship init bash)"
