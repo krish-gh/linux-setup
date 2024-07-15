@@ -245,6 +245,7 @@ setup_apps() {
     gsettings set org.gnome.meld prefer-dark-theme true
     gsettings set org.gnome.meld show-line-numbers true
     gsettings set org.gnome.meld style-scheme catppuccin_mocha
+    gsettings set org.gnome.meld highlight-syntax true
 
     # vlc
     mkdir -p ~/.config/vlc
