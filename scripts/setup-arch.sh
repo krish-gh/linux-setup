@@ -263,7 +263,7 @@ tweak_system
 improve_font
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli curl alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils intel-media-driver
+sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli curl alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils 
 
 if [ ${chaoticaur} -eq 1 ]; then
     pacman_configure_chaotic_aur
