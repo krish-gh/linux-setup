@@ -138,12 +138,16 @@ setup_gtk() {
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
     curl -o ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
-    for i in ~/.local/share/gtksourceview-{4,5}/styles; do cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml $i; done 
+    for i in ~/.local/share/gtksourceview-{4,5}/styles; 
+        do cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml $i; 
+    done 
 
     echo -e "Setting up QT apps to look like GTK.."
     mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
     curl -o ~/.config/Kvantum/kvantum.kvconfig ${baseRepoUrl}home/.config/Kvantum/kvantum.kvconfig
-    for i in 5 6; do curl -o ~/.config/qt${i}ct/qt${i}ct.conf ${baseRepoUrl}home/.config/qt${i}ct/qt${i}ct.conf; done
+    for i in 5 6; 
+        do curl -o ~/.config/qt${i}ct/qt${i}ct.conf ${baseRepoUrl}home/.config/qt${i}ct/qt${i}ct.conf; 
+    done
 
 }
 
@@ -247,10 +251,9 @@ setup_apps() {
     curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlc/vlcrc
 
     # misc
-    #curl -o ~/.config/chromium-flags.conf ${baseRepoUrl}home/.config/chromium-flags.conf
-    curl -o ~/.config/chrome-flags.conf ${baseRepoUrl}home/.config/chrome-flags.conf
-    curl -o ~/.config/code-flags.conf ${baseRepoUrl}home/.config/code-flags.conf
-    curl -o ~/.config/electron-flags.conf ${baseRepoUrl}home/.config/electron-flags.conf
+    for i in chromium chrome code electron; 
+        do curl -o ~/.config/${i}-flags.conf ${baseRepoUrl}home/.config/${i}-flags.conf; 
+    done
 }
 
 sudo pacman -Syu
