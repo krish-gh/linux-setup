@@ -7,7 +7,7 @@ HISTFILESIZE=20
 export SYSTEMD_PAGER=
 
 # My aliiases
-. ~/.aliases
+[[ -f ~/.aliases ]] && . ~/.aliases
 
 # Cool shell prompt
 eval "$(starship init bash)"
