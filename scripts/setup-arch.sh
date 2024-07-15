@@ -89,7 +89,7 @@ configure_bash() {
         curl ${baseRepoUrl}home/.bashrc >>~/.bashrc
     fi
     starship preset no-nerd-font -o ~/.config/starship.toml
-    source ~/.bashrc
+    #source ~/.bashrc
 }
 
 pacman_configure_chaotic_aur() {
