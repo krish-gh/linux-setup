@@ -117,6 +117,11 @@ pacman_configure_chaotic_aur() {
 
     echo -e "Installing some more stuffs..."
     sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple
+
+    gsettings set yad.sourceview line-num true
+    gsettings set yad.sourceview brackets true
+    gsettings set yad.sourceview theme catppuccin_mocha
+    gsettings set yad.settings terminal 'kgx -e "%s"'
 }
 
 setup_gtk() {
