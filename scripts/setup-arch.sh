@@ -60,7 +60,7 @@ improve_font() {
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
     curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf ${baseRepoUrl}home/.config/fontconfig/conf.d/20-no-embedded.conf
-    curl -o .Xresources ${baseRepoUrl}home/.Xresources
+    curl -o ~/.Xresources ${baseRepoUrl}home/.Xresources
     sudo pacman -S --noconfirm --needed xorg-xrdb
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
