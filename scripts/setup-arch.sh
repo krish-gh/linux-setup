@@ -37,8 +37,7 @@ setup_vm() {
     if [ ${hyperv} -eq 1 ]; then
         echo -e "Configuring Hyper-V stuffs..."
         sudo pacman -S --noconfirm --needed hyperv
-        sudo systemctl enable --now hv_fcopy_daemon.service hv_kvp_daemon.service hv_vss_daemon.service
-
+        sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
     fi
 
     sudo pacman -S --noconfirm --needed vulkan-mesa-layers vulkan-swrast
