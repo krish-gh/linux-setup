@@ -138,8 +138,7 @@ setup_gtk() {
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
     curl -o ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
-    curl -o ~/.local/share/gtksourceview-4/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
-    curl -o ~/.local/share/gtksourceview-5/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    for i in ~/.local/share/gtksourceview-{4,5}/styles; do cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml $i; done 
 
     echo -e "Setting up QT apps to look like GTK.."
     mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
