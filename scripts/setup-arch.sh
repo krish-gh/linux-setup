@@ -257,6 +257,8 @@ setup_apps() {
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
+    curl -o ~/.local/share/keyrings/Default_keyring.keyring ${baseRepoUrl}home/.local/share/keyrings/Default_keyring.keyring
+    curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
 }
 
 sudo pacman -Syu
