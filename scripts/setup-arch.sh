@@ -154,7 +154,7 @@ setup_gtk() {
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
     sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-tweaks gnome-shell-extensions python-pipx
+    sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions python-pipx
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
@@ -186,7 +186,9 @@ setup_gnome() {
     # organize in app folder
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'vim.desktop', 'yad-settings.desktop']"
-    gsettings set org.gnome.desktop.app-folders folder-children "['Utilities','zzz']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ name 'Stuffs'
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ apps "['org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.Meld.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'org.gnome.SystemMonitor.desktop', 'vlc.desktop']"
+    gsettings set org.gnome.desktop.app-folders folder-children "['stuffs','Utilities','zzz']"
 
     
     # console
