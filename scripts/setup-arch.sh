@@ -79,7 +79,7 @@ improve_font() {
     fc-cache -fv
 }
 
-configure_bash() {
+configure_terminal() {
     echo -e "Configuring bash..."
     sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd starship
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
@@ -214,14 +214,12 @@ setup_gnome() {
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'vim.desktop', 'yad-settings.desktop']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ name 'Stuffs'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ apps "['org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.Meld.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'org.gnome.SystemMonitor.desktop', 'vlc.desktop']"
-    gsettings set org.gnome.desktop.app-folders folder-children "['stuffs','Utilities','zzz']"
-
-    read -p suspect...
+    gsettings set org.gnome.desktop.app-folders folder-children "['stuffs','Utilities','zzz']" # gnome console
+    
     # console
     gsettings set org.gnome.Console audible-bell false
     gsettings set org.gnome.Console custom-font 'JetBrainsMono Nerd Font 12'
-    gsettings set org.gnome.Console use-system-font false
-    read -p suspect...
+    gsettings set org.gnome.Console use-system-font false   
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
@@ -295,6 +293,7 @@ sudo pacman -S --noconfirm --needed curl
 tweak_system
 setup_vm
 improve_font
+configure_terminal
 setup_gtk
 
 if [ ${gnome} -eq 1 ]; then
@@ -305,7 +304,6 @@ setup_apps
 
 mkdir -p ~/.config/environment.d
 curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
-configure_bash
 
 if [ ${chaoticaur} -eq 1 ]; then
     pacman_configure_chaotic_aur
