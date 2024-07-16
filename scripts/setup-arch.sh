@@ -61,7 +61,7 @@ tweak_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
+    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
@@ -81,7 +81,8 @@ improve_font() {
 
 configure_terminal() {
     echo -e "Configuring bash..."
-    sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd starship
+    sudo pacman -S --noconfirm --needed starship
+    starship preset no-nerd-font -o ~/.config/starship.toml
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
@@ -90,7 +91,6 @@ configure_terminal() {
     if [ "${bashrcAppend}" -ne 0 ]; then
         curl ${baseRepoUrl}home/.bashrc >>~/.bashrc
     fi
-    starship preset no-nerd-font -o ~/.config/starship.toml
     #source ~/.bashrc
 }
 
