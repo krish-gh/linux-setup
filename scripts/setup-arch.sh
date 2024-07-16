@@ -266,8 +266,8 @@ setup_apps() {
 }
 
 sudo pacman -Syu
-setup_vm
 tweak_system
+setup_vm
 
 improve_font
 
