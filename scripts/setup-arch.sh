@@ -259,6 +259,8 @@ setup_apps() {
     mkdir -p ~/.local/share/keyrings/
     curl -o ~/.local/share/keyrings/Default_keyring.keyring ${baseRepoUrl}home/.local/share/keyrings/Default_keyring.keyring
     curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
+    chmod og= ~/.local/share/keyrings/
+    chmod og= ~/.local/share/keyrings/Default_keyring.keyring
 }
 
 sudo pacman -Syu
