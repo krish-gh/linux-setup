@@ -118,7 +118,17 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more stuffs..."
-    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple pamac-flatpak
+    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple     
+
+    pamacvar='aur' 
+    hasflatpak="$(
+        command -v flatpak >/dev/null 2>&1
+        echo $?
+    )"
+    if [ "${hasflatpak}" -eq 0 ]; then
+        pamacvar='flatpak'
+    fi
+    sudo pacman -S --noconfirm --needed pamac-${pamacvar}
     
     if [ ${gnome} -eq 1 ]; then
         sudo pacman -S --noconfirm --needed extension-manager
