@@ -254,6 +254,9 @@ setup_apps() {
     for i in chromium chrome code electron; 
         do curl -o ~/.config/${i}-flags.conf ${baseRepoUrl}home/.config/${i}-flags.conf; 
     done
+
+    echo -e "Setting up keyring..."
+    mkdir -p ~/.local/share/keyrings/
 }
 
 sudo pacman -Syu
