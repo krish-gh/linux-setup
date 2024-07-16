@@ -51,6 +51,12 @@ tweak_system() {
     curl -o 00-journal-size.conf ${baseRepoUrl}system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -i 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
+
+    echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
+    sudo sed -i "/^#Color/c\Color\nILoveCandy
+        /^#VerbosePkgLists/c\VerbosePkgLists
+        /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
+    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 }
 
 improve_font() {
@@ -112,12 +118,22 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more stuffs..."
-    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple
+    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple pamac-flatpak
+    
+    if [ ${gnome} -eq 1 ]; then
+        sudo pacman -S --noconfirm --needed extension-manager
+    fi
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
     gsettings set yad.sourceview theme catppuccin_mocha
     gsettings set yad.settings terminal 'kgx -e "%s"'
+
+    # Configure pamac
+    sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
+        /NoUpdateHideIcon/s/^#//g
+        /KeepNumPackages/c\KeepNumPackages = 1
+        /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
 }
 
 setup_gtk() {
@@ -211,11 +227,6 @@ setup_gnome() {
     gsettings set org.gnome.nautilus.preferences show-delete-permanently true
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
-    
-    if [ ${chaoticaur} -eq 1 ]; then
-        sudo pacman -S --noconfirm --needed extension-manager
-    fi
-
     echo -e "Installing some extensions..."
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
@@ -240,7 +251,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed meld firefox seahorse neofetch fastfetch screenfetch vlc
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox seahorse neofetch fastfetch screenfetch vlc
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
@@ -266,32 +277,27 @@ setup_apps() {
 }
 
 sudo pacman -Syu
-tweak_system
-setup_vm
-
-improve_font
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli curl alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils 
+sudo pacman -S --noconfirm --needed curl 
 
-if [ ${chaoticaur} -eq 1 ]; then
-    pacman_configure_chaotic_aur
-fi
-
-echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
-sudo sed -i "/^#Color/c\Color\nILoveCandy
-    /^#VerbosePkgLists/c\VerbosePkgLists
-    /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
-sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
-
-configure_bash
+tweak_system
+setup_vm
+improve_font
 setup_gtk
-
-mkdir -p ~/.config/environment.d
-curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
 
 if [ ${gnome} -eq 1 ]; then
     setup_gnome
+fi
+
+setup_apps
+
+mkdir -p ~/.config/environment.d
+curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
+configure_bash
+
+if [ ${chaoticaur} -eq 1 ]; then
+    pacman_configure_chaotic_aur
 fi
 
 sudoAppend="$(
@@ -303,6 +309,5 @@ if [ "${sudoAppend}" -ne 0 ]; then
     echo -e Defaults:$(whoami)      \!authenticate | sudo tee -a /etc/sudoers
 fi
 
-setup_apps
-
+echo -e ""
 echo -e "Done...Reboot..."
