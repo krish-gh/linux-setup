@@ -153,7 +153,7 @@ setup_gtk() {
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
-    sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-contacts gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
+    sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-clocks gnome-connections gnome-disk-utility baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
     sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-tweaks gnome-shell-extensions python-pipx
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
