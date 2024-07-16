@@ -47,9 +47,9 @@ tweak_system() {
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
     curl -o 99-sysctl.conf ${baseRepoUrl}system/etc/sysctl.d/99-sysctl.conf
-    sudo mv -f 99-sysctl.conf /etc/sysctl.d/
+    sudo mv -i 99-sysctl.conf /etc/sysctl.d/
     curl -o 00-journal-size.conf ${baseRepoUrl}system/etc/systemd/journald.conf.d/00-journal-size.conf
-    sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/
+    sudo mv -i 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 }
 
