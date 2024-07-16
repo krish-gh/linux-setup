@@ -218,12 +218,12 @@ setup_gnome() {
     
     # console
     gsettings set org.gnome.Console audible-bell false
-    gsettings set org.gnome.Console custom-font 'JetBrainsMono Nerd Font 12'
+    gsettings set org.gnome.Console custom-font 'JetBrainsMono Nerd Font Mono 12'
     gsettings set org.gnome.Console use-system-font false   
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
-    gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font 12'
+    gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font Mono 12'
     gsettings set org.gnome.TextEditor use-system-font false
     gsettings set org.gnome.TextEditor show-line-numbers true
     gsettings set org.gnome.TextEditor style-scheme catppuccin_mocha
