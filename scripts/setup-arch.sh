@@ -179,8 +179,8 @@ setup_gtk() {
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
-    sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-tour totem gnome-weather epiphany gnome-user-docs yelp
-    sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions python-pipx
+    sudo pacman -Rns --noconfirm snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal
+    sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-pipx
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
