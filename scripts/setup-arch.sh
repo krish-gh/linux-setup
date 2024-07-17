@@ -61,7 +61,7 @@ tweak_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family
+    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono-nerd
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
@@ -81,7 +81,7 @@ improve_font() {
 
 configure_terminal() {
     echo -e "Configuring bash..."
-    sudo pacman -S --noconfirm --needed ttf-jetbrains-mono-nerd starship
+    sudo pacman -S --noconfirm --needed starship
     starship preset no-nerd-font -o ~/.config/starship.toml
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
@@ -223,8 +223,8 @@ setup_gnome() {
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
-    #gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font Mono 12'
-    #gsettings set org.gnome.TextEditor use-system-font false
+    gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font Mono 12'
+    gsettings set org.gnome.TextEditor use-system-font false
     gsettings set org.gnome.TextEditor show-line-numbers true
     gsettings set org.gnome.TextEditor style-scheme catppuccin_mocha
 
