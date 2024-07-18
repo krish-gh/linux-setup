@@ -303,18 +303,14 @@ improve_font
 configure_terminal
 setup_gtk
 
-if [ ${gnome} -eq 1 ]; then
-    setup_gnome
-fi
+[ ${gnome} == 1 ] && setup_gnome
 
 setup_apps
 
 mkdir -p ~/.config/environment.d
 curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
 
-if [ ${chaoticaur} -eq 1 ]; then
-    pacman_configure_chaotic_aur
-fi
+[ ${chaoticaur} == 1 ] && pacman_configure_chaotic_aur
 
 sudoAppend="$(
     sudo grep "Defaults:$(whoami)" /etc/sudoers >/dev/null 2>&1
