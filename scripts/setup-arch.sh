@@ -326,4 +326,7 @@ if [ "${sudoAppend}" -ne 0 ]; then
 fi
 
 echo -e ""
+read -p "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
+[ $TERM_PROGRAM == kgx ] && gsettings set org.gnome.Console use-system-font false
+
 echo -e "Done...Reboot..."
