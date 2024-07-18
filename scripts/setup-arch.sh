@@ -131,7 +131,6 @@ pacman_configure_chaotic_aur() {
     sudo pacman -S --noconfirm --needed pamac-${pamacvar}
     
     if [ ${gnome} -eq 1 && "${hasflatpak}" -ne 0 ]; then
-        read -p "Install extension-manager from chaotic-aur?"
         sudo pacman -S --noconfirm --needed extension-manager
     fi
 
@@ -239,7 +238,6 @@ setup_gnome() {
 
     echo -e "Installing some extensions..."
     command -v flatpak &> /dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
-    read -p checkpoint
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com arch-update@RaphaelRochet
