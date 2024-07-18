@@ -118,7 +118,7 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more stuffs..."
-    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple  
+    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple xterm
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
@@ -267,7 +267,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox seahorse neofetch fastfetch screenfetch vlc xterm
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox seahorse neofetch fastfetch screenfetch vlc
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
