@@ -129,11 +129,6 @@ pacman_configure_chaotic_aur() {
         command -v flatpak >/dev/null 2>&1
         echo $?
     )"
-    
-    if [ ${gnome} -eq 1 && "${hasflatpak}" -ne 0 ]; then
-        echo -e "Installing gnome extension-manager from chaotic-aur"
-        sudo pacman -S --noconfirm --needed extension-manager
-    fi
 
     pamacvar='aur' 
     if [ "${hasflatpak}" -eq 0 ]; then
@@ -146,6 +141,11 @@ pacman_configure_chaotic_aur() {
         /NoUpdateHideIcon/s/^#//g
         /KeepNumPackages/c\KeepNumPackages = 1
         /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
+    
+    if [ ${gnome} -eq 1 ]; then
+        echo -e "Installing gnome extension-manager from chaotic-aur"
+        sudo pacman -S --noconfirm --needed extension-manager
+    fi
 }
 
 setup_gtk() {
@@ -243,7 +243,7 @@ setup_gnome() {
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
-    command -v flatpak &> /dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    #command -v flatpak &> /dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com arch-update@RaphaelRochet
