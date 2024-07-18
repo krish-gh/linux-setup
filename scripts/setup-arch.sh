@@ -118,26 +118,28 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more stuffs..."
-    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple     
-
-    pamacvar='aur' 
-    hasflatpak="$(
-        command -v flatpak >/dev/null 2>&1
-        echo $?
-    )"
-    if [ "${hasflatpak}" -eq 0 ]; then
-        pamacvar='flatpak'
-    fi
-    sudo pacman -S --noconfirm --needed pamac-${pamacvar}
-    
-    if [ ${gnome} -eq 1 && "${hasflatpak}" -ne 0 ]; then
-        sudo pacman -S --noconfirm --needed extension-manager
-    fi
+    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple  
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
     gsettings set yad.sourceview theme catppuccin_mocha
-    gsettings set yad.settings terminal 'kgx -e "%s"'
+    #gsettings set yad.settings terminal 'kgx -e "%s"'   
+
+    hasflatpak="$(
+        command -v flatpak >/dev/null 2>&1
+        echo $?
+    )"
+    
+    if [ ${gnome} -eq 1 && "${hasflatpak}" -ne 0 ]; then
+        echo -e "Installing gnome extension-manager from chaotic-aur"
+        sudo pacman -S --noconfirm --needed extension-manager
+    fi
+
+    pamacvar='aur' 
+    if [ "${hasflatpak}" -eq 0 ]; then
+        pamacvar='flatpak'
+    fi
+    sudo pacman -S --noconfirm --needed pamac-${pamacvar}
 
     # Configure pamac
     sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
