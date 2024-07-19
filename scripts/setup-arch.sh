@@ -61,7 +61,7 @@ tweak_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-jetbrains-mono ttf-jetbrains-mono-nerd
+    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono ttf-jetbrains-mono-nerd
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
