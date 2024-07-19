@@ -118,7 +118,7 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more stuffs..."
-    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple xterm
+    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple xterm mkinitcpio-firmware
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
