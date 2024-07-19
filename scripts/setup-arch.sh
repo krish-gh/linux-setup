@@ -281,7 +281,7 @@ setup_apps() {
     curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlc/vlcrc
 
     # misc
-    for i in chromium chrome code electron; 
+    for i in chromium chrome microsoft-edge-stable code electron; 
         do curl -o ~/.config/${i}-flags.conf ${baseRepoUrl}home/.config/${i}-flags.conf; 
     done
 
