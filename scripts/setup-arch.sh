@@ -92,6 +92,9 @@ configure_terminal() {
         curl ${baseRepoUrl}home/.bashrc >>~/.bashrc
     fi
     #source ~/.bashrc
+    echo -e "Setting up a cool terminal..."
+    sudo pacman -S --noconfirm --needed wezterm
+    curl -o ~/.wezterm.lua ${baseRepoUrl}home/.wezterm.lua
 }
 
 pacman_configure_chaotic_aur() {
