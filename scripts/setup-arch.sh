@@ -244,7 +244,7 @@ setup_gnome() {
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
-    #command -v flatpak &> /dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    [ ${chaoticaur} == 0 ] && command -v flatpak &> /dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com arch-update@RaphaelRochet
