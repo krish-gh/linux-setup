@@ -1,8 +1,8 @@
 # https://wiki.archlinux.org/title/Sudo#Passing_aliases
 alias sudo='sudo -E -H GTK_THEME=Adwaita:dark '
-alias e='systemctl --failed --no-pager && journalctl -p 3 -b'
+alias e='systemctl --failed --no-pager; journalctl -p 3 -b'
 alias cls='clear'
-alias u='sudo pacman -Syu && command -v flatpak &> /dev/null && flatpak update && command -v pipx &> /dev/null && pipx upgrade-all'
+alias u='sudo pacman -Syu; command -v flatpak &> /dev/null && flatpak update; command -v pipx &> /dev/null && pipx upgrade-all'
 alias uu='yay -Syu'
 alias i='sudo pacman -S --needed'
 alias ii='yay -S --needed'
@@ -11,7 +11,7 @@ alias ss='yay -Ss'
 alias r='sudo pacman -Rns'
 alias rr='yay -Rns'
 alias b='pacman -Qqen > pkglist.txt && echo >> pkglist.txt && pacman -Qm >> pkglist.txt && echo >> pkglist.txt'
-alias c='paccache -r && yay -Yc && yay -Sc && yay -Rns $(yay -Qtdq)'
+alias c='paccache -r; yay -Yc; yay -Sc; yay -Rns $(yay -Qtdq)'
 alias x='exit'
 alias {gte,gted}='gnome-text-editor'
 alias nf='neofetch'
@@ -21,7 +21,8 @@ alias pacdiff='DIFFPROG=meld pacdiff'
 
 alias ua-drop-caches='sudo paccache -rk1; yay -Sc --aur --noconfirm'
 alias ua-rate='sudo true; \
-       rate-mirrors --entry-country IN arch --max-delay=900 | sudo tee /etc/pacman.d/mirrorlist \
-    && rate-mirrors --entry-country IN chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist \
-    && ua-drop-caches && yay -Syyu --noconfirm'
+       rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN arch --max-delay=120 | sudo tee /etc/pacman.d/mirrorlist; \
+      [ -f /etc/pacman.d/endeavouros-mirrorlist ] && rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist; \
+      [ -f /etc/pacman.d/chaotic-mirrorlist ] && rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist; \
+      ua-drop-caches; yay -Syyu --noconfirm'
 
