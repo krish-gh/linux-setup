@@ -191,7 +191,7 @@ setup_gtk() {
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
     curl -o ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     for i in ~/.local/share/gtksourceview-{4,5}/styles; 
-        do cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml $i; 
+        do cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml "$i"; 
     done 
 
     echo -e "Setting up QT apps to look like GTK.."
@@ -260,7 +260,7 @@ setup_gnome() {
     gsettings set org.gnome.Console audible-bell false
     gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
     # Below is to avoid updating font during setup as font starts looking bad
-    [ $TERM_PROGRAM != kgx ] && gsettings set org.gnome.Console use-system-font false   
+    [ "$TERM_PROGRAM" != kgx ] && gsettings set org.gnome.Console use-system-font false   
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
@@ -312,8 +312,8 @@ setup_apps() {
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
-    for i in ${flagstocopy[@]}; 
-        do curl -o ~/.config/${i}-flags.conf ${baseRepoUrl}home/.config/${i}-flags.conf; 
+    for i in "${flagstocopy[@]}"; 
+        do curl -o ~/.config/"${i}"-flags.conf ${baseRepoUrl}home/.config/"${i}"-flags.conf; 
     done
 
     # meld
@@ -349,7 +349,7 @@ setup_apps
 [ ${chaoticaur} == 1 ] && pacman_configure_chaotic_aur
 
 echo -e ""
-read -p "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
-[ $TERM_PROGRAM == kgx ] && gsettings set org.gnome.Console use-system-font false
+read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
+[ "$TERM_PROGRAM" == kgx ] && gsettings set org.gnome.Console use-system-font false
 
 echo -e "Done...Reboot..."
