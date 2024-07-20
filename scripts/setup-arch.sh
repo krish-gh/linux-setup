@@ -271,8 +271,8 @@ setup_gnome() {
     [ ${chaoticaur} == 0 ] && command -v flatpak &> /dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
-    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com arch-update@RaphaelRochet
-    gnome-extensions enable apps-menu@gnome-shell-extensions.gcampax.github.com
+    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com arch-update@RaphaelRochet
+    ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
     # dash to dock
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock apply-custom-theme true
@@ -287,6 +287,12 @@ setup_gnome() {
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update check-cmd '/usr/bin/checkupdates'
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update update-cmd 'kgx -e '\''/bin/sh -c "sudo pacman -Syu ; echo Done - Press enter to exit; read _" '\'''
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update use-buildin-icons true
+
+    # clipboard indicator
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator cache-size 1
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator clear-on-boot true
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator enable-keybindings false
+    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator history-size 10
     
 }
 
