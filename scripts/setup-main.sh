@@ -91,8 +91,8 @@ improve_font() {
 }
 
 configure_terminal() {
-    echo -e "Configuring bash..."
-    sudo pacman -S --noconfirm --needed starship
+    echo -e "Configuring shell stuffs..."
+    sudo pacman -S --noconfirm --needed bash-completion nano-syntax-highlighting starship neofetch fastfetch
     #starship preset no-nerd-font -o ~/.config/starship.toml
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
@@ -102,10 +102,20 @@ configure_terminal() {
     if [ "${bashrcAppend}" -ne 0 ]; then
         curl ${baseRepoUrl}home/.bashrc >>~/.bashrc
     fi
-    #source ~/.bashrc
+
+    # env var
+    mkdir -p ~/.config/environment.d
+    curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
+
+    # nano
+    mkdir -p ~/.config/nano
+    curl -o ~/.config/nano/nanorc ${baseRepoUrl}home/.config/nano/nanorc
+
     echo -e "Setting up a cool terminal..."
     sudo pacman -S --noconfirm --needed wezterm
     curl -o ~/.wezterm.lua ${baseRepoUrl}home/.wezterm.lua
+    
+    #source ~/.bashrc
 }
 
 pacman_configure_chaotic_aur() {
@@ -298,21 +308,13 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano-syntax-highlighting git bash-completion github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse neofetch fastfetch vlc
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel git github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse vlc
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
     for i in ${flagstocopy[@]}; 
         do curl -o ~/.config/${i}-flags.conf ${baseRepoUrl}home/.config/${i}-flags.conf; 
     done
-
-    # env var
-    mkdir -p ~/.config/environment.d
-    curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
-
-    # nano
-    mkdir -p ~/.config/nano
-    curl -o ~/.config/nano/nanorc ${baseRepoUrl}home/.config/nano/nanorc
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
