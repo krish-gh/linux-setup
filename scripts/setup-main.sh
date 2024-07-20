@@ -60,7 +60,7 @@ tweak_system() {
 
     echo -e "Updating some sudo stuffs..."
     sudo mkdir -p /etc/sudoers.d
-    echo -e "Defaults:$(whoami)      \!authenticate" | sudo tee /etc/sudoers.d/99-custom
+    echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
 }
 
 improve_font() {
