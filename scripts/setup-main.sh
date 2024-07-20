@@ -65,7 +65,7 @@ tweak_system() {
     )"
     if [ "${sudoAppend}" -ne 0 ]; then
         echo -e | sudo tee -a /etc/sudoers
-        echo -e Defaults:$(whoami)      \!authenticate | sudo tee -a /etc/sudoers
+        echo -e "Defaults:$(whoami)      \!authenticate" | sudo tee -a /etc/sudoers
     fi
 }
 
@@ -210,7 +210,7 @@ setup_gnome() {
 
     pkgtoremove=(snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal)
     #doing removing in loop to avoid abort in case something is not installed
-    for i in ${pkgtoremove[@]}; do sudo pacman -Rns --noconfirm $i; done
+    for i in "${pkgtoremove[@]}"; do sudo pacman -Rns --noconfirm "$i"; done
     
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
