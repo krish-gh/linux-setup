@@ -188,7 +188,7 @@ setup_gnome() {
     
     sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-nautilus python-pipx
 
-    pkgtoremove=(snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal)
+    pkgtoremove=(snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal)
     #doing removing in loop to avoid abort in case something is not installed
     for i in ${pkgtoremove[@]}; do sudo pacman -Rns --noconfirm $i; done
     
