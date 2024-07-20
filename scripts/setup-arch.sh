@@ -218,7 +218,7 @@ setup_gnome() {
     gsettings set org.gnome.shell.weather automatic-location true
     gsettings set org.gnome.tweaks show-extensions-notice false
 
-    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Console.desktop', 'firefox.desktop']"
+    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.wezfurlong.wezterm.desktop', 'firefox.desktop']"
     # organize in app folder
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'uxterm.desktop', 'vim.desktop', 'xterm.desktop', 'yad-settings.desktop']"
