@@ -59,14 +59,8 @@ tweak_system() {
     sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 
     echo -e "Updating some sudo stuffs..."
-    sudoAppend="$(
-        sudo grep "Defaults:$(whoami)" /etc/sudoers >/dev/null 2>&1
-        echo $?
-    )"
-    if [ "${sudoAppend}" -ne 0 ]; then
-        echo -e | sudo tee -a /etc/sudoers
-        echo -e "Defaults:$(whoami)      \!authenticate" | sudo tee -a /etc/sudoers
-    fi
+    sudo mkdir -p /etc/sudoers.d
+    echo -e "Defaults:$(whoami)      \!authenticate" | sudo tee /etc/sudoers.d/99-custom
 }
 
 improve_font() {
