@@ -57,6 +57,16 @@ tweak_system() {
         /^#VerbosePkgLists/c\VerbosePkgLists
         /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
     sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+
+    echo -e "Updating some sudo stuffs..."
+    sudoAppend="$(
+        sudo grep "Defaults:$(whoami)" /etc/sudoers >/dev/null 2>&1
+        echo $?
+    )"
+    if [ "${sudoAppend}" -ne 0 ]; then
+        echo -e | sudo tee -a /etc/sudoers
+        echo -e Defaults:$(whoami)      \!authenticate | sudo tee -a /etc/sudoers
+    fi
 }
 
 improve_font() {
@@ -304,6 +314,9 @@ setup_apps() {
     curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
     chmod og= ~/.local/share/keyrings/
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
+
+    mkdir -p ~/.config/environment.d
+    curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
 }
 
 sudo pacman -Syu
@@ -316,24 +329,9 @@ setup_vm
 improve_font
 configure_terminal
 setup_gtk
-
 [ ${gnome} == 1 ] && setup_gnome
-
 setup_apps
-
-mkdir -p ~/.config/environment.d
-curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
-
 [ ${chaoticaur} == 1 ] && pacman_configure_chaotic_aur
-
-sudoAppend="$(
-    sudo grep "Defaults:$(whoami)" /etc/sudoers >/dev/null 2>&1
-    echo $?
-)"
-if [ "${sudoAppend}" -ne 0 ]; then
-    echo -e | sudo tee -a /etc/sudoers
-    echo -e Defaults:$(whoami)      \!authenticate | sudo tee -a /etc/sudoers
-fi
 
 echo -e ""
 read -p "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
