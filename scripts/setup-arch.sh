@@ -61,7 +61,7 @@ tweak_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono ttf-jetbrains-mono-nerd
+    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
@@ -83,7 +83,7 @@ improve_font() {
 configure_terminal() {
     echo -e "Configuring bash..."
     sudo pacman -S --noconfirm --needed starship
-    starship preset no-nerd-font -o ~/.config/starship.toml
+    #starship preset no-nerd-font -o ~/.config/starship.toml
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
@@ -228,13 +228,13 @@ setup_gnome() {
     
     # console
     gsettings set org.gnome.Console audible-bell false
-    gsettings set org.gnome.Console custom-font 'JetBrainsMono Nerd Font Mono 12'
+    gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
     # Below is to avoid updating font during setup as font starts looking bad
     [ $TERM_PROGRAM != kgx ] && gsettings set org.gnome.Console use-system-font false   
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
-    gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font Mono 12'
+    gsettings set org.gnome.TextEditor custom-font 'JetBrains Mono 12'
     gsettings set org.gnome.TextEditor use-system-font false
     gsettings set org.gnome.TextEditor show-line-numbers true
     gsettings set org.gnome.TextEditor style-scheme catppuccin_mocha
