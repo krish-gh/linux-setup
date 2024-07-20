@@ -227,9 +227,9 @@ setup_gnome() {
     gsettings set org.gnome.desktop.app-folders folder-children "['stuffs','Utilities','zzz']"
 
     # GDM
-    sudo mkdir -p /etc/dconf/db/gdm.d
-    curl -o 95-gdm-settings ${baseRepoUrl}system/etc/dconf/db/gdm.d/95-gdm-settings
-    sudo mv -i 95-gdm-settings /etc/dconf/db/gdm.d/
+    #sudo mkdir -p /etc/dconf/db/gdm.d
+    #curl -o 95-gdm-settings ${baseRepoUrl}system/etc/dconf/db/gdm.d/95-gdm-settings
+    #sudo mv -i 95-gdm-settings /etc/dconf/db/gdm.d/
 
     
     # console
