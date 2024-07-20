@@ -221,8 +221,10 @@ setup_gnome() {
     gsettings set org.gnome.desktop.thumbnailers disable-all true
     gsettings set org.gnome.desktop.peripherals.mouse speed 1
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
-    gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/gnome/vnc-l.png'
-    gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/gnome/vnc-d.png'
+    gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/archlinux/gritty.png'
+    gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/archlinux/gritty.png'
+    gsettings set org.gnome.desktop.background primary-color '#000000000000'
+    gsettings set org.gnome.desktop.background secondary-color '#000000000000'
     gsettings set org.gnome.software screenshot-cache-age-maximum 60
     gsettings set org.gnome.gnome-system-monitor show-dependencies true
     gsettings set org.gnome.shell.weather automatic-location true
@@ -290,7 +292,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox seahorse neofetch fastfetch screenfetch vlc
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano git github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox seahorse neofetch fastfetch screenfetch vlc
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
