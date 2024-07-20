@@ -298,7 +298,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano nano-syntax-highlighting git bash-completion github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse neofetch fastfetch vlc
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano-syntax-highlighting git bash-completion github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse neofetch fastfetch vlc
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
