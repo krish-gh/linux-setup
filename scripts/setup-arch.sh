@@ -300,6 +300,20 @@ setup_apps() {
     echo -e "Installing some apps..."
     sudo pacman -S --noconfirm --needed pacman-contrib base-devel nano-syntax-highlighting git bash-completion github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse neofetch fastfetch vlc
 
+    # misc
+    flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
+    for i in ${flagstocopy[@]}; 
+        do curl -o ~/.config/${i}-flags.conf ${baseRepoUrl}home/.config/${i}-flags.conf; 
+    done
+
+    # env var
+    mkdir -p ~/.config/environment.d
+    curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
+
+    # nano
+    mkdir -p ~/.config/nano
+    curl -o ~/.config/nano/nanorc ${baseRepoUrl}home/.config/nano/nanorc
+
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
     gsettings set org.gnome.meld show-line-numbers true
@@ -310,21 +324,12 @@ setup_apps() {
     mkdir -p ~/.config/vlc
     curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlc/vlcrc
 
-    # misc
-    flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
-    for i in ${flagstocopy[@]}; 
-        do curl -o ~/.config/${i}-flags.conf ${baseRepoUrl}home/.config/${i}-flags.conf; 
-    done
-
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
     curl -o ~/.local/share/keyrings/Default_keyring.keyring ${baseRepoUrl}home/.local/share/keyrings/Default_keyring.keyring
     curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
     chmod og= ~/.local/share/keyrings/
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
-
-    mkdir -p ~/.config/environment.d
-    curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
 }
 
 sudo pacman -Syu
