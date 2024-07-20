@@ -1,3 +1,4 @@
+#!/bin/sh
 alias sudo='sudo -E -H GTK_THEME=Adwaita:dark '
 alias e='systemctl --failed --no-pager && journalctl -p 3 -b'
 alias cls='clear'
