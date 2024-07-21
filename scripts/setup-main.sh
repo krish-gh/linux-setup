@@ -190,8 +190,12 @@ pacman_configure_chaotic_aur() {
         /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
 
     if [ ${gnome} -eq 1 ]; then
-        echo -e "Installing gnome extension-manager from chaotic-aur"
+        echo -e "Installing gnome stuffs from chaotic-aur"
         sudo pacman -S --noconfirm --needed extension-manager
+        if [ $TERMINAL_TO_INSTALL != none ]; then
+            sudo pacman -S --noconfirm --needed nautilus-open-any-terminal
+            gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
+        fi
     fi
 }
 
