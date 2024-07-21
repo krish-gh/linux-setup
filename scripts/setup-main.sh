@@ -113,10 +113,10 @@ configure_terminal() {
     #curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
 
     # kitty
-    #sudo pacman -S --noconfirm --needed kitty
-    #mkdir -p ~/.config/kitty
-    #curl -o ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
-    #curl -o ~/.config/kitty/kitty.conf ${baseRepoUrl}home/.config/kitty/kitty.conf
+    sudo pacman -S --noconfirm --needed kitty
+    mkdir -p ~/.config/kitty
+    curl -o ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
+    curl -o ~/.config/kitty/kitty.conf ${baseRepoUrl}home/.config/kitty/kitty.conf
     
     # wezterm
     #sudo pacman -S --noconfirm --needed wezterm
