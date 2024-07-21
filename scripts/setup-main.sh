@@ -16,7 +16,11 @@ unset isArch
 SYSTEM_TO_SETUP=vmware
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
+INSTALL_CMD="sudo pacman -S --noconfirm --needed"
+UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
+
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
+FONTS_TO_INSTALL="noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono"
 APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc"
 PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt5-wayland qt5ct qt6ct"
@@ -28,26 +32,38 @@ chaoticaur=1
 
 TERMINAL_TO_INSTALL=kitty
 
+install() {
+    # shellcheck disable=SC2086
+    $INSTALL_CMD $1
+}
+
+uninstall() {
+    #doing removing in loop to avoid abort in case something is not installed
+    # shellcheck disable=SC2206
+    removearr=($1)
+    for i in "${removearr[@]}"; do $UNINSTALL_CMD "$i"; done    
+}
+
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
     case $SYSTEM_TO_SETUP in
 
     intel)
-        sudo pacman -S --noconfirm --needed intel-media-driver vulkan-intel
+        install "intel-media-driver vulkan-intel"
         ;;
 
     vmware)
-        sudo pacman -S --noconfirm --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
+        install "xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools"
         sudo systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service
         ;;
 
     vbox)
-        sudo pacman -S --noconfirm --needed virtualbox-guest-utils
+        install "virtualbox-guest-utils"
         sudo systemctl enable --now vboxservice.service
         ;;
 
     hyperv)
-        sudo pacman -S --noconfirm --needed hyperv
+        install "hyperv"
         sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
         ;;
 
@@ -56,8 +72,7 @@ setup_system() {
         ;;
     esac
 
-    # shellcheck disable=SC2086
-    sudo pacman -S --noconfirm --needed $SYSTEM_PACKAGES_TO_INSTALL
+    install "$SYSTEM_PACKAGES_TO_INSTALL"
 }
 
 tweak_system() {
@@ -82,13 +97,13 @@ tweak_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    sudo pacman -S --noconfirm --needed noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono
+    install "$FONTS_TO_INSTALL"
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     curl -o ~/.config/fontconfig/fonts.conf ${baseRepoUrl}home/.config/fontconfig/fonts.conf
     curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf ${baseRepoUrl}home/.config/fontconfig/conf.d/20-no-embedded.conf
     curl -o ~/.Xresources ${baseRepoUrl}home/.Xresources
-    sudo pacman -S --noconfirm --needed xorg-xrdb
+    install "xorg-xrdb"
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
@@ -103,7 +118,7 @@ improve_font() {
 
 configure_terminal() {
     echo -e "Configuring shell stuffs..."
-    sudo pacman -S --noconfirm --needed diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch
+    install "diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch"
     #starship preset no-nerd-font -o ~/.config/starship.toml
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
@@ -126,21 +141,21 @@ configure_terminal() {
     case $TERMINAL_TO_INSTALL in
 
     alacritty)
-        sudo pacman -S --noconfirm --needed alacritty
+        install $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/alacritty
         curl -o ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
         curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
         ;;
 
     kitty)
-        sudo pacman -S --noconfirm --needed kitty
+        install $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/kitty
         curl -o ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
         curl -o ~/.config/kitty/kitty.conf ${baseRepoUrl}home/.config/kitty/kitty.conf
         ;;
 
     wezterm)
-        sudo pacman -S --noconfirm --needed wezterm
+        install $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/wezterm
         curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
         ;;
@@ -177,7 +192,7 @@ pacman_configure_chaotic_aur() {
     sudo pacman -Fy
 
     echo -e "Installing some more stuffs..."
-    sudo pacman -S --noconfirm --needed yay rate-mirrors reflector-simple xterm mkinitcpio-firmware
+    install "yay rate-mirrors reflector-simple xterm mkinitcpio-firmware"
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
@@ -193,7 +208,7 @@ pacman_configure_chaotic_aur() {
     if [ "${hasflatpak}" -eq 0 ]; then
         pamacvar='flatpak'
     fi
-    sudo pacman -S --noconfirm --needed pamac-${pamacvar}
+    install "pamac-${pamacvar}"
 
     # Configure pamac
     sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
@@ -203,17 +218,16 @@ pacman_configure_chaotic_aur() {
 
     if [ ${gnome} -eq 1 ]; then
         echo -e "Installing some gnome stuffs from chaotic-aur"
-        sudo pacman -S --noconfirm --needed extension-manager
+        install "extension-manager"
         if [ $TERMINAL_TO_INSTALL != none ]; then
-            sudo pacman -S --noconfirm --needed nautilus-open-any-terminal
+            install "nautilus-open-any-terminal"
             gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
         fi
     fi
 }
 
 setup_gtk() {
-    # shellcheck disable=SC2086
-    sudo pacman -S --noconfirm --needed $GTK_PACKAGES_TO_INSTALL
+    install "$GTK_PACKAGES_TO_INSTALL"
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
@@ -245,9 +259,7 @@ setup_gtk() {
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
-
-    # shellcheck disable=SC2086
-    sudo pacman -S --noconfirm --needed $GNOME_PACKAGES_TO_INSTALL
+    install "$GNOME_PACKAGES_TO_INSTALL"
 
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
@@ -344,8 +356,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    # shellcheck disable=SC2086
-    sudo pacman -S --noconfirm --needed $APP_PACKAGES_TO_INSTALL
+    install "$APP_PACKAGES_TO_INSTALL"
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
@@ -371,16 +382,13 @@ setup_apps() {
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
 
     echo -e "Removing not needed apps..."
-    #doing removing in loop to avoid abort in case something is not installed
-    # shellcheck disable=SC2206
-    removearr=($PACKAGES_TO_REMOVE)
-    for i in "${removearr[@]}"; do sudo pacman -Rns --noconfirm "$i"; done
+    uninstall "$PACKAGES_TO_REMOVE"
 }
 
 sudo pacman -Syu
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -S --noconfirm --needed curl
+install "curl"
 
 tweak_system
 setup_system
