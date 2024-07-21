@@ -106,8 +106,14 @@ configure_terminal() {
     curl -o ~/.config/nano/nanorc ${baseRepoUrl}home/.config/nano/nanorc
 
     echo -e "Setting up a cool terminal..."
-    sudo pacman -S --noconfirm --needed wezterm
-    curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
+    sudo pacman -S --noconfirm --needed alacritty
+    mkdir -p ~/.config/alacritty
+    curl -o ~/.config/alacritty/catppuccin_mocha.toml https://raw.githubusercontent.com/alacritty/alacritty-theme/master/themes/catppuccin_mocha.toml
+    curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
+    
+    #sudo pacman -S --noconfirm --needed wezterm
+    #mkdir -p ~/.config/wezterm
+    #curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
     
     #source ~/.bashrc
 }
@@ -234,7 +240,7 @@ setup_gnome() {
     gsettings set org.gnome.shell.weather automatic-location true
     gsettings set org.gnome.tweaks show-extensions-notice false
 
-    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.wezfurlong.wezterm.desktop', 'firefox.desktop']"
+    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'Alacritty.desktop', 'org.wezfurlong.wezterm.desktop', 'firefox.desktop']"
     # organize in app folder
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'stoken-gui.desktop', 'stoken-gui-small.desktop', 'uxterm.desktop', 'vim.desktop', 'xterm.desktop', 'yad-settings.desktop']"
