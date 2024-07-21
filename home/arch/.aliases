@@ -18,6 +18,7 @@ alias {gte,gted}='gnome-text-editor'
 alias nf='neofetch'
 alias ff='fastfetch'
 #alias sf='screenfetch'
+alias vim='nvim'
 
 alias ua-drop-caches='sudo paccache -rk1; yay -Sc --aur --noconfirm'
 alias ua-rate='sudo true; \

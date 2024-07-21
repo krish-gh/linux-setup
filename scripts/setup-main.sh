@@ -15,18 +15,19 @@ unset isArch
 
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
+PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
+
 gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-nautilus python-pipx"
-GNOME_PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal"
 
 chaoticaur=1
 
-VM_TO_SETUP=vmware
+SYSTEM_TO_SETUP=vmware
 TERMINAL_TO_INSTALL=kitty
 
-setup_vm() {
-    echo -e "Setting up $VM_TO_SETUP..."
-    case $VM_TO_SETUP in
+setup_system() {
+    echo -e "Setting up $SYSTEM_TO_SETUP..."
+    case $SYSTEM_TO_SETUP in
 
     vmware)
         sudo pacman -S --noconfirm --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
@@ -48,7 +49,7 @@ setup_vm() {
         ;;
     esac
 
-    sudo pacman -S --noconfirm --needed vulkan-mesa-layers vulkan-swrast
+    sudo pacman -S --noconfirm --needed vulkan-mesa-layers vulkan-swrast alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils
 }
 
 tweak_system() {
@@ -239,11 +240,6 @@ setup_gnome() {
     # shellcheck disable=SC2086
     sudo pacman -S --noconfirm --needed $GNOME_PACKAGES_TO_INSTALL
 
-    #doing removing in loop to avoid abort in case something is not installed
-    # shellcheck disable=SC2206
-    removearr=($GNOME_PACKAGES_TO_REMOVE)
-    for i in "${removearr[@]}"; do sudo pacman -Rns --noconfirm "$i"; done
-
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
     gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
@@ -339,7 +335,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel git github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse vlc
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel git github-cli archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
@@ -363,6 +359,12 @@ setup_apps() {
     curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
     chmod og= ~/.local/share/keyrings/
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
+
+    echo -e "Removing not needed apps..."
+    #doing removing in loop to avoid abort in case something is not installed
+    # shellcheck disable=SC2206
+    removearr=($PACKAGES_TO_REMOVE)
+    for i in "${removearr[@]}"; do sudo pacman -Rns --noconfirm "$i"; done
 }
 
 sudo pacman -Syu
@@ -371,7 +373,7 @@ echo -e "Installing some needed stuffs..."
 sudo pacman -S --noconfirm --needed curl
 
 tweak_system
-setup_vm
+setup_system
 improve_font
 configure_terminal
 setup_gtk
