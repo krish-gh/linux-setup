@@ -15,32 +15,35 @@ unset isArch
 
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
-vmware=1
-vbox=0
-hyperv=0
 gnome=1
 chaoticaur=1
 
+VM_TO_SETUP=vmware
 TERMINAL_TO_INSTALL=none
 
 setup_vm() {
-    if [ ${vmware} -eq 1 ]; then
-        echo -e "Configuring VMware stuffs..."
+    echo -e "Setting up $VM_TO_SETUP..."
+    case $VM_TO_SETUP in
+
+    vmware)
         sudo pacman -S --noconfirm --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
         sudo systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service
-    fi
+        ;;
 
-    if [ ${vbox} -eq 1 ]; then
-        echo -e "Configuring VirtualBox stuffs..."
+    vbox)
         sudo pacman -S --noconfirm --needed virtualbox-guest-utils
         sudo systemctl enable --now vboxservice.service
-    fi
+        ;;
 
-    if [ ${hyperv} -eq 1 ]; then
-        echo -e "Configuring Hyper-V stuffs..."
+    hyperv)
         sudo pacman -S --noconfirm --needed hyperv
         sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
-    fi
+        ;;
+
+    *)
+        echo -e "No VM platform selected..."
+        ;;
+    esac
 
     sudo pacman -S --noconfirm --needed vulkan-mesa-layers vulkan-swrast
 }
