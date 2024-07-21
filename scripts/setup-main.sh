@@ -21,6 +21,7 @@ INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 HAS_FLATPAK=$(command -v flatpak &>/dev/null && echo 1 || echo 0)
 
+REQUIREMENTS="curl"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
 FONTS_TO_INSTALL="noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch"
@@ -389,7 +390,7 @@ setup_apps() {
 refresh_package_sources
 
 echo -e "Installing some needed stuffs..."
-install "curl"
+install "$REQUIREMENTS"
 
 tweak_system
 setup_system
