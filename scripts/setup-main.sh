@@ -106,11 +106,19 @@ configure_terminal() {
     curl -o ~/.config/nano/nanorc ${baseRepoUrl}home/.config/nano/nanorc
 
     echo -e "Setting up a cool terminal..."
+    # alacritty
     #sudo pacman -S --noconfirm --needed alacritty
     #mkdir -p ~/.config/alacritty
     #curl -o ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
     #curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
+
+    # kitty
+    #sudo pacman -S --noconfirm --needed kitty
+    #mkdir -p ~/.config/kitty
+    #curl -o ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
+    #curl -o ~/.config/kitty/kitty.conf ${baseRepoUrl}home/.config/kitty/kitty.conf
     
+    # wezterm
     #sudo pacman -S --noconfirm --needed wezterm
     #mkdir -p ~/.config/wezterm
     #curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
@@ -240,7 +248,7 @@ setup_gnome() {
     gsettings set org.gnome.shell.weather automatic-location true
     gsettings set org.gnome.tweaks show-extensions-notice false
 
-    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'Alacritty.desktop', 'org.wezfurlong.wezterm.desktop', 'firefox.desktop']"
+    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'Alacritty.desktop', 'kitty.desktop', 'org.wezfurlong.wezterm.desktop', 'firefox.desktop']"
     # organize in app folder
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'stoken-gui.desktop', 'stoken-gui-small.desktop', 'uxterm.desktop', 'vim.desktop', 'xterm.desktop', 'yad-settings.desktop']"
@@ -308,7 +316,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel git github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse vlc
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel diffutils git github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse vlc
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
