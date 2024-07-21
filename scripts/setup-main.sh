@@ -242,7 +242,7 @@ setup_gnome() {
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/eos/ apps "['eos-apps-info.desktop', 'eos-log-tool.desktop', 'eos-quickstart.desktop', 'eos-update.desktop', 'welcome.desktop']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ name 'Stuffs'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ apps "['org.manjaro.pamac.manager.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.Meld.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'org.gnome.SystemMonitor.desktop', 'vlc.desktop']"
-    gsettings set org.gnome.desktop.app-folders folder-children "['stuffs','Utilities','zzz']"
+    gsettings set org.gnome.desktop.app-folders folder-children "['eos','stuffs','Utilities','zzz']"
 
     # GDM
     #sudo mkdir -p /etc/dconf/db/gdm.d
