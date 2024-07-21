@@ -251,7 +251,7 @@ setup_gnome() {
     gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'Alacritty.desktop', 'kitty.desktop', 'org.wezfurlong.wezterm.desktop', 'firefox.desktop']"
     # organize in app folder
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'stoken-gui.desktop', 'stoken-gui-small.desktop', 'uxterm.desktop', 'vim.desktop', 'xterm.desktop', 'yad-settings.desktop']"
+    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'nvim.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'stoken-gui.desktop', 'stoken-gui-small.desktop', 'uxterm.desktop', 'vim.desktop', 'xterm.desktop', 'yad-settings.desktop']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/eos/ name 'eos'
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/eos/ apps "['eos-apps-info.desktop', 'eos-log-tool.desktop', 'eos-quickstart.desktop', 'eos-update.desktop', 'welcome.desktop']"
     gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ name 'Stuffs'
