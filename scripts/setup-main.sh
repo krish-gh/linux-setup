@@ -13,17 +13,18 @@ fi
 
 unset isArch
 
+SYSTEM_TO_SETUP=vmware
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
 APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc"
 PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
+GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt5-wayland qt5ct qt6ct"
 
 gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-nautilus python-pipx"
 
 chaoticaur=1
 
-SYSTEM_TO_SETUP=vmware
 TERMINAL_TO_INSTALL=kitty
 
 setup_system() {
@@ -205,7 +206,8 @@ pacman_configure_chaotic_aur() {
 }
 
 setup_gtk() {
-    sudo pacman -S --noconfirm --needed kvantum-qt5 qt5-wayland qt5ct qt6ct
+    # shellcheck disable=SC2086
+    sudo pacman -S --noconfirm --needed $GTK_PACKAGES_TO_INSTALL
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
