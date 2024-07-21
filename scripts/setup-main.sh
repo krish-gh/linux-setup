@@ -15,6 +15,7 @@ unset isArch
 
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
+APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc"
 PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
 
 gnome=1
@@ -335,7 +336,8 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel git github-cli archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc
+    # shellcheck disable=SC2086
+    sudo pacman -S --noconfirm --needed $APP_PACKAGES_TO_INSTALL
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
