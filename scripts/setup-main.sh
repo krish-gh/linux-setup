@@ -107,7 +107,7 @@ configure_terminal() {
 
     echo -e "Setting up a cool terminal..."
     sudo pacman -S --noconfirm --needed wezterm
-    curl -o ~/.wezterm.lua ${baseRepoUrl}home/.wezterm.lua
+    curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
     
     #source ~/.bashrc
 }
