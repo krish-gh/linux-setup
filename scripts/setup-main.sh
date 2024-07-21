@@ -18,6 +18,7 @@ baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-nautilus python-pipx"
 GNOME_PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal"
+
 chaoticaur=1
 
 VM_TO_SETUP=vmware
