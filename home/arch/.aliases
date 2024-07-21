@@ -24,7 +24,7 @@ alias vimdiff='nvim -d'
 alias ua-drop-caches='sudo paccache -rk1; yay -Sc --aur --noconfirm'
 alias ua-rate='sudo true; \
        rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN arch --max-delay=120 | sudo tee /etc/pacman.d/mirrorlist; \
-      [ -f /etc/pacman.d/endeavouros-mirrorlist ] && rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist; \
-      [ -f /etc/pacman.d/chaotic-mirrorlist ] && rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist; \
+      [[ -f /etc/pacman.d/endeavouros-mirrorlist ]] && rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist; \
+      [[ -f /etc/pacman.d/chaotic-mirrorlist ]] && rate-mirrors --disable-comments-in-file --protocol=https --entry-country IN chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist; \
       ua-drop-caches; yay -Syyu --noconfirm'
 
