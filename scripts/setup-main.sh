@@ -24,7 +24,7 @@ REQUIREMENTS="curl"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
 FONTS_TO_INSTALL="noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch"
-APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc"
+APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli shfmt archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc"
 PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt5-wayland qt5ct qt6ct"
 
