@@ -19,6 +19,7 @@ baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 REFRESH_CMD="sudo pacman -Syu"
 INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
+HAS_FLATPAK=$(command -v flatpak &>/dev/null && echo 1 || echo 0)
 
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
 FONTS_TO_INSTALL="noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono"
@@ -204,13 +205,8 @@ pacman_configure_chaotic_aur() {
     gsettings set yad.sourceview theme catppuccin_mocha
     #gsettings set yad.settings terminal 'kgx -e "%s"'
 
-    hasflatpak="$(
-        command -v flatpak >/dev/null 2>&1
-        echo $?
-    )"
-
     pamacvar='aur'
-    if [[ "${hasflatpak}" -eq 0 ]]; then
+    if [[ "$HAS_FLATPAK" == 1 ]]; then
         pamacvar='flatpak'
     fi
     install "pamac-${pamacvar}"
@@ -331,7 +327,7 @@ setup_gnome() {
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
-    [[ ${chaoticaur} == 0 ]] && command -v flatpak &>/dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    [[ ${chaoticaur} == 0 ]] && [[ "$HAS_FLATPAK" == 1 ]] && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com arch-update@RaphaelRochet
