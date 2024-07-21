@@ -106,10 +106,10 @@ configure_terminal() {
     curl -o ~/.config/nano/nanorc ${baseRepoUrl}home/.config/nano/nanorc
 
     echo -e "Setting up a cool terminal..."
-    sudo pacman -S --noconfirm --needed alacritty
-    mkdir -p ~/.config/alacritty
-    curl -o ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
-    curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
+    #sudo pacman -S --noconfirm --needed alacritty
+    #mkdir -p ~/.config/alacritty
+    #curl -o ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
+    #curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
     
     #sudo pacman -S --noconfirm --needed wezterm
     #mkdir -p ~/.config/wezterm
