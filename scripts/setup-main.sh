@@ -21,6 +21,8 @@ hyperv=0
 gnome=1
 chaoticaur=1
 
+TERMINAL_TO_INSTALL=none
+
 setup_vm() {
     if [ ${vmware} -eq 1 ]; then
         echo -e "Configuring VMware stuffs..."
@@ -105,23 +107,33 @@ configure_terminal() {
     mkdir -p ~/.config/nano
     curl -o ~/.config/nano/nanorc ${baseRepoUrl}home/.config/nano/nanorc
 
-    echo -e "Setting up a cool terminal..."
-    # alacritty
-    #sudo pacman -S --noconfirm --needed alacritty
-    #mkdir -p ~/.config/alacritty
-    #curl -o ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
-    #curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
+    echo -e "Installing terminal $TERMINAL_TO_INSTALL..."
+    case $TERMINAL_TO_INSTALL in
 
-    # kitty
-    sudo pacman -S --noconfirm --needed kitty
-    mkdir -p ~/.config/kitty
-    curl -o ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
-    curl -o ~/.config/kitty/kitty.conf ${baseRepoUrl}home/.config/kitty/kitty.conf
-    
-    # wezterm
-    #sudo pacman -S --noconfirm --needed wezterm
-    #mkdir -p ~/.config/wezterm
-    #curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
+    alacritty)
+        sudo pacman -S --noconfirm --needed alacritty
+        mkdir -p ~/.config/alacritty
+        curl -o ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
+        curl -o ~/.config/alacritty/alacritty.toml ${baseRepoUrl}home/.config/alacritty/alacritty.toml
+        ;;
+
+    kitty)
+        sudo pacman -S --noconfirm --needed kitty
+        mkdir -p ~/.config/kitty
+        curl -o ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
+        curl -o ~/.config/kitty/kitty.conf ${baseRepoUrl}home/.config/kitty/kitty.conf
+        ;;
+
+    wezterm)
+        sudo pacman -S --noconfirm --needed wezterm
+        mkdir -p ~/.config/wezterm
+        curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
+        ;;
+
+    *)
+        echo -e "No additional terminal installed..."
+        ;;
+    esac
     
     #source ~/.bashrc
 }
