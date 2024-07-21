@@ -6,7 +6,7 @@ isArch="$(
     echo $?
 )"
 
-if [ "${isArch}" -ne 0 ]; then
+if [[ "${isArch}" -ne 0 ]]; then
     echo "You do not run an Arch-based Linux distrbution ..."
     exit 1
 fi
@@ -131,7 +131,7 @@ configure_terminal() {
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
         echo $?
     )"
-    if [ "${bashrcAppend}" -ne 0 ]; then
+    if [[ "${bashrcAppend}" -ne 0 ]]; then
         curl ${baseRepoUrl}home/.bashrc >>~/.bashrc
     fi
 
@@ -175,7 +175,7 @@ configure_terminal() {
 }
 
 pacman_configure_chaotic_aur() {
-    if [ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ]; then
+    if [[ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ]]; then
         echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
         sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
         sudo pacman-key --lsign-key 3056513887B78AEB
@@ -187,7 +187,7 @@ pacman_configure_chaotic_aur() {
         grep "chaotic-aur" /etc/pacman.conf >/dev/null 2>&1
         echo $?
     )"
-    if [ "${chaoticAurAppend}" -ne 0 ]; then
+    if [[ "${chaoticAurAppend}" -ne 0 ]]; then
         echo "Appending Chaotic-AUR in pacman.conf..."
         echo -e | sudo tee -a /etc/pacman.conf
         echo -e "[chaotic-aur]" | sudo tee -a /etc/pacman.conf
@@ -210,7 +210,7 @@ pacman_configure_chaotic_aur() {
     )"
 
     pamacvar='aur'
-    if [ "${hasflatpak}" -eq 0 ]; then
+    if [[ "${hasflatpak}" -eq 0 ]]; then
         pamacvar='flatpak'
     fi
     install "pamac-${pamacvar}"
@@ -221,10 +221,10 @@ pacman_configure_chaotic_aur() {
         /KeepNumPackages/c\KeepNumPackages = 1
         /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
 
-    if [ ${gnome} -eq 1 ]; then
+    if [[ ${gnome} -eq 1 ]]; then
         echo -e "Installing some gnome stuffs from chaotic-aur"
         install "extension-manager"
-        if [ $TERMINAL_TO_INSTALL != none ]; then
+        if [[ $TERMINAL_TO_INSTALL != none ]]; then
             install "nautilus-open-any-terminal"
             gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
         fi
@@ -313,7 +313,7 @@ setup_gnome() {
     gsettings set org.gnome.Console audible-bell false
     gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
     # Below is to avoid updating font during setup as font starts looking bad
-    [ "$TERM_PROGRAM" != kgx ] && gsettings set org.gnome.Console use-system-font false
+    [[ "$TERM_PROGRAM" != kgx ]] && gsettings set org.gnome.Console use-system-font false
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
@@ -331,7 +331,7 @@ setup_gnome() {
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
-    [ ${chaoticaur} == 0 ] && command -v flatpak &>/dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    [[ ${chaoticaur} == 0 ]] && command -v flatpak &>/dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com arch-update@RaphaelRochet
@@ -400,12 +400,12 @@ setup_system
 improve_font
 configure_terminal
 setup_gtk
-[ ${gnome} == 1 ] && setup_gnome
+[[ ${gnome} == 1 ]] && setup_gnome
 setup_apps
-[ ${chaoticaur} == 1 ] && pacman_configure_chaotic_aur
+[[ ${chaoticaur} == 1 ]] && pacman_configure_chaotic_aur
 
 echo -e ""
 read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
-[ "$TERM_PROGRAM" == kgx ] && gsettings set org.gnome.Console use-system-font false
+[[ "$TERM_PROGRAM" == kgx ]] && gsettings set org.gnome.Console use-system-font false
 
 echo -e "Done...Reboot..."
