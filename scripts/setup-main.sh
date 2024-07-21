@@ -19,7 +19,7 @@ gnome=1
 chaoticaur=1
 
 VM_TO_SETUP=vmware
-TERMINAL_TO_INSTALL=none
+TERMINAL_TO_INSTALL=kitty
 
 setup_vm() {
     echo -e "Setting up $VM_TO_SETUP..."
