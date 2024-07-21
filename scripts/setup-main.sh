@@ -86,7 +86,7 @@ improve_font() {
 
 configure_terminal() {
     echo -e "Configuring shell stuffs..."
-    sudo pacman -S --noconfirm --needed bash-completion nano-syntax-highlighting starship neofetch fastfetch
+    sudo pacman -S --noconfirm --needed diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch
     #starship preset no-nerd-font -o ~/.config/starship.toml
     curl -o ~/.aliases ${baseRepoUrl}home/arch/.aliases
     bashrcAppend="$(
@@ -316,7 +316,7 @@ setup_gnome() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    sudo pacman -S --noconfirm --needed pacman-contrib base-devel diffutils git github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse vlc
+    sudo pacman -S --noconfirm --needed pacman-contrib base-devel git github-cli archlinux-wallpaper alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils meld firefox gnome-keyring seahorse vlc
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
