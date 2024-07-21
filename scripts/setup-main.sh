@@ -19,7 +19,6 @@ baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 REFRESH_CMD="sudo pacman -Syu"
 INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
-HAS_FLATPAK=$(command -v flatpak &>/dev/null && echo 1 || echo 0)
 
 REQUIREMENTS="curl"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
@@ -36,6 +35,10 @@ chaoticaur=1
 
 TERMINAL_TO_INSTALL=kitty
 
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
+
 refresh_package_sources() {
     $REFRESH_CMD
 }
@@ -49,7 +52,7 @@ uninstall() {
     #doing removing in loop to avoid abort in case something is not installed
     # shellcheck disable=SC2206
     removearr=($1)
-    for i in "${removearr[@]}"; do $UNINSTALL_CMD "$i"; done    
+    for i in "${removearr[@]}"; do $UNINSTALL_CMD "$i"; done
 }
 
 setup_system() {
@@ -207,7 +210,7 @@ pacman_configure_chaotic_aur() {
     #gsettings set yad.settings terminal 'kgx -e "%s"'
 
     pamacvar='aur'
-    if [[ "$HAS_FLATPAK" == 1 ]]; then
+    if command_exists flatpak; then
         pamacvar='flatpak'
     fi
     install "pamac-${pamacvar}"
@@ -328,7 +331,7 @@ setup_gnome() {
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
-    [[ ${chaoticaur} == 0 ]] && [[ "$HAS_FLATPAK" == 1 ]] && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    [[ ${chaoticaur} == 0 ]] && command_exists flatpak && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com arch-update@RaphaelRochet
