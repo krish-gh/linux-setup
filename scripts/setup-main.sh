@@ -16,6 +16,7 @@ unset isArch
 SYSTEM_TO_SETUP=vmware
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
+REFRESH_CMD="sudo pacman -Syu"
 INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
@@ -32,6 +33,10 @@ GNOME_PACKAGES_TO_INSTALL="gnome-themes-extra gnome-menus gnome-tweaks gnome-she
 chaoticaur=1
 
 TERMINAL_TO_INSTALL=kitty
+
+refresh_package_sources() {
+    $REFRESH_CMD
+}
 
 install() {
     # shellcheck disable=SC2086
@@ -189,8 +194,7 @@ pacman_configure_chaotic_aur() {
         echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
     fi
 
-    sudo pacman -Syyu
-    sudo pacman -Fy
+    refresh_package_sources
 
     echo -e "Installing some more stuffs..."
     install "yay rate-mirrors reflector-simple xterm mkinitcpio-firmware"
@@ -386,7 +390,7 @@ setup_apps() {
     uninstall "$PACKAGES_TO_REMOVE"
 }
 
-sudo pacman -Syu
+refresh_package_sources
 
 echo -e "Installing some needed stuffs..."
 install "curl"
