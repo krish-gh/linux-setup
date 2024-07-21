@@ -16,7 +16,7 @@ unset isArch
 SYSTEM_TO_SETUP=vmware
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
-SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
+SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
 APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli archlinux-wallpaper neovim meld firefox gnome-keyring seahorse vlc"
 PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt5-wayland qt5ct qt6ct"
@@ -31,6 +31,10 @@ TERMINAL_TO_INSTALL=kitty
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
     case $SYSTEM_TO_SETUP in
+
+    intel)
+        sudo pacman -S --noconfirm --needed intel-media-driver vulkan-intel
+        ;;
 
     vmware)
         sudo pacman -S --noconfirm --needed xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools
