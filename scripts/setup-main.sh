@@ -119,9 +119,9 @@ configure_terminal() {
     #curl -o ~/.config/kitty/kitty.conf ${baseRepoUrl}home/.config/kitty/kitty.conf
     
     # wezterm
-    #sudo pacman -S --noconfirm --needed wezterm
-    #mkdir -p ~/.config/wezterm
-    #curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
+    sudo pacman -S --noconfirm --needed wezterm
+    mkdir -p ~/.config/wezterm
+    curl -o ~/.config/wezterm/wezterm.lua ${baseRepoUrl}home/.config/wezterm/wezterm.lua
     
     #source ~/.bashrc
 }
