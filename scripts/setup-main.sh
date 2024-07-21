@@ -137,7 +137,7 @@ configure_terminal() {
         echo -e "No additional terminal installed..."
         ;;
     esac
-    
+
     #source ~/.bashrc
 }
 
@@ -170,14 +170,14 @@ pacman_configure_chaotic_aur() {
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
     gsettings set yad.sourceview theme catppuccin_mocha
-    #gsettings set yad.settings terminal 'kgx -e "%s"'   
+    #gsettings set yad.settings terminal 'kgx -e "%s"'
 
     hasflatpak="$(
         command -v flatpak >/dev/null 2>&1
         echo $?
     )"
 
-    pamacvar='aur' 
+    pamacvar='aur'
     if [ "${hasflatpak}" -eq 0 ]; then
         pamacvar='flatpak'
     fi
@@ -188,7 +188,7 @@ pacman_configure_chaotic_aur() {
         /NoUpdateHideIcon/s/^#//g
         /KeepNumPackages/c\KeepNumPackages = 1
         /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
-    
+
     if [ ${gnome} -eq 1 ]; then
         echo -e "Installing gnome extension-manager from chaotic-aur"
         sudo pacman -S --noconfirm --needed extension-manager
@@ -213,28 +213,28 @@ setup_gtk() {
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
     curl -o ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
-    for i in ~/.local/share/gtksourceview-{4,5}/styles; 
-        do cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml "$i"; 
-    done 
+    for i in ~/.local/share/gtksourceview-{4,5}/styles; do
+        cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml "$i"
+    done
 
     echo -e "Setting up QT apps to look like GTK.."
     mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
     curl -o ~/.config/Kvantum/kvantum.kvconfig ${baseRepoUrl}home/.config/Kvantum/kvantum.kvconfig
-    for i in 5 6; 
-        do curl -o ~/.config/qt${i}ct/qt${i}ct.conf ${baseRepoUrl}home/.config/qt${i}ct/qt${i}ct.conf; 
+    for i in 5 6; do
+        curl -o ~/.config/qt${i}ct/qt${i}ct.conf ${baseRepoUrl}home/.config/qt${i}ct/qt${i}ct.conf
     done
 
 }
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
-    
+
     sudo pacman -S --noconfirm --needed gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-nautilus python-pipx
 
     pkgtoremove=(snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal)
     #doing removing in loop to avoid abort in case something is not installed
     for i in "${pkgtoremove[@]}"; do sudo pacman -Rns --noconfirm "$i"; done
-    
+
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
     gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
@@ -278,12 +278,11 @@ setup_gnome() {
     #curl -o 95-gdm-settings ${baseRepoUrl}system/etc/dconf/db/gdm.d/95-gdm-settings
     #sudo mv -i 95-gdm-settings /etc/dconf/db/gdm.d/
 
-    
     # console
     gsettings set org.gnome.Console audible-bell false
     gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
     # Below is to avoid updating font during setup as font starts looking bad
-    [ "$TERM_PROGRAM" != kgx ] && gsettings set org.gnome.Console use-system-font false   
+    [ "$TERM_PROGRAM" != kgx ] && gsettings set org.gnome.Console use-system-font false
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
@@ -301,7 +300,7 @@ setup_gnome() {
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
-    [ ${chaoticaur} == 0 ] && command -v flatpak &> /dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    [ ${chaoticaur} == 0 ] && command -v flatpak &>/dev/null && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com arch-update@RaphaelRochet
@@ -326,7 +325,7 @@ setup_gnome() {
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator clear-on-boot true
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator enable-keybindings false
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator history-size 10
-    
+
 }
 
 setup_apps() {
@@ -335,8 +334,8 @@ setup_apps() {
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
-    for i in "${flagstocopy[@]}"; 
-        do curl -o ~/.config/"${i}"-flags.conf ${baseRepoUrl}home/.config/"${i}"-flags.conf; 
+    for i in "${flagstocopy[@]}"; do
+        curl -o ~/.config/"${i}"-flags.conf ${baseRepoUrl}home/.config/"${i}"-flags.conf
     done
 
     # meld
@@ -360,7 +359,7 @@ setup_apps() {
 sudo pacman -Syu
 
 echo -e "Installing some needed stuffs..."
-sudo pacman -S --noconfirm --needed curl 
+sudo pacman -S --noconfirm --needed curl
 
 tweak_system
 setup_vm
