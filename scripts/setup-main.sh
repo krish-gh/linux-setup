@@ -191,8 +191,11 @@ pacman_configure_chaotic_aur() {
 
     if [ ${gnome} -eq 1 ]; then
         echo -e "Installing some gnome stuffs from chaotic-aur"
-        sudo pacman -S --noconfirm --needed extension-manager nautilus-open-any-terminal
-        [ $TERMINAL_TO_INSTALL != none ] && gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
+        sudo pacman -S --noconfirm --needed extension-manager
+        if [ $TERMINAL_TO_INSTALL != none ]; then
+            sudo pacman -S --noconfirm --needed nautilus-open-any-terminal
+            gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
+        fi
     fi
 }
 
