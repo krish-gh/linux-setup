@@ -35,6 +35,7 @@ GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,con
 chaoticaur=1
 
 TERMINAL_TO_INSTALL=kitty
+GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
 
 command_exists() {
     command -v "$1" >/dev/null 2>&1
@@ -82,7 +83,7 @@ setup_system() {
         ;;
 
     *)
-        echo -e "No VM platform selected..."
+        echo -e "No system selected..."
         ;;
     esac
 
@@ -390,6 +391,12 @@ setup_apps() {
     curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
     chmod og= ~/.local/share/keyrings/
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
+
+    echo -e "Setting up file associations..."
+    curl -o ~/.config/mimeapps.list ${baseRepoUrl}home/.config/mimeapps.list
+    sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
+    mkdir -p ~/.local/share/applications
+    ln -s ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 
     echo -e "Removing not needed apps..."
     uninstall "$PACKAGES_TO_REMOVE"

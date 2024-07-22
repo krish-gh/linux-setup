@@ -1,9 +1,9 @@
 [Default Applications]
-text/plain=org.gnome.TextEditor.desktop
-application/xml=org.gnome.TextEditor.desktop
-application/x-shellscript=org.gnome.TextEditor.desktop
+text/plain=DEFAULT_TEXT_EDITOR
+application/xml=DEFAULT_TEXT_EDITOR
+application/x-shellscript=DEFAULT_TEXT_EDITOR
 
 [Added Associations]
-text/plain=org.gnome.TextEditor.desktop;
-application/xml=org.gnome.TextEditor.desktop;
-application/x-shellscript=org.gnome.TextEditor.desktop;
+text/plain=DEFAULT_TEXT_EDITOR;
+application/xml=DEFAULT_TEXT_EDITOR;
+application/x-shellscript=DEFAULT_TEXT_EDITOR;
