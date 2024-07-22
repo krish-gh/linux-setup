@@ -53,8 +53,8 @@ install() {
 
 uninstall() {
     #doing removing in loop to avoid abort in case something is not installed
-    # shellcheck disable=SC2206
-    pkgs=($1)
+    # shellcheck disable=SC2207
+    pkgs=($(eval echo "$1"))
     for i in "${pkgs[@]}"; do $UNINSTALL_CMD "$i"; done
 }
 
