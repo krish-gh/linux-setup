@@ -21,16 +21,16 @@ INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
 REQUIREMENTS="curl"
-SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader sof-firmware alsa-firmware alsa-oss alsa-plugins alsa-utils"
-FONTS_TO_INSTALL="noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono"
+SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-{firmware,oss,plugins,utils}"
+FONTS_TO_INSTALL="noto-{fonts,fonts-extra,fonts-emoji} ttf-{liberation,dejavu,roboto,ubuntu-font-family,nerd-fonts-symbols-mono,jetbrains-mono}"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch xclip wl-clipboard neovim"
 APP_PACKAGES_TO_INSTALL="pacman-contrib archlinux-wallpaper firefox gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="base-devel git github-cli shfmt meld"
-PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
+PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem yelp gedit vim gnome-{calculator,calendar,clocks,connections,contacts,maps,music,nettool,power-manager,tour,weather,user-docs,terminal}"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 
 gnome=1
-GNOME_PACKAGES_TO_INSTALL="gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-nautilus python-pipx"
+GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
 
 chaoticaur=1
 
