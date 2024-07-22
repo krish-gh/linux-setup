@@ -32,8 +32,6 @@ GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
 
-chaoticaur=1
-
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
 
@@ -88,9 +86,7 @@ setup_system() {
     esac
 
     install "$SYSTEM_PACKAGES_TO_INSTALL"
-}
-
-tweak_system() {
+    
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
     curl -o 999-sysctl.conf ${baseRepoUrl}system/etc/sysctl.d/999-sysctl.conf
@@ -98,12 +94,6 @@ tweak_system() {
     curl -o 00-journal-size.conf ${baseRepoUrl}system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -i 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
-
-    echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
-    sudo sed -i "/^#Color/c\Color\nILoveCandy
-        /^#VerbosePkgLists/c\VerbosePkgLists
-        /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
-    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 
     echo -e "Updating some sudo stuffs..."
     sudo mkdir -p /etc/sudoers.d
@@ -183,7 +173,13 @@ configure_terminal() {
     #source ~/.bashrc
 }
 
-pacman_configure_chaotic_aur() {
+setup_pacman() {
+    echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
+    sudo sed -i "/^#Color/c\Color\nILoveCandy
+        /^#VerbosePkgLists/c\VerbosePkgLists
+        /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
+    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+
     if [[ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ]]; then
         echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
         sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
@@ -335,7 +331,7 @@ setup_gnome() {
     #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
-    [[ ${chaoticaur} == 0 ]] && command_exists flatpak && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    command_exists flatpak && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
     ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com arch-update@RaphaelRochet
@@ -407,14 +403,13 @@ refresh_package_sources
 echo -e "Installing some needed stuffs..."
 install "$REQUIREMENTS"
 
-tweak_system
 setup_system
 improve_font
 configure_terminal
 setup_gtk
 [[ ${gnome} == 1 ]] && setup_gnome
 setup_apps
-[[ ${chaoticaur} == 1 ]] && pacman_configure_chaotic_aur
+command_exists pacman && setup_pacman
 
 echo -e ""
 read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
