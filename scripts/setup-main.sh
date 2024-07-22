@@ -23,8 +23,9 @@ UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 REQUIREMENTS="curl"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader sof-firmware alsa-firmware alsa-oss alsa-plugins alsa-utils"
 FONTS_TO_INSTALL="noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono"
-TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch"
-APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli shfmt archlinux-wallpaper xclip wl-clipboard neovim meld firefox gnome-keyring seahorse vlc"
+TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch xclip wl-clipboard neovim"
+APP_PACKAGES_TO_INSTALL="pacman-contrib archlinux-wallpaper firefox gnome-keyring seahorse vlc"
+DEV_PACKAGES_TO_INSTALL="base-devel git github-cli shfmt meld"
 PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt5-wayland qt6-wayland qt5ct qt6ct"
 
@@ -362,6 +363,8 @@ setup_gnome() {
 setup_apps() {
     echo -e "Installing some apps..."
     install "$APP_PACKAGES_TO_INSTALL"
+    echo -e "Installing some dev stuffs..."
+    install "$DEV_PACKAGES_TO_INSTALL"
 
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
