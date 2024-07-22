@@ -21,7 +21,7 @@ INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
 REQUIREMENTS="curl"
-SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware sof-firmware alsa-oss alsa-plugins alsa-utils"
+SYSTEM_PACKAGES_TO_INSTALL="vulkan-mesa-layers vulkan-swrast vulkan-icd-loader sof-firmware alsa-firmware alsa-oss alsa-plugins alsa-utils"
 FONTS_TO_INSTALL="noto-fonts noto-fonts-extra noto-fonts-emoji ttf-liberation ttf-dejavu ttf-roboto ttf-ubuntu-font-family ttf-nerd-fonts-symbols-mono ttf-jetbrains-mono"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch"
 APP_PACKAGES_TO_INSTALL="pacman-contrib base-devel git github-cli shfmt archlinux-wallpaper xclip wl-clipboard neovim meld firefox gnome-keyring seahorse vlc"
