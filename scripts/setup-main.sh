@@ -27,7 +27,7 @@ TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting sta
 APP_PACKAGES_TO_INSTALL="pacman-contrib archlinux-wallpaper firefox gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="base-devel git github-cli shfmt meld"
 PACKAGES_TO_REMOVE="snapshot gnome-calculator gnome-calendar gnome-clocks gnome-connections gnome-contacts baobab simple-scan gnome-maps gnome-music gnome-nettool gnome-power-manager gnome-tour gnome-weather epiphany totem gnome-user-docs yelp gedit gnome-terminal vim"
-GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt5-wayland qt6-wayland qt5ct qt6ct"
+GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 
 gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-themes-extra gnome-menus gnome-tweaks gnome-shell-extensions gnome-console gnome-text-editor python-nautilus python-pipx"
@@ -45,15 +45,17 @@ refresh_package_sources() {
 }
 
 install() {
+    #expanding the string to allow substitution
+    pkgs=$(eval echo "$1")
     # shellcheck disable=SC2086
-    $INSTALL_CMD $1
+    $INSTALL_CMD $pkgs
 }
 
 uninstall() {
     #doing removing in loop to avoid abort in case something is not installed
     # shellcheck disable=SC2206
-    removearr=($1)
-    for i in "${removearr[@]}"; do $UNINSTALL_CMD "$i"; done
+    pkgs=($1)
+    for i in "${pkgs[@]}"; do $UNINSTALL_CMD "$i"; done
 }
 
 setup_system() {
