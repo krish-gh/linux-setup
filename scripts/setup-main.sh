@@ -297,8 +297,8 @@ setup_gnome() {
     gsettings set org.gnome.desktop.thumbnailers disable-all true
     gsettings set org.gnome.desktop.peripherals.mouse speed 1
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
-    gsettings set org.gnome.desktop.background picture-uri "file:///$HOME/.local/share/backgrounds/$DIST_TYPE.png"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file:///$HOME/.local/share/backgrounds/$DIST_TYPE.png"
+    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DIST_TYPE.png"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DIST_TYPE.png"
     gsettings set org.gnome.desktop.background primary-color '#000000000000'
     gsettings set org.gnome.desktop.background secondary-color '#000000000000'
     gsettings set org.gnome.software screenshot-cache-age-maximum 60
