@@ -13,6 +13,7 @@ fi
 
 unset isArch
 
+DIST_TYPE=arch
 SYSTEM_TO_SETUP=vmware
 baseRepoUrl="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
@@ -24,7 +25,7 @@ REQUIREMENTS="curl"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-{firmware,oss,plugins,utils}"
 FONTS_TO_INSTALL="noto-{fonts,fonts-extra,fonts-emoji} ttf-{liberation,dejavu,roboto,ubuntu-font-family,nerd-fonts-symbols-mono,jetbrains-mono}"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch xclip wl-clipboard neovim"
-APP_PACKAGES_TO_INSTALL="pacman-contrib archlinux-wallpaper firefox gnome-keyring seahorse vlc"
+APP_PACKAGES_TO_INSTALL="pacman-contrib firefox gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="base-devel git github-cli shfmt meld"
 PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem yelp gedit vim gnome-{calculator,calendar,clocks,connections,contacts,maps,music,nettool,power-manager,tour,weather,user-docs,terminal}"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
@@ -95,6 +96,21 @@ setup_system() {
     sudo mv -i 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 
+    # env var
+    mkdir -p ~/.config/environment.d
+    curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
+
+    # wallpaper
+    mkdir -p ~/.local/share/backgrounds
+    curl -o ~/.local/share/backgrounds/${DIST_TYPE}.png ${baseRepoUrl}home/.local/share/backgrounds/${DIST_TYPE}.png
+
+    echo -e "Setting up keyring..."
+    mkdir -p ~/.local/share/keyrings/
+    curl -o ~/.local/share/keyrings/Default_keyring.keyring ${baseRepoUrl}home/.local/share/keyrings/Default_keyring.keyring
+    curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
+    chmod og= ~/.local/share/keyrings/
+    chmod og= ~/.local/share/keyrings/Default_keyring.keyring
+
     echo -e "Updating some sudo stuffs..."
     sudo mkdir -p /etc/sudoers.d
     echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
@@ -133,10 +149,6 @@ configure_terminal() {
     if [[ "${bashrcAppend}" -ne 0 ]]; then
         curl ${baseRepoUrl}home/.bashrc >>~/.bashrc
     fi
-
-    # env var
-    mkdir -p ~/.config/environment.d
-    curl -o ~/.config/environment.d/10-defaults.conf ${baseRepoUrl}home/.config/environment.d/10-defaults.conf
 
     # nano
     mkdir -p ~/.config/nano
@@ -285,8 +297,8 @@ setup_gnome() {
     gsettings set org.gnome.desktop.thumbnailers disable-all true
     gsettings set org.gnome.desktop.peripherals.mouse speed 1
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
-    gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/archlinux/gritty.png'
-    gsettings set org.gnome.desktop.background picture-uri-dark 'file:///usr/share/backgrounds/archlinux/gritty.png'
+    gsettings set org.gnome.desktop.background picture-uri "file:///$HOME/.local/share/backgrounds/$DIST_TYPE.png"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file:///$HOME/.local/share/backgrounds/$DIST_TYPE.png"
     gsettings set org.gnome.desktop.background primary-color '#000000000000'
     gsettings set org.gnome.desktop.background secondary-color '#000000000000'
     gsettings set org.gnome.software screenshot-cache-age-maximum 60
@@ -380,13 +392,6 @@ setup_apps() {
     # vlc
     mkdir -p ~/.config/vlc
     curl -o ~/.config/vlc/vlcrc ${baseRepoUrl}home/.config/vlc/vlcrc
-
-    echo -e "Setting up keyring..."
-    mkdir -p ~/.local/share/keyrings/
-    curl -o ~/.local/share/keyrings/Default_keyring.keyring ${baseRepoUrl}home/.local/share/keyrings/Default_keyring.keyring
-    curl -o ~/.local/share/keyrings/default ${baseRepoUrl}home/.local/share/keyrings/default
-    chmod og= ~/.local/share/keyrings/
-    chmod og= ~/.local/share/keyrings/Default_keyring.keyring
 
     echo -e "Setting up file associations..."
     curl -o ~/.config/mimeapps.list ${baseRepoUrl}home/.config/mimeapps.list
