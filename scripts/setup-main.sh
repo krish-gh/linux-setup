@@ -27,8 +27,8 @@ FONTS_TO_INSTALL="noto-{fonts,fonts-extra,fonts-emoji} ttf-{liberation,dejavu,ro
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch xclip wl-clipboard neovim"
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="base-devel git github-cli shfmt meld"
-PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem yelp gedit vim gnome-{calculator,calendar,clocks,connections,contacts,maps,music,nettool,power-manager,tour,weather,user-docs,terminal}"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
+PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem yelp gedit vim gnome-{calculator,calendar,clocks,connections,contacts,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal}"
 
 gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
