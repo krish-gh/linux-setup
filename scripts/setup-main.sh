@@ -17,7 +17,7 @@ DIST_TYPE=arch
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
-REFRESH_CMD="sudo pacman -Syu"
+REFRESH_CMD="sudo pacman -Syu --noconfirm"
 INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
