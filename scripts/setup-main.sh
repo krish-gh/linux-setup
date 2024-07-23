@@ -6,7 +6,7 @@ command_exists() {
 
 # Check if the distro is (based on) Arch Linux - temporary until other distro support is added
 if ! command_exists pacman; then
-    echo "You do not run an Arch-based Linux distrbution ..."
+    echo "You are not running an Arch-based Linux distrbution..."
     exit 1
 fi
 
