@@ -21,12 +21,12 @@ REFRESH_CMD="sudo pacman -Syu --noconfirm"
 INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
-REQUIREMENTS="curl"
+REQUIREMENTS="curl base-devel"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-{firmware,oss,plugins,utils}"
 FONTS_TO_INSTALL="noto-{fonts,fonts-extra,fonts-emoji} ttf-{liberation,dejavu,roboto,ubuntu-font-family,nerd-fonts-symbols-mono,jetbrains-mono}"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch xclip wl-clipboard neovim"
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox gnome-keyring seahorse vlc"
-DEV_PACKAGES_TO_INSTALL="base-devel git github-cli shfmt meld"
+DEV_PACKAGES_TO_INSTALL="git github-cli shfmt meld"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem gedit vim gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} yelp"
 
@@ -356,7 +356,12 @@ setup_gnome() {
     command_exists flatpak && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
-    ~/.local/bin/gnome-extensions-cli --filesystem install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com status-area-horizontal-spacing@mathematical.coffee.gmail.com arch-update@RaphaelRochet
+
+    extstoinstall=(AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com status-area-horizontal-spacing@mathematical.coffee.gmail.com arch-update@RaphaelRochet)
+    for i in "${extstoinstall[@]}"; do      
+        ~/.local/bin/gnome-extensions-cli --filesystem install "$i"; 
+        glib-compile-schemas ~/.local/share/gnome-shell/extensions/"$i"/schemas/;
+    done
     ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
     # dash to dock
