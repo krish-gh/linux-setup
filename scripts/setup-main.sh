@@ -151,7 +151,7 @@ configure_terminal() {
     echo -e "Configuring shell stuffs..."
     install "$TERM_PACKAGES_TO_INSTALL"
     #starship preset no-nerd-font -o ~/.config/starship.toml
-    download_file ~/.aliases ${BASE_REPO_URL}home/arch/.aliases
+    download_file ~/.aliases ${BASE_REPO_URL}home/${DIST_TYPE}/.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
         echo $?
