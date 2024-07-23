@@ -28,7 +28,7 @@ TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting sta
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="base-devel git github-cli shfmt meld"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
-PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem yelp gedit vim gnome-{calculator,calendar,clocks,connections,contacts,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal}"
+PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem gedit vim gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} yelp"
 
 gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
