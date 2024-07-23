@@ -58,6 +58,16 @@ uninstall() {
     for i in "${pkgs[@]}"; do $UNINSTALL_CMD "$i"; done
 }
 
+# arg1 = destination path, arg2 = source path
+download_file() {
+    curl -o "$1" "$2"
+}
+
+# arg1 = source path
+download_content() {
+    curl "$1"
+}
+
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
     case $SYSTEM_TO_SETUP in
@@ -87,27 +97,27 @@ setup_system() {
     esac
 
     install "$SYSTEM_PACKAGES_TO_INSTALL"
-    
+
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
-    curl -o 999-sysctl.conf ${BASE_REPO_URL}system/etc/sysctl.d/999-sysctl.conf
+    download_file 999-sysctl.conf ${BASE_REPO_URL}system/etc/sysctl.d/999-sysctl.conf
     sudo mv -i 999-sysctl.conf /etc/sysctl.d/
-    curl -o 00-journal-size.conf ${BASE_REPO_URL}system/etc/systemd/journald.conf.d/00-journal-size.conf
+    download_file 00-journal-size.conf ${BASE_REPO_URL}system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -i 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 
     # env var
     mkdir -p ~/.config/environment.d
-    curl -o ~/.config/environment.d/10-defaults.conf ${BASE_REPO_URL}home/.config/environment.d/10-defaults.conf
+    download_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_URL}home/.config/environment.d/10-defaults.conf
 
     # wallpaper
     mkdir -p ~/.local/share/backgrounds
-    curl -o ~/.local/share/backgrounds/${DIST_TYPE}.png ${BASE_REPO_URL}home/.local/share/backgrounds/${DIST_TYPE}.png
+    download_file ~/.local/share/backgrounds/${DIST_TYPE}.png ${BASE_REPO_URL}home/.local/share/backgrounds/${DIST_TYPE}.png
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
-    curl -o ~/.local/share/keyrings/Default_keyring.keyring ${BASE_REPO_URL}home/.local/share/keyrings/Default_keyring.keyring
-    curl -o ~/.local/share/keyrings/default ${BASE_REPO_URL}home/.local/share/keyrings/default
+    download_file ~/.local/share/keyrings/Default_keyring.keyring ${BASE_REPO_URL}home/.local/share/keyrings/Default_keyring.keyring
+    download_file ~/.local/share/keyrings/default ${BASE_REPO_URL}home/.local/share/keyrings/default
     chmod og= ~/.local/share/keyrings/
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
 
@@ -121,9 +131,9 @@ improve_font() {
     install "$FONTS_TO_INSTALL"
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
-    curl -o ~/.config/fontconfig/fonts.conf ${BASE_REPO_URL}home/.config/fontconfig/fonts.conf
-    curl -o ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_URL}home/.config/fontconfig/conf.d/20-no-embedded.conf
-    curl -o ~/.Xresources ${BASE_REPO_URL}home/.Xresources
+    download_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_URL}home/.config/fontconfig/fonts.conf
+    download_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_URL}home/.config/fontconfig/conf.d/20-no-embedded.conf
+    download_file ~/.Xresources ${BASE_REPO_URL}home/.Xresources
     install "xorg-xrdb"
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
@@ -141,18 +151,18 @@ configure_terminal() {
     echo -e "Configuring shell stuffs..."
     install "$TERM_PACKAGES_TO_INSTALL"
     #starship preset no-nerd-font -o ~/.config/starship.toml
-    curl -o ~/.aliases ${BASE_REPO_URL}home/arch/.aliases
+    download_file ~/.aliases ${BASE_REPO_URL}home/arch/.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
         echo $?
     )"
     if [[ "${bashrcAppend}" -ne 0 ]]; then
-        curl ${BASE_REPO_URL}home/.bashrc >>~/.bashrc
+        download_content ${BASE_REPO_URL}home/.bashrc >>~/.bashrc
     fi
 
     # nano
     mkdir -p ~/.config/nano
-    curl -o ~/.config/nano/nanorc ${BASE_REPO_URL}home/.config/nano/nanorc
+    download_file ~/.config/nano/nanorc ${BASE_REPO_URL}home/.config/nano/nanorc
 
     echo -e "Installing terminal $TERMINAL_TO_INSTALL..."
     case $TERMINAL_TO_INSTALL in
@@ -160,21 +170,21 @@ configure_terminal() {
     alacritty)
         install $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/alacritty
-        curl -o ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
-        curl -o ~/.config/alacritty/alacritty.toml ${BASE_REPO_URL}home/.config/alacritty/alacritty.toml
+        download_file ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
+        download_file ~/.config/alacritty/alacritty.toml ${BASE_REPO_URL}home/.config/alacritty/alacritty.toml
         ;;
 
     kitty)
         install $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/kitty
-        curl -o ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
-        curl -o ~/.config/kitty/kitty.conf ${BASE_REPO_URL}home/.config/kitty/kitty.conf
+        download_file ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
+        download_file ~/.config/kitty/kitty.conf ${BASE_REPO_URL}home/.config/kitty/kitty.conf
         ;;
 
     wezterm)
         install $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/wezterm
-        curl -o ~/.config/wezterm/wezterm.lua ${BASE_REPO_URL}home/.config/wezterm/wezterm.lua
+        download_file ~/.config/wezterm/wezterm.lua ${BASE_REPO_URL}home/.config/wezterm/wezterm.lua
         ;;
 
     *)
@@ -260,16 +270,16 @@ setup_gtk() {
     echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
-    curl -o ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    download_file ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
     for i in ~/.local/share/gtksourceview-{4,5}/styles; do
         cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml "$i"
     done
 
     echo -e "Setting up QT apps to look like GTK.."
     mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
-    curl -o ~/.config/Kvantum/kvantum.kvconfig ${BASE_REPO_URL}home/.config/Kvantum/kvantum.kvconfig
+    download_file ~/.config/Kvantum/kvantum.kvconfig ${BASE_REPO_URL}home/.config/Kvantum/kvantum.kvconfig
     for i in 5 6; do
-        curl -o ~/.config/qt${i}ct/qt${i}ct.conf ${BASE_REPO_URL}home/.config/qt${i}ct/qt${i}ct.conf
+        download_file ~/.config/qt${i}ct/qt${i}ct.conf ${BASE_REPO_URL}home/.config/qt${i}ct/qt${i}ct.conf
     done
 
 }
@@ -318,7 +328,7 @@ setup_gnome() {
 
     # GDM
     #sudo mkdir -p /etc/dconf/db/gdm.d
-    #curl -o 95-gdm-settings ${BASE_REPO_URL}system/etc/dconf/db/gdm.d/95-gdm-settings
+    #download_file 95-gdm-settings ${BASE_REPO_URL}system/etc/dconf/db/gdm.d/95-gdm-settings
     #sudo mv -i 95-gdm-settings /etc/dconf/db/gdm.d/
 
     # console
@@ -380,7 +390,7 @@ setup_apps() {
     # misc
     flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
     for i in "${flagstocopy[@]}"; do
-        curl -o ~/.config/"${i}"-flags.conf ${BASE_REPO_URL}home/.config/"${i}"-flags.conf
+        download_file ~/.config/"${i}"-flags.conf ${BASE_REPO_URL}home/.config/"${i}"-flags.conf
     done
 
     # meld
@@ -391,10 +401,10 @@ setup_apps() {
 
     # vlc
     mkdir -p ~/.config/vlc
-    curl -o ~/.config/vlc/vlcrc ${BASE_REPO_URL}home/.config/vlc/vlcrc
+    download_file ~/.config/vlc/vlcrc ${BASE_REPO_URL}home/.config/vlc/vlcrc
 
     echo -e "Setting up file associations..."
-    curl -o ~/.config/mimeapps.list ${BASE_REPO_URL}home/.config/mimeapps.list
+    download_file ~/.config/mimeapps.list ${BASE_REPO_URL}home/.config/mimeapps.list
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
     ln -s ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
