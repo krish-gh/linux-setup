@@ -356,7 +356,7 @@ setup_gnome() {
     command_exists flatpak && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
-    ~/.local/bin/gnome-extensions-cli install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com status-area-horizontal-spacing@mathematical.coffee.gmail.com arch-update@RaphaelRochet
+    ~/.local/bin/gnome-extensions-cli --filesystem install AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com status-area-horizontal-spacing@mathematical.coffee.gmail.com arch-update@RaphaelRochet
     ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
     # dash to dock
