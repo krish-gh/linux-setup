@@ -1,19 +1,16 @@
 #!/bin/bash
 
-# Check if the distro is (based on) Arch Linux
-isArch="$(
-    command -v pacman >/dev/null 2>&1
-    echo $?
-)"
+command_exists() {
+    command -v "$1" >/dev/null 2>&1
+}
 
-if [[ "${isArch}" -ne 0 ]]; then
+# Check if the distro is (based on) Arch Linux - temporary until other distro support is added
+if ! command_exists pacman; then
     echo "You do not run an Arch-based Linux distrbution ..."
     exit 1
 fi
 
-unset isArch
-
-DIST_TYPE=arch
+DISTRO=arch
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
@@ -35,10 +32,6 @@ GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,con
 
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
-
-command_exists() {
-    command -v "$1" >/dev/null 2>&1
-}
 
 refresh_package_sources() {
     $REFRESH_CMD
@@ -112,7 +105,7 @@ setup_system() {
 
     # wallpaper
     mkdir -p ~/.local/share/backgrounds
-    download_file ~/.local/share/backgrounds/${DIST_TYPE}.png ${BASE_REPO_URL}home/.local/share/backgrounds/${DIST_TYPE}.png
+    download_file ~/.local/share/backgrounds/${DISTRO}.png ${BASE_REPO_URL}home/.local/share/backgrounds/${DISTRO}.png
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
@@ -151,7 +144,7 @@ configure_terminal() {
     echo -e "Configuring shell stuffs..."
     install "$TERM_PACKAGES_TO_INSTALL"
     #starship preset no-nerd-font -o ~/.config/starship.toml
-    download_file ~/.aliases ${BASE_REPO_URL}home/${DIST_TYPE}/.aliases
+    download_file ~/.aliases ${BASE_REPO_URL}home/${DISTRO}/.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
         echo $?
@@ -307,8 +300,8 @@ setup_gnome() {
     gsettings set org.gnome.desktop.thumbnailers disable-all true
     gsettings set org.gnome.desktop.peripherals.mouse speed 1
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
-    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DIST_TYPE.png"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DIST_TYPE.png"
+    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO.png"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO.png"
     gsettings set org.gnome.desktop.background primary-color '#000000000000'
     gsettings set org.gnome.desktop.background secondary-color '#000000000000'
     gsettings set org.gnome.software screenshot-cache-age-maximum 60
