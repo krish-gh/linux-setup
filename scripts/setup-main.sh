@@ -427,8 +427,8 @@ setup_gtk
 setup_apps
 command_exists pacman && setup_pacman
 
-echo -e ""
-read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
+echo -e "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
+read -r
 [[ "$TERM_PROGRAM" == kgx ]] && gsettings set org.gnome.Console use-system-font false
 
 echo -e "Done...Reboot..."
