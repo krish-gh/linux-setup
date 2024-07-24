@@ -217,18 +217,17 @@ setup_pacman() {
     refresh_package_sources
 
     echo -e "Installing some more stuffs..."
-    install "yay rate-mirrors reflector-simple xterm mkinitcpio-firmware"
+    pamacvar='aur'
+    if command_exists flatpak; then
+        pamacvar='flatpak'
+    fi
+
+    install "yay rate-mirrors reflector-simple xterm mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
     gsettings set yad.sourceview theme catppuccin_mocha
     #gsettings set yad.settings terminal 'kgx -e "%s"'
-
-    pamacvar='aur'
-    if command_exists flatpak; then
-        pamacvar='flatpak'
-    fi
-    install "pamac-${pamacvar}"
 
     # Configure pamac
     sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
