@@ -367,7 +367,7 @@ setup_gnome() {
     extdir=~/.local/share/gnome-shell/extensions
     for i in "${exts[@]}"; do      
         ~/.local/bin/gnome-extensions-cli --filesystem install "$i"; 
-        glib-compile-schemas $extdir/"$i"/schemas/;
+        [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/;
     done
     ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
