@@ -94,9 +94,9 @@ setup_system() {
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
     download_file 999-sysctl.conf ${BASE_REPO_URL}system/etc/sysctl.d/999-sysctl.conf
-    sudo mv -i 999-sysctl.conf /etc/sysctl.d/
+    sudo mv -f 999-sysctl.conf /etc/sysctl.d/
     download_file 00-journal-size.conf ${BASE_REPO_URL}system/etc/systemd/journald.conf.d/00-journal-size.conf
-    sudo mv -i 00-journal-size.conf /etc/systemd/journald.conf.d/
+    sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 
     # env var
@@ -327,7 +327,7 @@ setup_gnome() {
     # GDM
     #sudo mkdir -p /etc/dconf/db/gdm.d
     #download_file 95-gdm-settings ${BASE_REPO_URL}system/etc/dconf/db/gdm.d/95-gdm-settings
-    #sudo mv -i 95-gdm-settings /etc/dconf/db/gdm.d/
+    #sudo mv -f 95-gdm-settings /etc/dconf/db/gdm.d/
 
     # console
     gsettings set org.gnome.Console audible-bell false
