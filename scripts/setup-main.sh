@@ -38,14 +38,14 @@ refresh_package_sources() {
 }
 
 install() {
-    #expanding the string to allow substitution
-    pkgs=$(eval echo "$1")
-    # shellcheck disable=SC2086
-    $INSTALL_CMD $pkgs
+    #doing in loop to avoid abort in case something is wrong
+    # shellcheck disable=SC2207
+    pkgs=($(eval echo "$1"))
+    for i in "${pkgs[@]}"; do $INSTALL_CMD "$i"; done
 }
 
 uninstall() {
-    #doing removing in loop to avoid abort in case something is not installed
+    #doing in loop to avoid abort in case something is wrong
     # shellcheck disable=SC2207
     pkgs=($(eval echo "$1"))
     for i in "${pkgs[@]}"; do $UNINSTALL_CMD "$i"; done
