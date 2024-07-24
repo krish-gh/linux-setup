@@ -23,7 +23,7 @@ SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware 
 FONTS_TO_INSTALL="noto-fonts{,-extra,-emoji} ttf-{liberation,dejavu,roboto,ubuntu-font-family,nerd-fonts-symbols-mono,jetbrains-mono}"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship neofetch fastfetch xclip wl-clipboard neovim"
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox{,-i18n-en-gb,-i18n-en-us} gnome-keyring seahorse vlc"
-DEV_PACKAGES_TO_INSTALL="git github-cli shfmt meld"
+DEV_PACKAGES_TO_INSTALL="git github-cli xterm shfmt meld"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem gedit vim gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} yelp"
 
@@ -222,7 +222,7 @@ setup_pacman() {
         pamacvar='flatpak'
     fi
 
-    install "yay rate-mirrors reflector-simple xterm mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
+    install "yay rate-mirrors reflector-simple mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
