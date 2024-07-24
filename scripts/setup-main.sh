@@ -244,6 +244,12 @@ setup_pacman() {
             gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
         fi
     fi
+
+    # misc
+    flagstocopy=(code electron chromium chrome microsoft-edge-stable)
+    for i in "${flagstocopy[@]}"; do
+        download_file ~/.config/"${i}"-flags.conf ${BASE_REPO_URL}home/.config/"${i}"-flags.conf
+    done
 }
 
 setup_gtk() {
@@ -388,12 +394,6 @@ setup_apps() {
     install "$APP_PACKAGES_TO_INSTALL"
     echo -e "Installing some dev stuffs..."
     install "$DEV_PACKAGES_TO_INSTALL"
-
-    # misc
-    flagstocopy=(code electron) # (chromium chrome microsoft-edge-stable)
-    for i in "${flagstocopy[@]}"; do
-        download_file ~/.config/"${i}"-flags.conf ${BASE_REPO_URL}home/.config/"${i}"-flags.conf
-    done
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
