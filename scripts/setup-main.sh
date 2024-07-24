@@ -379,6 +379,8 @@ setup_gnome() {
 
     # status area
     gsettings --schemadir ~/.local/share/gnome-shell/extensions/status-area-horizontal-spacing@mathematical.coffee.gmail.com/schemas/ set org.gnome.shell.extensions.status-area-horizontal-spacing hpadding 0
+
+    gsettings set org.gnome.shell disable-user-extensions false
 }
 
 setup_apps() {
