@@ -355,35 +355,46 @@ setup_gnome() {
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
 
-    extstoinstall=(AlphabeticalAppGrid@stuarthayhurst appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com clipboard-indicator@tudmotu.com status-area-horizontal-spacing@mathematical.coffee.gmail.com arch-update@RaphaelRochet)
+    declare -A extstoinstall
+    extstoinstall[1]=AlphabeticalAppGrid@stuarthayhurst
+    extstoinstall[2]=appindicatorsupport@rgcjonas.gmail.com
+    extstoinstall[3]=dash-to-dock@micxgx.gmail.com
+    extstoinstall[4]=clipboard-indicator@tudmotu.com
+    extstoinstall[5]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
+    extstoinstall[6]=xwayland-indicator@swsnr.de      
+    command_exists pacman && extstoinstall[arch]=arch-update@RaphaelRochet
+
+    extensiondir=~/.local/share/gnome-shell/extensions
     for i in "${extstoinstall[@]}"; do      
         ~/.local/bin/gnome-extensions-cli --filesystem install "$i"; 
-        glib-compile-schemas ~/.local/share/gnome-shell/extensions/"$i"/schemas/;
+        glib-compile-schemas $extensiondir/"$i"/schemas/;
     done
     ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
     # dash to dock
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock apply-custom-theme true
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen true
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock click-action minimize
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock require-pressure-to-show false
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/dash-to-dock@micxgx.gmail.com/schemas/ set org.gnome.shell.extensions.dash-to-dock hot-keys false
-
-    # arch update
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update always-visible false
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update check-cmd '/usr/bin/checkupdates'
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update update-cmd 'kgx -e '\''/bin/sh -c "sudo pacman -Syu ; echo Done - Press enter to exit; read _" '\'''
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/arch-update@RaphaelRochet/schemas/ set org.gnome.shell.extensions.arch-update use-buildin-icons true
+    gsettings --schemadir $extensiondir/"${extstoinstall[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock apply-custom-theme true
+    gsettings --schemadir $extensiondir/"${extstoinstall[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen true
+    gsettings --schemadir $extensiondir/"${extstoinstall[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock click-action minimize
+    gsettings --schemadir $extensiondir/"${extstoinstall[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
+    gsettings --schemadir $extensiondir/"${extstoinstall[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock require-pressure-to-show false
+    gsettings --schemadir $extensiondir/"${extstoinstall[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock hot-keys false
 
     # clipboard indicator
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator cache-size 1
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator clear-on-boot true
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator enable-keybindings false
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com/schemas/ set org.gnome.shell.extensions.clipboard-indicator history-size 10
+    gsettings --schemadir $extensiondir/"${extstoinstall[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator cache-size 1
+    gsettings --schemadir $extensiondir/"${extstoinstall[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator clear-on-boot true
+    gsettings --schemadir $extensiondir/"${extstoinstall[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator enable-keybindings false
+    gsettings --schemadir $extensiondir/"${extstoinstall[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator history-size 10
 
     # status area
-    gsettings --schemadir ~/.local/share/gnome-shell/extensions/status-area-horizontal-spacing@mathematical.coffee.gmail.com/schemas/ set org.gnome.shell.extensions.status-area-horizontal-spacing hpadding 0
+    gsettings --schemadir $extensiondir/"${extstoinstall[5]}"/schemas/ set org.gnome.shell.extensions.status-area-horizontal-spacing hpadding 0
+
+    # arch update
+    if [[ -v extstoinstall[arch] ]]; then
+        gsettings --schemadir $extensiondir/"${extstoinstall[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update always-visible false
+        gsettings --schemadir $extensiondir/"${extstoinstall[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update check-cmd '/usr/bin/checkupdates'
+        gsettings --schemadir $extensiondir/"${extstoinstall[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update update-cmd 'kgx -e '\''/bin/sh -c "sudo pacman -Syu ; echo Done - Press enter to exit; read _" '\'''
+        gsettings --schemadir $extensiondir/"${extstoinstall[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update use-buildin-icons true
+    fi
 
     gsettings set org.gnome.shell disable-user-extensions false
 }
