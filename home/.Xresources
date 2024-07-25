@@ -11,4 +11,3 @@ Xft.rgba: rgb
 *.vt100.faceName: monospace:size=12:antialias=true
 *.vt100.foreground: #cdd6f4
 *.vt100.background: #1e1e2e
-
