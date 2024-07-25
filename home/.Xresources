@@ -11,3 +11,20 @@ Xft.rgba: rgb
 *.vt100.faceName: monospace:size=12:antialias=true
 *.vt100.foreground: #cdd6f4
 *.vt100.background: #1e1e2e
+*.vt100.color0: #45475a
+*.vt100.color1: #f38ba8
+*.vt100.color2: #a6e3a1
+*.vt100.color3: #f9e2af
+*.vt100.color4: #89b4fa
+*.vt100.color5: #f5c2e7
+*.vt100.color6: #94e2d5
+*.vt100.color7: #bac2de
+*.vt100.color8: #585b70
+*.vt100.color9: #f38ba8
+*.vt100.color10: #a6e3a1
+*.vt100.color11: #f9e2af
+*.vt100.color12: #89b4fa
+*.vt100.color13: #f5c2e7
+*.vt100.color14: #94e2d5
+*.vt100.color15: #a6adc8
+
