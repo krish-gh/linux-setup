@@ -3,18 +3,12 @@ Xft.hintstyle: hintslight
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
-*.termName: xterm-256color
 *.vt100.locale: false
 *.vt100.utf8: true
-*.vt100.metaSendsEscape: true
-*.vt100.backarrowKey: false
-*.ttyModes: erase ^?
-*.vt100.saveLines: 4096
 *.vt100.scrollBar: true
-*.vt100.scrollbar.width: 8
+*.vt100.scrollbar.width: 1
 *.vt100.geometry: 100x32
 *.vt100.foreground: #cdd6f4
 *.vt100.background: #1e1e2e
 *.vt100.faceName: monospace:size=12:antialias=true
-*.vt100.font: 6x12
 
