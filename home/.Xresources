@@ -13,8 +13,8 @@ Xft.rgba: rgb
 *.vt100.scrollBar: true
 *.vt100.scrollbar.width: 8
 *.vt100.geometry: 100x32
-*.vt100.foreground: white
-*.vt100.background: black
+*.vt100.foreground: #cdd6f4
+*.vt100.background: #1e1e2e
 *.vt100.faceName: monospace:size=12:antialias=true
 *.vt100.font: 6x12
 
