@@ -3,18 +3,18 @@ Xft.hintstyle: hintslight
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
-XTerm.termName: xterm-256color
-XTerm.vt100.locale: false
-XTerm.vt100.utf8: true
-XTerm.vt100.metaSendsEscape: true
-XTerm.vt100.backarrowKey: false
-XTerm.ttyModes: erase ^?
-XTerm.vt100.saveLines: 4096
-XTerm.vt100.scrollBar: true
-XTerm.vt100.scrollbar.width: 8
-XTerm.vt100.geometry: 100x32
-XTerm.vt100.foreground: white
-XTerm.vt100.background: black
-XTerm.vt100.faceName: monospace:size=12:antialias=true
-XTerm.vt100.font: 6x12
+*.termName: xterm-256color
+*.vt100.locale: false
+*.vt100.utf8: true
+*.vt100.metaSendsEscape: true
+*.vt100.backarrowKey: false
+*.ttyModes: erase ^?
+*.vt100.saveLines: 4096
+*.vt100.scrollBar: true
+*.vt100.scrollbar.width: 8
+*.vt100.geometry: 100x32
+*.vt100.foreground: white
+*.vt100.background: black
+*.vt100.faceName: monospace:size=12:antialias=true
+*.vt100.font: 6x12
 
