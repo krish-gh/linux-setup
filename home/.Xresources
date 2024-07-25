@@ -12,7 +12,7 @@ Xft.rgba: rgb
 *.vt100.scrollbar.foreground: #cdd6f4
 *.vt100.scrollbar.background: #1e1e2e
 *.vt100.geometry: 100x32
-*.vt100.faceName: mono:size=12:antialias=true
+*.vt100.faceName: mono:size=12:antialias=false
 *.vt100.cursorBlink: true
 *.vt100.TrimSelection: true
 *.vt100.translations: #override \n\
