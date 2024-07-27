@@ -13,5 +13,8 @@ VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-x11"
 HYPERV_PACKAGES_TO_INSTALL=""
 FONTS_TO_INSTALL="fonts-noto-{core,color-emoji,extra,mono,ui-core,ui-extra} fonts-{liberation,dejavu,roboto,ubuntu,jetbrains-mono}"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano fastfetch xclip wl-clipboard neovim xterm"
+APP_PACKAGES_TO_INSTALL="firefox{,-locale-en} gnome-keyring seahorse vlc"
+DEV_PACKAGES_TO_INSTALL="git shfmt meld"
+GTK_PACKAGES_TO_INSTALL="qt5-style-kvantum qt6-wayland qt{5,6}ct"
 
 echo -e "Done debian.sh..."
