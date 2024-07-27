@@ -40,6 +40,10 @@ UNINSTALL_CMD="" #override from distro specific script
 
 REQUIREMENTS="curl base-devel"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-{firmware,oss,plugins,utils} fprintd"
+INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"
+VMWARE_PACKAGES_TO_INSTALL="xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools"
+VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-utils"
+HYPERV_PACKAGES_TO_INSTALL="hyperv"
 FONTS_TO_INSTALL="noto-fonts{,-extra,-emoji} ttf-{liberation,dejavu,roboto,ubuntu-font-family,nerd-fonts-symbols-mono,jetbrains-mono}"
 TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting starship fastfetch xclip wl-clipboard neovim xterm"
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox{,-i18n-en-gb,-i18n-en-us} gnome-keyring seahorse vlc"
@@ -86,21 +90,21 @@ setup_system() {
     case $SYSTEM_TO_SETUP in
 
     intel)
-        install "intel-media-driver vulkan-intel"
+        install "$INTEL_PACKAGES_TO_INSTALL"
         ;;
 
     vmware)
-        install "xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools"
+        install "$VMWARE_PACKAGES_TO_INSTALL"
         sudo systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service
         ;;
 
     vbox)
-        install "virtualbox-guest-utils"
+        install "$VBOX_PACKAGES_TO_INSTALL"
         sudo systemctl enable --now vboxservice.service
         ;;
 
     hyperv)
-        install "hyperv"
+        install "$HYPERV_PACKAGES_TO_INSTALL"
         sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
         ;;
 
