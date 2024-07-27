@@ -15,9 +15,9 @@ alias b='pacman -Qqen > pkglist.txt && echo >> pkglist.txt && pacman -Qm >> pkgl
 alias c='paccache -r; yay -Yc; yay -Sc; yay -Rns $(yay -Qtdq)'
 alias x='exit'
 alias {gte,gted}='gnome-text-editor'
+alias neofetch='fastfetch'
 alias nf='neofetch'
 alias ff='fastfetch'
-#alias sf='screenfetch'
 alias vim='nvim'
 alias vimdiff='nvim -d'
 
