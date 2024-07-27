@@ -12,5 +12,6 @@ VMWARE_PACKAGES_TO_INSTALL="xserver-xorg-video-vmware open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-x11"
 HYPERV_PACKAGES_TO_INSTALL=""
 FONTS_TO_INSTALL="fonts-noto-{core,color-emoji,extra,mono,ui-core,ui-extra} fonts-{liberation,dejavu,roboto,ubuntu,jetbrains-mono}"
+TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano fastfetch xclip wl-clipboard neovim xterm"
 
 echo -e "Done debian.sh..."
