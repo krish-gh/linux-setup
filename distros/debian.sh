@@ -11,5 +11,6 @@ INTEL_PACKAGES_TO_INSTALL="intel-media-va-driver-non-free va-driver-all"
 VMWARE_PACKAGES_TO_INSTALL="xserver-xorg-video-vmware open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-x11"
 HYPERV_PACKAGES_TO_INSTALL=""
+FONTS_TO_INSTALL="fonts-noto-{core,color-emoji,extra,mono,ui-core,ui-extra} fonts-{liberation,dejavu,roboto,ubuntu,jetbrains-mono}"
 
 echo -e "Done debian.sh..."
