@@ -9,8 +9,6 @@ Xft.rgba: rgb
 *.vt100.scrollBar: false
 *.vt100.rightScrollBar: false
 *.vt100.scrollbar.width: 1
-*.vt100.scrollbar.foreground: #cdd6f4
-*.vt100.scrollbar.background: #1e1e2e
 *.vt100.geometry: 100x32
 *.vt100.faceName: mono:size=12:antialias=false
 *.vt100.cursorBlink: true
@@ -23,6 +21,8 @@ Xft.rgba: rgb
 *background: #1E1E2E
 *foreground: #CDD6F4
 *cursorColor: #F5E0DC
+*scrollbar.foreground: #CDD6F4
+*scrollbar.background: #1E1E2E
 
 ! black
 *color0: #45475A
