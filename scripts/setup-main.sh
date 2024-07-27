@@ -105,7 +105,7 @@ setup_system() {
 
     # wallpaper
     mkdir -p ~/.local/share/backgrounds
-    download_file ~/.local/share/backgrounds/${DISTRO}.png ${BASE_REPO_URL}home/.local/share/backgrounds/${DISTRO}.png
+    download_file ~/.local/share/backgrounds/$DISTRO.png ${BASE_REPO_URL}home/.local/share/backgrounds/$DISTRO.png
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
@@ -144,7 +144,7 @@ configure_terminal() {
     echo -e "Configuring shell stuffs..."
     install "$TERM_PACKAGES_TO_INSTALL"
     #starship preset no-nerd-font -o ~/.config/starship.toml
-    download_file ~/.aliases ${BASE_REPO_URL}home/${DISTRO}/.aliases
+    download_file ~/.aliases ${BASE_REPO_URL}/distros/$DISTRO.aliases
     bashrcAppend="$(
         grep ".aliases" ~/.bashrc >/dev/null 2>&1
         echo $?
