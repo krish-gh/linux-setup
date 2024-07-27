@@ -49,10 +49,8 @@ TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting sta
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox{,-i18n-en-gb,-i18n-en-us} gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="git github-cli shfmt meld"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
-
-PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem gedit vim neofetch gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} yelp"
-
 GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
+PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem gedit vim neofetch gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} yelp"
 
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
