@@ -21,6 +21,7 @@ if ! command_exists pacman; then
 fi
 
 DISTRO=arch
+DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
@@ -45,13 +46,13 @@ GUI_TEXT_EDITOR="OVERRIDE WITH DESKTOP SPECIFIC EDITOR"
 
 # override with distro and desktop specific stuffs
 download_file ~/$DISTRO.sh ${BASE_REPO_URL}distros/$DISTRO.sh
-download_file ~/"$DESKTOP_SESSION".sh ${BASE_REPO_URL}desktop/"$DESKTOP_SESSION".sh
+download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
 # shellcheck disable=SC1090
 source ~/$DISTRO.sh
 # shellcheck disable=SC1090
-source ~/"$DESKTOP_SESSION".sh
+source ~/"$DESKTOP".sh
 rm -rf ~/$DISTRO.sh
-rm -rf ~/"$DESKTOP_SESSION".sh
+rm -rf ~/"$DESKTOP".sh
 
 refresh_package_sources() {
     $REFRESH_CMD
@@ -249,7 +250,7 @@ setup_pacman() {
         /KeepNumPackages/c\KeepNumPackages = 1
         /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
 
-    if [[ $DESKTOP_SESSION == "gnome" ]]; then
+    if [[ $DESKTOP == "gnome" ]]; then
         echo -e "Installing some gnome stuffs from chaotic-aur"
         ! command_exists flatpak && install "extension-manager"
         if [[ $TERMINAL_TO_INSTALL != none ]]; then
@@ -448,7 +449,7 @@ setup_system
 improve_font
 configure_terminal
 setup_gtk
-[[ $DESKTOP_SESSION == "gnome" ]] && setup_gnome
+[[ $DESKTOP == "gnome" ]] && setup_gnome
 setup_apps
 command_exists pacman && setup_pacman
 
