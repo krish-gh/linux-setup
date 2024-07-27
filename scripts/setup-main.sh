@@ -14,9 +14,9 @@ DISTRO=arch
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
-REFRESH_CMD="sudo pacman -Syu --noconfirm"
-INSTALL_CMD="sudo pacman -S --noconfirm --needed"
-UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
+REFRESH_CMD="OVERRIDE WITH DISTRO SPECIFIC CMD"
+INSTALL_CMD="OVERRIDE WITH DISTRO SPECIFIC CMD"
+UNINSTALL_CMD="OVERRIDE WITH DISTRO SPECIFIC CMD"
 
 REQUIREMENTS="curl base-devel"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-{firmware,oss,plugins,utils} fprintd"
@@ -31,7 +31,11 @@ PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem gedit vim neofetc
 GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
 
 TERMINAL_TO_INSTALL=kitty
-GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
+GUI_TEXT_EDITOR="OVERRIDE WITH DESKTOP SPECIFIC EDITOR"
+
+# override with distro and desktop specific stuffs
+sh -c "$(curl -fsSL ${BASE_REPO_URL}/distros/$DISTRO.sh)"
+sh -c "$(curl -fsSL ${BASE_REPO_URL}/desktop/"$DESKTOP_SESSION".sh)"
 
 refresh_package_sources() {
     $REFRESH_CMD
