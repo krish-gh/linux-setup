@@ -158,8 +158,8 @@ configure_terminal() {
     download_file ~/.config/nano/nanorc ${BASE_REPO_URL}home/.config/nano/nanorc
 
     # fastfetch
-    mkdir p ~/.config/fastfetch
-    download_file ~/.config/fastfetch/config.jsonc ${BASE_REPO_URL}home/.config/fastfetch/config.jsonc
+    #mkdir p ~/.config/fastfetch
+    #download_file ~/.config/fastfetch/config.jsonc ${BASE_REPO_URL}home/.config/fastfetch/config.jsonc
 
     echo -e "Installing terminal $TERMINAL_TO_INSTALL..."
     case $TERMINAL_TO_INSTALL in
