@@ -38,7 +38,7 @@ REFRESH_CMD="" #override from distro specific script
 INSTALL_CMD="" #override from distro specific script
 UNINSTALL_CMD="" #override from distro specific script
 
-REQUIREMENTS="curl base-devel"
+REQUIREMENTS="curl base-devel xorg-xrdb"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-{firmware,oss,plugins,utils} fprintd"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"
 VMWARE_PACKAGES_TO_INSTALL="xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools"
@@ -149,7 +149,6 @@ improve_font() {
     download_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_URL}home/.config/fontconfig/fonts.conf
     download_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_URL}home/.config/fontconfig/conf.d/20-no-embedded.conf
     download_file ~/.Xresources ${BASE_REPO_URL}home/.Xresources
-    install "xorg-xrdb"
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
