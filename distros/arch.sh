@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 # shellcheck disable=SC2034
 REFRESH_CMD="sudo pacman -Syu --noconfirm"
 INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
-printf "Done arch.sh..."
+declare -A pkgmap
+
+echo -e "Done arch.sh..."
