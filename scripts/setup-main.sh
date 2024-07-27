@@ -167,6 +167,7 @@ improve_font() {
 configure_terminal() {
     echo -e "Configuring shell stuffs..."
     install "$TERM_PACKAGES_TO_INSTALL"
+    ! command_exists starship && curl -sS https://starship.rs/install.sh | sh -s -- -y
     #starship preset no-nerd-font -o ~/.config/starship.toml
     download_file ~/.aliases ${BASE_REPO_URL}distros/$DISTRO.aliases
     bashrcAppend="$(
