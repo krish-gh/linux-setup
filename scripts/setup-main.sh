@@ -25,9 +25,9 @@ TERM_PACKAGES_TO_INSTALL="diffutils bash-completion nano-syntax-highlighting sta
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox{,-i18n-en-gb,-i18n-en-us} gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="git github-cli shfmt meld"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
+
 PACKAGES_TO_REMOVE="snapshot baobab simple-scan epiphany totem gedit vim neofetch gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} yelp"
 
-gnome=1
 GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
 
 TERMINAL_TO_INSTALL=kitty
@@ -239,7 +239,7 @@ setup_pacman() {
         /KeepNumPackages/c\KeepNumPackages = 1
         /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
 
-    if [[ ${gnome} -eq 1 ]]; then
+    if [[ $DESKTOP_SESSION == "gnome" ]]; then
         echo -e "Installing some gnome stuffs from chaotic-aur"
         ! command_exists flatpak && install "extension-manager"
         if [[ $TERMINAL_TO_INSTALL != none ]]; then
@@ -337,7 +337,7 @@ setup_gnome() {
     gsettings set org.gnome.Console audible-bell false
     gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
     # Below is to avoid updating font during setup as font starts looking bad
-    [[ "$TERM_PROGRAM" != kgx ]] && gsettings set org.gnome.Console use-system-font false
+    [[ "$TERM_PROGRAM" != "kgx" ]] && gsettings set org.gnome.Console use-system-font false
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
@@ -438,12 +438,12 @@ setup_system
 improve_font
 configure_terminal
 setup_gtk
-[[ ${gnome} == 1 ]] && setup_gnome
+[[ $DESKTOP_SESSION == "gnome" ]] && setup_gnome
 setup_apps
 command_exists pacman && setup_pacman
 
 echo -e ""
 read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
-[[ "$TERM_PROGRAM" == kgx ]] && gsettings set org.gnome.Console use-system-font false
+[[ "$TERM_PROGRAM" == "kgx" ]] && gsettings set org.gnome.Console use-system-font false
 
 echo -e "Done...Reboot..."
