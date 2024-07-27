@@ -4,6 +4,16 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# arg1 = destination path, arg2 = source path
+download_file() {
+    curl -o "$1" "$2"
+}
+
+# arg1 = source path
+download_content() {
+    curl "$1"
+}
+
 # Check if the distro is (based on) Arch Linux - temporary until other distro support is added
 if ! command_exists pacman; then
     echo "You are not running an Arch-based Linux distrbution..."
@@ -34,8 +44,8 @@ TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="OVERRIDE WITH DESKTOP SPECIFIC EDITOR"
 
 # override with distro and desktop specific stuffs
-curl -o ~/$DISTRO.sh ${BASE_REPO_URL}distros/$DISTRO.sh
-curl -o ~/"$DESKTOP_SESSION".sh ${BASE_REPO_URL}desktop/"$DESKTOP_SESSION".sh
+download_file ~/$DISTRO.sh ${BASE_REPO_URL}distros/$DISTRO.sh
+download_file ~/"$DESKTOP_SESSION".sh ${BASE_REPO_URL}desktop/"$DESKTOP_SESSION".sh
 # shellcheck disable=SC1090
 source ~/$DISTRO.sh
 # shellcheck disable=SC1090
@@ -59,16 +69,6 @@ uninstall() {
     # shellcheck disable=SC2207
     pkgs=($(eval echo "$1"))
     for i in "${pkgs[@]}"; do $UNINSTALL_CMD "$i"; done
-}
-
-# arg1 = destination path, arg2 = source path
-download_file() {
-    curl -o "$1" "$2"
-}
-
-# arg1 = source path
-download_content() {
-    curl "$1"
 }
 
 setup_system() {
