@@ -3,7 +3,7 @@
 # Shell customization
 HISTSIZE=20
 HISTFILESIZE=20
-export HISTCONTROL="erasedups:ignorespace"
+export HISTCONTROL="ignoreboth"
 
 # Mimic Zsh run-help ability
 #run-help() { help "$READLINE_LINE" 2>/dev/null || man "$READLINE_LINE"; }
