@@ -53,9 +53,9 @@ GUI_TEXT_EDITOR="" #override from desktop specific script
 download_file ~/"$DISTRO".sh ${BASE_REPO_URL}distros/"$DISTRO".sh
 download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
 # shellcheck disable=SC1090
-source ~/"$DISTRO".sh
+. ~/"$DISTRO".sh
 # shellcheck disable=SC1090
-source ~/"$DESKTOP".sh
+. ~/"$DESKTOP".sh
 rm -rf ~/"$DISTRO".sh
 rm -rf ~/"$DESKTOP".sh
 echo -e ""
