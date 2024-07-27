@@ -34,8 +34,10 @@ TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="OVERRIDE WITH DESKTOP SPECIFIC EDITOR"
 
 # override with distro and desktop specific stuffs
-sh -c "$(curl -fsSL ${BASE_REPO_URL}/distros/$DISTRO.sh)"
-sh -c "$(curl -fsSL ${BASE_REPO_URL}/desktop/"$DESKTOP_SESSION".sh)"
+# shellcheck disable=SC1090
+source ${BASE_REPO_URL}/distros/$DISTRO.sh
+# shellcheck disable=SC1090
+source ${BASE_REPO_URL}/desktop/"$DESKTOP_SESSION".sh
 
 refresh_package_sources() {
     $REFRESH_CMD
