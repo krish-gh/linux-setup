@@ -37,11 +37,11 @@ GUI_TEXT_EDITOR="OVERRIDE WITH DESKTOP SPECIFIC EDITOR"
 curl -o $DISTRO.sh ${BASE_REPO_URL}distros/$DISTRO.sh
 # shellcheck disable=SC1090
 source $DISTRO.sh
-rm -rf $DISTRO.sh
+#rm -rf $DISTRO.sh
 curl -o "$DESKTOP_SESSION".sh ${BASE_REPO_URL}desktop/"$DESKTOP_SESSION".sh
 # shellcheck disable=SC1090
 source "$DESKTOP_SESSION".sh
-rm -rf "$DESKTOP_SESSION".sh
+#rm -rf "$DESKTOP_SESSION".sh
 
 refresh_package_sources() {
     $REFRESH_CMD
