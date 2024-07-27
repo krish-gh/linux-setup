@@ -33,6 +33,7 @@ fi
 DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
+declare -A pkgmap #override from distro specific script
 
 REFRESH_CMD="OVERRIDE WITH DISTRO SPECIFIC CMD"
 INSTALL_CMD="OVERRIDE WITH DISTRO SPECIFIC CMD"
