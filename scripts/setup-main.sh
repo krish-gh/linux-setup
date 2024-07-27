@@ -58,7 +58,7 @@ source ~/"$DISTRO".sh
 source ~/"$DESKTOP".sh
 rm -rf ~/"$DISTRO".sh
 rm -rf ~/"$DESKTOP".sh
-echo -e
+echo -e ""
 
 refresh_package_sources() {
     $REFRESH_CMD
