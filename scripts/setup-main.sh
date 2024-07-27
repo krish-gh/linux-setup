@@ -20,7 +20,16 @@ if ! command_exists pacman; then
     exit 1
 fi
 
-DISTRO=arch
+DISTRO=''
+command_exists pacman && DISTRO=arch
+command_exists apt && DISTRO=debian
+command_exists dnf && DISTRO=fedora
+
+if [[ $DISTRO == '' ]]; then
+    echo "You are not running supported Linux distrbution..."
+    exit 1
+fi
+
 DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
@@ -45,13 +54,13 @@ TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="OVERRIDE WITH DESKTOP SPECIFIC EDITOR"
 
 # override with distro and desktop specific stuffs
-download_file ~/$DISTRO.sh ${BASE_REPO_URL}distros/$DISTRO.sh
+download_file ~/"$DISTRO".sh ${BASE_REPO_URL}distros/"$DISTRO".sh
 download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
 # shellcheck disable=SC1090
-source ~/$DISTRO.sh
+source ~/"$DISTRO".sh
 # shellcheck disable=SC1090
 source ~/"$DESKTOP".sh
-rm -rf ~/$DISTRO.sh
+rm -rf ~/"$DISTRO".sh
 rm -rf ~/"$DESKTOP".sh
 
 refresh_package_sources() {
@@ -377,7 +386,7 @@ setup_gnome() {
     exts[4]=clipboard-indicator@tudmotu.com
     exts[5]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
     exts[6]=xwayland-indicator@swsnr.de      
-    command_exists pacman && exts[arch]=arch-update@RaphaelRochet
+    [[ $DISTRO == arch ]] && exts[arch]=arch-update@RaphaelRochet
 
     extdir=~/.local/share/gnome-shell/extensions
     for i in "${exts[@]}"; do      
