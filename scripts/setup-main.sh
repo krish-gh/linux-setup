@@ -173,6 +173,15 @@ configure_terminal() {
     # nano
     mkdir -p ~/.config/nano
     download_file ~/.config/nano/nanorc ${BASE_REPO_URL}home/.config/nano/nanorc
+    if [[ -d "/usr/share/nano-syntax-highlighting" ]]; then
+        nanorcAppend="$(
+            grep "nano-syntax-highlighting" ~/.config/nano/nanorc >/dev/null 2>&1
+            echo $?
+        )"
+        if [[ "${nanorcAppend}" -ne 0 ]]; then
+            echo 'include "/usr/share/nano-syntax-highlighting/*.nanorc"' >>~/.config/nano/nanorc
+        fi
+    fi
 
     # fastfetch
     #mkdir p ~/.config/fastfetch
