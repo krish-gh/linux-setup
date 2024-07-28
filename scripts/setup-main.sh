@@ -228,6 +228,7 @@ configure_terminal() {
     # gnome terminal
     if command_exists gnome-terminal; then
         gsettings set org.gnome.Terminal.Legacy.Settings always-check-default-terminal false
+        gsettings set org.gnome.Terminal.Legacy.Settings default-show-menubar false
         tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ visible-name "$(whoami)"
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ audible-bell false
