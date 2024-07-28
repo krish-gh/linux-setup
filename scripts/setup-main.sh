@@ -225,6 +225,19 @@ configure_terminal() {
         [[ "$TERM_PROGRAM" != "kgx" ]] && gsettings set org.gnome.Console use-system-font false
     fi
 
+    # gnome terminal
+    if command_exists gnome-terminal; then
+        gsettings set org.gnome.Terminal.Legacy.Settings always-check-default-terminal false
+        tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ visible-name "$(whoami)"
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ audible-bell false
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ bold-is-bright true
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ default-size-columns 120
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ default-size-rows 36
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ font 'JetBrains Mono 12'
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ use-system-font false
+    fi
+
     #source ~/.bashrc
 }
 
