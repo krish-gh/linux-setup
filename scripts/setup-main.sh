@@ -488,6 +488,17 @@ setup_gnome() {
 
 setup_cinnamon() {
     echo -e "Configuring cinnamon stuffs..."
+
+    gsettings set org.cinnamon.desktop.wm.preferences num-workspaces 1
+
+    # xed
+    download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
+    gsettings set org.x.editor.preferences.editor display-line-numbers true
+    gsettings set org.x.editor.preferences.editor editor-font 'JetBrains Mono 12'
+    gsettings set org.x.editor.preferences.editor prefer-dark-theme true
+    gsettings set org.x.editor.preferences.editor scheme catppuccin-mocha
+    gsettings set org.x.editor.preferences.editor use-default-font false
+
 }
 
 setup_apps() {
