@@ -519,10 +519,10 @@ setup_apps() {
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
-
-    echo -e "Removing not needed apps..."
-    uninstall "$PACKAGES_TO_REMOVE"
 }
+
+echo -e "Removing not needed packages..."
+uninstall "$PACKAGES_TO_REMOVE"
 
 refresh_package_sources
 
