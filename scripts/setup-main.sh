@@ -487,6 +487,19 @@ setup_cinnamon() {
     echo -e "Configuring cinnamon stuffs..."
 
     gsettings set org.cinnamon.desktop.wm.preferences num-workspaces 1
+    gsettings set org.cinnamon.theme name Mint-Y-Dark-Blue
+    gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark-Blue
+    gsettings set org.x.apps.portal color-scheme prefer-dark
+    gsettings set org.cinnamon.desktop.interface text-scaling-factor 1.3
+    gsettings set org.cinnamon.desktop.privacy remember-recent-files false
+    gsettings set org.cinnamon.sounds login-enabled false
+    gsettings set org.cinnamon.sounds logout-enabled false
+    gsettings set org.cinnamon.sounds notification-enabled false
+    gsettings set org.cinnamon.sounds plug-enabled false
+    gsettings set org.cinnamon.sounds switch-enabled false
+    gsettings set org.cinnamon.sounds tile-enabled false
+    gsettings set org.cinnamon.sounds unplug-enabled false
+
 
     # xed
     download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
