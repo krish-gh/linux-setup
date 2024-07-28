@@ -3,4 +3,4 @@
 # shellcheck disable=SC2034
 GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
 
-printf "Done gnome.sh..."
+echo -e "Done gnome.sh..."
