@@ -63,7 +63,7 @@ rm -rf ~/"$DESKTOP".sh
 echo -e ""
 
 refresh_package_sources() {
-    eval "${REFRESH_CMD}"
+    eval "$REFRESH_CMD"
 }
 
 install() {
