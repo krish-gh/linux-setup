@@ -217,6 +217,14 @@ configure_terminal() {
         ;;
     esac
 
+    # gnome console
+    if command_exists kgx; then
+        gsettings set org.gnome.Console audible-bell false
+        gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
+        # Below is to avoid updating font during setup as font starts looking bad
+        [[ "$TERM_PROGRAM" != "kgx" ]] && gsettings set org.gnome.Console use-system-font false
+    fi
+
     #source ~/.bashrc
 }
 
@@ -360,12 +368,6 @@ setup_gnome() {
     #sudo mkdir -p /etc/dconf/db/gdm.d
     #download_file 95-gdm-settings ${BASE_REPO_URL}system/etc/dconf/db/gdm.d/95-gdm-settings
     #sudo mv -f 95-gdm-settings /etc/dconf/db/gdm.d/
-
-    # console
-    gsettings set org.gnome.Console audible-bell false
-    gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
-    # Below is to avoid updating font during setup as font starts looking bad
-    [[ "$TERM_PROGRAM" != "kgx" ]] && gsettings set org.gnome.Console use-system-font false
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
