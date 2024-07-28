@@ -49,6 +49,8 @@ PACKAGES_TO_REMOVE=""         #override from distro specific script
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
+read
+
 # override with distro and desktop specific stuffs
 download_file ~/"$DISTRO".sh ${BASE_REPO_URL}distros/"$DISTRO".sh
 download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
@@ -61,8 +63,6 @@ source ~/"$DESKTOP".sh
 rm -rf ~/"$DISTRO".sh
 rm -rf ~/"$DESKTOP".sh
 echo -e ""
-
-read
 
 refresh_package_sources() {
     $REFRESH_CMD
