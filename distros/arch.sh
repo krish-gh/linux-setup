@@ -17,6 +17,6 @@ APP_PACKAGES_TO_INSTALL="pacman-contrib firefox{,-i18n-en-gb,-i18n-en-us} gnome-
 DEV_PACKAGES_TO_INSTALL="git github-cli shfmt meld"
 GTK_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{themes-extra,menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
-PACKAGES_TO_REMOVE="baobab celluloid epiphany gedit rhythmbox simple-scan snapshot totem vim neofetch gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} thunderbird yelp"
+PACKAGES_TO_REMOVE="baobab celluloid epiphany gedit rhythmbox simple-scan snapshot thunderbird totem vim neofetch gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs,terminal} yelp"
 
 echo -e "Done arch.sh..."
