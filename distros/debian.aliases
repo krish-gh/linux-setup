@@ -2,7 +2,7 @@
 alias sudo='sudo -E -H GTK_THEME=Adwaita:dark '
 alias e='systemctl --failed --no-pager && journalctl -p 3 -b'
 alias cls='clear'
-alias u='sudo apt update && sudo apt full-upgrade'
+alias u='sudo apt update && sudo apt full-upgrade; command -v flatpak &> /dev/null && flatpak update; command -v pipx &> /dev/null && pipx upgrade-all'
 alias uu='sudo nala update && sudo nala upgrade'
 alias i='sudo apt install'
 alias ii='sudo nala install'
