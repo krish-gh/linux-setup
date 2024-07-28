@@ -372,6 +372,7 @@ setup_gnome() {
     gsettings set org.gnome.TextEditor custom-font 'JetBrains Mono 12'
     gsettings set org.gnome.TextEditor use-system-font false
     gsettings set org.gnome.TextEditor show-line-numbers true
+    gsettings set org.gnome.TextEditor spellcheck false
     gsettings set org.gnome.TextEditor style-scheme catppuccin_mocha
 
     # files
