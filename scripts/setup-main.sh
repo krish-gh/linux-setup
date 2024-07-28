@@ -26,6 +26,13 @@ fi
 
 DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
+
+echo -e "================================="
+echo -e "DISTRO TYPE: $DISTRO_TYPE"
+echo -e "DESKTOP: $DESKTOP"
+echo -e "SYSTEM: $SYSTEM_TO_SETUP"
+echo -e "================================="
+
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
 REFRESH_CMD=""   #override from DISTRO_TYPE specific script
