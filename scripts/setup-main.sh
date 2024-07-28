@@ -14,12 +14,12 @@ download_content() {
     curl "$1?$(date +%s)"
 }
 
-DISTRO=''
-command_exists pacman && DISTRO=arch
-command_exists apt && DISTRO=debian
-#command_exists dnf && DISTRO=fedora
+DISTRO_TYPE=''
+command_exists pacman && DISTRO_TYPE=arch
+command_exists apt && DISTRO_TYPE=debian
+#command_exists dnf && DISTRO_TYPE=fedora
 
-if [[ $DISTRO == '' ]]; then
+if [[ $DISTRO_TYPE == '' ]]; then
     echo "You are not running supported Linux distrbution..."
     exit 1
 fi
@@ -28,37 +28,37 @@ DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
-REFRESH_CMD=""   #override from distro specific script
-INSTALL_CMD=""   #override from distro specific script
-UNINSTALL_CMD="" #override from distro specific script
+REFRESH_CMD=""   #override from DISTRO_TYPE specific script
+INSTALL_CMD=""   #override from DISTRO_TYPE specific script
+UNINSTALL_CMD="" #override from DISTRO_TYPE specific script
 
-REQUIREMENTS=""               #override from distro specific script
-SYSTEM_PACKAGES_TO_INSTALL="" #override from distro specific script
-INTEL_PACKAGES_TO_INSTALL=""  #override from distro specific script
-VMWARE_PACKAGES_TO_INSTALL="" #override from distro specific script
-VBOX_PACKAGES_TO_INSTALL=""   #override from distro specific script
-HYPERV_PACKAGES_TO_INSTALL="" #override from distro specific script
-FONTS_TO_INSTALL=""           #override from distro specific script
-TERM_PACKAGES_TO_INSTALL=""   #override from distro specific script
-APP_PACKAGES_TO_INSTALL=""    #override from distro specific script
-DEV_PACKAGES_TO_INSTALL=""    #override from distro specific script
-GTK_PACKAGES_TO_INSTALL=""    #override from distro specific script
-GNOME_PACKAGES_TO_INSTALL=""  #override from distro specific script
-PACKAGES_TO_REMOVE=""         #override from distro specific script
+REQUIREMENTS=""               #override from DISTRO_TYPE specific script
+SYSTEM_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
+INTEL_PACKAGES_TO_INSTALL=""  #override from DISTRO_TYPE specific script
+VMWARE_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
+VBOX_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
+HYPERV_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
+FONTS_TO_INSTALL=""           #override from DISTRO_TYPE specific script
+TERM_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
+APP_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
+DEV_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
+GTK_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
+GNOME_PACKAGES_TO_INSTALL=""  #override from DISTRO_TYPE specific script
+PACKAGES_TO_REMOVE=""         #override from DISTRO_TYPE specific script
 
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
-# override with distro and desktop specific stuffs
-download_file ~/"$DISTRO".sh ${BASE_REPO_URL}distros/"$DISTRO".sh
+# override with DISTRO_TYPE and desktop specific stuffs
+download_file ~/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
 download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
-chmod +x ~/"$DISTRO".sh
+chmod +x ~/"$DISTRO_TYPE".sh
 chmod +x ~/"$DESKTOP".sh
 # shellcheck disable=SC1090
-source ~/"$DISTRO".sh
+source ~/"$DISTRO_TYPE".sh
 # shellcheck disable=SC1090
 source ~/"$DESKTOP".sh
-rm -rf ~/"$DISTRO".sh
+rm -rf ~/"$DISTRO_TYPE".sh
 rm -rf ~/"$DESKTOP".sh
 echo -e ""
 
@@ -124,7 +124,7 @@ setup_system() {
 
     # wallpaper
     mkdir -p ~/.local/share/backgrounds
-    download_file ~/.local/share/backgrounds/$DISTRO.png ${BASE_REPO_URL}home/.local/share/backgrounds/$DISTRO.png
+    download_file ~/.local/share/backgrounds/$DISTRO_TYPE.png ${BASE_REPO_URL}home/.local/share/backgrounds/$DISTRO_TYPE.png
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
@@ -163,7 +163,7 @@ configure_terminal() {
     install "$TERM_PACKAGES_TO_INSTALL"
     ! command_exists starship && curl -sS https://starship.rs/install.sh | sh -s -- -y
     #starship preset no-nerd-font -o ~/.config/starship.toml
-    download_file ~/.aliases ${BASE_REPO_URL}distros/$DISTRO.aliases
+    download_file ~/.aliases ${BASE_REPO_URL}distros/$DISTRO_TYPE.aliases
     bashrcAppend="$(
         grep "\.aliases" ~/.bashrc >/dev/null 2>&1
         echo $?
@@ -371,8 +371,8 @@ setup_gnome() {
     gsettings set org.gnome.desktop.thumbnailers disable-all true
     gsettings set org.gnome.desktop.peripherals.mouse speed 1
     gsettings set org.gnome.desktop.notifications show-in-lock-screen false
-    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO.png"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO.png"
+    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
     gsettings set org.gnome.desktop.background primary-color '#000000000000'
     gsettings set org.gnome.desktop.background secondary-color '#000000000000'
     gsettings set org.gnome.software screenshot-cache-age-maximum 60
@@ -423,7 +423,7 @@ setup_gnome() {
     exts[4]=clipboard-indicator@tudmotu.com
     exts[5]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
     exts[6]=xwayland-indicator@swsnr.de
-    [[ $DISTRO == arch ]] && exts[arch]=arch-update@RaphaelRochet
+    [[ $DISTRO_TYPE == arch ]] && exts[arch]=arch-update@RaphaelRochet
 
     extdir=~/.local/share/gnome-shell/extensions
     for i in "${exts[@]}"; do
