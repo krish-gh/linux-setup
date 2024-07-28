@@ -6,12 +6,12 @@ command_exists() {
 
 # arg1 = destination path, arg2 = source path
 download_file() {
-    curl -o "$1" "$2"
+    curl -o "$1" "$2?$(date +%s)"
 }
 
 # arg1 = source path
 download_content() {
-    curl "$1"
+    curl "$1?$(date +%s)"
 }
 
 DISTRO=''
