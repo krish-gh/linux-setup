@@ -153,7 +153,7 @@ improve_font() {
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     download_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_URL}home/.config/fontconfig/fonts.conf
-    download_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_URL}home/.config/fontconfig/conf.d/20-no-embedded.conf
+    #download_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_URL}home/.config/fontconfig/conf.d/20-no-embedded.conf
     download_file ~/.Xresources ${BASE_REPO_URL}home/.Xresources
     xrdb -merge ~/.Xresources
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
