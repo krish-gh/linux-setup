@@ -161,8 +161,6 @@ improve_font() {
     sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
     [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]] && sudo ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
     [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
-    gsettings set org.gnome.desktop.interface font-antialiasing rgba
-    gsettings set org.gnome.desktop.interface font-hinting slight
     sudo fc-cache -fv
     fc-cache -fv
 }
@@ -336,6 +334,8 @@ setup_apt() {
 
 setup_gtk() {
     install "$GTK_PACKAGES_TO_INSTALL"
+    gsettings set org.gnome.desktop.interface font-antialiasing rgba
+    gsettings set org.gnome.desktop.interface font-hinting slight
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
     gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
     gsettings set org.gnome.desktop.interface color-scheme prefer-dark
