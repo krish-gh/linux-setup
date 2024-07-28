@@ -28,30 +28,30 @@ DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
-REFRESH_CMD="" #override from distro specific script
-INSTALL_CMD="" #override from distro specific script
+REFRESH_CMD=""   #override from distro specific script
+INSTALL_CMD=""   #override from distro specific script
 UNINSTALL_CMD="" #override from distro specific script
 
-REQUIREMENTS="" #override from distro specific script
+REQUIREMENTS=""               #override from distro specific script
 SYSTEM_PACKAGES_TO_INSTALL="" #override from distro specific script
-INTEL_PACKAGES_TO_INSTALL="" #override from distro specific script
+INTEL_PACKAGES_TO_INSTALL=""  #override from distro specific script
 VMWARE_PACKAGES_TO_INSTALL="" #override from distro specific script
-VBOX_PACKAGES_TO_INSTALL="" #override from distro specific script
+VBOX_PACKAGES_TO_INSTALL=""   #override from distro specific script
 HYPERV_PACKAGES_TO_INSTALL="" #override from distro specific script
-FONTS_TO_INSTALL="" #override from distro specific script
-TERM_PACKAGES_TO_INSTALL="" #override from distro specific script
-APP_PACKAGES_TO_INSTALL="" #override from distro specific script
-DEV_PACKAGES_TO_INSTALL="" #override from distro specific script
-GTK_PACKAGES_TO_INSTALL="" #override from distro specific script
-GNOME_PACKAGES_TO_INSTALL="" #override from distro specific script
-PACKAGES_TO_REMOVE="" #override from distro specific script
+FONTS_TO_INSTALL=""           #override from distro specific script
+TERM_PACKAGES_TO_INSTALL=""   #override from distro specific script
+APP_PACKAGES_TO_INSTALL=""    #override from distro specific script
+DEV_PACKAGES_TO_INSTALL=""    #override from distro specific script
+GTK_PACKAGES_TO_INSTALL=""    #override from distro specific script
+GNOME_PACKAGES_TO_INSTALL=""  #override from distro specific script
+PACKAGES_TO_REMOVE=""         #override from distro specific script
 
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
 # override with distro and desktop specific stuffs
-download_file ~/"$DISTRO".sh ${BASE_REPO_URL}distros/"$DISTRO".sh
-download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
+download_file ~/"$DISTRO".sh ${BASE_REPO_URL}scripts/"$DISTRO".sh
+download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}scripts/"$DESKTOP".sh
 # shellcheck disable=SC1090
 source ~/"$DISTRO".sh
 # shellcheck disable=SC1090
@@ -382,13 +382,13 @@ setup_gnome() {
     exts[3]=dash-to-dock@micxgx.gmail.com
     exts[4]=clipboard-indicator@tudmotu.com
     exts[5]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
-    exts[6]=xwayland-indicator@swsnr.de      
+    exts[6]=xwayland-indicator@swsnr.de
     [[ $DISTRO == arch ]] && exts[arch]=arch-update@RaphaelRochet
 
     extdir=~/.local/share/gnome-shell/extensions
-    for i in "${exts[@]}"; do      
-        ~/.local/bin/gnome-extensions-cli --filesystem install "$i"; 
-        [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/;
+    for i in "${exts[@]}"; do
+        ~/.local/bin/gnome-extensions-cli --filesystem install "$i"
+        [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/
     done
     ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
@@ -460,7 +460,9 @@ setup_apps
 command_exists pacman && setup_pacman
 
 echo -e ""
-read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
-[[ "$TERM_PROGRAM" == "kgx" ]] && gsettings set org.gnome.Console use-system-font false
+if [[ "$TERM_PROGRAM" == "kgx" ]]; then
+    read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
+    gsettings set org.gnome.Console use-system-font false
+fi
 
 echo -e "Done...Reboot..."
