@@ -6,12 +6,12 @@ command_exists() {
 
 # arg1 = destination path, arg2 = source path
 download_file() {
-    curl -o "$1" "$2?$(date +%s)"
+    curl -H 'Cache-Control: no-cache, no-store' -o "$1" "$2"
 }
 
 # arg1 = source path
 download_content() {
-    curl "$1?$(date +%s)"
+    curl -H 'Cache-Control: no-cache, no-store' "$1"
 }
 
 DISTRO=''
