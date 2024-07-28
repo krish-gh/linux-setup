@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # shellcheck disable=SC2034
-REFRESH_CMD="sudo apt update && sudo apt full-upgrade -y"
-INSTALL_CMD="sudo apt install -y"
-UNINSTALL_CMD="sudo apt purge --ignore-missing --auto-remove -y"
+REFRESH_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
+INSTALL_CMD="sudo apt-get install -y"
+UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
 
 REQUIREMENTS="curl build-essential"
 SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers firmware-sof-signed alsa-{firmware-loaders,oss,utils} fprintd libpam-fprintd"
