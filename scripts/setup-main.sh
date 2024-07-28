@@ -62,6 +62,8 @@ rm -rf ~/"$DISTRO".sh
 rm -rf ~/"$DESKTOP".sh
 echo -e ""
 
+read
+
 refresh_package_sources() {
     $REFRESH_CMD
 }
