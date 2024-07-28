@@ -222,7 +222,7 @@ configure_terminal() {
         gsettings set org.gnome.Console audible-bell false
         gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
         # Below is to avoid updating font during setup as font starts looking bad
-        [[ "$TERM_PROGRAM" != "kgx" ]] && gsettings set org.gnome.Console use-system-font false
+        #gsettings set org.gnome.Console use-system-font false
     fi
 
     # gnome terminal
@@ -236,7 +236,8 @@ configure_terminal() {
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ default-size-columns 120
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ default-size-rows 36
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ font 'JetBrains Mono 12'
-        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ use-system-font false
+        # Below is to avoid updating font during setup as font starts looking bad
+        #gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ use-system-font false
         # catppuccin mocha
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ background-color '#1e1e2e'
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ foreground-color '#cdd6f4'
@@ -499,9 +500,8 @@ setup_apps
 command_exists pacman && setup_pacman
 
 echo -e ""
-if [[ "$TERM_PROGRAM" == "kgx" ]]; then
-    read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
-    gsettings set org.gnome.Console use-system-font false
-fi
+read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
+command_exists kgx && gsettings set org.gnome.Console use-system-font false
+command_exists gnome-terminal && gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ use-system-font false
 
 echo -e "Done...Reboot..."
