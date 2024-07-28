@@ -50,16 +50,16 @@ TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
 # override with DISTRO_TYPE and desktop specific stuffs
-download_file ~/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
-download_file ~/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
-chmod +x ~/"$DISTRO_TYPE".sh
-chmod +x ~/"$DESKTOP".sh
+download_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
+download_file /tmp/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
+chmod +x /tmp/"$DISTRO_TYPE".sh
+chmod +x /tmp/"$DESKTOP".sh
 # shellcheck disable=SC1090
-source ~/"$DISTRO_TYPE".sh
+source /tmp/"$DISTRO_TYPE".sh
 # shellcheck disable=SC1090
-source ~/"$DESKTOP".sh
-rm -rf ~/"$DISTRO_TYPE".sh
-rm -rf ~/"$DESKTOP".sh
+source /tmp/"$DESKTOP".sh
+rm -rf /tmp/"$DISTRO_TYPE".sh
+rm -rf /tmp/"$DESKTOP".sh
 echo -e ""
 
 refresh_package_sources() {
@@ -112,10 +112,10 @@ setup_system() {
 
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
-    download_file 999-sysctl.conf ${BASE_REPO_URL}system/etc/sysctl.d/999-sysctl.conf
-    sudo mv -f 999-sysctl.conf /etc/sysctl.d/
-    download_file 00-journal-size.conf ${BASE_REPO_URL}system/etc/systemd/journald.conf.d/00-journal-size.conf
-    sudo mv -f 00-journal-size.conf /etc/systemd/journald.conf.d/
+    download_file /tmp/999-sysctl.conf ${BASE_REPO_URL}system/etc/sysctl.d/999-sysctl.conf
+    sudo mv -f /tmp/999-sysctl.conf /etc/sysctl.d/
+    download_file /tmp/00-journal-size.conf ${BASE_REPO_URL}system/etc/systemd/journald.conf.d/00-journal-size.conf
+    sudo mv -f /tmp/00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 
     # env var
