@@ -4,8 +4,8 @@
 HISTSIZE=20
 HISTFILESIZE=20
 export HISTCONTROL="ignoreboth"
-
 export SYSTEMD_PAGER=
+export PATH="$PATH:~/.local/bin"
 
 # My aliiases
 [[ -f ~/.aliases ]] && . ~/.aliases
