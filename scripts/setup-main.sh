@@ -451,7 +451,7 @@ setup_apps() {
     download_file ~/.config/mimeapps.list ${BASE_REPO_URL}home/.config/mimeapps.list
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
-    ln -s ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
+    ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 
     echo -e "Removing not needed apps..."
     uninstall "$PACKAGES_TO_REMOVE"
