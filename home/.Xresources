@@ -10,7 +10,7 @@ Xft.rgba: rgb
 *.vt100.rightScrollBar: false
 *.vt100.scrollbar.width: 1
 *.vt100.geometry: 100x32
-*.vt100.faceName: JetBrains Mono:size=12:antialias=false
+*.vt100.faceName: JetBrainsMono Nerd Font:size=12:antialias=false
 *.vt100.cursorBlink: true
 *.vt100.TrimSelection: true
 *.vt100.translations: #override \n\

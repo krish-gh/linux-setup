@@ -155,21 +155,18 @@ improve_font() {
     download_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_URL}home/.config/fontconfig/fonts.conf
     #download_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_URL}home/.config/fontconfig/conf.d/20-no-embedded.conf
     download_file ~/.Xresources ${BASE_REPO_URL}home/.Xresources
-    xrdb -merge ~/.Xresources
+    xrdb -merge ~/.Xresources    
+    [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
-    if [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]]; then
-        sudo ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
-    else
+    [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]] && sudo ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
+    if [[ ! -f /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf ]]; then
         echo -e "Installing Nerd Font manually as not found natively..."
         mkdir -p ~/.local/bin
         curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
-        ~/.local/bin/oh-my-posh font install NerdFontsSymbolsOnly
-        download_file ~/.config/fontconfig/conf.d/10-nerd-font-symbols.conf https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/10-nerd-font-symbols.conf
+        ~/.local/bin/oh-my-posh font install JetBrainsMono
     fi
-    
-    [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
     sudo fc-cache -fv
     fc-cache -fv
 }
@@ -239,7 +236,7 @@ configure_terminal() {
     # gnome console
     if command_exists kgx; then
         gsettings set org.gnome.Console audible-bell false
-        gsettings set org.gnome.Console custom-font 'JetBrains Mono 12'
+        gsettings set org.gnome.Console custom-font 'JetBrainsMono Nerd Font 12'
         # Below is to avoid updating font during setup as font starts looking bad
         #gsettings set org.gnome.Console use-system-font false
     fi
@@ -254,7 +251,7 @@ configure_terminal() {
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ bold-is-bright true
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ default-size-columns 120
         gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ default-size-rows 36
-        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ font 'JetBrains Mono 12'
+        gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ font 'JetBrainsMono Nerd Font 12'
         # Below is to avoid updating font during setup as font starts looking bad
         #gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ use-system-font false
         # catppuccin mocha
@@ -423,7 +420,7 @@ setup_gnome() {
 
     # text editor
     gsettings set org.gnome.TextEditor restore-session false
-    gsettings set org.gnome.TextEditor custom-font 'JetBrains Mono 12'
+    gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font 12'
     gsettings set org.gnome.TextEditor use-system-font false
     gsettings set org.gnome.TextEditor show-line-numbers true
     gsettings set org.gnome.TextEditor spellcheck false
@@ -494,7 +491,7 @@ setup_cinnamon() {
     # xed
     download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
     gsettings set org.x.editor.preferences.editor display-line-numbers true
-    gsettings set org.x.editor.preferences.editor editor-font 'JetBrains Mono 12'
+    gsettings set org.x.editor.preferences.editor editor-font 'JetBrainsMono Nerd Font 12'
     gsettings set org.x.editor.preferences.editor prefer-dark-theme true
     gsettings set org.x.editor.preferences.editor scheme catppuccin-mocha
     gsettings set org.x.editor.preferences.editor use-default-font false
