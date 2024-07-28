@@ -161,8 +161,8 @@ improve_font() {
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
     [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]] && sudo ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
-    if [[ ! -f /usr/share/fonts/TTF/JetBrainsMonoNerdFont-Regular.ttf ]]; then
-        echo -e "Installing Nerd Font manually as not found natively..."
+    if [[ $(fc-list | grep -i "JetBrainsMono Nerd") == "" ]]; then
+        echo -e "Installing Nerd Font manually as not found..."
         mkdir -p ~/.local/bin
         curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
         ~/.local/bin/oh-my-posh font install JetBrainsMono
