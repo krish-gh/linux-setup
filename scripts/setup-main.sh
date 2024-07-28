@@ -70,14 +70,14 @@ install() {
     #doing in loop to avoid abort in case something is wrong
     # shellcheck disable=SC2207
     pkgs=($(eval echo "$1"))
-    for i in "${pkgs[@]}"; do $INSTALL_CMD "$i"; done
+    for i in "${pkgs[@]}"; do eval "$INSTALL_CMD $i"; done
 }
 
 uninstall() {
     #doing in loop to avoid abort in case something is wrong
     # shellcheck disable=SC2207
     pkgs=($(eval echo "$1"))
-    for i in "${pkgs[@]}"; do $UNINSTALL_CMD "$i"; done
+    for i in "${pkgs[@]}"; do eval "$UNINSTALL_CMD $i"; done
 }
 
 setup_system() {
