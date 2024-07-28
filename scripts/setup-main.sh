@@ -326,6 +326,11 @@ setup_pacman() {
     done
 }
 
+setup_apt() {
+    echo -e "Setting up apt..."
+    install "nala"
+}
+
 setup_gtk() {
     install "$GTK_PACKAGES_TO_INSTALL"
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
@@ -469,6 +474,10 @@ setup_gnome() {
     gsettings set org.gnome.shell disable-user-extensions false
 }
 
+setup_cinnamon() {
+    echo -e "Configuring cinnamon stuffs..."
+}
+
 setup_apps() {
     echo -e "Installing some apps..."
     install "$APP_PACKAGES_TO_INSTALL"
@@ -505,8 +514,10 @@ improve_font
 configure_terminal
 setup_gtk
 [[ $DESKTOP == "gnome" ]] && setup_gnome
+[[ $DESKTOP == "cinnamon" ]] && setup_cinnamon
 setup_apps
 command_exists pacman && setup_pacman
+command_exists apt && setup_apt
 
 echo -e ""
 read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
