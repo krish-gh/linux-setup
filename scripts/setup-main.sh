@@ -159,7 +159,16 @@ improve_font() {
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
-    [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]] && sudo ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
+    if [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]]; then
+        sudo ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
+    else
+        echo -e "Installing Nerd Font manually as not found natively..."
+        mkdir -p ~/.local/bin
+        curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
+        ~/.local/bin/oh-my-posh font install NerdFontsSymbolsOnly
+        download_file ~/.config/fontconfig/conf.d/10-nerd-font-symbols.conf https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/10-nerd-font-symbols.conf
+    fi
+    
     [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
     sudo fc-cache -fv
     fc-cache -fv
