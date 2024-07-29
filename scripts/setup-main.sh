@@ -359,6 +359,7 @@ setup_gtk() {
     gsettings set org.gtk.gtk4.Settings.FileChooser show-hidden true
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
+    gsettings set org.gnome.nm-applet disable-connected-notifications true
 
     mkdir -p ~/.config/gtk-{3,4}.0
     #echo >~/.gtkrc-2.0
@@ -527,7 +528,10 @@ setup_cinnamon() {
     gsettings set org.x.editor.preferences.editor auto-close true
 
     # nemo
-
+    gsettings set org.nemo.preferences executable-text-activation display
+    gsettings set org.nemo.preferences show-directory-item-counts never
+    gsettings set org.nemo.preferences show-hidden-files true
+    gsettings set org.nemo.preferences show-image-thumbnails never
 }
 
 setup_apps() {
