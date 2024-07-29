@@ -360,6 +360,14 @@ setup_gtk() {
     gsettings set org.gtk.Settings.FileChooser sort-directories-first true
     gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
     gsettings set org.gnome.nm-applet disable-connected-notifications true
+    gsettings set org.gnome.desktop.privacy old-files-age 0
+    gsettings set org.gnome.desktop.privacy recent-files-max-age 1
+    gsettings set org.gnome.desktop.privacy remember-recent-files false
+    gsettings set org.gnome.desktop.privacy remember-app-usage false
+    gsettings set org.gnome.desktop.privacy remove-old-temp-files true
+    gsettings set org.gnome.desktop.privacy remove-old-trash-files true
+    gsettings set org.gnome.desktop.privacy report-technical-problems false
+    gsettings set org.gnome.desktop.privacy send-software-usage-stats false
 
     mkdir -p ~/.config/gtk-{3,4}.0
     #echo >~/.gtkrc-2.0
@@ -390,15 +398,6 @@ setup_gnome() {
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
     gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
     gsettings set org.gnome.system.location enabled true
-    gsettings set org.gnome.desktop.privacy old-files-age 0
-    gsettings set org.gnome.desktop.privacy recent-files-max-age 1
-    gsettings set org.gnome.desktop.privacy remember-recent-files false
-    gsettings set org.gnome.desktop.privacy remember-app-usage false
-    gsettings set org.gnome.desktop.privacy remove-old-temp-files true
-    gsettings set org.gnome.desktop.privacy remove-old-trash-files true
-    gsettings set org.gnome.desktop.privacy report-technical-problems false
-    gsettings set org.gnome.desktop.privacy send-software-usage-stats false
-    gsettings set org.gnome.desktop.screensaver lock-enabled false
     gsettings set org.gnome.desktop.session idle-delay 0
     gsettings set org.gnome.desktop.search-providers disable-external true
     gsettings set org.gnome.desktop.sound event-sounds false
@@ -507,8 +506,10 @@ setup_cinnamon() {
     gsettings set org.cinnamon.desktop.media-handling automount-open false
     gsettings set org.cinnamon.desktop.media-handling autorun-never true
     gsettings set org.cinnamon.desktop.privacy remember-recent-files false
+    gsettings set org.cinnamon.desktop.session idle-delay 0
     gsettings set org.cinnamon.settings-daemon.plugins.xsettings antialiasing rgba
     gsettings set org.cinnamon.settings-daemon.plugins.xsettings hinting slight
+    gsettings set org.cinnamon.settings-daemon.plugins.power sleep-display-ac 0
     gsettings set org.cinnamon.sounds login-enabled false
     gsettings set org.cinnamon.sounds logout-enabled false
     gsettings set org.cinnamon.sounds notification-enabled false
