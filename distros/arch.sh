@@ -5,7 +5,7 @@ REFRESH_CMD="sudo pacman -Syu --noconfirm"
 INSTALL_CMD="sudo pacman -S --noconfirm --needed"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
-REQUIREMENTS="curl unzip base-devel xorg-xrdb"
+REQUIREMENTS="curl unzip base-devel xorg-xrdb dconf"
 SYSTEM_PACKAGES_TO_INSTALL="vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-{firmware,oss,plugins,utils} fprintd"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"
 VMWARE_PACKAGES_TO_INSTALL="xf86-video-vmware xf86-input-vmmouse gtkmm gtkmm3 open-vm-tools"

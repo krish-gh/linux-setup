@@ -350,24 +350,10 @@ setup_apt() {
 
 setup_gtk() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
-    gsettings set org.gnome.desktop.interface font-antialiasing rgba
-    gsettings set org.gnome.desktop.interface font-hinting slight
-    gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
-    gsettings set org.gnome.desktop.interface gtk-theme Adwaita-dark
-    gsettings set org.gnome.desktop.interface color-scheme prefer-dark
-    gsettings set org.gtk.Settings.FileChooser show-hidden true
-    gsettings set org.gtk.gtk4.Settings.FileChooser show-hidden true
-    gsettings set org.gtk.Settings.FileChooser sort-directories-first true
-    gsettings set org.gtk.gtk4.Settings.FileChooser sort-directories-first true
-    gsettings set org.gnome.nm-applet disable-connected-notifications true
-    gsettings set org.gnome.desktop.privacy old-files-age 0
-    gsettings set org.gnome.desktop.privacy recent-files-max-age 1
-    gsettings set org.gnome.desktop.privacy remember-recent-files false
-    gsettings set org.gnome.desktop.privacy remember-app-usage false
-    gsettings set org.gnome.desktop.privacy remove-old-temp-files true
-    gsettings set org.gnome.desktop.privacy remove-old-trash-files true
-    gsettings set org.gnome.desktop.privacy report-technical-problems false
-    gsettings set org.gnome.desktop.privacy send-software-usage-stats false
+
+    download_file /tmp/gtk.dconf ${BASE_REPO_URL}desktop/gtk.dconf
+    dconf load / < /tmp/gtk.dconf
+    rm -f /tmp/gtk.dconf
 
     mkdir -p ~/.config/gtk-{3,4}.0
     #echo >~/.gtkrc-2.0
