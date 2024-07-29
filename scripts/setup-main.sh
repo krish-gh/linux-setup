@@ -505,9 +505,10 @@ setup_cinnamon() {
     gsettings set org.x.editor.preferences.editor display-line-numbers true
     gsettings set org.x.editor.preferences.editor editor-font 'JetBrainsMono Nerd Font 12'
     gsettings set org.x.editor.preferences.editor prefer-dark-theme true
-    gsettings set org.x.editor.preferences.editor scheme 'catppuccin_mocha'
+    gsettings set org.x.editor.preferences.editor scheme catppuccin_mocha
     gsettings set org.x.editor.preferences.editor use-default-font false
     gsettings set org.x.editor.preferences.editor auto-close true
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
 }
 
 setup_apps() {
