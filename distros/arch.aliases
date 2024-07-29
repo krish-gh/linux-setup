@@ -18,8 +18,8 @@ alias {gte,gted}='gnome-text-editor'
 alias neofetch='fastfetch'
 alias nf='neofetch'
 alias ff='fastfetch'
-alias vim='nvim'
-alias vimdiff='nvim -d'
+#alias vim='nvim'
+#alias vimdiff='nvim -d'
 
 alias ua-drop-caches='sudo paccache -rk1; yay -Sc --aur --noconfirm'
 alias ua-rate='sudo true; \
