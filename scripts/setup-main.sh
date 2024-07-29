@@ -502,6 +502,9 @@ setup_cinnamon() {
     gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y-Blue
     gsettings set org.cinnamon.desktop.interface text-scaling-factor 1.3
     gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+    gsettings set org.cinnamon.desktop.sound event-sounds false
+    gsettings set org.cinnamon.desktop.media-handling automount-open false
+    gsettings set org.cinnamon.desktop.media-handling autorun-never true
     gsettings set org.cinnamon.desktop.privacy remember-recent-files false
     gsettings set org.cinnamon.settings-daemon.plugins.xsettings antialiasing rgba
     gsettings set org.cinnamon.settings-daemon.plugins.xsettings hinting slight
