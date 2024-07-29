@@ -450,8 +450,4 @@ command_exists pacman && setup_pacman
 command_exists apt && setup_apt
 
 echo -e ""
-read -rp "After next step, terminal font may look messed up, but will be fine after restart. Press any key to continue..."
-command_exists kgx && gsettings set org.gnome.Console use-system-font false
-command_exists gnome-terminal && gsettings set org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:"$tprofileid"/ use-system-font false
-
 echo -e "Done...Reboot..."
