@@ -489,8 +489,10 @@ setup_cinnamon() {
     gsettings set org.cinnamon.desktop.wm.preferences num-workspaces 1
     gsettings set org.cinnamon.theme name Mint-Y-Dark-Blue
     gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark-Blue
-    gsettings set org.x.apps.portal color-scheme prefer-dark
+    gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y-Blue
     gsettings set org.cinnamon.desktop.interface text-scaling-factor 1.3
+    gsettings set org.cinnamon.settings-daemon.plugins.xsettings antialiasing rgba
+    gsettings set org.cinnamon.settings-daemon.plugins.xsettings hinting slight
     gsettings set org.cinnamon.desktop.privacy remember-recent-files false
     gsettings set org.cinnamon.sounds login-enabled false
     gsettings set org.cinnamon.sounds logout-enabled false
@@ -499,6 +501,7 @@ setup_cinnamon() {
     gsettings set org.cinnamon.sounds switch-enabled false
     gsettings set org.cinnamon.sounds tile-enabled false
     gsettings set org.cinnamon.sounds unplug-enabled false
+    gsettings set org.x.apps.portal color-scheme prefer-dark
 
     # xed
     download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
@@ -509,6 +512,9 @@ setup_cinnamon() {
     gsettings set org.x.editor.preferences.editor use-default-font false
     gsettings set org.x.editor.preferences.editor auto-close true
     gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+
+    # nemo
+
 }
 
 setup_apps() {

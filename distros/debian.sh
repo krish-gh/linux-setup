@@ -17,6 +17,6 @@ APP_PACKAGES_TO_INSTALL="firefox{,-locale-en} gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="git shfmt meld"
 GTK_PACKAGES_TO_INSTALL="gnome-themes-extra{,-data} qt5-style-kvantum qt6-wayland qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,shell-extensions,console,text-editor} python3-nautilus pipx"
-PACKAGES_TO_REMOVE="baobab caribou celluloid epiphany gedit *libreoffice* *rhythmbox* simple-scan snapshot *thunderbird* *totem* vim gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs} *yelp*"
+PACKAGES_TO_REMOVE="baobab caribou celluloid epiphany gedit *libreoffice* *rhythmbox* simple-scan snapshot *thunderbird* *totem* vim gnome-{calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs} warpinator *yelp*"
 
 echo -e "Done debian.sh..."
