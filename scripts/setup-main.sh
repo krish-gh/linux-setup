@@ -486,14 +486,15 @@ setup_gnome() {
 setup_cinnamon() {
     echo -e "Configuring cinnamon stuffs..."
 
-    gsettings set org.cinnamon.desktop.wm.preferences num-workspaces 1
     gsettings set org.cinnamon.theme name Mint-Y-Dark-Blue
+    gsettings set org.cinnamon.desktop.wm.preferences num-workspaces 1
     gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark-Blue
     gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y-Blue
     gsettings set org.cinnamon.desktop.interface text-scaling-factor 1.3
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+    gsettings set org.cinnamon.desktop.privacy remember-recent-files false
     gsettings set org.cinnamon.settings-daemon.plugins.xsettings antialiasing rgba
     gsettings set org.cinnamon.settings-daemon.plugins.xsettings hinting slight
-    gsettings set org.cinnamon.desktop.privacy remember-recent-files false
     gsettings set org.cinnamon.sounds login-enabled false
     gsettings set org.cinnamon.sounds logout-enabled false
     gsettings set org.cinnamon.sounds notification-enabled false
@@ -511,7 +512,6 @@ setup_cinnamon() {
     gsettings set org.x.editor.preferences.editor scheme catppuccin_mocha
     gsettings set org.x.editor.preferences.editor use-default-font false
     gsettings set org.x.editor.preferences.editor auto-close true
-    gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
 
     # nemo
 
