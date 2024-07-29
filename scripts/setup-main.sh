@@ -67,22 +67,22 @@ chmod +x /tmp/"$DESKTOP".sh
 source /tmp/"$DISTRO_TYPE".sh
 # shellcheck disable=SC1090
 source /tmp/"$DESKTOP".sh
-rm -rf /tmp/"$DISTRO_TYPE".sh
-rm -rf /tmp/"$DESKTOP".sh
+rm -f /tmp/"$DISTRO_TYPE".sh
+rm -f /tmp/"$DESKTOP".sh
 echo -e ""
 
 refresh_package_sources() {
     eval "$REFRESH_CMD"
 }
 
-install() {
+install_pkgs() {
     #doing in loop to avoid abort in case something is wrong
     # shellcheck disable=SC2207
     pkgs=($(eval echo "$1"))
     for i in "${pkgs[@]}"; do eval "$INSTALL_CMD $i"; done
 }
 
-uninstall() {
+uninstall_pkgs() {
     #doing in loop to avoid abort in case something is wrong
     # shellcheck disable=SC2207
     pkgs=($(eval echo "$1"))
@@ -94,21 +94,21 @@ setup_system() {
     case $SYSTEM_TO_SETUP in
 
     intel)
-        install "$INTEL_PACKAGES_TO_INSTALL"
+        install_pkgs "$INTEL_PACKAGES_TO_INSTALL"
         ;;
 
     vmware)
-        install "$VMWARE_PACKAGES_TO_INSTALL"
+        install_pkgs "$VMWARE_PACKAGES_TO_INSTALL"
         sudo systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service
         ;;
 
     vbox)
-        install "$VBOX_PACKAGES_TO_INSTALL"
+        install_pkgs "$VBOX_PACKAGES_TO_INSTALL"
         sudo systemctl enable --now vboxservice.service
         ;;
 
     hyperv)
-        install "$HYPERV_PACKAGES_TO_INSTALL"
+        install_pkgs "$HYPERV_PACKAGES_TO_INSTALL"
         sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
         ;;
 
@@ -117,7 +117,7 @@ setup_system() {
         ;;
     esac
 
-    install "$SYSTEM_PACKAGES_TO_INSTALL"
+    install_pkgs "$SYSTEM_PACKAGES_TO_INSTALL"
 
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
@@ -149,7 +149,7 @@ setup_system() {
 
 improve_font() {
     echo -e "Installing fonts..."
-    install "$FONTS_TO_INSTALL"
+    install_pkgs "$FONTS_TO_INSTALL"
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     download_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_URL}home/.config/fontconfig/fonts.conf
@@ -173,7 +173,7 @@ improve_font() {
 
 configure_terminal() {
     echo -e "Configuring shell stuffs..."
-    install "$TERM_PACKAGES_TO_INSTALL"
+    install_pkgs "$TERM_PACKAGES_TO_INSTALL"
     if ! command_exists starship; then
         mkdir -p ~/.local/bin
         curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin
@@ -209,21 +209,21 @@ configure_terminal() {
     case $TERMINAL_TO_INSTALL in
 
     alacritty)
-        install $TERMINAL_TO_INSTALL
+        install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/alacritty
         download_file ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
         download_file ~/.config/alacritty/alacritty.toml ${BASE_REPO_URL}home/.config/alacritty/alacritty.toml
         ;;
 
     kitty)
-        install $TERMINAL_TO_INSTALL
+        install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/kitty
         download_file ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
         download_file ~/.config/kitty/kitty.conf ${BASE_REPO_URL}home/.config/kitty/kitty.conf
         ;;
 
     wezterm)
-        install $TERMINAL_TO_INSTALL
+        install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/wezterm
         download_file ~/.config/wezterm/wezterm.lua ${BASE_REPO_URL}home/.config/wezterm/wezterm.lua
         ;;
@@ -304,7 +304,7 @@ setup_pacman() {
         pamacvar='flatpak'
     fi
 
-    install "yay rate-mirrors reflector-simple mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
+    install_pkgs "yay rate-mirrors reflector-simple mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
@@ -319,9 +319,9 @@ setup_pacman() {
 
     if [[ $DESKTOP == "gnome" ]]; then
         echo -e "Installing some gnome stuffs from chaotic-aur"
-        ! command_exists flatpak && install "extension-manager"
+        ! command_exists flatpak && install_pkgs "extension-manager"
         if [[ $TERMINAL_TO_INSTALL != none ]]; then
-            install "nautilus-open-any-terminal"
+            install_pkgs "nautilus-open-any-terminal"
             gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
         fi
     fi
@@ -335,11 +335,19 @@ setup_pacman() {
 
 setup_apt() {
     echo -e "Setting up apt..."
-    install "nala"
+    install_pkgs "nala wget gpg apt-transport-https"
+
+    # vscode
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+    sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+    rm -f packages.microsoft.gpg
+    refresh_package_sources
+    install_pkgs code
 }
 
 setup_gtk() {
-    install "$GTK_PACKAGES_TO_INSTALL"
+    install_pkgs "$GTK_PACKAGES_TO_INSTALL"
     gsettings set org.gnome.desktop.interface font-antialiasing rgba
     gsettings set org.gnome.desktop.interface font-hinting slight
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.3
@@ -373,7 +381,7 @@ setup_gtk() {
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
-    install "$GNOME_PACKAGES_TO_INSTALL"
+    install_pkgs "$GNOME_PACKAGES_TO_INSTALL"
 
     gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
     gsettings set org.gnome.desktop.wm.preferences audible-bell false
@@ -519,9 +527,9 @@ setup_cinnamon() {
 
 setup_apps() {
     echo -e "Installing some apps..."
-    install "$APP_PACKAGES_TO_INSTALL"
+    install_pkgs "$APP_PACKAGES_TO_INSTALL"
     echo -e "Installing some dev stuffs..."
-    install "$DEV_PACKAGES_TO_INSTALL"
+    install_pkgs "$DEV_PACKAGES_TO_INSTALL"
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
@@ -541,12 +549,12 @@ setup_apps() {
 }
 
 echo -e "Removing not needed packages..."
-uninstall "$PACKAGES_TO_REMOVE"
+uninstall_pkgs "$PACKAGES_TO_REMOVE"
 
 refresh_package_sources
 
 echo -e "Installing some needed stuffs..."
-install "$REQUIREMENTS"
+install_pkgs "$REQUIREMENTS"
 
 setup_system
 improve_font
