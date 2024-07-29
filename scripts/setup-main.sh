@@ -99,7 +99,7 @@ setup_system() {
 
     vmware)
         install_pkgs "$VMWARE_PACKAGES_TO_INSTALL"
-        sudo systemctl enable --now vmtoolsd.service vmware-vmblock-fuse.service
+        sudo systemctl enable --now vmtoolsd.service
         ;;
 
     vbox)
