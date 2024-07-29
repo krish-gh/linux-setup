@@ -363,55 +363,10 @@ setup_gnome() {
     echo -e "Configuring gnome stuffs..."
     install_pkgs "$GNOME_PACKAGES_TO_INSTALL"
 
-    gsettings set org.gnome.desktop.wm.preferences button-layout ':minimize,maximize,close'
-    gsettings set org.gnome.desktop.wm.preferences audible-bell false
-    gsettings set org.gnome.desktop.wm.preferences num-workspaces 1
-    gsettings set org.gnome.system.location enabled true
-    gsettings set org.gnome.desktop.session idle-delay 0
-    gsettings set org.gnome.desktop.search-providers disable-external true
-    gsettings set org.gnome.desktop.sound event-sounds false
-    gsettings set org.gnome.desktop.thumbnailers disable-all true
-    gsettings set org.gnome.desktop.peripherals.mouse speed 1
-    gsettings set org.gnome.desktop.notifications show-in-lock-screen false
-    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
-    gsettings set org.gnome.desktop.background primary-color '#000000000000'
-    gsettings set org.gnome.desktop.background secondary-color '#000000000000'
-    gsettings set org.gnome.software screenshot-cache-age-maximum 60
-    gsettings set org.gnome.gnome-system-monitor show-dependencies true
-    gsettings set org.gnome.shell.weather automatic-location true
-    gsettings set org.gnome.tweaks show-extensions-notice false
-
-    gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Console.desktop', 'Alacritty.desktop', 'kitty.desktop', 'org.wezfurlong.wezterm.desktop', 'firefox.desktop']"
-    # organize in app folder
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ name 'zzz'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/zzz/ apps "['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'nvim.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'stoken-gui.desktop', 'stoken-gui-small.desktop', 'uxterm.desktop', 'vim.desktop', 'xterm.desktop', 'yad-settings.desktop']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/eos/ name 'eos'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/eos/ apps "['eos-apps-info.desktop', 'eos-log-tool.desktop', 'eos-quickstart.desktop', 'eos-update.desktop', 'welcome.desktop']"
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ name 'Stuffs'
-    gsettings set org.gnome.desktop.app-folders.folder:/org/gnome/desktop/app-folders/folders/stuffs/ apps "['org.manjaro.pamac.manager.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.Meld.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'org.gnome.SystemMonitor.desktop', 'vlc.desktop']"
-    gsettings set org.gnome.desktop.app-folders folder-children "['eos','stuffs','Utilities','zzz']"
-
     # GDM
     #sudo mkdir -p /etc/dconf/db/gdm.d
     #download_file 95-gdm-settings ${BASE_REPO_URL}system/etc/dconf/db/gdm.d/95-gdm-settings
     #sudo mv -f 95-gdm-settings /etc/dconf/db/gdm.d/
-
-    # text editor
-    gsettings set org.gnome.TextEditor restore-session false
-    gsettings set org.gnome.TextEditor custom-font 'JetBrainsMono Nerd Font 12'
-    gsettings set org.gnome.TextEditor use-system-font false
-    gsettings set org.gnome.TextEditor show-line-numbers true
-    gsettings set org.gnome.TextEditor spellcheck false
-    gsettings set org.gnome.TextEditor style-scheme catppuccin_mocha
-
-    # files
-    gsettings set org.gnome.nautilus.preferences show-image-thumbnails never
-    gsettings set org.gnome.nautilus.preferences show-directory-item-counts never
-    gsettings set org.gnome.nautilus.preferences show-hidden-files true
-    gsettings set org.gnome.nautilus.preferences show-create-link true
-    gsettings set org.gnome.nautilus.preferences show-delete-permanently true
-    #gsettings set org.gnome.nautilus.preferences sort-directories-first true
 
     echo -e "Installing some extensions..."
     command_exists flatpak && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
@@ -432,34 +387,14 @@ setup_gnome() {
         ~/.local/bin/gnome-extensions-cli --filesystem install "$i"
         [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/
     done
-    ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
+    ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com    
 
-    # dash to dock
-    gsettings --schemadir $extdir/"${exts[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock apply-custom-theme true
-    gsettings --schemadir $extdir/"${exts[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen true
-    gsettings --schemadir $extdir/"${exts[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock click-action minimize
-    gsettings --schemadir $extdir/"${exts[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
-    gsettings --schemadir $extdir/"${exts[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock require-pressure-to-show false
-    gsettings --schemadir $extdir/"${exts[3]}"/schemas/ set org.gnome.shell.extensions.dash-to-dock hot-keys false
-
-    # clipboard indicator
-    gsettings --schemadir $extdir/"${exts[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator cache-size 1
-    gsettings --schemadir $extdir/"${exts[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator clear-on-boot true
-    gsettings --schemadir $extdir/"${exts[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator enable-keybindings false
-    gsettings --schemadir $extdir/"${exts[4]}"/schemas/ set org.gnome.shell.extensions.clipboard-indicator history-size 10
-
-    # status area
-    gsettings --schemadir $extdir/"${exts[5]}"/schemas/ set org.gnome.shell.extensions.status-area-horizontal-spacing hpadding 0
-
-    # arch update
-    if [[ -v exts[arch] ]]; then
-        gsettings --schemadir $extdir/"${exts[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update always-visible false
-        gsettings --schemadir $extdir/"${exts[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update check-cmd '/usr/bin/checkupdates'
-        gsettings --schemadir $extdir/"${exts[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update update-cmd 'kgx -e '\''/bin/sh -c "sudo pacman -Syu ; echo Done - Press enter to exit; read _" '\'''
-        gsettings --schemadir $extdir/"${exts[arch]}"/schemas/ set org.gnome.shell.extensions.arch-update use-buildin-icons true
-    fi
-
-    gsettings set org.gnome.shell disable-user-extensions false
+    download_file /tmp/gnome.dconf ${BASE_REPO_URL}desktop/gnome.dconf
+    dconf load / < /tmp/gnome.dconf
+    rm -f /tmp/gnome.dconf
+    
+    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
 }
 
 setup_cinnamon() {
