@@ -23,11 +23,15 @@ fi
 # arg1 = destination path, arg2 = source path
 download_file() {
     curl -f -o "$1" "$2?$(date +%s)"
+    curl_exit_status="$?"
+    [[ $curl_exit_status != "0" ]] && >&2 echo -e "Error downloading $2"
 }
 
 # arg1 = source path
 download_content() {
-    curl -f "$1?$(date +%s)"
+    curl -f "$1?$(date +%s)"    
+    curl_exit_status="$?"
+    [[ $curl_exit_status != "0" ]] && >&2 echo -e "Error downloading $1"
 }
 
 DESKTOP=$DESKTOP_SESSION
