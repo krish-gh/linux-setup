@@ -247,84 +247,6 @@ configure_terminal() {
     #source ~/.bashrc
 }
 
-setup_pacman() {
-    echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
-    sudo sed -i "/^#Color/c\Color\nILoveCandy
-        /^#VerbosePkgLists/c\VerbosePkgLists
-        /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
-    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
-
-    if [[ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ]]; then
-        echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
-        sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-        sudo pacman-key --lsign-key 3056513887B78AEB
-        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-    fi
-
-    chaoticAurAppend="$(
-        grep "chaotic-aur" /etc/pacman.conf >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${chaoticAurAppend}" -ne 0 ]]; then
-        echo "Appending Chaotic-AUR in pacman.conf..."
-        echo -e | sudo tee -a /etc/pacman.conf
-        echo -e "[chaotic-aur]" | sudo tee -a /etc/pacman.conf
-        echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
-    fi
-
-    refresh_package_sources
-
-    echo -e "Installing some more stuffs..."
-    pamacvar='aur'
-    if command_exists flatpak; then
-        pamacvar='flatpak'
-    fi
-
-    install_pkgs "yay rate-mirrors reflector-simple mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
-
-    gsettings set yad.sourceview line-num true
-    gsettings set yad.sourceview brackets true
-    gsettings set yad.sourceview theme catppuccin_mocha
-    gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
-
-    # Configure pamac
-    sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
-        /NoUpdateHideIcon/s/^#//g
-        /KeepNumPackages/c\KeepNumPackages = 1
-        /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
-
-    if [[ $DESKTOP == "gnome" ]]; then
-        echo -e "Installing some gnome stuffs from chaotic-aur"
-        ! command_exists flatpak && install_pkgs "extension-manager"
-        if [[ $TERMINAL_TO_INSTALL != none ]]; then
-            install_pkgs "nautilus-open-any-terminal"
-            gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
-        fi
-    fi
-
-    # misc
-    flagstocopy=(code electron chromium chrome microsoft-edge-stable)
-    for i in "${flagstocopy[@]}"; do
-        download_file ~/.config/"${i}"-flags.conf ${BASE_REPO_URL}home/.config/"${i}"-flags.conf
-    done
-}
-
-setup_apt() {
-    echo -e "Setting up apt..."
-    install_pkgs "nala wget gpg apt-transport-https"
-
-    # vscode
-    if [[ ! -f /etc/apt/sources.list.d/vscode.list ]]; then
-        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-        sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
-        rm -f packages.microsoft.gpg
-        refresh_package_sources
-        install_pkgs code
-    fi
-}
-
 setup_gtk() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
 
@@ -424,6 +346,84 @@ setup_apps() {
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
+}
+
+setup_pacman() {
+    echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
+    sudo sed -i "/^#Color/c\Color\nILoveCandy
+        /^#VerbosePkgLists/c\VerbosePkgLists
+        /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
+    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+
+    if [[ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ]]; then
+        echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
+        sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+        sudo pacman-key --lsign-key 3056513887B78AEB
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+    fi
+
+    chaoticAurAppend="$(
+        grep "chaotic-aur" /etc/pacman.conf >/dev/null 2>&1
+        echo $?
+    )"
+    if [[ "${chaoticAurAppend}" -ne 0 ]]; then
+        echo "Appending Chaotic-AUR in pacman.conf..."
+        echo -e | sudo tee -a /etc/pacman.conf
+        echo -e "[chaotic-aur]" | sudo tee -a /etc/pacman.conf
+        echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
+    fi
+
+    refresh_package_sources
+
+    echo -e "Installing some more stuffs..."
+    pamacvar='aur'
+    if command_exists flatpak; then
+        pamacvar='flatpak'
+    fi
+
+    install_pkgs "yay rate-mirrors reflector-simple mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
+
+    gsettings set yad.sourceview line-num true
+    gsettings set yad.sourceview brackets true
+    gsettings set yad.sourceview theme catppuccin_mocha
+    gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
+
+    # Configure pamac
+    sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
+        /NoUpdateHideIcon/s/^#//g
+        /KeepNumPackages/c\KeepNumPackages = 1
+        /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
+
+    if [[ $DESKTOP == "gnome" ]]; then
+        echo -e "Installing some gnome stuffs from chaotic-aur"
+        ! command_exists flatpak && install_pkgs "extension-manager"
+        if [[ $TERMINAL_TO_INSTALL != none ]]; then
+            install_pkgs "nautilus-open-any-terminal"
+            gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
+        fi
+    fi
+
+    # misc
+    flagstocopy=(code electron chromium chrome microsoft-edge-stable)
+    for i in "${flagstocopy[@]}"; do
+        download_file ~/.config/"${i}"-flags.conf ${BASE_REPO_URL}home/.config/"${i}"-flags.conf
+    done
+}
+
+setup_apt() {
+    echo -e "Setting up apt..."
+    install_pkgs "nala wget gpg apt-transport-https"
+
+    # vscode
+    if [[ ! -f /etc/apt/sources.list.d/vscode.list ]]; then
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+        sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+        rm -f packages.microsoft.gpg
+        refresh_package_sources
+        install_pkgs code
+    fi
 }
 
 echo -e "Removing not needed packages..."
