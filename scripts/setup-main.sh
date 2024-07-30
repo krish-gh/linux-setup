@@ -5,6 +5,7 @@ command_exists() {
 }
 
 DISTRO_TYPE=''
+DIST_ID=''
 PKG_MGR=''
 command_exists pacman && PKG_MGR=pacman && DISTRO_TYPE=arch
 command_exists apt && PKG_MGR=apt && DISTRO_TYPE=debian
@@ -19,6 +20,9 @@ if ! command_exists curl; then
     echo "curl required but not found..."
     exit 1
 fi
+
+# shellcheck disable=SC1091
+[[ -f /etc/os-release ]] && source /etc/os-release && DIST_ID=$ID
 
 # arg1 = destination path, arg2 = source path
 download_file() {
@@ -44,8 +48,7 @@ echo -e "PACKAGE_MANAGER=$PKG_MGR"
 echo -e "DESKTOP=$DESKTOP"
 echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 echo -e "TERMINAL=$CURRENT_TERMINAL"
-echo -e "#################################################################"
-cat /etc/os-release
+echo -e "DISTRO_ID=$DIST_ID"
 echo -e "#################################################################"
 
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
@@ -79,7 +82,17 @@ chmod +x /tmp/"$DISTRO_TYPE".sh
 # shellcheck disable=SC1090
 source /tmp/"$DISTRO_TYPE".sh
 rm -f /tmp/"$DISTRO_TYPE".sh
-echo -e ""
+
+# execute exact distro specic stuffs e.g. linux mint, ubuntu, manjaro etc.
+if [[ $DIST_ID != '' ]]; then
+    download_file /tmp/"$DIST_ID".sh ${BASE_REPO_URL}specific/"$DIST_ID".sh
+    if [[ $curl_exit_status == '0' ]]; then
+        chmod +x /tmp/"$DIST_ID".sh
+        # shellcheck disable=SC1090
+        source /tmp/"$DIST_ID".sh
+    fi
+    rm -f /tmp/"$DIST_ID".sh
+fi
 
 refresh_package_sources() {
     eval "$REFRESH_CMD"
