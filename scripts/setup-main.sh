@@ -233,14 +233,6 @@ configure_terminal() {
         ;;
     esac
 
-    # gnome console
-    if command_exists kgx; then
-        gsettings set org.gnome.Console audible-bell false
-        gsettings set org.gnome.Console custom-font 'JetBrainsMono Nerd Font 12'
-        # Below is to avoid updating font during setup as font starts looking bad
-        #gsettings set org.gnome.Console use-system-font false
-    fi
-
     # gnome terminal
     if command_exists gnome-terminal; then
         tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
