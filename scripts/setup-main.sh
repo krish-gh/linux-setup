@@ -22,12 +22,12 @@ fi
 
 # arg1 = destination path, arg2 = source path
 download_file() {
-    curl -o "$1" "$2?$(date +%s)"
+    curl -f -o "$1" "$2?$(date +%s)"
 }
 
 # arg1 = source path
 download_content() {
-    curl "$1?$(date +%s)"
+    curl -f "$1?$(date +%s)"
 }
 
 DESKTOP=$DESKTOP_SESSION
@@ -177,7 +177,7 @@ setup_font() {
     if [[ $(fc-list | grep -i "JetBrainsMono Nerd") == "" ]]; then
         echo -e "Installing Nerd Font manually as not found..."
         mkdir -p ~/.local/bin
-        curl -s https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
+        curl -fs https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
         ~/.local/bin/oh-my-posh font install JetBrainsMono
     fi
     sudo fc-cache -fv
@@ -189,7 +189,7 @@ setup_terminal() {
     install_pkgs "$TERM_PACKAGES_TO_INSTALL"
     if ! command_exists starship; then
         mkdir -p ~/.local/bin
-        curl -sS https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin
+        curl -fsS https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin
     fi
     #starship preset no-nerd-font -o ~/.config/starship.toml
     download_file ~/.aliases ${BASE_REPO_URL}distros/$DISTRO_TYPE.aliases
