@@ -18,7 +18,7 @@ fi
 
 if ! command_exists curl; then
     echo "curl required but not found..."
-    exit 1
+    exit 2
 fi
 
 # shellcheck disable=SC1091
@@ -77,21 +77,20 @@ TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
 # override with DISTRO_TYPE specific stuffs
-download_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
-chmod +x /tmp/"$DISTRO_TYPE".sh
-# shellcheck disable=SC1090
-source /tmp/"$DISTRO_TYPE".sh
-rm -f /tmp/"$DISTRO_TYPE".sh
+dist_type_exec=$(download_content ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh)
+if [[ $curl_exit_status == '0' ]]; then
+    $dist_type_exec
+else
+    echo -e "Could not find $DISTRO_TYPE specific script!"
+    exit 3
+fi
 
 # execute exact distro specic stuffs e.g. linux mint, ubuntu, manjaro etc.
 if [[ $DIST_ID != '' ]]; then
-    download_file /tmp/"$DIST_ID".sh ${BASE_REPO_URL}specific/"$DIST_ID".sh
+    dist_id_exec=$(download_content ${BASE_REPO_URL}specific/"$DIST_ID".sh)
     if [[ $curl_exit_status == '0' ]]; then
-        chmod +x /tmp/"$DIST_ID".sh
-        # shellcheck disable=SC1090
-        source /tmp/"$DIST_ID".sh
+        $dist_id_exec
     fi
-    rm -f /tmp/"$DIST_ID".sh
 fi
 
 refresh_package_sources() {
