@@ -4,6 +4,22 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+DISTRO_TYPE=''
+PKG_MGR=''
+command_exists pacman && PKG_MGR=pacman && DISTRO_TYPE=arch
+command_exists apt && PKG_MGR=apt && DISTRO_TYPE=debian
+#command_exists dnf && PKG_MGR=dnf && DISTRO_TYPE=fedora
+
+if [[ $DISTRO_TYPE == '' ]]; then
+    echo "You are not running supported Linux distrbution..."
+    exit 1
+fi
+
+if ! command_exists curl; then
+    echo "curl required but not found..."
+    exit 1
+fi
+
 # arg1 = destination path, arg2 = source path
 download_file() {
     curl -o "$1" "$2?$(date +%s)"
@@ -14,22 +30,13 @@ download_content() {
     curl "$1?$(date +%s)"
 }
 
-DISTRO_TYPE=''
-command_exists pacman && DISTRO_TYPE=arch
-command_exists apt && DISTRO_TYPE=debian
-#command_exists dnf && DISTRO_TYPE=fedora
-
-if [[ $DISTRO_TYPE == '' ]]; then
-    echo "You are not running supported Linux distrbution..."
-    exit 1
-fi
-
 DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
 CURRENT_TERMINAL=$(ps -p $PPID -o comm= | sed 's/-$//')
 
 echo -e "#################################################################"
 echo -e "DISTRO_TYPE=$DISTRO_TYPE"
+echo -e "PACKAGE_MANAGER=$PKG_MGR"
 echo -e "DESKTOP=$DESKTOP"
 echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 echo -e "TERMINAL=$CURRENT_TERMINAL"
