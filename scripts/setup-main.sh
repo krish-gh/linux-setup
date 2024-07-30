@@ -73,17 +73,12 @@ PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
-# override with DISTRO_TYPE and desktop specific stuffs
+# override with DISTRO_TYPE specific stuffs
 download_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
-download_file /tmp/"$DESKTOP".sh ${BASE_REPO_URL}desktop/"$DESKTOP".sh
 chmod +x /tmp/"$DISTRO_TYPE".sh
-chmod +x /tmp/"$DESKTOP".sh
 # shellcheck disable=SC1090
 source /tmp/"$DISTRO_TYPE".sh
-# shellcheck disable=SC1090
-source /tmp/"$DESKTOP".sh
 rm -f /tmp/"$DISTRO_TYPE".sh
-rm -f /tmp/"$DESKTOP".sh
 echo -e ""
 
 refresh_package_sources() {
@@ -293,6 +288,7 @@ setup_ui() {
 
 setup_gnome() {
     echo -e "Configuring gnome stuffs..."
+    GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
     install_pkgs "$GNOME_PACKAGES_TO_INSTALL"
 
     # GDM
@@ -331,6 +327,7 @@ setup_gnome() {
 
 setup_cinnamon() {
     echo -e "Configuring cinnamon stuffs..."
+    GUI_TEXT_EDITOR=xed.desktop
     install_pkgs "$CINNAMON_PACKAGES_TO_INSTALL"
 
     mkdir -p ~/.local/share/xed/styles
