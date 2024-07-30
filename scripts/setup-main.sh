@@ -28,14 +28,14 @@ fi
 download_file() {
     curl -f -o "$1" "$2?$(date +%s)"
     curl_exit_status="$?"
-    [[ $curl_exit_status != "0" ]] && >&2 echo -e "Error downloading $2"
+    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
 }
 
 # arg1 = source path
 download_content() {
-    curl -f "$1?$(date +%s)"    
+    curl -f "$1?$(date +%s)"
     curl_exit_status="$?"
-    [[ $curl_exit_status != "0" ]] && >&2 echo -e "Error downloading $1"
+    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
 }
 
 DESKTOP=$DESKTOP_SESSION
@@ -78,7 +78,7 @@ GUI_TEXT_EDITOR="" #override from desktop specific script
 
 # override with DISTRO_TYPE specific stuffs
 dist_type_exec=$(download_content ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh)
-if [[ $curl_exit_status == '0' ]]; then
+if [[ $curl_exit_status == 0 ]]; then
     $dist_type_exec
 else
     echo -e "Could not find $DISTRO_TYPE specific script!"
@@ -88,7 +88,7 @@ fi
 # execute exact distro specic stuffs e.g. linux mint, ubuntu, manjaro etc.
 if [[ $DIST_ID != '' ]]; then
     dist_id_exec=$(download_content ${BASE_REPO_URL}specific/"$DIST_ID".sh)
-    if [[ $curl_exit_status == '0' ]]; then
+    if [[ $curl_exit_status == 0 ]]; then
         $dist_id_exec
     fi
 fi
