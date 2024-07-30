@@ -456,11 +456,9 @@ setup_system
 setup_font
 setup_terminal
 setup_ui
-[[ $DESKTOP == "gnome" ]] && setup_gnome
-[[ $DESKTOP == "cinnamon" ]] && setup_cinnamon
+[[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
 setup_apps
-command_exists pacman && setup_pacman
-command_exists apt && setup_apt
+[[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 
 echo -e ""
 echo -e "Done...Reboot..."
