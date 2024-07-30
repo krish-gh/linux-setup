@@ -43,19 +43,21 @@ REFRESH_CMD=""   #override from DISTRO_TYPE specific script
 INSTALL_CMD=""   #override from DISTRO_TYPE specific script
 UNINSTALL_CMD="" #override from DISTRO_TYPE specific script
 
-REQUIREMENTS=""               #override from DISTRO_TYPE specific script
-SYSTEM_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
-INTEL_PACKAGES_TO_INSTALL=""  #override from DISTRO_TYPE specific script
-VMWARE_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
-VBOX_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
-HYPERV_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
-FONTS_TO_INSTALL=""           #override from DISTRO_TYPE specific script
-TERM_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
-APP_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
-DEV_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
-GTK_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
-GNOME_PACKAGES_TO_INSTALL=""  #override from DISTRO_TYPE specific script
-PACKAGES_TO_REMOVE=""         #override from DISTRO_TYPE specific script
+REQUIREMENTS=""                 #override from DISTRO_TYPE specific script
+SYSTEM_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
+INTEL_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
+VMWARE_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
+VBOX_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
+HYPERV_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
+FONTS_TO_INSTALL=""             #override from DISTRO_TYPE specific script
+TERM_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
+APP_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
+DEV_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
+GTK_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
+QT_PACKAGES_TO_INSTALL=""       #override from DISTRO_TYPE specific script
+GNOME_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
+CINNAMON_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
+PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
 
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
@@ -159,7 +161,7 @@ improve_font() {
     download_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_URL}home/.config/fontconfig/fonts.conf
     #download_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_URL}home/.config/fontconfig/conf.d/20-no-embedded.conf
     download_file ~/.Xresources ${BASE_REPO_URL}home/.Xresources
-    xrdb -merge ~/.Xresources    
+    xrdb -merge ~/.Xresources
     [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
     sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
@@ -242,18 +244,19 @@ configure_terminal() {
         tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
         download_file /tmp/gterm.dconf ${BASE_REPO_URL}desktop/gterm.dconf
         sed -i "s/DEFAULT_PROFILE/$tprofileid/g" /tmp/gterm.dconf
-        dconf load /org/gnome/terminal/ < /tmp/gterm.dconf
+        dconf load /org/gnome/terminal/ </tmp/gterm.dconf
         rm -f /tmp/gterm.dconf
     fi
 
     #source ~/.bashrc
 }
 
-setup_gtk() {
+setup_ui() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
+    install_pkgs "$QT_PACKAGES_TO_INSTALL"
 
     download_file /tmp/gtk.dconf ${BASE_REPO_URL}desktop/gtk.dconf
-    dconf load / < /tmp/gtk.dconf
+    dconf load / </tmp/gtk.dconf
     rm -f /tmp/gtk.dconf
 
     mkdir -p ~/.config/gtk-{3,4}.0
@@ -305,23 +308,25 @@ setup_gnome() {
         ~/.local/bin/gnome-extensions-cli --filesystem install "$i"
         [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/
     done
-    ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com    
+    ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
     download_file /tmp/gnome.dconf ${BASE_REPO_URL}desktop/gnome.dconf
-    dconf load / < /tmp/gnome.dconf
+    dconf load / </tmp/gnome.dconf
     rm -f /tmp/gnome.dconf
-    
+
     gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
     gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
 }
 
 setup_cinnamon() {
     echo -e "Configuring cinnamon stuffs..."
+    install_pkgs "$CINNAMON_PACKAGES_TO_INSTALL"
+
     mkdir -p ~/.local/share/xed/styles
     download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
 
     download_file /tmp/cinnamon.dconf ${BASE_REPO_URL}desktop/cinnamon.dconf
-    dconf load / < /tmp/cinnamon.dconf
+    dconf load / </tmp/cinnamon.dconf
     rm -f /tmp/cinnamon.dconf
 
     gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
@@ -419,9 +424,9 @@ setup_apt() {
 
     # vscode
     if [[ ! -f /etc/apt/sources.list.d/vscode.list ]]; then
-        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
         sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+        echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
         rm -f packages.microsoft.gpg .wget-hsts
         refresh_package_sources
         install_pkgs code
@@ -439,7 +444,7 @@ install_pkgs "$REQUIREMENTS"
 setup_system
 improve_font
 configure_terminal
-setup_gtk
+setup_ui
 [[ $DESKTOP == "gnome" ]] && setup_gnome
 [[ $DESKTOP == "cinnamon" ]] && setup_cinnamon
 setup_apps
