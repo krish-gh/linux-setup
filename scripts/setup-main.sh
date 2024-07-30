@@ -147,6 +147,8 @@ setup_system() {
     echo -e "Updating some sudo stuffs..."
     sudo mkdir -p /etc/sudoers.d
     echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
+
+    systemctl is-enabled casper-md5check.service && sudo systemctl disable casper-md5check.service
 }
 
 improve_font() {
