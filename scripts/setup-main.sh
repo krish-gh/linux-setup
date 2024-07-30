@@ -152,6 +152,14 @@ setup_system() {
     mkdir -p ~/.config/environment.d
     download_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_URL}home/.config/environment.d/10-defaults.conf
 
+    profileAppend="$(
+        grep "~custom-setup~" ~/.profile >/dev/null 2>&1
+        echo $?
+    )"
+    if [[ "${profileAppend}" -ne 0 ]]; then
+        download_content ${BASE_REPO_URL}home/.profile >>~/.profile
+    fi
+
     # wallpaper
     mkdir -p ~/.local/share/backgrounds
     download_file ~/.local/share/backgrounds/$DISTRO_TYPE.png ${BASE_REPO_URL}home/.local/share/backgrounds/$DISTRO_TYPE.png
@@ -204,7 +212,7 @@ setup_terminal() {
     #starship preset no-nerd-font -o ~/.config/starship.toml
     download_file ~/.aliases ${BASE_REPO_URL}distros/$DISTRO_TYPE.aliases
     bashrcAppend="$(
-        grep "\.aliases" ~/.bashrc >/dev/null 2>&1
+        grep "~custom-setup~" ~/.bashrc >/dev/null 2>&1
         echo $?
     )"
     if [[ "${bashrcAppend}" -ne 0 ]]; then
