@@ -26,7 +26,7 @@ fi
 
 DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
-CURRENT_TERMINAL=$(ps -p $PPID -o comm=)
+CURRENT_TERMINAL=$(ps -p $PPID -o comm= | sed 's/-$//')
 
 echo -e "#################################################################"
 echo -e "DISTRO_TYPE=$DISTRO_TYPE"
