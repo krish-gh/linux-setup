@@ -153,7 +153,7 @@ setup_system() {
     systemctl is-enabled casper-md5check.service && sudo systemctl disable casper-md5check.service
 }
 
-improve_font() {
+setup_font() {
     echo -e "Installing fonts..."
     install_pkgs "$FONTS_TO_INSTALL"
     echo -e "Making font look better..."
@@ -177,7 +177,7 @@ improve_font() {
     fc-cache -fv
 }
 
-configure_terminal() {
+setup_terminal() {
     echo -e "Configuring shell stuffs..."
     install_pkgs "$TERM_PACKAGES_TO_INSTALL"
     if ! command_exists starship; then
@@ -442,8 +442,8 @@ echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
 
 setup_system
-improve_font
-configure_terminal
+setup_font
+setup_terminal
 setup_ui
 [[ $DESKTOP == "gnome" ]] && setup_gnome
 [[ $DESKTOP == "cinnamon" ]] && setup_cinnamon
