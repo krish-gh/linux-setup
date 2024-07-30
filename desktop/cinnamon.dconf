@@ -55,3 +55,6 @@ editor-font='JetBrainsMono Nerd Font 12'
 prefer-dark-theme=true
 scheme='catppuccin_mocha'
 use-default-font=false
+
+[org/x/editor/state/window]
+size=(1400, 1200)
