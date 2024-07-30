@@ -28,7 +28,7 @@ DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
 
 echo -e "#################################################################"
-echo -e "DISTRO TYPE=$DISTRO_TYPE"
+echo -e "DISTRO_TYPE=$DISTRO_TYPE"
 echo -e "DESKTOP=$DESKTOP"
 echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 echo -e "#################################################################"
@@ -399,6 +399,7 @@ setup_gnome() {
 
 setup_cinnamon() {
     echo -e "Configuring cinnamon stuffs..."
+    mkdir -p ~/.local/share/xed/styles
     download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
 
     download_file /tmp/cinnamon.dconf ${BASE_REPO_URL}desktop/cinnamon.dconf
