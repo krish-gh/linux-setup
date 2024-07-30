@@ -99,12 +99,12 @@ setup_system() {
 
     vmware)
         install_pkgs "$VMWARE_PACKAGES_TO_INSTALL"
-        sudo systemctl enable --now vmtoolsd.service
+        ! systemctl is-enabled vmtoolsd.service && sudo systemctl enable --now vmtoolsd.service
         ;;
 
     vbox)
         install_pkgs "$VBOX_PACKAGES_TO_INSTALL"
-        sudo systemctl enable --now vboxservice.service
+        ! systemctl is-enabled vboxservice.service && sudo systemctl enable --now vboxservice.service
         ;;
 
     hyperv)
