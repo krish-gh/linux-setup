@@ -45,6 +45,10 @@ show-directory-item-counts='never'
 show-hidden-files=true
 show-image-thumbnails='never'
 
+[org/nemo/window-state]
+geometry='1400x1200+50+50'
+maximized=false
+
 [org/x/apps/portal]
 color-scheme='prefer-dark'
 
