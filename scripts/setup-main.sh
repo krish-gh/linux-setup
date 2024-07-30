@@ -78,19 +78,16 @@ GUI_TEXT_EDITOR="" #override from desktop specific script
 
 # override with DISTRO_TYPE specific stuffs
 dist_type_exec=$(download_content ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh)
-if [[ $curl_exit_status == 0 ]]; then
-    $dist_type_exec
-else
+if [[ $dist_type_exec == '' ]]; then
     echo -e "Could not find $DISTRO_TYPE specific script!"
     exit 3
 fi
+$dist_type_exec
 
-# execute exact distro specic stuffs e.g. linux mint, ubuntu, manjaro etc.
+# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
     dist_id_exec=$(download_content ${BASE_REPO_URL}specific/"$DIST_ID".sh)
-    if [[ $curl_exit_status == 0 ]]; then
-        $dist_id_exec
-    fi
+    [[ $dist_id_exec != '' ]] && $dist_id_exec
 fi
 
 refresh_package_sources() {
