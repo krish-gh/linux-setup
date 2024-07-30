@@ -26,11 +26,13 @@ fi
 
 DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
+CURRENT_TERMINAL=$(ps -p $PPID -o comm=)
 
 echo -e "#################################################################"
 echo -e "DISTRO_TYPE=$DISTRO_TYPE"
 echo -e "DESKTOP=$DESKTOP"
 echo -e "SYSTEM=$SYSTEM_TO_SETUP"
+echo -e "TERMINAL=$CURRENT_TERMINAL"
 echo -e "#################################################################"
 cat /etc/os-release
 echo -e "#################################################################"
@@ -284,7 +286,7 @@ setup_pacman() {
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
     gsettings set yad.sourceview theme catppuccin_mocha
-    #gsettings set yad.settings terminal 'kgx -e "%s"'
+    gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
 
     # Configure pamac
     sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
