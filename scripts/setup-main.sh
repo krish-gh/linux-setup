@@ -154,6 +154,9 @@ setup_system() {
     mkdir -p ~/.config/environment.d
     download_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_URL}home/.config/environment.d/10-defaults.conf
 
+    mkdir -p ~/.config/systemd/user/service.d
+    download_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_URL}home/.config/systemd/user/service.d/env.conf
+
     profileAppend="$(
         grep "~custom-setup~" ~/.profile >/dev/null 2>&1
         echo $?
