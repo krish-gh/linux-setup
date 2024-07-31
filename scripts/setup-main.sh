@@ -459,8 +459,11 @@ setup_apt() {
         rm -f packages.microsoft.gpg .wget-hsts
     fi
 
-    # for qt6-style-kvantum
-    [[ $ID_LIKE == *ubuntu* ]] && sudo add-apt-repository ppa:papirus/papirus -y
+    # add some ppa if ubuntu based
+    if [[ $ID_LIKE == *ubuntu* ]]; then
+        # for qt6-style-kvantum
+        sudo add-apt-repository ppa:papirus/papirus -y
+    fi
 
     refresh_package_sources
     install_pkgs "code qt6-style-kvantum"
