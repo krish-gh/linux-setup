@@ -459,8 +459,11 @@ setup_apt() {
         rm -f packages.microsoft.gpg .wget-hsts
     fi
 
+    # for qt6-style-kvantum
+    [[ $ID_LIKE == *ubuntu* ]] && sudo add-apt-repository ppa:papirus/papirus -y
+
     refresh_package_sources
-    install_pkgs code
+    install_pkgs "code qt6-style-kvantum"
 }
 
 echo -e "Removing not needed packages..."
