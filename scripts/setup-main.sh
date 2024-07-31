@@ -50,6 +50,8 @@ echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 echo -e "TERMINAL=$CURRENT_TERMINAL"
 echo -e "DISTRO_ID=$DIST_ID"
 echo -e "#################################################################"
+cat /etc/os-release
+echo -e "#################################################################"
 
 BASE_REPO_URL="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
