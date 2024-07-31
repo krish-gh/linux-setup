@@ -79,7 +79,7 @@ TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
 # override with DISTRO_TYPE specific stuffs
-echo -e "Executing $DISTRO_TYPE specific script..."
+echo -e "Executing common $DISTRO_TYPE specific script..."
 download_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
 # shellcheck disable=SC1090
 source /tmp/"$DISTRO_TYPE".sh
@@ -105,7 +105,7 @@ uninstall_pkgs() {
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
-    echo -e "Executing $DIST_ID specific script..."
+    echo -e "Executing special $DIST_ID specific script..."
     download_file /tmp/"$DIST_ID".sh ${BASE_REPO_URL}specific/"$DIST_ID".sh
     # shellcheck disable=SC1090
     source /tmp/"$DIST_ID".sh
@@ -472,7 +472,7 @@ setup_apt() {
     fi
 
     # add some ppa if ubuntu based
-    if [[ $ID_LIKE == *ubuntu* ]]; then
+    if [[ $DIST_ID == *ubuntu* || $ID_LIKE == *ubuntu* ]]; then
         # for qt6-style-kvantum
         sudo add-apt-repository ppa:papirus/papirus -y
     fi
