@@ -12,12 +12,12 @@ command_exists apt && PKG_MGR=apt && DISTRO_TYPE=debian
 #command_exists dnf && PKG_MGR=dnf && DISTRO_TYPE=fedora
 
 if [[ $DISTRO_TYPE == '' ]]; then
-    echo "You are not running supported Linux distrbution..."
+    >&2 echo "You are not running supported Linux distrbution..."
     exit 1
 fi
 
 if ! command_exists curl; then
-    echo "curl required but not found..."
+    >&2 echo "curl required, but not found..."
     exit 2
 fi
 
@@ -81,6 +81,10 @@ GUI_TEXT_EDITOR="" #override from desktop specific script
 # override with DISTRO_TYPE specific stuffs
 echo -e "Executing common $DISTRO_TYPE specific script..."
 download_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
+if [[ ! -f /tmp/"$DISTRO_TYPE".sh ]]; then
+    >&2 echo "Error: $DISTRO_TYPE specific script not found!"
+    exit 3
+fi
 # shellcheck disable=SC1090
 source /tmp/"$DISTRO_TYPE".sh
 rm -f /tmp/"$DISTRO_TYPE".sh
@@ -108,7 +112,7 @@ if [[ $DIST_ID != '' ]]; then
     echo -e "Executing special $DIST_ID specific script..."
     download_file /tmp/"$DIST_ID".sh ${BASE_REPO_URL}specific/"$DIST_ID".sh
     # shellcheck disable=SC1090
-    source /tmp/"$DIST_ID".sh
+    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
     rm -f /tmp/"$DIST_ID".sh
 fi
 
