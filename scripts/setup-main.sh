@@ -425,7 +425,8 @@ setup_pacman() {
         pamacvar='flatpak'
     fi
 
-    install_pkgs "yay rate-mirrors reflector-simple mkinitcpio-firmware pamac-${pamacvar} visual-studio-code-bin"
+    install_pkgs "yay rate-mirrors reflector-simple pamac-${pamacvar} visual-studio-code-bin"
+    [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
