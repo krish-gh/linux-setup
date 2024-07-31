@@ -85,15 +85,6 @@ download_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_URL}distros/"$DISTRO_TYPE".sh
 source /tmp/"$DISTRO_TYPE".sh
 rm -f /tmp/"$DISTRO_TYPE".sh
 
-# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
-if [[ $DIST_ID != '' ]]; then
-    echo -e "Executing $DIST_ID specific script..."
-    download_file /tmp/"$DIST_ID".sh ${BASE_REPO_URL}specific/"$DIST_ID".sh
-    # shellcheck disable=SC1090
-    source /tmp/"$DIST_ID".sh
-    rm -f /tmp/"$DIST_ID".sh
-fi
-
 refresh_package_sources() {
     eval "$REFRESH_CMD"
 }
@@ -111,6 +102,15 @@ uninstall_pkgs() {
     pkgs=($(eval echo "$1"))
     for i in "${pkgs[@]}"; do eval "$UNINSTALL_CMD $i"; done
 }
+
+# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
+if [[ $DIST_ID != '' ]]; then
+    echo -e "Executing $DIST_ID specific script..."
+    download_file /tmp/"$DIST_ID".sh ${BASE_REPO_URL}specific/"$DIST_ID".sh
+    # shellcheck disable=SC1090
+    source /tmp/"$DIST_ID".sh
+    rm -f /tmp/"$DIST_ID".sh
+fi
 
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
