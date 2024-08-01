@@ -499,6 +499,11 @@ setup_apt() {
 
     refresh_package_sources
     install_pkgs "code gh qt6-style-kvantum{,-themes}"
+
+    if [[ $DESKTOP == "gnome" ]]; then
+        echo -e "Installing some more gnome stuffs"
+        ! command_exists flatpak && install_pkgs "gnome-shell-extension-manager"
+    fi
 }
 
 echo -e "Removing not needed packages..."
