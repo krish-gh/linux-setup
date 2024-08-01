@@ -1,0 +1,16 @@
+[com/linuxmint/updates]
+auto-update-cinnamon-spices=true
+auto-update-flatpaks=true
+hide-systray=true
+show-welcome-page=false
+
+[org/cinnamon/desktop/interface]
+gtk-theme='Mint-Y-Dark-Blue'
+icon-theme='Mint-Y-Blue'
+
+[org/cinnamon/theme]
+name='Mint-Y-Dark-Blue'
+
+[org/gnome/desktop/interface]
+gtk-theme='Mint-Y-Dark-Blue'
+icon-theme='Mint-Y-Blue'
