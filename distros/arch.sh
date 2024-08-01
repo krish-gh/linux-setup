@@ -19,6 +19,6 @@ GTK_PACKAGES_TO_INSTALL="gnome-themes-extra"
 QT_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,shell-extensions,console,text-editor} python-nautilus python-pipx"
 CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python"
-PACKAGES_TO_REMOVE="baobab celluloid epiphany gedit mpv rhythmbox simple-scan snapshot system-config-printer thunderbird totem vim neofetch gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs} yelp"
+PACKAGES_TO_REMOVE="baobab celluloid epiphany gedit mpv gthumb rhythmbox simple-scan snapshot system-config-printer thunderbird totem vim neofetch gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs} yelp"
 
 echo -e "Done arch.sh..."
