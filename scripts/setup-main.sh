@@ -493,7 +493,7 @@ setup_apt() {
     fi
 
     refresh_package_sources
-    install_pkgs "code gh qt6-style-kvantum"
+    install_pkgs "code gh qt6-style-kvantum{,-themes}"
 }
 
 echo -e "Removing not needed packages..."
