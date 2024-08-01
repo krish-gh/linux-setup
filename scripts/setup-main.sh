@@ -460,7 +460,7 @@ setup_pacman() {
 
     if [[ $DESKTOP == "cinnamon" ]]; then
         echo -e "Installing some cinnamon stuffs from chaotic-aur"
-        install_pkgs "xviewer xviewer-plugins"
+        install_pkgs "xviewer xviewer-plugins mint-themes mint-y-icons"
     fi
 
     # misc
