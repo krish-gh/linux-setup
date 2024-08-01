@@ -384,6 +384,16 @@ setup_apps() {
     mkdir -p ~/.config/vlc
     download_file ~/.config/vlc/vlcrc ${BASE_REPO_URL}home/.config/vlc/vlcrc
 
+    # onboard
+    if command_exists onboard; then
+        gsettings set org.onboard theme '/usr/share/onboard/themes/Droid.theme'
+        gsettings set org.onboard.window docking-enabled true
+        gsettings set org.onboard.window docking-edge bottom
+        gsettings set org.onboard.window docking-shrink-workarea false
+        gsettings set org.onboard.window.landscape dock-expand false
+        gsettings set org.onboard.window.portrait dock-expand false
+    fi
+
     echo -e "Setting up file associations..."
     download_file ~/.config/mimeapps.list ${BASE_REPO_URL}home/.config/mimeapps.list
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
