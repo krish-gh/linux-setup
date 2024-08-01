@@ -7,7 +7,6 @@ command_exists() {
 }
 
 DISTRO_TYPE=''
-DIST_ID=''
 PKG_MGR=''
 command_exists pacman && PKG_MGR=pacman && DISTRO_TYPE=arch
 command_exists apt && PKG_MGR=apt && DISTRO_TYPE=debian
@@ -23,22 +22,9 @@ if ! command_exists curl; then
     exit 2
 fi
 
+DIST_ID=''
 # shellcheck disable=SC1091
 [[ -f /etc/os-release ]] && source /etc/os-release && DIST_ID=$ID
-
-# arg1 = destination path, arg2 = source path
-copy_file() {
-    curl -f -o "$1" "$2?$(date +%s)"
-    curl_exit_status=$?
-    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
-}
-
-# arg1 = source path
-copy_content() {
-    curl -f "$1?$(date +%s)"
-    curl_exit_status=$?
-    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
-}
 
 DESKTOP=$DESKTOP_SESSION
 SYSTEM_TO_SETUP=vmware
@@ -77,6 +63,20 @@ PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
 
 TERMINAL_TO_INSTALL=kitty
 GUI_TEXT_EDITOR="" #override from desktop specific script
+
+# arg1 = destination path, arg2 = source path
+copy_file() {
+    curl -f -o "$1" "$2?$(date +%s)"
+    curl_exit_status=$?
+    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
+}
+
+# arg1 = source path
+copy_content() {
+    curl -f "$1?$(date +%s)"
+    curl_exit_status=$?
+    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
+}
 
 # override with DISTRO_TYPE specific stuffs
 echo -e "Executing common $DISTRO_TYPE specific script..."
