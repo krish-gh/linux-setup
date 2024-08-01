@@ -1,6 +1,6 @@
 [org/cinnamon/desktop/interface]
-#gtk-theme='Mint-Y-Dark-Blue'
-#icon-theme='Mint-Y-Blue'
+gtk-theme='Mint-Y-Dark-Blue'
+icon-theme='Mint-Y-Blue'
 text-scaling-factor=1.3
 toolkit-accessibility=false
 
@@ -37,11 +37,11 @@ tile-enabled=false
 unplug-enabled=false
 
 [org/cinnamon/theme]
-#name='Mint-Y-Dark-Blue'
+name='Mint-Y-Dark-Blue'
 
 [org/gnome/desktop/interface]
-#gtk-theme='Mint-Y-Dark-Blue'
-#icon-theme='Mint-Y-Blue'
+gtk-theme='Mint-Y-Dark-Blue'
+icon-theme='Mint-Y-Blue'
 
 [org/nemo/preferences]
 executable-text-activation='display'
