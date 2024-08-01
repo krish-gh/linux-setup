@@ -300,7 +300,7 @@ setup_ui() {
     echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
-    download_file ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/gedit/main/themes/catppuccin-mocha.xml
+    download_file ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
     for i in ~/.local/share/gtksourceview-{4,5}/styles; do
         cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml "$i"
     done
@@ -358,8 +358,8 @@ setup_cinnamon() {
     GUI_TEXT_EDITOR=xed.desktop
     install_pkgs "$CINNAMON_PACKAGES_TO_INSTALL"
 
-    mkdir -p ~/.local/share/xed/styles
-    download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
+    #mkdir -p ~/.local/share/xed/styles
+    #download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
 
     download_file /tmp/cinnamon.dconf ${BASE_REPO_LOCATION}desktop/cinnamon.dconf
     dconf load / </tmp/cinnamon.dconf
