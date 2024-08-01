@@ -25,14 +25,14 @@ fi
 [[ -f /etc/os-release ]] && source /etc/os-release && DIST_ID=$ID
 
 # arg1 = destination path, arg2 = source path
-download_file() {
+copy_file() {
     curl -f -o "$1" "$2?$(date +%s)"
     curl_exit_status=$?
     [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
 }
 
 # arg1 = source path
-download_content() {
+copy_content() {
     curl -f "$1?$(date +%s)"
     curl_exit_status=$?
     [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
@@ -80,7 +80,7 @@ GUI_TEXT_EDITOR="" #override from desktop specific script
 
 # override with DISTRO_TYPE specific stuffs
 echo -e "Executing common $DISTRO_TYPE specific script..."
-download_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
+copy_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
 if [[ ! -f /tmp/"$DISTRO_TYPE".sh ]]; then
     >&2 echo "Error: $DISTRO_TYPE specific script not found!"
     exit 3
@@ -110,7 +110,7 @@ uninstall_pkgs() {
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
     echo -e "Executing special $DIST_ID specific script..."
-    download_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
+    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
     # shellcheck disable=SC1090
     [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
     rm -f /tmp/"$DIST_ID".sh
@@ -148,35 +148,35 @@ setup_system() {
 
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
-    download_file /tmp/999-sysctl.conf ${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf
+    copy_file /tmp/999-sysctl.conf ${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf
     sudo mv -f /tmp/999-sysctl.conf /etc/sysctl.d/
-    download_file /tmp/00-journal-size.conf ${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf
+    copy_file /tmp/00-journal-size.conf ${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -f /tmp/00-journal-size.conf /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 
     # env var
     mkdir -p ~/.config/environment.d
-    download_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_LOCATION}home/.config/environment.d/10-defaults.conf
+    copy_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_LOCATION}home/.config/environment.d/10-defaults.conf
 
     mkdir -p ~/.config/systemd/user/service.d
-    download_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
+    copy_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
 
     profileAppend="$(
         grep "~custom-setup~" ~/.profile >/dev/null 2>&1
         echo $?
     )"
     if [[ "${profileAppend}" -ne 0 ]]; then
-        download_content ${BASE_REPO_LOCATION}home/.profile >>~/.profile
+        copy_content ${BASE_REPO_LOCATION}home/.profile >>~/.profile
     fi
 
     # wallpaper
     mkdir -p ~/.local/share/backgrounds
-    download_file ~/.local/share/backgrounds/$DISTRO_TYPE.png ${BASE_REPO_LOCATION}home/.local/share/backgrounds/$DISTRO_TYPE.png
+    copy_file ~/.local/share/backgrounds/$DISTRO_TYPE.png ${BASE_REPO_LOCATION}home/.local/share/backgrounds/$DISTRO_TYPE.png
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
-    download_file ~/.local/share/keyrings/Default_keyring.keyring ${BASE_REPO_LOCATION}home/.local/share/keyrings/Default_keyring.keyring
-    download_file ~/.local/share/keyrings/default ${BASE_REPO_LOCATION}home/.local/share/keyrings/default
+    copy_file ~/.local/share/keyrings/Default_keyring.keyring ${BASE_REPO_LOCATION}home/.local/share/keyrings/Default_keyring.keyring
+    copy_file ~/.local/share/keyrings/default ${BASE_REPO_LOCATION}home/.local/share/keyrings/default
     chmod og= ~/.local/share/keyrings/
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
 
@@ -192,9 +192,9 @@ setup_font() {
     install_pkgs "$FONTS_TO_INSTALL"
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
-    download_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/fonts.conf
-    #download_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/conf.d/20-no-embedded.conf
-    download_file ~/.Xresources ${BASE_REPO_LOCATION}home/.Xresources
+    copy_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/fonts.conf
+    #copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/conf.d/20-no-embedded.conf
+    copy_file ~/.Xresources ${BASE_REPO_LOCATION}home/.Xresources
     xrdb -merge ~/.Xresources
     [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
@@ -219,18 +219,18 @@ setup_terminal() {
         curl -fsS https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin
     fi
     #starship preset no-nerd-font -o ~/.config/starship.toml
-    download_file ~/.aliases ${BASE_REPO_LOCATION}distros/$DISTRO_TYPE.aliases
+    copy_file ~/.aliases ${BASE_REPO_LOCATION}distros/$DISTRO_TYPE.aliases
     bashrcAppend="$(
         grep "~custom-setup~" ~/.bashrc >/dev/null 2>&1
         echo $?
     )"
     if [[ "${bashrcAppend}" -ne 0 ]]; then
-        download_content ${BASE_REPO_LOCATION}home/.bashrc >>~/.bashrc
+        copy_content ${BASE_REPO_LOCATION}home/.bashrc >>~/.bashrc
     fi
 
     # nano
     mkdir -p ~/.config/nano
-    download_file ~/.config/nano/nanorc ${BASE_REPO_LOCATION}home/.config/nano/nanorc
+    copy_file ~/.config/nano/nanorc ${BASE_REPO_LOCATION}home/.config/nano/nanorc
     if [[ -d /usr/share/nano-syntax-highlighting/ ]]; then
         nanorcAppend="$(
             grep "nano-syntax-highlighting" ~/.config/nano/nanorc >/dev/null 2>&1
@@ -243,7 +243,7 @@ setup_terminal() {
 
     # fastfetch
     #mkdir p ~/.config/fastfetch
-    #download_file ~/.config/fastfetch/config.jsonc ${BASE_REPO_LOCATION}home/.config/fastfetch/config.jsonc
+    #copy_file ~/.config/fastfetch/config.jsonc ${BASE_REPO_LOCATION}home/.config/fastfetch/config.jsonc
 
     echo -e "Installing terminal $TERMINAL_TO_INSTALL..."
     case $TERMINAL_TO_INSTALL in
@@ -251,21 +251,21 @@ setup_terminal() {
     alacritty)
         install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/alacritty
-        download_file ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
-        download_file ~/.config/alacritty/alacritty.toml ${BASE_REPO_LOCATION}home/.config/alacritty/alacritty.toml
+        copy_file ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
+        copy_file ~/.config/alacritty/alacritty.toml ${BASE_REPO_LOCATION}home/.config/alacritty/alacritty.toml
         ;;
 
     kitty)
         install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/kitty
-        download_file ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
-        download_file ~/.config/kitty/kitty.conf ${BASE_REPO_LOCATION}home/.config/kitty/kitty.conf
+        copy_file ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
+        copy_file ~/.config/kitty/kitty.conf ${BASE_REPO_LOCATION}home/.config/kitty/kitty.conf
         ;;
 
     wezterm)
         install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/wezterm
-        download_file ~/.config/wezterm/wezterm.lua ${BASE_REPO_LOCATION}home/.config/wezterm/wezterm.lua
+        copy_file ~/.config/wezterm/wezterm.lua ${BASE_REPO_LOCATION}home/.config/wezterm/wezterm.lua
         ;;
 
     *)
@@ -276,7 +276,7 @@ setup_terminal() {
     # gnome terminal
     if command_exists gnome-terminal; then
         tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
-        download_file /tmp/gterm.dconf ${BASE_REPO_LOCATION}desktop/gterm.dconf
+        copy_file /tmp/gterm.dconf ${BASE_REPO_LOCATION}desktop/gterm.dconf
         sed -i "s/DEFAULT_PROFILE/$tprofileid/g" /tmp/gterm.dconf
         dconf load /org/gnome/terminal/ </tmp/gterm.dconf
         rm -f /tmp/gterm.dconf
@@ -289,7 +289,7 @@ setup_ui() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
     install_pkgs "$QT_PACKAGES_TO_INSTALL"
 
-    download_file /tmp/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
+    copy_file /tmp/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
     dconf load / </tmp/gtk.dconf
     rm -f /tmp/gtk.dconf
 
@@ -300,16 +300,16 @@ setup_ui() {
     echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
-    download_file ~/.local/share/gtksourceview-3.0/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
+    copy_file ~/.local/share/gtksourceview-3.0/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
     for i in ~/.local/share/gtksourceview-{4,5}/styles; do
         cp -s -f ~/.local/share/gtksourceview-3.0/styles/mocha.xml "$i"
     done
 
     echo -e "Setting up QT apps to look like GTK.."
     mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
-    download_file ~/.config/Kvantum/kvantum.kvconfig ${BASE_REPO_LOCATION}home/.config/Kvantum/kvantum.kvconfig
+    copy_file ~/.config/Kvantum/kvantum.kvconfig ${BASE_REPO_LOCATION}home/.config/Kvantum/kvantum.kvconfig
     for i in 5 6; do
-        download_file ~/.config/qt${i}ct/qt${i}ct.conf ${BASE_REPO_LOCATION}home/.config/qt${i}ct/qt${i}ct.conf
+        copy_file ~/.config/qt${i}ct/qt${i}ct.conf ${BASE_REPO_LOCATION}home/.config/qt${i}ct/qt${i}ct.conf
     done
 
 }
@@ -321,7 +321,7 @@ setup_gnome() {
 
     # GDM
     #sudo mkdir -p /etc/dconf/db/gdm.d
-    #download_file 95-gdm-settings ${BASE_REPO_LOCATION}system/etc/dconf/db/gdm.d/95-gdm-settings
+    #copy_file 95-gdm-settings ${BASE_REPO_LOCATION}system/etc/dconf/db/gdm.d/95-gdm-settings
     #sudo mv -f 95-gdm-settings /etc/dconf/db/gdm.d/
 
     echo -e "Installing some extensions..."
@@ -345,7 +345,7 @@ setup_gnome() {
     done
     ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
-    download_file /tmp/gnome.dconf ${BASE_REPO_LOCATION}desktop/gnome.dconf
+    copy_file /tmp/gnome.dconf ${BASE_REPO_LOCATION}desktop/gnome.dconf
     dconf load / </tmp/gnome.dconf
     rm -f /tmp/gnome.dconf
 
@@ -359,9 +359,9 @@ setup_cinnamon() {
     install_pkgs "$CINNAMON_PACKAGES_TO_INSTALL"
 
     #mkdir -p ~/.local/share/xed/styles
-    #download_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
+    #copy_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
 
-    download_file /tmp/cinnamon.dconf ${BASE_REPO_LOCATION}desktop/cinnamon.dconf
+    copy_file /tmp/cinnamon.dconf ${BASE_REPO_LOCATION}desktop/cinnamon.dconf
     dconf load / </tmp/cinnamon.dconf
     rm -f /tmp/cinnamon.dconf
 
@@ -382,7 +382,7 @@ setup_apps() {
 
     # vlc
     mkdir -p ~/.config/vlc
-    download_file ~/.config/vlc/vlcrc ${BASE_REPO_LOCATION}home/.config/vlc/vlcrc
+    copy_file ~/.config/vlc/vlcrc ${BASE_REPO_LOCATION}home/.config/vlc/vlcrc
 
     # onboard
     if command_exists onboard; then
@@ -395,7 +395,7 @@ setup_apps() {
     fi
 
     echo -e "Setting up file associations..."
-    download_file ~/.config/mimeapps.list ${BASE_REPO_LOCATION}home/.config/mimeapps.list
+    copy_file ~/.config/mimeapps.list ${BASE_REPO_LOCATION}home/.config/mimeapps.list
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
@@ -466,7 +466,7 @@ setup_pacman() {
     # misc
     flagstocopy=(code electron chromium chrome microsoft-edge-stable)
     for i in "${flagstocopy[@]}"; do
-        download_file ~/.config/"${i}"-flags.conf ${BASE_REPO_LOCATION}home/.config/"${i}"-flags.conf
+        copy_file ~/.config/"${i}"-flags.conf ${BASE_REPO_LOCATION}home/.config/"${i}"-flags.conf
     done
 }
 
