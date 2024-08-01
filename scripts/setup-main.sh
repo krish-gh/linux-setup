@@ -300,9 +300,9 @@ setup_ui() {
     echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
-    download_file ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
+    download_file ~/.local/share/gtksourceview-3.0/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
     for i in ~/.local/share/gtksourceview-{4,5}/styles; do
-        cp -s -f ~/.local/share/gtksourceview-3.0/styles/catppuccin-mocha.xml "$i"
+        cp -s -f ~/.local/share/gtksourceview-3.0/styles/mocha.xml "$i"
     done
 
     echo -e "Setting up QT apps to look like GTK.."
@@ -377,7 +377,7 @@ setup_apps() {
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
     gsettings set org.gnome.meld show-line-numbers true
-    gsettings set org.gnome.meld style-scheme catppuccin_mocha
+    gsettings set org.gnome.meld style-scheme catppuccin-mocha
     gsettings set org.gnome.meld highlight-syntax true
 
     # vlc
@@ -440,7 +440,7 @@ setup_pacman() {
 
     gsettings set yad.sourceview line-num true
     gsettings set yad.sourceview brackets true
-    gsettings set yad.sourceview theme catppuccin_mocha
+    gsettings set yad.sourceview theme catppuccin-mocha
     gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
 
     # Configure pamac

@@ -61,7 +61,7 @@ auto-close=true
 display-line-numbers=true
 editor-font='JetBrainsMono Nerd Font 12'
 prefer-dark-theme=true
-scheme='catppuccin_mocha'
+scheme='catppuccin-mocha'
 use-default-font=false
 
 [org/x/editor/state/window]

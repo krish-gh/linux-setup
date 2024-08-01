@@ -10,7 +10,7 @@ custom-font='JetBrainsMono Nerd Font 12'
 restore-session=false
 show-line-numbers=true
 spellcheck=false
-style-scheme='catppuccin_mocha'
+style-scheme='catppuccin-mocha'
 use-system-font=false
 
 [org/gnome/desktop/app-folders]
