@@ -458,6 +458,11 @@ setup_pacman() {
         fi
     fi
 
+    if [[ $DESKTOP == "cinnamon" ]]; then
+        echo -e "Installing some cinnamon stuffs from chaotic-aur"
+        install_pkgs "xviewer xviewer-plugins"
+    fi
+
     # misc
     flagstocopy=(code electron chromium chrome microsoft-edge-stable)
     for i in "${flagstocopy[@]}"; do
