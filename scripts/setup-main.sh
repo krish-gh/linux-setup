@@ -1,5 +1,7 @@
 #!/bin/bash
 
+BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
+
 command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
@@ -52,8 +54,6 @@ echo -e "DISTRO_ID=$DIST_ID"
 echo -e "#################################################################"
 cat /etc/os-release
 echo -e "#################################################################"
-
-BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
 REFRESH_CMD=""   #override from DISTRO_TYPE specific script
 INSTALL_CMD=""   #override from DISTRO_TYPE specific script
