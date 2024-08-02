@@ -330,11 +330,11 @@ setup_gnome() {
 
     declare -A exts
     exts[1]=AlphabeticalAppGrid@stuarthayhurst
-    exts[2]=appindicatorsupport@rgcjonas.gmail.com
-    exts[3]=dash-to-dock@micxgx.gmail.com
-    exts[4]=clipboard-indicator@tudmotu.com
-    exts[5]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
-    exts[6]=xwayland-indicator@swsnr.de
+    exts[2]=clipboard-indicator@tudmotu.com
+    exts[3]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
+    exts[4]=xwayland-indicator@swsnr.de
+    [[ $DIST_ID != ubuntu ]] && exts[5]=appindicatorsupport@rgcjonas.gmail.com
+    [[ $DIST_ID != ubuntu ]] && exts[6]=dash-to-dock@micxgx.gmail.com
     [[ $DISTRO_TYPE == arch ]] && exts[arch]=arch-update@RaphaelRochet
 
     extdir=~/.local/share/gnome-shell/extensions
