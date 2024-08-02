@@ -333,8 +333,9 @@ setup_gnome() {
     exts[2]=clipboard-indicator@tudmotu.com
     exts[3]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
     exts[4]=xwayland-indicator@swsnr.de
-    [[ $DIST_ID != ubuntu ]] && exts[5]=appindicatorsupport@rgcjonas.gmail.com
-    [[ $DIST_ID != ubuntu ]] && exts[6]=dash-to-dock@micxgx.gmail.com
+    exts[5]=apps-menu@gnome-shell-extensions.gcampax.github.com
+    [[ $DIST_ID != ubuntu ]] && exts[6]=appindicatorsupport@rgcjonas.gmail.com
+    [[ $DIST_ID != ubuntu ]] && exts[7]=dash-to-dock@micxgx.gmail.com
     [[ $DISTRO_TYPE == arch ]] && exts[arch]=arch-update@RaphaelRochet
 
     extdir=~/.local/share/gnome-shell/extensions
@@ -342,7 +343,6 @@ setup_gnome() {
         ~/.local/bin/gnome-extensions-cli --filesystem install "$i"
         [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/
     done
-    ~/.local/bin/gnome-extensions-cli enable apps-menu@gnome-shell-extensions.gcampax.github.com
 
     copy_file /tmp/gnome.dconf ${BASE_REPO_LOCATION}desktop/gnome.dconf
     dconf load / </tmp/gnome.dconf
