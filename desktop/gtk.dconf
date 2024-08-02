@@ -2,7 +2,7 @@
 color-scheme='prefer-dark'
 font-antialiasing='rgba'
 font-hinting='slight'
-gtk-theme='Adwaita-dark'
+#gtk-theme='Adwaita-dark'
 text-scaling-factor=1.3
 
 [org/gnome/desktop/privacy]
