@@ -29,7 +29,7 @@ apps=['org.manjaro.pamac.manager.desktop', 'com.mattjakeman.ExtensionManager.des
 name='Stuffs'
 
 [org/gnome/desktop/app-folders/folders/zzz]
-apps=['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'kvantummanager.desktop', 'nvim.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'stoken-gui.desktop', 'stoken-gui-small.desktop', 'vim.desktop', 'uxterm.desktop', 'xterm.desktop', 'yad-settings.desktop']
+apps=['bssh.desktop', 'bvnc.desktop', 'avahi-discover.desktop', 'htop.desktop', 'yad-icon-browser.desktop', 'display-im6.q16.desktop', 'kvantummanager.desktop', 'nvim.desktop', 'qv4l2.desktop', 'qvidcap.desktop', 'qt5ct.desktop', 'qt6ct.desktop', 'reflector-simple.desktop', 'stoken-gui.desktop', 'stoken-gui-small.desktop', 'vim.desktop', 'uxterm.desktop', 'xterm.desktop', 'yad-settings.desktop']
 name='zzz'
 
 [org/gnome/desktop/background]
