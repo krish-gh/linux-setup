@@ -507,22 +507,8 @@ setup_apt() {
     fi
 }
 
-# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
-if [[ $DIST_ID != '' ]]; then
-    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
-    # shellcheck disable=SC1090
-    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
-    rm -f /tmp/"$DIST_ID".sh
-fi
-
-if [[ $(type -t setup_"$DIST_ID") == function ]]; then
-    echo -e "Executing additional $DIST_ID specific script..."
-    setup_"$DIST_ID"
-fi
-
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
-
 refresh_package_sources
 
 echo -e "Installing some needed stuffs..."
@@ -535,6 +521,19 @@ setup_ui
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
 setup_apps
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
+
+# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
+if [[ $DIST_ID != '' ]]; then
+    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
+    # shellcheck disable=SC1090
+    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
+    rm -f /tmp/"$DIST_ID".sh
+fi
+
+if [[ $(type -t setup_"$DIST_ID") == function ]]; then
+    echo -e "Executing additional $DIST_ID specific script..."
+    setup_"$DIST_ID"
+fi
 
 echo -e ""
 echo -e "Done...Reboot..."
