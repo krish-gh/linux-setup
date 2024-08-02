@@ -21,7 +21,7 @@ apps=['eos-apps-info.desktop', 'eos-log-tool.desktop', 'eos-quickstart.desktop',
 name='eos'
 
 [org/gnome/desktop/app-folders/folders/ubuntu]
-apps=['software-properties-drivers.desktop', 'firmware-updater_firmware-updater.desktop', 'software-properties-gtk.desktop', 'update-manager.desktop']
+apps=['software-properties-drivers.desktop', 'snap-store_snap-store.desktop', 'firmware-updater_firmware-updater.desktop', 'software-properties-gtk.desktop', 'update-manager.desktop']
 name='ubuntu'
 
 [org/gnome/desktop/app-folders/folders/stuffs]
