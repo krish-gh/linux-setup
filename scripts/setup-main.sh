@@ -290,9 +290,9 @@ setup_ui() {
     rm -f /tmp/gtk.dconf
 
     # make it dark
-    gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme)
-    if [[ $gtktheme != '' && $gtktheme != *dark ]]; then "$gtktheme"-dark
-        gsettings get org.gnome.desktop.interface gtk-theme 
+    gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d \'\")
+    if [[ $gtktheme != '' && $gtktheme != *dark ]]; then
+        gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
     fi
 
     mkdir -p ~/.config/gtk-{3,4}.0
