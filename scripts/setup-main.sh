@@ -107,16 +107,6 @@ uninstall_pkgs() {
     for i in "${pkgs[@]}"; do eval "$UNINSTALL_CMD $i"; done
 }
 
-# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
-if [[ $DIST_ID != '' ]]; then
-    echo -e "Executing additional $DIST_ID specific script..."
-    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
-    # shellcheck disable=SC1090
-    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
-    rm -f /tmp/"$DIST_ID".sh
-    [[ $(type -t setup_"$DIST_ID") == function ]] && setup_"$DIST_ID"
-fi
-
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
     case $SYSTEM_TO_SETUP in
@@ -487,17 +477,17 @@ setup_apt() {
 
     # vscode
     if [[ ! -f /etc/apt/sources.list.d/vscode.list ]]; then
-        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg 
-        sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg 
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null 
+        wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
+        sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
         rm -f packages.microsoft.gpg .wget-hsts
     fi
 
     # github
     if [[ ! -f /etc/apt/sources.list.d/github-cli.list ]]; then
-        wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
-        && sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
-        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null 
+        wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
+            sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg &&
+            echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
         rm -f .wget-hsts
     fi
 
@@ -515,6 +505,19 @@ setup_apt() {
         ! command_exists flatpak && install_pkgs "gnome-shell-extension-manager"
     fi
 }
+
+# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
+if [[ $DIST_ID != '' ]]; then
+    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
+    # shellcheck disable=SC1090
+    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
+    rm -f /tmp/"$DIST_ID".sh
+fi
+
+if [[ $(type -t setup_"$DIST_ID") == function ]]; then
+    echo -e "Executing additional $DIST_ID specific script..."
+    setup_"$DIST_ID"
+fi
 
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
