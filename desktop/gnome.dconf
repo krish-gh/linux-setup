@@ -14,11 +14,15 @@ style-scheme='catppuccin-mocha'
 use-system-font=false
 
 [org/gnome/desktop/app-folders]
-folder-children=['eos', 'stuffs', 'Utilities', 'zzz']
+folder-children=['eos', 'stuffs', 'ubuntu', 'Utilities', 'zzz']
 
 [org/gnome/desktop/app-folders/folders/eos]
 apps=['eos-apps-info.desktop', 'eos-log-tool.desktop', 'eos-quickstart.desktop', 'eos-update.desktop', 'welcome.desktop']
 name='eos'
+
+[org/gnome/desktop/app-folders/folders/ubuntu]
+apps=['software-properties-drivers.desktop', 'firmware-updater_firmware-updater.desktop', 'software-properties-gtk.desktop', 'update-manager.desktop']
+name='ubuntu'
 
 [org/gnome/desktop/app-folders/folders/stuffs]
 apps=['org.manjaro.pamac.manager.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.Meld.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'org.gnome.SystemMonitor.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop', 'vlc.desktop']
