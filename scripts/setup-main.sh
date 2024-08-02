@@ -179,8 +179,8 @@ setup_system() {
     fi
 
     # wallpaper
-    mkdir -p ~/.local/share/backgrounds
-    copy_file ~/.local/share/backgrounds/$DISTRO_TYPE.png ${BASE_REPO_LOCATION}home/.local/share/backgrounds/$DISTRO_TYPE.png
+    #mkdir -p ~/.local/share/backgrounds
+    #copy_file ~/.local/share/backgrounds/$DISTRO_TYPE.png ${BASE_REPO_LOCATION}home/.local/share/backgrounds/$DISTRO_TYPE.png
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
@@ -358,8 +358,8 @@ setup_gnome() {
     dconf load / </tmp/gnome.dconf
     rm -f /tmp/gnome.dconf
 
-    gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
-    gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+    #gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+    #gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
 }
 
 setup_cinnamon() {
@@ -374,7 +374,7 @@ setup_cinnamon() {
     dconf load / </tmp/cinnamon.dconf
     rm -f /tmp/cinnamon.dconf
 
-    gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
+    #gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/$DISTRO_TYPE.png"
 }
 
 setup_apps() {
