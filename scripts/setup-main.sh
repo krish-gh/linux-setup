@@ -158,8 +158,8 @@ setup_system() {
     mkdir -p ~/.config/environment.d
     copy_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_LOCATION}home/.config/environment.d/10-defaults.conf
 
-    mkdir -p ~/.config/systemd/user/service.d
-    copy_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
+    #mkdir -p ~/.config/systemd/user/service.d
+    #copy_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
 
     profileAppend="$(
         grep "~custom-setup~" ~/.profile >/dev/null 2>&1
@@ -201,7 +201,7 @@ setup_font() {
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
     copy_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/fonts.conf
-    #copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/conf.d/20-no-embedded.conf
+    copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/conf.d/20-no-embedded.conf
     copy_file ~/.Xresources ${BASE_REPO_LOCATION}home/.Xresources
     xrdb -merge ~/.Xresources
     [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
