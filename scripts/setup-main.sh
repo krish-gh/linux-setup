@@ -169,6 +169,14 @@ setup_system() {
         copy_content ${BASE_REPO_LOCATION}home/.profile >>~/.profile
     fi
 
+    xprofileAppend="$(
+        grep "~custom-setup~" ~/.xprofile >/dev/null 2>&1
+        echo $?
+    )"
+    if [[ "${xprofileAppend}" -ne 0 ]]; then
+        copy_content ${BASE_REPO_LOCATION}home/.xprofile >>~/.xprofile
+    fi
+
     # wallpaper
     mkdir -p ~/.local/share/backgrounds
     copy_file ~/.local/share/backgrounds/$DISTRO_TYPE.png ${BASE_REPO_LOCATION}home/.local/share/backgrounds/$DISTRO_TYPE.png
