@@ -109,11 +109,12 @@ uninstall_pkgs() {
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
-    echo -e "Executing special $DIST_ID specific script..."
+    echo -e "Executing additional $DIST_ID specific script..."
     copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
     # shellcheck disable=SC1090
     [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
     rm -f /tmp/"$DIST_ID".sh
+    [[ $(type -t setup_"$DIST_ID") == function ]] && setup_"$DIST_ID"
 fi
 
 setup_system() {
