@@ -26,7 +26,8 @@ DIST_ID=''
 # shellcheck disable=SC1091
 [[ -f /etc/os-release ]] && source /etc/os-release && DIST_ID=$ID
 
-DESKTOP=$XDG_SESSION_DESKTOP
+# shellcheck disable=SC2086
+DESKTOP=$(echo ${XDG_CURRENT_DESKTOP##*:} | tr '[:upper:]' '[:lower:]' | sed 's/^x-//')
 SYSTEM_TO_SETUP=vmware
 CURRENT_TERMINAL=$(ps -p $PPID -o comm= | sed 's/-$//')
 
