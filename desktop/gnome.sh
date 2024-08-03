@@ -51,3 +51,4 @@ setup_gnome() {
         gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/wallpaper"
     fi
 }
+
