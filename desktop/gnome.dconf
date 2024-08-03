@@ -7,6 +7,8 @@ use-system-font=false
 
 [org/gnome/TextEditor]
 custom-font='JetBrainsMono Nerd Font 12'
+last-window-maximised=false
+last-window-size=(1200, 1000)
 restore-session=false
 show-line-numbers=true
 spellcheck=false
@@ -25,7 +27,7 @@ apps=['software-properties-drivers.desktop', 'snap-store_snap-store.desktop', 'f
 name='ubuntu'
 
 [org/gnome/desktop/app-folders/folders/stuffs]
-apps=['org.manjaro.pamac.manager.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.eog.desktop', 'org.gnome.Meld.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'org.gnome.SystemMonitor.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop', 'vlc.desktop']
+apps=['org.manjaro.pamac.manager.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.eog.desktop', 'org.gnome.Meld.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'gnome-system-monitor.desktop', 'org.gnome.SystemMonitor.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop', 'vlc.desktop']
 name='Stuffs'
 
 [org/gnome/desktop/app-folders/folders/zzz]
@@ -87,7 +89,7 @@ initial-size=(1400, 1200)
 
 [org/gnome/shell]
 disable-user-extensions=false
-favorite-apps=['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Terminal.desktop', 'firefox.desktop', 'firefox_firefox.desktop']
+favorite-apps=['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Terminal.desktop', 'firefox.desktop', 'firefox-esr.desktop', 'firefox_firefox.desktop']
 
 [org/gnome/shell/extensions/arch-update]
 always-visible=false
