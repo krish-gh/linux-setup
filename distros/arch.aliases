@@ -1,6 +1,5 @@
 #!/bin/sh
-# https://wiki.archlinux.org/title/Sudo#Passing_aliases
-alias sudo='sudo -E -H GTK_THEME=Adwaita:dark '
+alias sudo='sudo -E -H '
 alias e='systemctl --failed --no-pager; journalctl -p 3 -b'
 alias cls='clear'
 alias u='sudo pacman -Syu; command -v flatpak &> /dev/null && flatpak update; command -v pipx &> /dev/null && pipx upgrade-all'
