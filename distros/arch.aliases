@@ -1,4 +1,7 @@
 #!/bin/sh
+# shellcheck disable=SC2139
+# shellcheck disable=SC3009
+# shellcheck disable=SC3020
 alias sudo='sudo -E -H '
 alias e='systemctl --failed --no-pager; journalctl -p 3 -b'
 alias cls='clear'
@@ -13,10 +16,10 @@ alias rr='yay -Rns'
 alias b='pacman -Qqen > pkglist.txt && echo >> pkglist.txt && pacman -Qm >> pkglist.txt && echo >> pkglist.txt'
 alias c='paccache -r; yay -Yc; yay -Sc; yay -Rns $(yay -Qtdq)'
 alias x='exit'
-alias {gte,gted}='gnome-text-editor'
-alias neofetch='command -v fastfetch &> /dev/null && fastfetch || neofetch'
-alias nf='neofetch'
-alias ff='command -v fastfetch &> /dev/null && fastfetch || neofetch'
+command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
+command -v fastfetch &> /dev/null && alias neofetch='fastfetch'
+command -v neofetch &> /dev/null && alias nf='neofetch'
+command -v fastfetch &> /dev/null && alias ff='fastfetch'
 #alias vim='nvim'
 #alias vimdiff='nvim -d'
 

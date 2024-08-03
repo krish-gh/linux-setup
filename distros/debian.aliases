@@ -1,4 +1,7 @@
 #!/bin/sh
+# shellcheck disable=SC2139
+# shellcheck disable=SC3009
+# shellcheck disable=SC3020
 alias sudo='sudo -E -H '
 alias e='systemctl --failed --no-pager && journalctl -p 3 -b'
 alias cls='clear'
@@ -13,9 +16,9 @@ alias rr='sudo nala remove --purge'
 alias c='sudo apt autoremove && sudo apt autopurge && sudo apt clean'
 alias cc='sudo nala autoremove && sudo nala autopurge && sudo nala clean'
 alias x='exit'
-alias {gte,gted}='gnome-text-editor'
-alias neofetch='command -v fastfetch &> /dev/null && fastfetch || neofetch'
-alias nf='neofetch'
-alias ff='command -v fastfetch &> /dev/null && fastfetch || neofetch'
+command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
+command -v fastfetch &> /dev/null && alias neofetch='fastfetch'
+command -v neofetch &> /dev/null && alias nf='neofetch'
+command -v fastfetch &> /dev/null && alias ff='fastfetch'
 #alias vim='nvim'
 #alias vimdiff='nvim -d'
