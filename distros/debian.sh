@@ -24,7 +24,12 @@ PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution g
 
 setup_apt() {
     echo -e "Setting up apt..."
-    install_pkgs "nala wget gpg apt-transport-https"
+    install_pkgs "software-properties-common nala wget gpg apt-transport-https"
+
+    if [[ $DIST_ID == *debian* ]]; then
+        sudo apt-add-repository contrib non-free non-free-firmware -y
+    fi
+
     sudo mkdir -p -m 755 /etc/apt/keyrings
 
     # microsoft
