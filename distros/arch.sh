@@ -22,4 +22,54 @@ GNOME_EXT_MGR_PKG="extension-manager"
 CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer xviewer-plugins mint-themes mint-y-icons"
 PACKAGES_TO_REMOVE="baobab celluloid epiphany gedit gthumb mpv galculator rhythmbox simple-scan snapshot system-config-printer thunderbird totem vim neofetch gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,maps,music,nettool,power-manager,screenshot,tour,weather,user-docs} yelp"
 
+setup_pacman() {
+    echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
+    sudo sed -i "/^#Color/c\Color\nILoveCandy
+        /^#VerbosePkgLists/c\VerbosePkgLists
+        /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
+    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+
+    if [[ "$(find /etc/pacman.d/ -name chaotic-mirrorlist)" == "" ]]; then
+        echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
+        sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
+        sudo pacman-key --lsign-key 3056513887B78AEB
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+    fi
+
+    chaoticAurAppend="$(
+        grep "chaotic-aur" /etc/pacman.conf >/dev/null 2>&1
+        echo $?
+    )"
+    if [[ "${chaoticAurAppend}" -ne 0 ]]; then
+        echo "Appending Chaotic-AUR in pacman.conf..."
+        echo -e | sudo tee -a /etc/pacman.conf
+        echo -e "[chaotic-aur]" | sudo tee -a /etc/pacman.conf
+        echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
+    fi
+
+    refresh_package_sources
+
+    echo -e "Installing some stuffs..."
+    [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
+
+    pamacvar='aur'
+    if command_exists flatpak; then
+        pamacvar='flatpak'
+    fi
+    install_pkgs "pamac-${pamacvar}"
+
+    # Configure pamac
+    sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
+        /NoUpdateHideIcon/s/^#//g
+        /KeepNumPackages/c\KeepNumPackages = 1
+        /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
+
+    # misc
+    flagstocopy=(code electron chromium chrome microsoft-edge-stable)
+    for i in "${flagstocopy[@]}"; do
+        copy_file ~/.config/"${i}"-flags.conf "${BASE_REPO_LOCATION}"home/.config/"${i}"-flags.conf
+    done
+}
+
 echo -e "Done arch.sh..."
