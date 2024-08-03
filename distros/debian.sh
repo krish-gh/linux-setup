@@ -27,11 +27,12 @@ setup_apt() {
     install_pkgs "nala wget gpg apt-transport-https"
     sudo mkdir -p -m 755 /etc/apt/keyrings
 
-    # vscode
-    if [[ ! -f /etc/apt/sources.list.d/vscode.list ]]; then
+    # microsoft
+    if [[ ! -f /etc/apt/sources.list.d/microsoft.list ]]; then
         wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
         sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-        echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
+        echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list >/dev/null
+        echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" | sudo tee -a /etc/apt/sources.list.d/microsoft.list >/dev/null
         rm -f packages.microsoft.gpg .wget-hsts
     fi
 
