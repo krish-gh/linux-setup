@@ -390,8 +390,8 @@ setup_system
 setup_font
 setup_common_ui
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
-setup_terminal
 setup_apps
+setup_terminal
 
 echo -e ""
 echo -e "Done...Reboot..."
