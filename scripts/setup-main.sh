@@ -307,7 +307,7 @@ setup_common_ui() {
 
     # make it dark
     gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d \'\")
-    if [[ $gtktheme != '' && $gtktheme != *dark ]]; then
+    if [[ $gtktheme != '' && $gtktheme != *dark* ]]; then
         gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
     fi
 
