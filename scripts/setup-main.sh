@@ -377,13 +377,12 @@ setup_apps() {
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 }
 
+echo -e "Removing not needed packages..."
+uninstall_pkgs "$PACKAGES_TO_REMOVE"
 if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
     setup_"$DIST_ID"
 fi
-
-echo -e "Removing not needed packages..."
-uninstall_pkgs "$PACKAGES_TO_REMOVE"
 refresh_package_sources
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
