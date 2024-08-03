@@ -17,7 +17,7 @@ APP_PACKAGES_TO_INSTALL="firefox{,-locale-en} gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="git shfmt meld"
 GTK_PACKAGES_TO_INSTALL="gnome-themes-extra{,-data}"
 QT_PACKAGES_TO_INSTALL="qt5-style-kvantum qt6-wayland qt{5,6}ct"
-GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,console,text-editor} python3-nautilus pipx"
+GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} python3-nautilus pipx"
 CINNAMON_PACKAGES_TO_INSTALL=""
 PACKAGES_TO_REMOVE="baobab caribou drawing epiphany gedit gthumb *libreoffice* mpv *rhythmbox* simple-scan snapshot totem vim gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,tour,weather}"
 

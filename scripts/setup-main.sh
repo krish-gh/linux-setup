@@ -535,9 +535,9 @@ install_pkgs "$REQUIREMENTS"
 
 setup_system
 setup_font
-setup_terminal
 setup_ui
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
+setup_terminal
 setup_apps
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 
