@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# shellcheck disable=SC2034
 BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 
 command_exists() {
