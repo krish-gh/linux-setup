@@ -401,6 +401,13 @@ setup_apps() {
         gsettings set org.onboard.window.portrait dock-expand false
     fi
 
+    if command_exists yad; then
+        gsettings set yad.sourceview line-num true
+        gsettings set yad.sourceview brackets true
+        gsettings set yad.sourceview theme catppuccin-mocha
+        gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
+    fi
+
     echo -e "Setting up file associations..."
     copy_file ~/.config/mimeapps.list ${BASE_REPO_LOCATION}home/.config/mimeapps.list
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
@@ -444,11 +451,6 @@ setup_pacman() {
 
     install_pkgs "yay rate-mirrors reflector-simple pamac-${pamacvar} visual-studio-code-bin"
     [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
-
-    gsettings set yad.sourceview line-num true
-    gsettings set yad.sourceview brackets true
-    gsettings set yad.sourceview theme catppuccin-mocha
-    gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
 
     # Configure pamac
     sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
