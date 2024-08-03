@@ -72,6 +72,9 @@ num-workspaces=1
 [org/gnome/gnome-system-monitor]
 show-dependencies=true
 
+[org/gnome/nautilus/icon-view]
+default-zoom-level='medium'
+
 [org/gnome/nautilus/preferences]
 show-create-link=true
 show-delete-permanently=true
