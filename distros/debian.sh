@@ -20,7 +20,7 @@ QT_PACKAGES_TO_INSTALL="qt{5,6}-style-kvantum{,-themes} qt6-wayland qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} python3-nautilus pipx"
 GNOME_EXT_MGR_PKG="gnome-shell-extension-manager"
 CINNAMON_PACKAGES_TO_INSTALL=""
-PACKAGES_TO_REMOVE="baobab caribou cheese drawing epiphany evolution gedit gthumb *libreoffice* mpv pix *rhythmbox* shotwell simple-scan snapshot totem *transmission* vim gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather}"
+PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution gedit gthumb *libreoffice* mpv pix *rhythmbox* shotwell simple-scan snapshot totem *transmission* vim gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather}"
 
 setup_apt() {
     echo -e "Setting up apt..."
