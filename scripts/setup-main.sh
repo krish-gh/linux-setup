@@ -123,7 +123,6 @@ copy_file /tmp/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
 [[ -f /tmp/"$DESKTOP".sh ]] && source /tmp/"$DESKTOP".sh
 rm -f /tmp/"$DESKTOP".sh
 
-
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
     case $SYSTEM_TO_SETUP in
@@ -333,71 +332,6 @@ setup_ui() {
     # wallpaper
     #mkdir -p ~/.local/share/backgrounds
     #copy_file ~/.local/share/backgrounds/wallpaper ${BASE_REPO_LOCATION}home/.local/share/backgrounds/wallpaper
-}
-
-setup_gnome() {
-    echo -e "Configuring gnome stuffs..."
-    GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
-    install_pkgs "$GNOME_PACKAGES_TO_INSTALL"
-
-    # GDM
-    #sudo mkdir -p /etc/dconf/db/gdm.d
-    #copy_file 95-gdm-settings ${BASE_REPO_LOCATION}system/etc/dconf/db/gdm.d/95-gdm-settings
-    #sudo mv -f 95-gdm-settings /etc/dconf/db/gdm.d/
-
-    echo -e "Installing some extensions..."
-    if command_exists flatpak; then
-        flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
-    else
-        install_pkgs "$GNOME_EXT_MGR_PKG"
-    fi
-    pipx ensurepath
-    pipx install gnome-extensions-cli --system-site-packages
-
-    declare -A exts
-    exts[1]=AlphabeticalAppGrid@stuarthayhurst
-    exts[2]=clipboard-indicator@tudmotu.com
-    exts[3]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
-    exts[4]=xwayland-indicator@swsnr.de
-    exts[5]=apps-menu@gnome-shell-extensions.gcampax.github.com
-    [[ $DIST_ID != ubuntu ]] && exts[6]=appindicatorsupport@rgcjonas.gmail.com
-    [[ $DIST_ID != ubuntu ]] && exts[7]=dash-to-dock@micxgx.gmail.com
-    [[ $DISTRO_TYPE == arch ]] && exts[arch]=arch-update@RaphaelRochet
-
-    extdir=~/.local/share/gnome-shell/extensions
-    for i in "${exts[@]}"; do
-        ~/.local/bin/gnome-extensions-cli --filesystem install "$i"
-        [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/
-    done
-
-    #if [[ $TERMINAL_TO_INSTALL != none ]]; then
-    #    install_pkgs "nautilus-open-any-terminal"
-    #    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
-    #fi
-
-    copy_file /tmp/gnome.dconf ${BASE_REPO_LOCATION}desktop/gnome.dconf
-    dconf load / </tmp/gnome.dconf
-    rm -f /tmp/gnome.dconf
-
-    if [[ -f ~/.local/share/backgrounds/wallpaper ]]; then
-        gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"
-        gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/wallpaper"
-    fi
-}
-
-setup_cinnamon() {
-    echo -e "Configuring cinnamon stuffs..."
-    GUI_TEXT_EDITOR=xed.desktop
-    install_pkgs "$CINNAMON_PACKAGES_TO_INSTALL"
-
-    #mkdir -p ~/.local/share/xed/styles
-    #copy_file ~/.local/share/xed/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
-
-    copy_file /tmp/cinnamon.dconf ${BASE_REPO_LOCATION}desktop/cinnamon.dconf
-    dconf load / </tmp/cinnamon.dconf
-    rm -f /tmp/cinnamon.dconf
-
-    [[ -f ~/.local/share/backgrounds/wallpaper ]] && gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"
 }
 
 setup_apps() {
