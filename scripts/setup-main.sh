@@ -59,6 +59,7 @@ DEV_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 GTK_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 QT_PACKAGES_TO_INSTALL=""       #override from DISTRO_TYPE specific script
 GNOME_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
+GNOME_EXT_MGR_PKG=""            #override from DISTRO_TYPE specific script
 CINNAMON_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
 PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
 
@@ -330,7 +331,11 @@ setup_gnome() {
     #sudo mv -f 95-gdm-settings /etc/dconf/db/gdm.d/
 
     echo -e "Installing some extensions..."
-    command_exists flatpak && flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    if command_exists flatpak; then
+        flatpak install flathub com.mattjakeman.ExtensionManager --assumeyes
+    else
+        install_pkgs "$GNOME_EXT_MGR_PKG"
+    fi
     pipx ensurepath
     pipx install gnome-extensions-cli --system-site-packages
 
@@ -443,14 +448,14 @@ setup_pacman() {
 
     refresh_package_sources
 
-    echo -e "Installing some more stuffs..."
+    echo -e "Installing some stuffs..."
+    [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
+
     pamacvar='aur'
     if command_exists flatpak; then
         pamacvar='flatpak'
     fi
-
-    install_pkgs "yay rate-mirrors reflector-simple pamac-${pamacvar} visual-studio-code-bin"
-    [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
+    install_pkgs "pamac-${pamacvar}"
 
     # Configure pamac
     sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
@@ -460,16 +465,10 @@ setup_pacman() {
 
     if [[ $DESKTOP == "gnome" ]]; then
         echo -e "Installing some gnome stuffs from chaotic-aur"
-        ! command_exists flatpak && install_pkgs "extension-manager"
         if [[ $TERMINAL_TO_INSTALL != none ]]; then
             install_pkgs "nautilus-open-any-terminal"
             gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
         fi
-    fi
-
-    if [[ $DESKTOP == "cinnamon" ]]; then
-        echo -e "Installing some cinnamon stuffs from chaotic-aur"
-        install_pkgs "xviewer xviewer-plugins mint-themes mint-y-icons"
     fi
 
     # misc
@@ -507,12 +506,6 @@ setup_apt() {
     fi
 
     refresh_package_sources
-    install_pkgs "code gh qt6-style-kvantum{,-themes}"
-
-    if [[ $DESKTOP == "gnome" ]]; then
-        echo -e "Installing some more gnome stuffs"
-        ! command_exists flatpak && install_pkgs "gnome-shell-extension-manager"
-    fi
 }
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
@@ -531,17 +524,15 @@ fi
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
 refresh_package_sources
-
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
-
+[[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 setup_system
 setup_font
 setup_ui
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
 setup_terminal
 setup_apps
-[[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 
 echo -e ""
 echo -e "Done...Reboot..."
