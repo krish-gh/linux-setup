@@ -27,7 +27,7 @@ apps=['software-properties-drivers.desktop', 'snap-store_snap-store.desktop', 'f
 name='ubuntu'
 
 [org/gnome/desktop/app-folders/folders/stuffs]
-apps=['org.manjaro.pamac.manager.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.eog.desktop', 'im-config.desktop', 'gnome-language-selector.desktop', 'org.gnome.Meld.desktop', 'org.gnome.Settings.desktop', 'org.gnome.Software.desktop', 'software-properties-gtk.desktop', 'synaptic.desktop', 'gnome-session-properties.desktop', 'gnome-system-monitor.desktop', 'org.gnome.SystemMonitor.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop', 'vlc.desktop']
+apps=['org.manjaro.pamac.manager.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.eog.desktop', 'im-config.desktop', 'gnome-language-selector.desktop', 'org.gnome.Meld.desktop', 'org.gnome.Software.desktop', 'software-properties-gtk.desktop', 'synaptic.desktop', 'gnome-session-properties.desktop', 'gnome-system-monitor.desktop', 'org.gnome.SystemMonitor.desktop', 'org.gnome.Calendar.desktop', 'org.gnome.Contacts.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop']
 name='Stuffs'
 
 [org/gnome/desktop/app-folders/folders/zzz]
