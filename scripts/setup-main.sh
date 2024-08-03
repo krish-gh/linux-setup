@@ -307,7 +307,9 @@ setup_common_ui() {
 
     # make it dark
     gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d \'\")
-    if [[ $gtktheme != '' && $gtktheme != *dark* ]]; then
+    # shellcheck disable=SC2086
+    # shellcheck disable=SC2143
+    if [[ $gtktheme != '' && ! $(echo $gtktheme | grep -i dark) ]]; then
         gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
     fi
 
