@@ -297,7 +297,7 @@ setup_terminal() {
     #source ~/.bashrc
 }
 
-setup_ui() {
+setup_common_ui() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
     install_pkgs "$QT_PACKAGES_TO_INSTALL"
 
@@ -388,7 +388,7 @@ install_pkgs "$REQUIREMENTS"
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 setup_system
 setup_font
-setup_ui
+setup_common_ui
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
 setup_terminal
 setup_apps
