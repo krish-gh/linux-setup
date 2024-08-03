@@ -38,6 +38,9 @@ name='zzz'
 primary-color='#000000000000'
 secondary-color='#000000000000'
 
+[org/gnome/desktop/media-handling]
+autorun-never=true
+
 [org/gnome/desktop/notifications]
 show-in-lock-screen=false
 
@@ -62,6 +65,7 @@ idle-delay=0
 
 [org/gnome/desktop/sound]
 event-sounds=false
+input-feedback-sounds=false
 
 [org/gnome/desktop/thumbnailers]
 disable-all=true
