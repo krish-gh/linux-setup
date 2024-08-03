@@ -117,6 +117,13 @@ if [[ $DIST_ID != '' ]]; then
     rm -f /tmp/"$DIST_ID".sh
 fi
 
+# desktop environment specific stuffs
+copy_file /tmp/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
+# shellcheck disable=SC1090
+[[ -f /tmp/"$DESKTOP".sh ]] && source /tmp/"$DESKTOP".sh
+rm -f /tmp/"$DESKTOP".sh
+
+
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
     case $SYSTEM_TO_SETUP in
