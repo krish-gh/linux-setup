@@ -17,9 +17,13 @@ alias b='pacman -Qqen > pkglist.txt && echo >> pkglist.txt && pacman -Qm >> pkgl
 alias c='paccache -r; yay -Yc; yay -Sc; yay -Rns $(yay -Qtdq)'
 alias x='exit'
 command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
-command -v fastfetch &> /dev/null && alias neofetch='fastfetch'
-command -v neofetch &> /dev/null && alias nf='neofetch'
-command -v fastfetch &> /dev/null && alias ff='fastfetch'
+if command -v fastfetch &> /dev/null; then
+    alias neofetch='fastfetch'
+else
+    alias fastfetch='neofetch'
+fi
+alias nf='neofetch'
+alias ff='fastfetch'
 #alias vim='nvim'
 #alias vimdiff='nvim -d'
 
