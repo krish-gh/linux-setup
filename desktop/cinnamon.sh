@@ -16,3 +16,5 @@ setup_cinnamon() {
 
     [[ -f ~/.local/share/backgrounds/wallpaper ]] && gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"
 }
+
+echo -e "Done cinnamon.sh..."

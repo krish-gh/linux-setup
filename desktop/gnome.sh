@@ -52,3 +52,5 @@ setup_gnome() {
     fi
 }
 
+echo -e "Done gnome.sh..."
+
