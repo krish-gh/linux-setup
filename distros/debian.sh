@@ -12,7 +12,7 @@ VMWARE_PACKAGES_TO_INSTALL="xserver-xorg-video-vmware open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-x11"
 HYPERV_PACKAGES_TO_INSTALL=""
 FONTS_TO_INSTALL="fonts-{recommended,jetbrains-mono}"
-TERM_PACKAGES_TO_INSTALL="bash-completion nano neofetch"
+TERM_PACKAGES_TO_INSTALL="bash-completion nano fastfetch"
 APP_PACKAGES_TO_INSTALL="firefox{,-locale-en} gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="build-essential shfmt diffutils meld code gh"
 GTK_PACKAGES_TO_INSTALL="gnome-themes-extra{,-data}"
@@ -47,6 +47,7 @@ setup_apt() {
     if [[ $DIST_ID == *ubuntu* || $ID_LIKE == *ubuntu* ]]; then
         # for qt6-style-kvantum
         sudo add-apt-repository ppa:papirus/papirus -y
+        sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
     fi
 
     refresh_package_sources
