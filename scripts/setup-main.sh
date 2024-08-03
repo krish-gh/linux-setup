@@ -252,6 +252,9 @@ setup_terminal() {
             echo -e "include "/usr/share/nano-syntax-highlighting/*.nanorc"" >>~/.config/nano/nanorc
         fi
     fi
+    
+    # if fastfetch not found at this point fallback to neofetch
+    ! command_exists fastfetch && install_pkgs neofetch
 
     # fastfetch
     #mkdir p ~/.config/fastfetch
