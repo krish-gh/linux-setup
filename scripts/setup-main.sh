@@ -355,6 +355,11 @@ setup_gnome() {
         [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/
     done
 
+    #if [[ $TERMINAL_TO_INSTALL != none ]]; then
+    #    install_pkgs "nautilus-open-any-terminal"
+    #    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
+    #fi
+
     copy_file /tmp/gnome.dconf ${BASE_REPO_LOCATION}desktop/gnome.dconf
     dconf load / </tmp/gnome.dconf
     rm -f /tmp/gnome.dconf
@@ -462,14 +467,6 @@ setup_pacman() {
         /NoUpdateHideIcon/s/^#//g
         /KeepNumPackages/c\KeepNumPackages = 1
         /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
-
-    if [[ $DESKTOP == "gnome" ]]; then
-        echo -e "Installing some gnome stuffs from chaotic-aur"
-        if [[ $TERMINAL_TO_INSTALL != none ]]; then
-            install_pkgs "nautilus-open-any-terminal"
-            gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
-        fi
-    fi
 
     # misc
     flagstocopy=(code electron chromium chrome microsoft-edge-stable)
