@@ -80,17 +80,6 @@ copy_content() {
     [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
 }
 
-# override with DISTRO_TYPE specific stuffs
-echo -e "Executing common $DISTRO_TYPE specific script..."
-copy_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
-if [[ ! -f /tmp/"$DISTRO_TYPE".sh ]]; then
-    >&2 echo "Error: $DISTRO_TYPE specific script not found!"
-    exit 3
-fi
-# shellcheck disable=SC1090
-source /tmp/"$DISTRO_TYPE".sh
-rm -f /tmp/"$DISTRO_TYPE".sh
-
 refresh_package_sources() {
     eval "$REFRESH_CMD"
 }
@@ -108,6 +97,25 @@ uninstall_pkgs() {
     pkgs=($(eval echo "$1"))
     for i in "${pkgs[@]}"; do eval "$UNINSTALL_CMD $i"; done
 }
+
+# override with DISTRO_TYPE specific stuffs
+echo -e "Executing common $DISTRO_TYPE specific script..."
+copy_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
+if [[ ! -f /tmp/"$DISTRO_TYPE".sh ]]; then
+    >&2 echo "Error: $DISTRO_TYPE specific script not found!"
+    exit 3
+fi
+# shellcheck disable=SC1090
+source /tmp/"$DISTRO_TYPE".sh
+rm -f /tmp/"$DISTRO_TYPE".sh
+
+# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
+if [[ $DIST_ID != '' ]]; then
+    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
+    # shellcheck disable=SC1090
+    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
+    rm -f /tmp/"$DIST_ID".sh
+fi
 
 setup_system() {
     echo -e "Setting up $SYSTEM_TO_SETUP..."
@@ -424,14 +432,6 @@ setup_apps() {
     mkdir -p ~/.local/share/applications
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 }
-
-# execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
-if [[ $DIST_ID != '' ]]; then
-    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
-    # shellcheck disable=SC1090
-    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
-    rm -f /tmp/"$DIST_ID".sh
-fi
 
 if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
