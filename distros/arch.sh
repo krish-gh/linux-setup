@@ -20,7 +20,7 @@ QT_PACKAGES_TO_INSTALL="kvantum-qt5 qt{5,6}-wayland qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} python-nautilus python-pipx"
 GNOME_EXT_MGR_PKG="extension-manager"
 CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer xviewer-plugins mint-themes mint-y-icons"
-PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution galculator gedit gthumb libreoffice-{fresh,still} mpv rhythmbox shotwell simple-scan snapshot thunderbird totem vim gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather,user-docs} yelp"
+PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution galculator gedit gthumb gucharmap libreoffice-{fresh,still} mpv rhythmbox shotwell simple-scan snapshot thunderbird totem vim gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather,user-docs} yelp"
 
 setup_pacman() {
     echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
