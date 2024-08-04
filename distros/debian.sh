@@ -5,7 +5,7 @@ REFRESH_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
 INSTALL_CMD="sudo apt-get install -y"
 UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
 
-REQUIREMENTS="curl git unzip dconf-cli"
+REQUIREMENTS="curl wget git unzip dconf-cli"
 SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers firmware-sof-signed alsa-{firmware-loaders,oss,utils} fprintd libpam-fprintd"
 INTEL_PACKAGES_TO_INSTALL="intel-media-va-driver-non-free va-driver-all"
 VMWARE_PACKAGES_TO_INSTALL="xserver-xorg-video-vmware open-vm-tools-desktop"
@@ -24,7 +24,7 @@ PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution g
 
 setup_apt() {
     echo -e "Setting up apt..."
-    install_pkgs "software-properties-common python3-launchpadlib nala wget gpg apt-transport-https"
+    install_pkgs "software-properties-common python3-launchpadlib nala gpg apt-transport-https"
 
     sudo apt-add-repository contrib -y
     sudo apt-add-repository non-free -y
@@ -49,10 +49,6 @@ setup_apt() {
     wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
         sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-
-    # mozilla
-    wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc >/dev/null
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee /etc/apt/sources.list.d/mozilla.list >/dev/null
 
     rm -f .wget-hsts
 
