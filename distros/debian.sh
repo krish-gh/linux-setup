@@ -44,6 +44,12 @@ setup_apt() {
     fi
     rm -f packages.microsoft.gpg
 
+    # google
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/google.gpg >/dev/null
+    if [[ ! -f /etc/apt/sources.list.d/google-chrome.list ]]; then
+        echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/google.gpg] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list >/dev/null
+    fi
+
     # github
     wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
         sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
