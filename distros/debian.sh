@@ -24,7 +24,7 @@ PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution g
 
 setup_apt() {
     echo -e "Setting up apt..."
-    install_pkgs "software-properties-common nala wget gpg apt-transport-https"
+    install_pkgs "software-properties-common python3-launchpadlib nala wget gpg apt-transport-https"
 
     sudo apt-add-repository contrib -y
     sudo apt-add-repository non-free -y
