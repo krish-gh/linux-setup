@@ -29,14 +29,12 @@ DIST_ID=''
 
 # shellcheck disable=SC2086
 DESKTOP=$(echo ${XDG_CURRENT_DESKTOP##*:} | tr '[:upper:]' '[:lower:]' | sed 's/^x-//')
-SYSTEM_TO_SETUP=vmware
 CURRENT_TERMINAL=$(ps -p $PPID -o comm= | sed 's/-$//')
 
 echo -e "#################################################################"
 echo -e "DISTRO_TYPE=$DISTRO_TYPE"
 echo -e "PACKAGE_MANAGER=$PKG_MGR"
 echo -e "DESKTOP=$DESKTOP"
-echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 echo -e "TERMINAL=$CURRENT_TERMINAL"
 echo -e "DISTRO_ID=$DIST_ID"
 echo -e "#################################################################"
@@ -125,7 +123,9 @@ copy_file /tmp/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
 rm -f /tmp/"$DESKTOP".sh
 
 setup_system() {
-    echo -e "Setting up $SYSTEM_TO_SETUP..."
+    install_pkgs "virt-what"
+    SYSTEM_TO_SETUP=$(sudo virt-what)
+    echo -e "SYSTEM=$SYSTEM_TO_SETUP"
     case $SYSTEM_TO_SETUP in
 
     intel)
@@ -137,7 +137,7 @@ setup_system() {
         ! systemctl is-enabled vmtoolsd.service && sudo systemctl enable --now vmtoolsd.service
         ;;
 
-    vbox)
+    virtualbox)
         install_pkgs "$VBOX_PACKAGES_TO_INSTALL"
         ! systemctl is-enabled vboxservice.service && sudo systemctl enable --now vboxservice.service
         ;;
@@ -148,7 +148,8 @@ setup_system() {
         ;;
 
     *)
-        echo -e "No system selected..."
+        >&2 echo "System detected is not yet implemented..."
+        exit 4
         ;;
     esac
 
