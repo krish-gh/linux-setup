@@ -2,6 +2,7 @@
 
 # shellcheck disable=SC2034
 REFRESH_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
+UPDATE_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
 INSTALL_CMD="sudo apt-get install -y"
 UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
 
@@ -32,7 +33,6 @@ setup_apt() {
     sudo apt-add-repository restricted -y
 
     sudo mkdir -p -m 755 /etc/apt/keyrings
-    sudo install -d -m 0755 /etc/apt/keyrings
 
     # microsoft
     wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
@@ -58,12 +58,12 @@ setup_apt() {
         sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
     fi
 
+    refresh_package_sources
+
     # synaptic
     sudo mkdir -p /root/.synaptic/
     copy_file /tmp/synaptic.conf "${BASE_REPO_LOCATION}"system/root/.synaptic/synaptic.conf
     sudo mv -f /tmp/synaptic.conf /root/.synaptic/
-
-    refresh_package_sources
 }
 
 echo -e "Done debian.sh..."

@@ -42,6 +42,7 @@ cat /etc/os-release
 echo -e "#################################################################"
 
 REFRESH_CMD=""   #override from DISTRO_TYPE specific script
+UPDATE_CMD=""    #override from DISTRO_TYPE specific script
 INSTALL_CMD=""   #override from DISTRO_TYPE specific script
 UNINSTALL_CMD="" #override from DISTRO_TYPE specific script
 
@@ -81,6 +82,10 @@ copy_content() {
 
 refresh_package_sources() {
     eval "$REFRESH_CMD"
+}
+
+update_packages() {
+    eval "$UPDATE_CMD"
 }
 
 install_pkgs() {
@@ -385,6 +390,9 @@ setup_apps() {
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 }
 
+refresh_package_sources
+echo -e "Installing some needed stuffs..."
+install_pkgs "$REQUIREMENTS"
 setup_system
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
@@ -392,15 +400,14 @@ if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
     setup_"$DIST_ID"
 fi
-refresh_package_sources
-echo -e "Installing some needed stuffs..."
-install_pkgs "$REQUIREMENTS"
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
+update_packages
 setup_font
+setup_apps
 setup_common_ui
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
-setup_apps
 setup_terminal
+update_packages
 
 echo -e ""
 echo -e "Done...Reboot..."
