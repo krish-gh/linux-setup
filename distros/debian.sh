@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # shellcheck disable=SC2034
-REFRESH_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
+REFRESH_CMD="sudo apt-get update"
 UPDATE_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
 INSTALL_CMD="sudo apt-get install -y"
 UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
