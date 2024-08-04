@@ -26,7 +26,10 @@ setup_apt() {
     echo -e "Setting up apt..."
     install_pkgs "software-properties-common nala wget gpg apt-transport-https"
 
-    sudo apt-add-repository contrib non-free non-free-firmware restricted -y
+    sudo apt-add-repository contrib -y
+    sudo apt-add-repository non-free -y
+    sudo apt-add-repository non-free-firmware -y
+    sudo apt-add-repository restricted -y
 
     sudo mkdir -p -m 755 /etc/apt/keyrings
 
