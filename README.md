@@ -2,10 +2,10 @@
 
 ## Supported scenario
 
-| Distrution Type | Specific           | Desktop Environment |
-| --------------- | ------------------ | ------------------- |
-| Arch            | Arch, EndeavourOS  | Gnome, Cinnamon     |
-| Debian          | Debian, Mint, LMDE | Gnome, Cinnamon     |
+| Distrution Type | Specific                   | Desktop Environment |
+| --------------- | -------------------------- | ------------------- |
+| Arch            | Arch, EndeavourOS          | Gnome, Cinnamon     |
+| Debian          | Debian, Ubuntu, Mint, LMDE | Gnome, Cinnamon     |
 
 ## How
 
