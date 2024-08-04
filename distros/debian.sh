@@ -42,7 +42,7 @@ setup_apt() {
     if [[ ! -f /etc/apt/sources.list.d/microsoft-edge.list ]]; then
         echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" | sudo tee /etc/apt/sources.list.d/microsoft-edge.list >/dev/null
     fi
-    rm -f packages.microsoft.gpg .wget-hsts
+    rm -f packages.microsoft.gpg
 
     # github
     wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
@@ -53,9 +53,15 @@ setup_apt() {
     rm -f .wget-hsts
 
     # add some ppa if ubuntu based
-    if [[ $DIST_ID == *ubuntu* || $ID_LIKE == *ubuntu* ]]; then        
+    if [[ $DIST_ID == *ubuntu* || $ID_LIKE == *ubuntu* ]]; then
         sudo add-apt-repository ppa:papirus/papirus -y # for qt6-style-kvantum
         sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
+    fi
+
+    # synaptic
+    if command_exists synaptic; then
+        copy_file /tmp/synaptic.conf "${BASE_REPO_LOCATION}"system/root/.synaptic/synaptic.conf
+        sudo mv -f /tmp/synaptic.conf /root/.synaptic/
     fi
 
     refresh_package_sources
