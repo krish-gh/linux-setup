@@ -1,9 +1,11 @@
 [Default Applications]
 text/plain=DEFAULT_TEXT_EDITOR
+application/json=DEFAULT_TEXT_EDITOR
 application/xml=DEFAULT_TEXT_EDITOR
 application/x-shellscript=DEFAULT_TEXT_EDITOR
 
 [Added Associations]
 text/plain=DEFAULT_TEXT_EDITOR;
+application/json=DEFAULT_TEXT_EDITOR;
 application/xml=DEFAULT_TEXT_EDITOR;
 application/x-shellscript=DEFAULT_TEXT_EDITOR;
