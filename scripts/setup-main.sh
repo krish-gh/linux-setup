@@ -385,6 +385,7 @@ setup_apps() {
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 }
 
+setup_system
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
 if [[ $(type -t setup_"$DIST_ID") == function ]]; then
@@ -395,7 +396,6 @@ refresh_package_sources
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
-setup_system
 setup_font
 setup_common_ui
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
