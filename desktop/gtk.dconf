@@ -8,10 +8,10 @@ text-scaling-factor=1.3
 [org/gnome/desktop/privacy]
 old-files-age=0
 recent-files-max-age=1
+remember-app-usage=false
 remember-recent-files=false
 remove-old-temp-files=true
 remove-old-trash-files=true
-remember-app-usage=false
 report-technical-problems=false
 send-software-usage-stats=false
 

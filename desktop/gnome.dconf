@@ -48,16 +48,6 @@ show-in-lock-screen=false
 [org/gnome/desktop/peripherals/mouse]
 speed=1.0
 
-[org/gnome/desktop/privacy]
-old-files-age=uint32 0
-recent-files-max-age=1
-remember-app-usage=false
-remember-recent-files=false
-remove-old-temp-files=true
-remove-old-trash-files=true
-report-technical-problems=false
-send-software-usage-stats=false
-
 [org/gnome/desktop/search-providers]
 disable-external=true
 
