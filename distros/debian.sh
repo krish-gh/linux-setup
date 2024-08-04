@@ -53,10 +53,8 @@ setup_apt() {
     rm -f .wget-hsts
 
     # add some ppa if ubuntu based
-    if [[ $DIST_ID == *ubuntu* || $ID_LIKE == *ubuntu* ]]; then
-        #install_pkgs "ubuntu-restricted-addons ubuntu-restricted-extras"
-        # for qt6-style-kvantum
-        sudo add-apt-repository ppa:papirus/papirus -y
+    if [[ $DIST_ID == *ubuntu* || $ID_LIKE == *ubuntu* ]]; then        
+        sudo add-apt-repository ppa:papirus/papirus -y # for qt6-style-kvantum
         sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
     fi
 
