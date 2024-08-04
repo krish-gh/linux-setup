@@ -6,5 +6,6 @@ setup_linuxmint() {
     copy_file /tmp/linuxmint.dconf "${BASE_REPO_LOCATION}"specific/linuxmint.dconf
     dconf load / </tmp/linuxmint.dconf
     rm -f /tmp/linuxmint.dconf
-    echo -e "Done linuxmint..."
 }
+
+echo -e "Done linuxmint.sh..."
