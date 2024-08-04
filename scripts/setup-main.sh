@@ -392,7 +392,6 @@ setup_apps() {
 refresh_package_sources
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
-setup_system
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
 if [[ $(type -t setup_"$DIST_ID") == function ]]; then
@@ -400,6 +399,7 @@ if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     setup_"$DIST_ID"
 fi
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
+setup_system
 update_packages
 setup_font
 setup_apps
