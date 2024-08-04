@@ -43,6 +43,9 @@ name='Mint-Y-Dark-Blue'
 gtk-theme='Mint-Y-Dark-Blue'
 icon-theme='Mint-Y-Blue'
 
+[org/gnome/gnome-system-monitor]
+show-dependencies=true
+
 [org/nemo/preferences]
 executable-text-activation='display'
 show-directory-item-counts='never'
