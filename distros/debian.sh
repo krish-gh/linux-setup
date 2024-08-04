@@ -44,15 +44,15 @@ setup_apt() {
     # google
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/google.gpg >/dev/null
     echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/google.gpg] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list >/dev/null
-    
+
     # github
     wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
         sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
-    
+
     # mozilla
-    wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc > /dev/null
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee /etc/apt/sources.list.d/mozilla.list > /dev/null
+    wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc >/dev/null
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.mozilla.org.asc] https://packages.mozilla.org/apt mozilla main" | sudo tee /etc/apt/sources.list.d/mozilla.list >/dev/null
 
     rm -f .wget-hsts
 
@@ -63,10 +63,9 @@ setup_apt() {
     fi
 
     # synaptic
-    if command_exists synaptic; then
-        copy_file /tmp/synaptic.conf "${BASE_REPO_LOCATION}"system/root/.synaptic/synaptic.conf
-        sudo mv -f /tmp/synaptic.conf /root/.synaptic/
-    fi
+    sudo mkdir -p /root/.synaptic/
+    copy_file /tmp/synaptic.conf "${BASE_REPO_LOCATION}"system/root/.synaptic/synaptic.conf
+    sudo mv -f /tmp/synaptic.conf /root/.synaptic/
 
     refresh_package_sources
 }
