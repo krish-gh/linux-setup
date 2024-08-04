@@ -153,8 +153,7 @@ setup_system() {
         ;;
 
     *)
-        >&2 echo "System detected is not yet implemented..."
-        exit 4
+        echo "Ahh! Taking a note..."
         ;;
     esac
 
