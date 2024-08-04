@@ -39,6 +39,7 @@ primary-color='#000000000000'
 secondary-color='#000000000000'
 
 [org/gnome/desktop/media-handling]
+automount-open=false
 autorun-never=true
 
 [org/gnome/desktop/notifications]
