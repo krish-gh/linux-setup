@@ -399,8 +399,8 @@ if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     setup_"$DIST_ID"
 fi
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
-setup_system
 update_packages
+setup_system
 setup_font
 setup_apps
 setup_common_ui
