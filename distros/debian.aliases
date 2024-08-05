@@ -3,7 +3,7 @@
 # shellcheck disable=SC3009
 # shellcheck disable=SC3020
 alias sudo='sudo -E -H '
-alias e='systemctl --failed --no-pager && journalctl -p 3 -b'
+alias e='systemctl --failed --no-pager; journalctl -p 3 -b'
 alias cls='clear'
 alias u='sudo apt update && sudo apt full-upgrade; command -v flatpak &> /dev/null && flatpak update; command -v pipx &> /dev/null && pipx upgrade-all'
 alias uu='sudo nala update && sudo nala upgrade'
