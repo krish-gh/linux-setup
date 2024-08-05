@@ -31,7 +31,7 @@ setup_dnf() {
     sudo dnf config-manager --enable fedora-cisco-openh264
     sudo dnf update -y @core
 
-
+    echo -e "Disabling some not needed repos..."
     sudo dnf config-manager --disable *PyCharm*
     sudo dnf config-manager --disable *nvidia*
     sudo dnf config-manager --disable *steam*
