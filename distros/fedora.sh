@@ -24,7 +24,7 @@ CINNAMON_PACKAGES_TO_INSTALL=""
 PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution galculator gedit gthumb *gucharmap* *libreoffice* mpv *rhythmbox* shotwell simple-scan snapshot *thunderbird* totem *transmission* vim* gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather,user-docs} yelp"
 
 setup_dnf() {
-    echo "TODO"
+    echo -e "TODO: fedora"
 }
 
 echo -e "Done fedora.sh..."
