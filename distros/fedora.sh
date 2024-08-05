@@ -24,7 +24,12 @@ CINNAMON_PACKAGES_TO_INSTALL=""
 PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution galculator gedit gthumb *gucharmap* *libreoffice* mpv *rhythmbox* shotwell simple-scan snapshot *thunderbird* totem *transmission* vim* gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather,user-docs} yelp"
 
 setup_dnf() {
-    echo -e "TODO: fedora"
+    echo -e "Setting up RPM Fusion..."
+    # https://rpmfusion.org/Configuration
+    # shellcheck disable=SC2046
+    sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf config-manager --enable fedora-cisco-openh264
+    sudo dnf update @core
 }
 
 echo -e "Done fedora.sh..."

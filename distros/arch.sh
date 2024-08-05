@@ -30,8 +30,9 @@ setup_pacman() {
         /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
     sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 
+    # https://aur.chaotic.cx/docs
     if [[ ! -f /etc/pacman.d/chaotic-mirrorlist ]]; then
-        echo -e "Configuring Chaotic-AUR - https://aur.chaotic.cx/docs..."
+        echo -e "Configuring Chaotic-AUR..."
         sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
         sudo pacman-key --lsign-key 3056513887B78AEB
         sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
