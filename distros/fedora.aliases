@@ -1,0 +1,30 @@
+#!/bin/sh
+# shellcheck disable=SC2139
+# shellcheck disable=SC3009
+# shellcheck disable=SC3020
+alias sudo='sudo -E -H '
+alias e='systemctl --failed --no-pager && journalctl -p 3 -b'
+alias cls='clear'
+alias u='sudo dnf update --refresh; command -v flatpak &> /dev/null && flatpak update; command -v pipx &> /dev/null && pipx upgrade-all'
+alias uu='sudo dnf update --refresh'
+alias i='sudo dnf install'
+alias ii='sudo dnf install'
+alias s='dnf search'
+alias ss='dnf search'
+alias si='dnf list installed | grep -i'
+alias r='sudo dnf autoremove'
+alias rr='sudo dnf autoremove'
+alias b='dnf list installed > pkglist.txt'
+alias c='sudo dnf clean all'
+alias cc='sudo dnf autoremove $(dnf repoquery --installonly --latest-limit=-1 -q)'
+alias x='exit'
+command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
+if command -v fastfetch &> /dev/null; then
+    alias neofetch='fastfetch'
+else
+    alias fastfetch='neofetch'
+fi
+alias nf='neofetch'
+alias ff='fastfetch'
+#alias vim='nvim'
+#alias vimdiff='nvim -d'
