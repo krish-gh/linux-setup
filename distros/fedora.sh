@@ -2,9 +2,9 @@
 
 # shellcheck disable=SC2034
 REFRESH_CMD="sudo dnf check-update --refresh"
-UPDATE_CMD="sudo dnf update --refresh"
-INSTALL_CMD="sudo dnf install"
-UNINSTALL_CMD="sudo dnf autoremove"
+UPDATE_CMD="sudo dnf update -y --refresh"
+INSTALL_CMD="sudo dnf install -y"
+UNINSTALL_CMD="sudo dnf autoremove -y"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf"
 SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware,plugins-oss,utils} fprintd"
@@ -27,9 +27,15 @@ setup_dnf() {
     echo -e "Setting up RPM Fusion..."
     # https://rpmfusion.org/Configuration
     # shellcheck disable=SC2046
-    sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     sudo dnf config-manager --enable fedora-cisco-openh264
-    sudo dnf update @core
+    sudo dnf update -y @core
+
+
+    sudo dnf config-manager --disable *PyCharm*
+    sudo dnf config-manager --disable *nvidia*
+    sudo dnf config-manager --disable *steam*
+
 }
 
 echo -e "Done fedora.sh..."
