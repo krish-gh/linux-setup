@@ -8,7 +8,7 @@ UNINSTALL_CMD="sudo dnf autoremove"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf"
 SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware,plugins-oss,utils} fprintd"
-INTEL_PACKAGES_TO_INSTALL="mesa-va-drivers libva-intel-media-driver"
+INTEL_PACKAGES_TO_INSTALL="mesa-va-drivers libva-intel-media-driver intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="xorg-x11-drv-vmware open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-additions"
 HYPERV_PACKAGES_TO_INSTALL="hyperv-daemons hyperv-tools"
