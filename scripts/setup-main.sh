@@ -166,6 +166,7 @@ setup_system() {
     sudo restorecon -Rv /etc/sysctl.d/
     copy_file /tmp/00-journal-size.conf ${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf
     sudo mv -f /tmp/00-journal-size.conf /etc/systemd/journald.conf.d/
+    sudo restorecon -Rv /etc/systemd/journald.conf.d/
     sudo journalctl --rotate --vacuum-size=10M
 
     # env var
