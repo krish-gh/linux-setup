@@ -113,6 +113,11 @@ fi
 source /tmp/"$DISTRO_TYPE".sh
 rm -f /tmp/"$DISTRO_TYPE".sh
 
+refresh_package_sources
+install_pkgs "virt-what"
+SYSTEM_TO_SETUP=$(sudo virt-what)
+echo -e "SYSTEM=$SYSTEM_TO_SETUP"
+
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
     copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
@@ -128,9 +133,6 @@ copy_file /tmp/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
 rm -f /tmp/"$DESKTOP".sh
 
 setup_system() {
-    install_pkgs "virt-what"
-    SYSTEM_TO_SETUP=$(sudo virt-what)
-    echo -e "SYSTEM=$SYSTEM_TO_SETUP"
     case $SYSTEM_TO_SETUP in
 
     intel)
@@ -388,7 +390,6 @@ setup_apps() {
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 }
 
-refresh_package_sources
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
 echo -e "Removing not needed packages..."
