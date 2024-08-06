@@ -313,22 +313,22 @@ setup_common_ui() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
     install_pkgs "$QT_PACKAGES_TO_INSTALL"
 
-    copy_file /tmp/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
-    dconf load / </tmp/gtk.dconf
-    rm -f /tmp/gtk.dconf
-
     # make it dark
     gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d \'\")
     echo -e "CURRENT_GTK_THEME=$gtktheme"
     # shellcheck disable=SC2086
     # shellcheck disable=SC2143
-    if [[ $gtktheme != '' && ! $(echo $gtktheme | grep -i dark) ]]; then
-        gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
-    fi
+    #if [[ $gtktheme != '' && ! $(echo $gtktheme | grep -i dark) ]]; then
+    #    gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
+    #fi
+
+    copy_file /tmp/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
+    dconf load / </tmp/gtk.dconf
+    rm -f /tmp/gtk.dconf
 
     mkdir -p ~/.config/gtk-{3,4}.0
     #echo >~/.gtkrc-2.0
-    echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "#gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
+    echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
     cp -f ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/
     echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
 
