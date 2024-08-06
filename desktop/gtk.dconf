@@ -6,7 +6,7 @@ font-hinting='slight'
 text-scaling-factor=1.3
 
 [org/gnome/desktop/privacy]
-old-files-age=0
+old-files-age=uint32 1
 recent-files-max-age=1
 remember-app-usage=false
 remember-recent-files=false
