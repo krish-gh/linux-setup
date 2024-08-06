@@ -313,14 +313,14 @@ setup_common_ui() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
     install_pkgs "$QT_PACKAGES_TO_INSTALL"
 
-    # make it dark
     gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d \'\")
     echo -e "CURRENT_GTK_THEME=$gtktheme"
     # shellcheck disable=SC2086
     # shellcheck disable=SC2143
-    #if [[ $gtktheme != '' && ! $(echo $gtktheme | grep -i dark) ]]; then
-    #    gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
-    #fi
+    # make it dark
+    if [[ $gtktheme != '' && ! $(echo $gtktheme | grep -i dark) ]]; then
+        gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
+    fi
 
     copy_file /tmp/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
     dconf load / </tmp/gtk.dconf
