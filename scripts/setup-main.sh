@@ -161,12 +161,8 @@ setup_system() {
 
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
-    copy_file /tmp/999-sysctl.conf ${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf
-    sudo mv -f /tmp/999-sysctl.conf /etc/sysctl.d/
-    sudo restorecon -Rv /etc/sysctl.d/
-    copy_file /tmp/00-journal-size.conf ${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf
-    sudo mv -f /tmp/00-journal-size.conf /etc/systemd/journald.conf.d/
-    sudo restorecon -Rv /etc/systemd/journald.conf.d/
+    copy_content ${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf | sudo tee /etc/sysctl.d/999-sysctl.conf
+    copy_content ${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf | sudo tee /etc/systemd/journald.conf.d/00-journal-size.conf
     sudo journalctl --rotate --vacuum-size=10M
 
     # env var
