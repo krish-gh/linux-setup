@@ -42,6 +42,8 @@ setup_dnf() {
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/vscode
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
+
+    refresh_package_sources
 }
 
 echo -e "Done fedora.sh..."
