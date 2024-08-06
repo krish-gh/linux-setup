@@ -393,11 +393,11 @@ echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
+[[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
     setup_"$DIST_ID"
 fi
-[[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 update_packages
 setup_system
 setup_font
