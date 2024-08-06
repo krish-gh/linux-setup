@@ -7,7 +7,7 @@ INSTALL_CMD="sudo apt-get install -y"
 UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
 
 REQUIREMENTS="curl wget unzip dconf-cli"
-SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers firmware-sof-signed alsa-{firmware-loaders,oss,utils} fprintd libpam-fprintd"
+SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers firmware-sof-signed alsa-firmware-loaders fprintd libpam-fprintd"
 INTEL_PACKAGES_TO_INSTALL="intel-media-va-driver-non-free va-driver-all"
 VMWARE_PACKAGES_TO_INSTALL="xserver-xorg-video-vmware open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-x11"
