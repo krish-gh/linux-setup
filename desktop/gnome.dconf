@@ -124,6 +124,7 @@ hpadding=0
 automatic-location=true
 
 [org/gnome/software]
+first-run=false
 screenshot-cache-age-maximum=60
 
 [org/gnome/system/location]
