@@ -38,7 +38,7 @@ setup_dnf() {
     #sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld --allowerasing
 
     echo -e "Disabling some not needed repos..."
-    sudo dnf config-manager --set-disabled phracek-PyCharm rpmfusion-nonfree-nvidia-driver rpmfusion-nonfree-steam
+    sudo dnf config-manager --disable *PyCharm* *nvidia* *steam*
 
     echo -e "Adding some needed repos..."
     # microsoft
@@ -46,7 +46,7 @@ setup_dnf() {
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/vscode
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
     # google
-    sudo dnf config-manager --set-enabled google-chrome
+    sudo dnf config-manager --enable google-chrome
 
     refresh_package_sources
 }
