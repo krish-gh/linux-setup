@@ -38,10 +38,9 @@ setup_dnf() {
     sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
     echo -e "Disabling some not needed repos..."
-    sudo dnf config-manager --disable *PyCharm*
-    sudo dnf config-manager --disable *nvidia*
-    sudo dnf config-manager --disable *steam*
+    sudo dnf config-manager --set-disabled phracek-PyCharm rpmfusion-nonfree-nvidia-driver rpmfusion-nonfree-steam
 
+    echo -e "Adding some needed repos..."
     # microsoft
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/vscode
