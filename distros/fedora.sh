@@ -31,11 +31,11 @@ setup_dnf() {
     sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     sudo dnf config-manager --enable fedora-cisco-openh264
     sudo dnf update -y @core
+    sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
     sudo dnf swap -y ffmpeg-free ffmpeg --allowerasing
     #sudo dnf swap libva-intel-media-driver intel-media-driver --allowerasing
     #sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld --allowerasing
     #sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld --allowerasing
-    sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
 
     echo -e "Disabling some not needed repos..."
     sudo dnf config-manager --set-disabled phracek-PyCharm rpmfusion-nonfree-nvidia-driver rpmfusion-nonfree-steam
