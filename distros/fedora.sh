@@ -47,6 +47,8 @@ setup_dnf() {
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/vscode
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
+    sudo sed -i "/name=/c\name=microsoft-vscode" /etc/yum.repos.d/packages.microsoft.com_yumrepos_vscode.repo
+    sudo sed -i "/name=/c\name=microsoft-edge" /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo
 
     refresh_package_sources
 }
