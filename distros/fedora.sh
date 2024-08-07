@@ -41,12 +41,12 @@ setup_dnf() {
     sudo dnf config-manager --disable *PyCharm* *nvidia* *steam*
 
     echo -e "Adding some needed repos..."
+    # google
+    sudo dnf config-manager --enable google-chrome
     # microsoft
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/vscode
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
-    # google
-    sudo dnf config-manager --enable google-chrome
 
     refresh_package_sources
 }
