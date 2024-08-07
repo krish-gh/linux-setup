@@ -45,6 +45,8 @@ setup_dnf() {
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/vscode
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
+    # google
+    sudo dnf config-manager --set-enabled google-chrome
 
     refresh_package_sources
 }
