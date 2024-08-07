@@ -393,8 +393,8 @@ setup_apps() {
 }
 
 echo -e "Installing some needed stuffs..."
-command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 install_pkgs "$REQUIREMENTS"
+command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 echo -e "Removing not needed packages..."
 uninstall_pkgs "$PACKAGES_TO_REMOVE"
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
