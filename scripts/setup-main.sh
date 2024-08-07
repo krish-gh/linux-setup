@@ -133,7 +133,7 @@ copy_file /tmp/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
 rm -f /tmp/"$DESKTOP".sh
 
 setup_system() {
-    command_exists flatpak && flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     case $SYSTEM_TO_SETUP in
 
     intel)
