@@ -51,8 +51,8 @@ setup_dnf() {
     sudo sed -i "/name=/c\name=microsoft-edge" /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo
 
     # feddy https://github.com/rpmfusion-infra/fedy
-    sudo dnf copr enable -y kwizart/fedy
-    install_pkgs fedy
+    #sudo dnf copr enable -y kwizart/fedy
+    #install_pkgs fedy
 
     refresh_package_sources
 }
