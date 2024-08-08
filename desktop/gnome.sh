@@ -37,10 +37,10 @@ setup_gnome() {
         [[ -d $extdir/"$i"/schemas ]] && glib-compile-schemas $extdir/"$i"/schemas/
     done
 
-    #if [[ $TERMINAL_TO_INSTALL != none ]]; then
-    #    install_pkgs "nautilus-open-any-terminal"
-    #    gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal $TERMINAL_TO_INSTALL
-    #fi
+    if [[ $TERMINAL_TO_INSTALL != none ]]; then
+       python -m pip install --user --upgrade nautilus-open-any-terminal
+       gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal "$TERMINAL_TO_INSTALL"
+    fi
 
     copy_file /tmp/gnome.dconf "${BASE_REPO_LOCATION}"desktop/gnome.dconf
     dconf load / </tmp/gnome.dconf

@@ -357,6 +357,7 @@ setup_apps() {
     install_pkgs "$APP_PACKAGES_TO_INSTALL"
     echo -e "Installing some dev stuffs..."
     install_pkgs "$DEV_PACKAGES_TO_INSTALL"
+    #python -m pip install --user --upgrade pip
 
     # meld
     gsettings set org.gnome.meld prefer-dark-theme true
