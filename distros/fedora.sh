@@ -7,7 +7,7 @@ INSTALL_CMD="sudo dnf install -y"
 UNINSTALL_CMD="sudo dnf autoremove -y"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf"
-SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware} fprintd"
+SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware} fprintd fprintd-pam"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="xorg-x11-drv-vmware open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-additions"
@@ -24,6 +24,16 @@ CINNAMON_PACKAGES_TO_INSTALL=""
 PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution galculator gedit gthumb *gucharmap* *libreoffice* mpv *rhythmbox* shotwell simple-scan snapshot *thunderbird* totem *transmission* vim* gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather,user-docs} yelp"
 
 setup_dnf() {
+    dnfConfigAppend="$(
+        grep "~custom-setup~" /etc/dnf/dnf.conf >/dev/null 2>&1
+        echo $?
+    )"
+    if [[ "${dnfConfigAppend}" -ne 0 ]]; then
+        echo "Updating dnf.conf..."
+        echo -e "# ~custom-setup~" | sudo tee -a /etc/dnf/dnf.conf
+        echo -e "max_parallel_downloads=10" | sudo tee -a /etc/dnf/dnf.conf
+    fi
+
     install_pkgs "fedora-workstation-repositories"
     echo -e "Setting up RPM Fusion..."
     # https://rpmfusion.org/Configuration
