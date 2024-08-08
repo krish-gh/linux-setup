@@ -50,6 +50,8 @@ setup_dnf() {
     sudo sed -i "/name=/c\name=microsoft-vscode" /etc/yum.repos.d/packages.microsoft.com_yumrepos_vscode.repo
     sudo sed -i "/name=/c\name=microsoft-edge" /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo
 
+    #install_pkgs dnfdragora-gui
+
     # feddy https://github.com/rpmfusion-infra/fedy
     #sudo dnf copr enable -y kwizart/fedy
     #install_pkgs fedy
