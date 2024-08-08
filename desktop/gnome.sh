@@ -39,6 +39,7 @@ setup_gnome() {
 
     if [[ $TERMINAL_TO_INSTALL != none ]]; then
        python -m pip install --user --upgrade nautilus-open-any-terminal
+       glib-compile-schemas ~/.local/share/glib-2.0/schemas/
        gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal "$TERMINAL_TO_INSTALL"
     fi
 
