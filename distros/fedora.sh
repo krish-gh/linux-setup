@@ -20,7 +20,7 @@ GTK_PACKAGES_TO_INSTALL="gnome-themes-extra"
 QT_PACKAGES_TO_INSTALL="kvantum kvantum-qt5 qt{5,6}-qtwayland qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} nautilus-python pipx"
 GNOME_EXT_MGR_PKG=""
-CINNAMON_PACKAGES_TO_INSTALL=""
+CINNAMON_PACKAGES_TO_INSTALL="xed xreader nemo-emblems nemo-fileroller nemo-preview nemo-python mint-{themes,y-icons}"
 PACKAGES_TO_REMOVE="baobab caribou celluloid cheese drawing epiphany evolution galculator gedit gthumb *gucharmap* *libreoffice* mpv *rhythmbox* shotwell simple-scan snapshot *thunderbird* totem *transmission* vim* gnome-{boxes,calculator,calendar,characters,clocks,connections,contacts,disk-utility,font-viewer,games,maps,music,nettool,power-manager,screenshot,sound-recorder,tour,weather,user-docs} yelp"
 
 setup_dnf() {
