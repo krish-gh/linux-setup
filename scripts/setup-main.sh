@@ -111,6 +111,7 @@ debloat_pkgs() {
     while read -r pkg; do
         uninstall_pkgs "$pkg"
     done <$TEMP_DIR/$DISTRO_TYPE.txt
+    rm -f $TEMP_DIR/$DISTRO_TYPE.txt
 
     if [[ $PACKAGES_TO_REMOVE != "" ]]; then
         echo -e "Removing additional packages..."
