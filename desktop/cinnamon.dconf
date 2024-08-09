@@ -8,6 +8,9 @@ toolkit-accessibility=false
 automount-open=false
 autorun-never=true
 
+[org/cinnamon/desktop/peripherals/mouse]
+speed=1.0
+
 [org/cinnamon/desktop/privacy]
 remember-recent-files=false
 
