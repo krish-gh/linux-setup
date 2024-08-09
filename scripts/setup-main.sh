@@ -130,11 +130,6 @@ fi
 source $TEMP_DIR/"$DISTRO_TYPE".sh
 rm -f $TEMP_DIR/"$DISTRO_TYPE".sh
 
-refresh_package_sources
-install_pkgs "virt-what"
-SYSTEM_TO_SETUP=$(sudo virt-what)
-echo -e "SYSTEM=$SYSTEM_TO_SETUP"
-
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
     copy_file $TEMP_DIR/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
@@ -150,6 +145,10 @@ copy_file $TEMP_DIR/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
 rm -f $TEMP_DIR/"$DESKTOP".sh
 
 setup_system() {
+    install_pkgs "virt-what"
+    SYSTEM_TO_SETUP=$(sudo virt-what)
+    echo -e "SYSTEM=$SYSTEM_TO_SETUP"
+
     case $SYSTEM_TO_SETUP in
 
     intel)
