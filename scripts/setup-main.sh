@@ -102,6 +102,19 @@ uninstall_pkgs() {
     for i in "${pkgs[@]}"; do eval "$UNINSTALL_CMD $i"; done
 }
 
+debloat_pkgs() {
+    echo -e "Debloating..."
+    copy_file /tmp/$DISTRO_TYPE.txt ${BASE_REPO_LOCATION}debloat/$DISTRO_TYPE.txt
+    while read -r pkg; do
+        uninstall_pkgs "$pkg"
+    done </tmp/$DISTRO_TYPE.txt
+
+    if [[ $PACKAGES_TO_REMOVE != "" ]]; then
+        echo -e "Removing additional packages..."
+        uninstall_pkgs "$PACKAGES_TO_REMOVE"
+    fi
+}
+
 # override with DISTRO_TYPE specific stuffs
 echo -e "Executing common $DISTRO_TYPE specific script..."
 copy_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
@@ -393,16 +406,15 @@ setup_apps() {
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
 }
 
+debloat_pkgs
+update_packages
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
-echo -e "Removing not needed packages..."
-uninstall_pkgs "$PACKAGES_TO_REMOVE"
 [[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
 if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
     setup_"$DIST_ID"
 fi
-#update_packages
 setup_system
 setup_font
 setup_apps
