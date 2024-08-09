@@ -402,7 +402,7 @@ if [[ $(type -t setup_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
     setup_"$DIST_ID"
 fi
-update_packages
+#update_packages
 setup_system
 setup_font
 setup_apps
