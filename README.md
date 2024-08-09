@@ -6,7 +6,7 @@
 | --------------- | -------------------------- | ------------------- |
 | Arch            | Arch, EndeavourOS          | Gnome, Cinnamon     |
 | Debian          | Debian, Ubuntu, Mint, LMDE | Gnome, Cinnamon     |
-| Fedora          | Fedora (Not Silverblue)    | Gnome               |
+| Fedora          | Fedora (Not Silverblue)    | Gnome, Cinnamon     |
 
 ## How
 
