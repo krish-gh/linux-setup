@@ -43,9 +43,9 @@ setup_gnome() {
        gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal "$TERMINAL_TO_INSTALL"
     fi
 
-    copy_file /tmp/gnome.dconf "${BASE_REPO_LOCATION}"desktop/gnome.dconf
-    dconf load / </tmp/gnome.dconf
-    rm -f /tmp/gnome.dconf
+    copy_file "$TEMP_DIR"/gnome.dconf "${BASE_REPO_LOCATION}"desktop/gnome.dconf
+    dconf load / <"$TEMP_DIR"/gnome.dconf
+    rm -f "$TEMP_DIR"/gnome.dconf
 
     if [[ -f ~/.local/share/backgrounds/wallpaper ]]; then
         gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"

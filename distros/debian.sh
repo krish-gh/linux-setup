@@ -61,8 +61,8 @@ setup_apt() {
 
     # synaptic
     sudo mkdir -p /root/.synaptic/
-    copy_file /tmp/synaptic.conf "${BASE_REPO_LOCATION}"system/root/.synaptic/synaptic.conf
-    sudo mv -f /tmp/synaptic.conf /root/.synaptic/
+    copy_file "$TEMP_DIR"/synaptic.conf "${BASE_REPO_LOCATION}"system/root/.synaptic/synaptic.conf
+    sudo mv -f "$TEMP_DIR"/synaptic.conf /root/.synaptic/
 }
 
 echo -e "Done debian.sh..."

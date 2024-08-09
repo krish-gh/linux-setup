@@ -66,6 +66,9 @@ PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
 TERMINAL_TO_INSTALL=none
 GUI_TEXT_EDITOR="" #override from desktop specific script
 
+TEMP_DIR=/tmp/linux-setup
+mkdir -p $TEMP_DIR
+
 # arg1 = destination path, arg2 = source path
 copy_file() {
     curl -f -o "$1" "$2?$(date +%s)"
@@ -104,10 +107,10 @@ uninstall_pkgs() {
 
 debloat_pkgs() {
     echo -e "Debloating..."
-    copy_file /tmp/$DISTRO_TYPE.txt ${BASE_REPO_LOCATION}debloat/$DISTRO_TYPE.txt
+    copy_file $TEMP_DIR/$DISTRO_TYPE.txt ${BASE_REPO_LOCATION}debloat/$DISTRO_TYPE.txt
     while read -r pkg; do
         uninstall_pkgs "$pkg"
-    done </tmp/$DISTRO_TYPE.txt
+    done <$TEMP_DIR/$DISTRO_TYPE.txt
 
     if [[ $PACKAGES_TO_REMOVE != "" ]]; then
         echo -e "Removing additional packages..."
@@ -117,14 +120,14 @@ debloat_pkgs() {
 
 # override with DISTRO_TYPE specific stuffs
 echo -e "Executing common $DISTRO_TYPE specific script..."
-copy_file /tmp/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
-if [[ ! -f /tmp/"$DISTRO_TYPE".sh ]]; then
+copy_file $TEMP_DIR/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
+if [[ ! -f $TEMP_DIR/"$DISTRO_TYPE".sh ]]; then
     >&2 echo "Error: $DISTRO_TYPE specific script not found!"
     exit 3
 fi
 # shellcheck disable=SC1090
-source /tmp/"$DISTRO_TYPE".sh
-rm -f /tmp/"$DISTRO_TYPE".sh
+source $TEMP_DIR/"$DISTRO_TYPE".sh
+rm -f $TEMP_DIR/"$DISTRO_TYPE".sh
 
 refresh_package_sources
 install_pkgs "virt-what"
@@ -133,17 +136,17 @@ echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
-    copy_file /tmp/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
+    copy_file $TEMP_DIR/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
     # shellcheck disable=SC1090
-    [[ -f /tmp/"$DIST_ID".sh ]] && source /tmp/"$DIST_ID".sh
-    rm -f /tmp/"$DIST_ID".sh
+    [[ -f $TEMP_DIR/"$DIST_ID".sh ]] && source $TEMP_DIR/"$DIST_ID".sh
+    rm -f $TEMP_DIR/"$DIST_ID".sh
 fi
 
 # desktop environment specific stuffs
-copy_file /tmp/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
+copy_file $TEMP_DIR/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
 # shellcheck disable=SC1090
-[[ -f /tmp/"$DESKTOP".sh ]] && source /tmp/"$DESKTOP".sh
-rm -f /tmp/"$DESKTOP".sh
+[[ -f $TEMP_DIR/"$DESKTOP".sh ]] && source $TEMP_DIR/"$DESKTOP".sh
+rm -f $TEMP_DIR/"$DESKTOP".sh
 
 setup_system() {
     case $SYSTEM_TO_SETUP in
@@ -315,10 +318,10 @@ setup_terminal() {
     # gnome terminal
     if command_exists gnome-terminal; then
         tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
-        copy_file /tmp/gterm.dconf ${BASE_REPO_LOCATION}desktop/gterm.dconf
-        sed -i "s/DEFAULT_PROFILE/$tprofileid/g" /tmp/gterm.dconf
-        dconf load /org/gnome/terminal/ </tmp/gterm.dconf
-        rm -f /tmp/gterm.dconf
+        copy_file $TEMP_DIR/gterm.dconf ${BASE_REPO_LOCATION}desktop/gterm.dconf
+        sed -i "s/DEFAULT_PROFILE/$tprofileid/g" $TEMP_DIR/gterm.dconf
+        dconf load /org/gnome/terminal/ <$TEMP_DIR/gterm.dconf
+        rm -f $TEMP_DIR/gterm.dconf
     fi
 
     #source ~/.bashrc
@@ -337,9 +340,9 @@ setup_common_ui() {
         gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
     fi
 
-    copy_file /tmp/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
-    dconf load / </tmp/gtk.dconf
-    rm -f /tmp/gtk.dconf
+    copy_file $TEMP_DIR/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
+    dconf load / <$TEMP_DIR/gtk.dconf
+    rm -f $TEMP_DIR/gtk.dconf
 
     mkdir -p ~/.config/gtk-{3,4}.0
     #echo >~/.gtkrc-2.0
