@@ -15,6 +15,7 @@ setup_kde() {
 
     # configs
     # konsole
+    copy_file ~/.local/share/konsole/catppuccin-mocha.colorscheme https://raw.githubusercontent.com/catppuccin/konsole/main/themes/catppuccin-mocha.colorscheme
     kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group Appearance --key ColorScheme catppuccin-mocha
     kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group Appearance --key Font "JetBrainsMono Nerd Font,12"
     kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group Appearance --key UseFontLineChararacters true
