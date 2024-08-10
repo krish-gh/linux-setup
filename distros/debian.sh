@@ -20,6 +20,7 @@ GTK_PACKAGES_TO_INSTALL="gnome-themes-extra{,-data}"
 QT_PACKAGES_TO_INSTALL="qt{5,6}-style-kvantum{,-themes} qt6-wayland qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} python3-nautilus pipx"
 GNOME_EXT_MGR_PKG="gnome-shell-extension-manager"
+KDE_PACKAGES_TO_INSTALL=""
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} mint-{themes,y-icons}"
 PACKAGES_TO_REMOVE=""
 
