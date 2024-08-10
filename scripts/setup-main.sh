@@ -58,9 +58,6 @@ APP_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 DEV_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 GTK_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 QT_PACKAGES_TO_INSTALL=""       #override from DISTRO_TYPE specific script
-GNOME_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
-GNOME_EXT_MGR_PKG=""            #override from DISTRO_TYPE specific script
-CINNAMON_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
 PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
 
 TERMINAL_TO_INSTALL=none
