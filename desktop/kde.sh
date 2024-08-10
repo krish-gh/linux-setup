@@ -14,6 +14,7 @@ setup_kde() {
     [[ -f ~/.config/systemd/user/service.d/env.conf ]] && sed -i '/QT_QPA_PLATFORMTHEME/s/^/#/' ~/.config/systemd/user/service.d/env.conf
 
     # configs
+
     # konsole
     copy_file ~/.local/share/konsole/catppuccin-mocha.colorscheme https://raw.githubusercontent.com/catppuccin/konsole/main/themes/catppuccin-mocha.colorscheme
     kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group Appearance --key ColorScheme catppuccin-mocha
@@ -25,6 +26,21 @@ setup_kde() {
     kwriteconfig6 --file ~/.config/konsolerc --group "Desktop Entry" --key DefaultProfile custom.profile
     kwriteconfig6 --file ~/.config/konsolerc --group KonsoleWindow --key RememberWindowSize false
     kwriteconfig6 --file ~/.config/konsolerc --group KonsoleWindow --key UseSingleInstance true
+
+    # kate
+    kwriteconfig6 --file ~/.config/katerc --group General --key "Close After Last" true
+    kwriteconfig6 --file ~/.config/katerc --group General --key "Restore Window Configuration" false
+    kwriteconfig6 --file ~/.config/katerc --group General --key "Save Meta Infos" false
+    kwriteconfig6 --file ~/.config/katerc --group "KTextEditor Renderer" --key "Color Theme" "Catppuccin Mocha"
+    kwriteconfig6 --file ~/.config/katerc --group "KTextEditor Renderer" --key "Text Font" "JetBrainsMono Nerd Font,12"
+
+    # kwrite
+    kwriteconfig6 --file ~/.config/kwriterc --group General --key "Close After Last" true
+    kwriteconfig6 --file ~/.config/kwriterc --group General --key "Restore Window Configuration" false
+    kwriteconfig6 --file ~/.config/kwriterc --group General --key "Save Meta Infos" false
+    kwriteconfig6 --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Color Theme" "Catppuccin Mocha"
+    kwriteconfig6 --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Text Font" "JetBrainsMono Nerd Font,12"
+    
 
 }
 
