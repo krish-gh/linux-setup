@@ -2,11 +2,15 @@
 
 ## Supported scenario
 
-| Distrution Type | Specific                   | Desktop Environment |
-| --------------- | -------------------------- | ------------------- |
-| Arch            | Arch, EndeavourOS          | Gnome, Cinnamon     |
-| Debian          | Debian, Ubuntu, Mint, LMDE | Gnome, Cinnamon     |
-| Fedora          | Fedora (Not Silverblue)    | Gnome, Cinnamon     |
+| Distrution Type | Specific                | Desktop Environment |
+| --------------- | ----------------------- | ------------------- |
+| Arch            | Arch                    | Gnome, Cinnamon     |
+|                 | EndeavourOS             | Gnome, Cinnamon     |
+| Debian          | Debian                  | Gnome               |
+|                 | Ubuntu                  | Gnome               |
+|                 | Mint                    | Cinnamon            |
+|                 | LMDE                    | Cinnamon            |
+| Fedora          | Fedora (Non-Silverblue) | Gnome, Cinnamon     |
 
 ## How
 
