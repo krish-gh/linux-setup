@@ -4,7 +4,8 @@
 GUI_TEXT_EDITOR=org.kde.kwrite.desktop
 
 setup_kde() {
-    echo -e "TODO: kde"
+    echo -e "Configuring kde stuffs..."
+    install_pkgs "$KDE_PACKAGES_TO_INSTALL"
 }
 
 echo -e "Done gnome.sh..."
