@@ -12,6 +12,9 @@ setup_kde() {
     [[ -f ~/.profile ]] && sed -i '/QT_QPA_PLATFORMTHEME/s/^/#/' ~/.profile
     [[ -f ~/.xprofile ]] && sed -i '/QT_QPA_PLATFORMTHEME/s/^/#/' ~/.xprofile
     [[ -f ~/.config/systemd/user/service.d/env.conf ]] && sed -i '/QT_QPA_PLATFORMTHEME/s/^/#/' ~/.config/systemd/user/service.d/env.conf
+
+    # config
+    plasma-apply-desktoptheme breeze-dark
 }
 
 echo -e "Done gnome.sh..."
