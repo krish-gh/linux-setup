@@ -58,6 +58,7 @@ APP_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 DEV_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 GTK_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 QT_PACKAGES_TO_INSTALL=""       #override from DISTRO_TYPE specific script
+QT_PATCHES_TO_INSTALL=""          #override from DISTRO_TYPE specific script
 GNOME_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
 GNOME_EXT_MGR_PKG=""            #override from DISTRO_TYPE specific script
 KDE_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
