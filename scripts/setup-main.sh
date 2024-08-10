@@ -58,7 +58,7 @@ APP_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 DEV_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 GTK_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 QT_PACKAGES_TO_INSTALL=""       #override from DISTRO_TYPE specific script
-QT_PATCHES_TO_INSTALL=""          #override from DISTRO_TYPE specific script
+QT_PATCHES_TO_INSTALL=""        #override from DISTRO_TYPE specific script
 GNOME_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
 GNOME_EXT_MGR_PKG=""            #override from DISTRO_TYPE specific script
 KDE_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
@@ -347,10 +347,13 @@ setup_common_ui() {
     rm -f $TEMP_DIR/gtk.dconf
 
     mkdir -p ~/.config/gtk-{3,4}.0
-    #echo >~/.gtkrc-2.0
-    echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=1" >>~/.config/gtk-3.0/settings.ini
-    cp -f ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/
-    echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
+    if [[ ! -f ~/.config/gtk-3.0/settings.ini ]]; then
+        echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=true" >>~/.config/gtk-3.0/settings.ini
+    fi
+    if [[ ! -f ~/.config/gtk-4.0/settings.ini ]]; then
+        cp -f ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/
+        echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
+    fi
 
     mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
     copy_file ~/.local/share/gtksourceview-3.0/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
