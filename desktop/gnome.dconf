@@ -7,8 +7,6 @@ use-system-font=false
 
 [org/gnome/TextEditor]
 custom-font='JetBrainsMono Nerd Font 12'
-last-window-maximised=false
-last-window-size=(1200, 1000)
 restore-session=false
 show-line-numbers=true
 spellcheck=false
