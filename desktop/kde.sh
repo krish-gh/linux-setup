@@ -14,6 +14,7 @@ setup_kde() {
     [[ -f ~/.config/systemd/user/service.d/env.conf ]] && sed -i '/QT_QPA_PLATFORMTHEME/s/^/#/' ~/.config/systemd/user/service.d/env.conf
 
     # configs
+    lookandfeeltool -a org.kde.breezedark.desktop
 
     # konsole
     copy_file ~/.local/share/konsole/catppuccin-mocha.colorscheme https://raw.githubusercontent.com/catppuccin/konsole/main/themes/catppuccin-mocha.colorscheme
