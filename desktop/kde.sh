@@ -13,7 +13,18 @@ setup_kde() {
     [[ -f ~/.xprofile ]] && sed -i '/QT_QPA_PLATFORMTHEME/s/^/#/' ~/.xprofile
     [[ -f ~/.config/systemd/user/service.d/env.conf ]] && sed -i '/QT_QPA_PLATFORMTHEME/s/^/#/' ~/.config/systemd/user/service.d/env.conf
 
-    # config
+    # configs
+    # konsole
+    kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group Appearance --key ColorScheme catppuccin-mocha
+    kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group Appearance --key Font "JetBrainsMono Nerd Font,12"
+    kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group Appearance --key UseFontLineChararacters true
+    kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group General --key Name custom
+    kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group General --key TerminalColumns 120
+    kwriteconfig6 --file ~/.local/share/konsole/custom.profile --group General --key TerminalRows 36    
+    kwriteconfig6 --file ~/.config/konsolerc --group "Desktop Entry" --key DefaultProfile custom.profile
+    kwriteconfig6 --file ~/.config/konsolerc --group KonsoleWindow --key RememberWindowSize false
+    kwriteconfig6 --file ~/.config/konsolerc --group KonsoleWindow --key UseSingleInstance true
+
 }
 
 echo -e "Done gnome.sh..."
