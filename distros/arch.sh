@@ -22,7 +22,7 @@ QT_PATCHES_TO_INSTALL="kvantum-qt5 qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} python-nautilus python-pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG="extension-manager"
 KDE_PACKAGES_TO_INSTALL="plasma-meta kde-system-meta kwayland-integration colord-kde kwalletmanager gwenview kcalc maliit-keyboard okular spectacle xwaylandvideobridge"
-CINNAMON_PACKAGES_TO_INSTALL="xdg-desktop-portal-xapp x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
+CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
 setup_pacman() {
