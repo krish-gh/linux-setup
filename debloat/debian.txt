@@ -43,7 +43,6 @@ mintchat
 mpv
 orca
 pix
-print-manager
 shotwell
 simple-scan
 snapshot
