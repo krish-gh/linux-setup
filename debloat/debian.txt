@@ -16,6 +16,7 @@ drawing
 epiphany
 evolution
 gedit
+gimp
 gnome-boxes
 gnome-calendar
 gnome-characters
@@ -37,9 +38,12 @@ gnote
 gthumb
 hypnotix
 kdeconnect
+konqueror
 mintchat
 mpv
+orca
 pix
+print-manager
 shotwell
 simple-scan
 snapshot
