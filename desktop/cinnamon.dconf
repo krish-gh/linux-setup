@@ -29,6 +29,7 @@ sleep-display-ac=0
 [org/cinnamon/settings-daemon/plugins/xsettings]
 antialiasing='rgba'
 hinting='slight'
+overrides={'Gdk/WindowScalingFactor': <1.3>}
 
 [org/cinnamon/sounds]
 login-enabled=false
