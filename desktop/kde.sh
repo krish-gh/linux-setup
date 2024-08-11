@@ -58,4 +58,4 @@ setup_kde() {
 
 }
 
-echo -e "Done gnome.sh..."
+echo -e "Done kde.sh..."

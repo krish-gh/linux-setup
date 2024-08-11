@@ -21,7 +21,7 @@ QT_PACKAGES_TO_INSTALL="qt6-wayland"
 QT_PATCHES_TO_INSTALL="qt{5,6}-style-kvantum{,-themes} qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="xdg-desktop-portal-gnome gnome-{menus,tweaks,terminal,text-editor} python3-nautilus pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG="gnome-shell-extension-manager"
-KDE_PACKAGES_TO_INSTALL="xdg-desktop-portal-kde kwayland-integration colord-kde kwalletmanager gwenview kcalc maliit-keyboard okular kde-spectacle"
+KDE_PACKAGES_TO_INSTALL="kde-plasma-desktop kwayland-integration colord-kde kwalletmanager gwenview kcalc maliit-keyboard okular kde-spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="xdg-desktop-portal-xapp xed xreader xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
