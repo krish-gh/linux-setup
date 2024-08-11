@@ -21,7 +21,7 @@ QT_PACKAGES_TO_INSTALL="qt{5,6}-wayland"
 QT_PATCHES_TO_INSTALL="kvantum-qt5 qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} python-nautilus python-pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG="extension-manager"
-KDE_PACKAGES_TO_INSTALL="colord-kde"
+KDE_PACKAGES_TO_INSTALL="colord-kde kwalletmanager"
 CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
