@@ -25,6 +25,7 @@ gnome-user-docs
 gnome-weather
 gthumb
 hexchat
+kdeconnect
 libreoffice-{fresh,still}
 mpv
 redshift
