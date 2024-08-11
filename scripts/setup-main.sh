@@ -181,10 +181,11 @@ setup_system() {
     install_pkgs "$SYSTEM_PACKAGES_TO_INSTALL"
 
     echo -e "Tweaking some system stuffs..."
-    sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d
+    sudo mkdir -p /etc/sysctl.d /etc/systemd/{journald.conf.d,coredump.conf.d}
     copy_content ${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf | sudo tee /etc/sysctl.d/999-sysctl.conf
     copy_content ${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf | sudo tee /etc/systemd/journald.conf.d/00-journal-size.conf
     sudo journalctl --rotate --vacuum-size=10M
+    copy_content ${BASE_REPO_LOCATION}system/etc/systemd/coredump.conf.d/custom.conf | sudo tee /etc/systemd/coredump.conf.d/custom.conf
 
     # env var
     mkdir -p ~/.config/environment.d
