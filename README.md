@@ -2,15 +2,17 @@
 
 ## Supported scenario
 
-| Distrution Type | Specific                | Desktop Environment |
-| --------------- | ----------------------- | ------------------- |
-| Arch            | Arch                    | Gnome, Cinnamon     |
-|                 | EndeavourOS             | Gnome, Cinnamon     |
-| Debian          | Debian                  | Gnome               |
-|                 | Ubuntu                  | Gnome               |
-|                 | Mint                    | Cinnamon            |
-|                 | LMDE                    | Cinnamon            |
-| Fedora          | Fedora (Non-Silverblue) | Gnome, Cinnamon     |
+* KDE's config system is all over the places and many things are only possible from UI. So, I could only automate few things. That's one of the reasons I don't like KDE.
+
+| Distrution Type | Specific                | Desktop Environment  |
+| --------------- | ----------------------- | -------------------- |
+| Arch            | Arch                    | Gnome, KDE, Cinnamon |
+|                 | EndeavourOS             | Gnome, KDE, Cinnamon |
+| Debian          | Debian                  | Gnome                |
+|                 | Ubuntu                  | Gnome                |
+|                 | Mint                    | Cinnamon             |
+|                 | LMDE                    | Cinnamon             |
+| Fedora          | Fedora (Non-Silverblue) | Gnome, Cinnamon      |
 
 ## How
 
