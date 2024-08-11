@@ -38,7 +38,7 @@ gthumb
 hypnotix
 mintchat
 mpv
-pix*
+pix
 shotwell
 simple-scan
 snapshot
