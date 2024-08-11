@@ -36,6 +36,7 @@ gnome-weather
 gnote
 gthumb
 hypnotix
+kdeconnect
 mintchat
 mpv
 pix
