@@ -21,6 +21,7 @@ setup_kde() {
     sudo mkdir -p /etc/sddm.conf.d
     sudo $KWRITECONFIG_CMD --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key Current breeze
     sudo $KWRITECONFIG_CMD --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key CursorTheme breeze_cursors
+    sudo chmod -R +r /etc/sddm.conf.d/
     $KWRITECONFIG_CMD --file ~/.config/kdeglobals --group KScreen --key ScaleFactor 1.3
     $KWRITECONFIG_CMD --file ~/.config/kwinrc --group Xwayland --key Scale 1.3
     $KWRITECONFIG_CMD --file ~/.config/plasmashellrc --group PlasmaViews --group "Panel 2" --group Defaults --key thickness 30
