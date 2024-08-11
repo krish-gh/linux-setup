@@ -22,7 +22,7 @@ QT_PATCHES_TO_INSTALL="qt{5,6}-style-kvantum{,-themes} qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="xdg-desktop-portal-gnome gnome-{menus,tweaks,terminal,text-editor} python3-nautilus pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG="gnome-shell-extension-manager"
 KDE_PACKAGES_TO_INSTALL="xdg-desktop-portal-kde breeze-gtk-theme kde-config-gtk-style colord-kde kwalletmanager maliit-keyboard"
-CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
+CINNAMON_PACKAGES_TO_INSTALL="xdg-desktop-portal-xapp xed xreader xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
 setup_apt() {
