@@ -22,6 +22,7 @@ setup_kde() {
     KWRITECONFIG_CMD --file ~/.config/kwinrc --group Xwayland --key Scale 1.3
     KWRITECONFIG_CMD --file ~/.config/plasmashellrc --group PlasmaViews --group "Panel 2" --group Defaults --key thickness 30
     KWRITECONFIG_CMD --file ~/.config/krunnerrc --group Plugins --key baloosearchEnabled false
+    rm -f ~/.local/share/baloo/index
 
     # konsole
     copy_file ~/.local/share/konsole/catppuccin-mocha.colorscheme https://raw.githubusercontent.com/catppuccin/konsole/main/themes/catppuccin-mocha.colorscheme
