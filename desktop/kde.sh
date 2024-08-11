@@ -16,6 +16,7 @@ setup_kde() {
     # configs
     lookandfeeltool -a org.kde.breezedark.desktop
     kwriteconfig6 --file ~/.config/kdeglobals --group KScreen --key ScaleFactor 1.3
+    kwriteconfig6 --file ~/.config/kwinrc --group Xwayland --key Scale 1.3
 
     # konsole
     copy_file ~/.local/share/konsole/catppuccin-mocha.colorscheme https://raw.githubusercontent.com/catppuccin/konsole/main/themes/catppuccin-mocha.colorscheme
