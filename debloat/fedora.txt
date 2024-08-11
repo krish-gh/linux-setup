@@ -39,7 +39,7 @@ shotwell
 simple-scan
 snapshot
 totem
-vim*
+vim
 xawtv*
 xfburn
 yelp

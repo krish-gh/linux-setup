@@ -45,7 +45,7 @@ snapshot
 sticky
 thingy
 totem
-vim*
+vim
 warpinator
 webapp-manager
 zutty
