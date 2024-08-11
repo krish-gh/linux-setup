@@ -22,7 +22,7 @@ QT_PATCHES_TO_INSTALL="kvantum{,-qt5} qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} nautilus-python pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG=""
 KDE_PACKAGES_TO_INSTALL=""
-CINNAMON_PACKAGES_TO_INSTALL="xed xreader nemo-emblems nemo-fileroller nemo-preview nemo-python mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
+CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} nemo-emblems nemo-fileroller nemo-preview nemo-python mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
 setup_dnf() {
