@@ -2,7 +2,7 @@
 
 ## Supported scenario
 
-* KDE's config system is all over the places and many things are only possible from UI. So, I could only automate few things. That's one of the reasons I don't like KDE.
+> **_NOTE:_** KDE's config system is all over the places and many things are only possible from UI. So, I could only automate few things. That's one of the reasons I don't like KDE.
 
 | Distrution Type | Specific                | Desktop Environment  |
 | --------------- | ----------------------- | -------------------- |
