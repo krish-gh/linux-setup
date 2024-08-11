@@ -46,6 +46,7 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/katerc --group General --key "Restore Window Configuration" false
     $KWRITECONFIG_CMD --file ~/.config/katerc --group General --key "Save Meta Infos" false
     $KWRITECONFIG_CMD --file ~/.config/katerc --group "KTextEditor Renderer" --key "Color Theme" "Catppuccin Mocha"
+    $KWRITECONFIG_CMD --file ~/.config/katerc --group "KTextEditor Renderer" --key "Auto Color Theme Selection" false
     $KWRITECONFIG_CMD --file ~/.config/katerc --group "KTextEditor Renderer" --key "Text Font" "JetBrainsMono Nerd Font,12"
 
     # kwrite
@@ -53,6 +54,7 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/kwriterc --group General --key "Restore Window Configuration" false
     $KWRITECONFIG_CMD --file ~/.config/kwriterc --group General --key "Save Meta Infos" false
     $KWRITECONFIG_CMD --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Color Theme" "Catppuccin Mocha"
+    $KWRITECONFIG_CMD --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Auto Color Theme Selection" false
     $KWRITECONFIG_CMD --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Text Font" "JetBrainsMono Nerd Font,12"
     
 
