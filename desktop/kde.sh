@@ -26,6 +26,7 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/kwinrc --group Xwayland --key Scale 1.3
     $KWRITECONFIG_CMD --file ~/.config/plasmashellrc --group PlasmaViews --group "Panel 2" --group Defaults --key thickness 30
     $KWRITECONFIG_CMD --file ~/.config/krunnerrc --group Plugins --key baloosearchEnabled false
+    $KWRITECONFIG_CMD --file ~/.config/baloofilerc --group "Basic Settings" --key Indexing-Enabled false
     rm -f ~/.local/share/baloo/index
 
     # konsole
