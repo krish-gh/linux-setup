@@ -12,6 +12,7 @@
 |                 | Ubuntu                  | Gnome                |
 |                 | Mint                    | Cinnamon             |
 |                 | LMDE                    | Cinnamon             |
+|                 | KDE neon                | KDE                  |
 | Fedora          | Fedora (Non-Silverblue) | Gnome, Cinnamon      |
 
 ## How
