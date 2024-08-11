@@ -18,6 +18,7 @@ setup_kde() {
 
     # configs
     lookandfeeltool -a org.kde.breezedark.desktop
+    sudo mkdir -p /etc/sddm.conf.d
     sudo $KWRITECONFIG_CMD --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key Current breeze
     sudo $KWRITECONFIG_CMD --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key CursorTheme breeze_cursors
     $KWRITECONFIG_CMD --file ~/.config/kdeglobals --group KScreen --key ScaleFactor 1.3
