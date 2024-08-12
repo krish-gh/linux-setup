@@ -50,9 +50,9 @@ kde-partitionmanager
 kdebugsettings
 kdeconnect*
 kdepim
-kgpgkmahjongg
 kjournald
 kmag
+kmahjongg
 kmail
 kmines
 kmousetool
