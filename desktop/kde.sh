@@ -30,6 +30,10 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/baloofilerc --group "Basic Settings" --key Indexing-Enabled false
     rm -f ~/.local/share/baloo/index
 
+    # dolphin
+    mkdir -p ~/.local/share/dolphin/view_properties/global
+    $KWRITECONFIG_CMD --file ~/.local/share/dolphin/view_properties/global/.directory --group Settings --key HiddenFilesShown true
+
     # konsole
     copy_file ~/.local/share/konsole/catppuccin-mocha.colorscheme https://raw.githubusercontent.com/catppuccin/konsole/main/themes/catppuccin-mocha.colorscheme
     $KWRITECONFIG_CMD --file ~/.local/share/konsole/custom.profile --group Appearance --key ColorScheme catppuccin-mocha
