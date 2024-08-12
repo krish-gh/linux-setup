@@ -11,7 +11,7 @@ clock-format='24h'
 font-name='Cantarell 11'
 font-antialiasing='rgba'
 font-hinting='slight'
-text-scaling-factor=1.3
+text-scaling-factor=1.25
 
 #---- Accessibility ----
 [org/gnome/desktop/a11y]
