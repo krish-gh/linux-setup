@@ -29,6 +29,8 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/krunnerrc --group Plugins --key baloosearchEnabled false
     $KWRITECONFIG_CMD --file ~/.config/baloofilerc --group "Basic Settings" --key Indexing-Enabled false
     rm -f ~/.local/share/baloo/index
+    $KWRITECONFIG_CMD --file ~/.config/powerdevilrc --group AC --group Display --key TurnOffDisplayIdleTimeoutSec -1
+    $KWRITECONFIG_CMD --file ~/.config/powerdevilrc --group AC --group Display --key TurnOffDisplayWhenIdle false
 
     # dolphin
     mkdir -p ~/.local/share/dolphin/view_properties/global
