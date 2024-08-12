@@ -21,5 +21,5 @@
 Run without cloning this repo. Fully remote. It downloads required files when required.
 
 `
-eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-main.sh)" 2>&1 | tee setup.log
+eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-main.sh?$(date +%s))" 2>&1 | tee setup.log
 `
