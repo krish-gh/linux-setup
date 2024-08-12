@@ -25,7 +25,8 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/kdeglobals --group Sounds --key Enable false
     $KWRITECONFIG_CMD --file ~/.config/kdeglobals --group KScreen --key ScaleFactor 1.25
     $KWRITECONFIG_CMD --file ~/.config/kwinrc --group Xwayland --key Scale 1.25
-    #jq '(.[] | select(.name == "outputs") | .data | .[] | .scale) |= 1.25' ~/.config/kwinoutputconfig.json | tee ~/.config/kwinoutputconfig.json
+    kwinoutputconfig="$(jq '(.[] | select(.name == "outputs") | .data | .[] | .scale) |= 1.25' ~/.config/kwinoutputconfig.json)" && \
+        echo -E "${kwinoutputconfig}" > ~/.config/kwinoutputconfig.json
     $KWRITECONFIG_CMD --file ~/.config/plasmashellrc --group PlasmaViews --group "Panel 2" --group Defaults --key thickness 30
     $KWRITECONFIG_CMD --file ~/.config/krunnerrc --group Plugins --key baloosearchEnabled false
     $KWRITECONFIG_CMD --file ~/.config/baloofilerc --group "Basic Settings" --key Indexing-Enabled false
