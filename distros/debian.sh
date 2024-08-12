@@ -6,7 +6,7 @@ UPDATE_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
 INSTALL_CMD="sudo apt-get install -y"
 UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
 
-REQUIREMENTS="curl wget unzip dconf-cli"
+REQUIREMENTS="curl wget unzip dconf-cli jq"
 SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers firmware-sof-signed alsa-firmware-loaders fprintd libpam-fprintd"
 INTEL_PACKAGES_TO_INSTALL="intel-media-va-driver-non-free va-driver-all"
 VMWARE_PACKAGES_TO_INSTALL="xserver-xorg-video-vmware xserver-xorg-video-qxl open-vm-tools-desktop"

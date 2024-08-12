@@ -6,7 +6,7 @@ UPDATE_CMD="sudo dnf update -y --refresh"
 INSTALL_CMD="sudo dnf install -y"
 UNINSTALL_CMD="sudo dnf autoremove -y"
 
-REQUIREMENTS="curl wget2-wget unzip xrdb dconf"
+REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq"
 SYSTEM_PACKAGES_TO_INSTALL="mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware} fprintd fprintd-pam"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="xorg-x11-drv-vmware open-vm-tools-desktop"
