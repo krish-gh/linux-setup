@@ -22,9 +22,10 @@ setup_kde() {
     sudo $KWRITECONFIG_CMD --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key Current breeze
     sudo $KWRITECONFIG_CMD --file /etc/sddm.conf.d/kde_settings.conf --group Theme --key CursorTheme breeze_cursors
     sudo chmod -R +r /etc/sddm.conf.d/
-    $KWRITECONFIG_CMD --file ~/.config/kdeglobals --group KScreen --key ScaleFactor 1.25
     $KWRITECONFIG_CMD --file ~/.config/kdeglobals --group Sounds --key Enable false
+    $KWRITECONFIG_CMD --file ~/.config/kdeglobals --group KScreen --key ScaleFactor 1.25
     $KWRITECONFIG_CMD --file ~/.config/kwinrc --group Xwayland --key Scale 1.25
+    #jq '(.[] | select(.name == "outputs") | .data | .[] | .scale) |= 1.25' ~/.config/kwinoutputconfig.json | tee ~/.config/kwinoutputconfig.json
     $KWRITECONFIG_CMD --file ~/.config/plasmashellrc --group PlasmaViews --group "Panel 2" --group Defaults --key thickness 30
     $KWRITECONFIG_CMD --file ~/.config/krunnerrc --group Plugins --key baloosearchEnabled false
     $KWRITECONFIG_CMD --file ~/.config/baloofilerc --group "Basic Settings" --key Indexing-Enabled false
@@ -43,7 +44,7 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.local/share/konsole/custom.profile --group Appearance --key UseFontLineChararacters true
     $KWRITECONFIG_CMD --file ~/.local/share/konsole/custom.profile --group General --key Name custom
     $KWRITECONFIG_CMD --file ~/.local/share/konsole/custom.profile --group General --key TerminalColumns 120
-    $KWRITECONFIG_CMD --file ~/.local/share/konsole/custom.profile --group General --key TerminalRows 36    
+    $KWRITECONFIG_CMD --file ~/.local/share/konsole/custom.profile --group General --key TerminalRows 36
     $KWRITECONFIG_CMD --file ~/.config/konsolerc --group "Desktop Entry" --key DefaultProfile custom.profile
     $KWRITECONFIG_CMD --file ~/.config/konsolerc --group KonsoleWindow --key RememberWindowSize false
     $KWRITECONFIG_CMD --file ~/.config/konsolerc --group KonsoleWindow --key UseSingleInstance true
@@ -63,7 +64,6 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Color Theme" "Catppuccin Mocha"
     $KWRITECONFIG_CMD --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Auto Color Theme Selection" false
     $KWRITECONFIG_CMD --file ~/.config/kwriterc --group "KTextEditor Renderer" --key "Text Font" "JetBrainsMono Nerd Font,12"
-    
 
 }
 
