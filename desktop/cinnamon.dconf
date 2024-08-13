@@ -19,6 +19,7 @@ idle-delay=0
 
 [org/cinnamon/desktop/sound]
 event-sounds=false
+volume-sound-enabled=false
 
 [org/cinnamon/desktop/wm/preferences]
 num-workspaces=1
@@ -31,12 +32,17 @@ antialiasing='rgba'
 hinting='slight'
 
 [org/cinnamon/sounds]
+close-enabled=false
 login-enabled=false
 logout-enabled=false
+map-enabled=false
+maximize-enabled=false
+minimize-enabled=false
 notification-enabled=false
 plug-enabled=false
 switch-enabled=false
 tile-enabled=false
+unmaximize-enabled=false
 unplug-enabled=false
 
 #[org/cinnamon/theme]
