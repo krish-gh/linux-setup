@@ -67,6 +67,9 @@ num-workspaces=1
 [org/gnome/gnome-system-monitor]
 show-dependencies=true
 
+[org/gnome/mutter]
+attach-modal-dialogs=false
+
 [org/gnome/nautilus/icon-view]
 default-zoom-level='medium'
 
