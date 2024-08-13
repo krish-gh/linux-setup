@@ -223,8 +223,6 @@ setup_system() {
 
     systemctl is-enabled casper-md5check.service && sudo systemctl disable casper-md5check.service
     sudo systemctl daemon-reload
-
-    command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 }
 
 setup_font() {
