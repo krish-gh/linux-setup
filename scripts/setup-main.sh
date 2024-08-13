@@ -277,7 +277,7 @@ setup_terminal() {
             echo $?
         )"
         if [[ "${nanorcAppend}" -ne 0 ]]; then
-            echo -e "include "/usr/share/nano-syntax-highlighting/*.nanorc"" >>~/.config/nano/nanorc
+            echo -e 'include "/usr/share/nano-syntax-highlighting/*.nanorc"' >>~/.config/nano/nanorc
         fi
     fi
 

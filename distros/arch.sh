@@ -55,7 +55,16 @@ setup_pacman() {
     refresh_package_sources
 
     echo -e "Installing some stuffs..."
-    [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
+    if [[ -f /etc/mkinitcpio.conf ]]; then
+        vsconsoleAppend="$(
+            grep "FONT=" /etc/vconsole.conf >/dev/null 2>&1
+            echo $?
+        )"
+        if [[ "${vsconsoleAppend}" -ne 0 ]]; then
+            echo -e 'FONT="eurlatgr"' | sudo tee -a /etc/vconsole.conf
+        fi
+        install_pkgs "mkinitcpio-firmware"
+    fi
 
     pamacvar='aur'
     if command_exists flatpak; then
