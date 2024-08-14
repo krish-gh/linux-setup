@@ -14,7 +14,7 @@ setup_gnome() {
 
     echo -e "Installing some extensions..."
     if command_exists flatpak; then
-        flatpak install --user flathub com.mattjakeman.ExtensionManager --assumeyes
+        flatpak install --assumeyes flathub com.mattjakeman.ExtensionManager
     else
         install_pkgs "$GNOME_EXT_MGR_PKG"
     fi
