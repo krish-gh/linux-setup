@@ -26,6 +26,17 @@ CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview n
 PACKAGES_TO_REMOVE=""
 
 setup_pacman() {
+    if [[ -f /etc/vconsole.conf ]]; then
+        vsconsoleAppend="$(
+            grep "FONT=" /etc/vconsole.conf >/dev/null 2>&1
+            echo $?
+        )"
+        if [[ "${vsconsoleAppend}" -ne 0 ]]; then
+            echo -e "FONT is not set in vconsole.conf, updating..."
+            echo -e 'FONT="eurlatgr"' | sudo tee -a /etc/vconsole.conf
+        fi
+    fi
+    
     echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
     sudo sed -i "/^#Color/c\Color\nILoveCandy
         /^#VerbosePkgLists/c\VerbosePkgLists
@@ -55,16 +66,7 @@ setup_pacman() {
     refresh_package_sources
 
     echo -e "Installing some stuffs..."
-    if [[ -f /etc/mkinitcpio.conf ]]; then
-        vsconsoleAppend="$(
-            grep "FONT=" /etc/vconsole.conf >/dev/null 2>&1
-            echo $?
-        )"
-        if [[ "${vsconsoleAppend}" -ne 0 ]]; then
-            echo -e 'FONT="eurlatgr"' | sudo tee -a /etc/vconsole.conf
-        fi
-        install_pkgs "mkinitcpio-firmware"
-    fi
+    [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
 
     pamacvar='aur'
     if command_exists flatpak; then
