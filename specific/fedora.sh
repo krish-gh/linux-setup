@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# shellcheck disable=SC2034
+FLATPAK_INSTALL_CMD="flatpak install --user --assumeyes flathub"
+
 setup_fedora() {
     #if [[ $SYSTEM_TO_SETUP == vmware ]]; then
     #    echo -e "Making sound work for vmware"

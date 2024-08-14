@@ -46,6 +46,8 @@ UPDATE_CMD=""    #override from DISTRO_TYPE specific script
 INSTALL_CMD=""   #override from DISTRO_TYPE specific script
 UNINSTALL_CMD="" #override from DISTRO_TYPE specific script
 
+FLATPAK_INSTALL_CMD="flatpak install --assumeyes flathub" #override from DISTRO_TYPE specific script
+
 REQUIREMENTS=""                 #override from DISTRO_TYPE specific script
 SYSTEM_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
 INTEL_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
