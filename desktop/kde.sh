@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # shellcheck disable=SC2034
-GUI_TEXT_EDITOR=org.kde.kate.desktop
+GUI_TEXT_EDITOR=org.kde.kwrite.desktop
 
 setup_kde() {
     echo -e "Configuring kde stuffs..."
