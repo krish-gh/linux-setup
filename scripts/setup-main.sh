@@ -351,7 +351,7 @@ setup_common_ui() {
 
     mkdir -p ~/.config/gtk-{3,4}.0
     if [[ ! -f ~/.config/gtk-3.0/settings.ini ]]; then
-        echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "gtk-application-prefer-dark-theme=true" >>~/.config/gtk-3.0/settings.ini
+        echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "#gtk-application-prefer-dark-theme=true" >>~/.config/gtk-3.0/settings.ini
     fi
     if [[ ! -f ~/.config/gtk-4.0/settings.ini ]]; then
         cp -f ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/
