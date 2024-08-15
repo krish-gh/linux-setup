@@ -14,6 +14,11 @@ setup_cinnamon() {
     dconf load / <"$TEMP_DIR"/cinnamon.dconf
     rm -f "$TEMP_DIR"/cinnamon.dconf
 
+    # pinned apps
+    gwlconfigfile=$(ls ~/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json)
+    gwlconfig="$(jq '(."pinned-apps".value) |= [ "nemo.desktop", "xed.desktop", "org.gnome.Terminal.desktop", "firefox.desktop" ]' "$gwlconfigfile")" &&
+        echo -E "${gwlconfig}" >"$gwlconfigfile"
+
     [[ -f ~/.local/share/backgrounds/wallpaper ]] && gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"
 }
 
