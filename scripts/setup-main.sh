@@ -421,10 +421,10 @@ debloat_pkgs
 update_packages
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
-[[ $(type -t setup_"$PKG_MGR") == function ]] && setup_"$PKG_MGR"
-if [[ $(type -t setup_"$DIST_ID") == function ]]; then
+[[ $(type -t setup_"$DISTRO_TYPE") == function ]] && setup_"$DISTRO_TYPE"
+if [[ $(type -t setup_specific_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
-    setup_"$DIST_ID"
+    setup_specific_"$DIST_ID"
 fi
 setup_system
 setup_font

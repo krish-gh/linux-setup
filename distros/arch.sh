@@ -25,7 +25,7 @@ KDE_PACKAGES_TO_INSTALL="plasma-meta kwayland-integration gwenview kcalc kfind m
 CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
-setup_pacman() {
+setup_arch() {
     if [[ -f /etc/vconsole.conf ]]; then
         vsconsoleAppend="$(
             grep "FONT=" /etc/vconsole.conf >/dev/null 2>&1

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-setup_linuxmint() {
+setup_specific_linuxmint() {
     sudo sed -i "s/http:\/\/packages.linuxmint.com/https:\/\/fastly.linuxmint.io/g" /etc/apt/sources.list.d/official-package-repositories.list
     refresh_package_sources
     # just ensuring this meta package was not uninstalled, it will wait for confirmation if it was

@@ -25,7 +25,7 @@ KDE_PACKAGES_TO_INSTALL="plasma-workspace{,-x11} kwayland-integration gwenview k
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} nemo-emblems nemo-fileroller nemo-preview nemo-python mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
-setup_dnf() {
+setup_fedora() {
     dnfConfigAppend="$(
         grep "~custom-setup~" /etc/dnf/dnf.conf >/dev/null 2>&1
         echo $?

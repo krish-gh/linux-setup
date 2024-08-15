@@ -1,6 +1,6 @@
 #!/bin/bash
 
-setup_ubuntu() {
+setup_specific_ubuntu() {
     # echo -e "Replacing snap version of firefox with native one..."
     # sudo install -d -m 0755 /etc/apt/keyrings
     # wget -q https://packages.mozilla.org/apt/repo-signing-key.gpg -O- | sudo tee /etc/apt/keyrings/packages.mozilla.org.asc >/dev/null

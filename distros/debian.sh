@@ -25,7 +25,7 @@ KDE_PACKAGES_TO_INSTALL="kde-plasma-desktop kwayland-integration gwenview kcalc 
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
-setup_apt() {
+setup_debian() {
     echo -e "Setting up apt..."
     install_pkgs "software-properties-common python3-launchpadlib nala gpg apt-transport-https"
 
