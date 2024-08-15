@@ -1,3 +1,6 @@
+[org/cinnamon]
+favorite-apps=['cinnamon-settings.desktop', 'mintinstall.desktop', 'nemo.desktop', 'xed.desktop', 'org.gnome.Terminal.desktop', 'firefox.desktop']
+
 [org/cinnamon/desktop/interface]
 #gtk-theme='Mint-Y-Dark-Blue'
 #icon-theme='Mint-Y-Blue'
@@ -70,6 +73,7 @@ color-scheme='prefer-dark'
 
 [org/x/editor/preferences/editor]
 auto-close=true
+bracket-matching=true
 display-line-numbers=true
 editor-font='JetBrainsMono Nerd Font 12'
 prefer-dark-theme=true
