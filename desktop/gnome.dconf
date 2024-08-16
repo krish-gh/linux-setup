@@ -100,10 +100,10 @@ use-buildin-icons=true
 
 [org/gnome/shell/extensions/debian-updates-indicator]
 always-visible=false
-check-cmd-custom='sudo apt update'
+check-cmd-custom='sudo apt-get update'
 output-on-terminal=true
 show-count=true
-update-cmd='sudo apt upgrade -y'
+update-cmd='sudo apt-get upgrade -y'
 update-cmd-options=4
 use-custom-cmd=true
 
