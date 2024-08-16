@@ -30,6 +30,7 @@ setup_gnome() {
     [[ $DIST_ID != ubuntu ]] && exts[6]=appindicatorsupport@rgcjonas.gmail.com
     [[ $DIST_ID != ubuntu ]] && exts[7]=dash-to-dock@micxgx.gmail.com
     [[ $DISTRO_TYPE == arch ]] && exts[arch]=arch-update@RaphaelRochet
+    [[ $DISTRO_TYPE == debian ]] && exts[debian]=debian-updates-indicator@glerro.pm.me
     [[ $DISTRO_TYPE == fedora ]] && exts[fedora]=update-extension@purejava.org
 
     extdir=~/.local/share/gnome-shell/extensions

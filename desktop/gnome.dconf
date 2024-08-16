@@ -98,6 +98,13 @@ favorite-apps=['org.gnome.Nautilus.desktop', 'org.gnome.TextEditor.desktop', 'or
 always-visible=false
 use-buildin-icons=true
 
+[org/gnome/shell/extensions/debian-updates-indicator]
+always-visible=false
+check-cmd-custom='sudo apt update'
+output-on-terminal=true
+update-cmd='sudo apt upgrade -y'
+update-cmd-options='custom'
+
 [org/gnome/shell/extensions/fedora-update]
 always-visible=false
 use-buildin-icons=true
