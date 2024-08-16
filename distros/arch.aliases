@@ -5,7 +5,7 @@
 alias sudo='sudo -E -H '
 alias e='systemctl --failed --no-pager; journalctl -p 3 -b'
 alias cls='clear'
-alias u='sudo pacman -Syu; command -v flatpak &> /dev/null && flatpak update; command -v pipx &> /dev/null && pipx upgrade-all'
+alias u='sudo pacman -Syu; command -v flatpak &> /dev/null && flatpak update; command -v snap &> /dev/null && sudo snap refresh; command -v pipx &> /dev/null && pipx upgrade-all'
 alias uu='yay -Syu'
 alias i='sudo pacman -S --needed'
 alias ii='yay -S --needed'
