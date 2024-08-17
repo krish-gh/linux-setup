@@ -7,7 +7,7 @@ INSTALL_CMD="sudo dnf install -y"
 UNINSTALL_CMD="sudo dnf autoremove -y"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq"
-SYSTEM_PACKAGES_TO_INSTALL="fwupd-efi ibus nss-mdns mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware} pipewire-plugin-libcamera fprintd fprintd-pam"
+SYSTEM_PACKAGES_TO_INSTALL="fwupd-efi ibus nss-mdns mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware} pipewire-plugin-libcamera fprintd fprintd-pam power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="xorg-x11-drv-vmware xorg-x11-drv-qxl open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-additions"
