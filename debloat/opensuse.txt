@@ -14,16 +14,11 @@ gnome-remote-desktop
 gnome-user-docs
 gnome-weather
 kcharselect
-kdegames*
 kmag
-kmahjongg
-kmines
 kmousetool
 kompare
 konversation
 kpartx
-kreversi
-ksudoku
 kuiviewer
 patterns-desktop-imaging
 patterns-desktop-multimedia
@@ -37,6 +32,7 @@ simple-scan
 skanlite
 system-config-printer
 transmission*
+vinagre
 wacomtablet-kcm6
 xscreensaver
 xterm
