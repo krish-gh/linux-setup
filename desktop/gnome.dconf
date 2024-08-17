@@ -14,7 +14,7 @@ style-scheme='catppuccin-mocha'
 use-system-font=false
 
 [org/gnome/desktop/app-folders]
-folder-children=['eos', 'stuffs', 'ubuntu', 'Utilities', 'zzz']
+folder-children=['eos', 'stuffs', 'ubuntu', 'Utilities', 'YaST', 'Pardus', 'zzz']
 
 [org/gnome/desktop/app-folders/folders/eos]
 apps=['eos-apps-info.desktop', 'eos-log-tool.desktop', 'eos-quickstart.desktop', 'eos-update.desktop', 'welcome.desktop']
