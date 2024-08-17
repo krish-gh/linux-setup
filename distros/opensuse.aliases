@@ -1,0 +1,30 @@
+#!/bin/sh
+# shellcheck disable=SC2139
+# shellcheck disable=SC3009
+# shellcheck disable=SC3020
+alias sudo='sudo -E -H '
+alias e='systemctl --failed --no-pager; journalctl -p 3 -b'
+alias cls='clear'
+alias u='sudo zypper update; command -v flatpak &> /dev/null && flatpak update; command -v snap &> /dev/null && sudo snap refresh; command -v pipx &> /dev/null && pipx upgrade-all'
+#alias uu='sudo zypper update'
+alias i='sudo zypper install'
+#alias ii='sudo zypper install'
+alias s='zypper search'
+#alias ss='zypper search'
+alias si='zypper search --installed-only'
+alias r='sudo zypper remove --clean-deps'
+#alias rr='sudo zypper remove --clean-deps'
+alias b='zypper search --installed-only > pkglist.txt'
+alias c='zypper pa --orphaned && sudo zypper cc -a'
+#alias cc='zypper pa --orphaned && sudo zypper cc -a'
+alias x='exit'
+command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
+if command -v fastfetch &> /dev/null; then
+    alias neofetch='fastfetch'
+else
+    alias fastfetch='neofetch'
+fi
+alias nf='neofetch'
+alias ff='fastfetch'
+#alias vim='nvim'
+#alias vimdiff='nvim -d'
