@@ -12,7 +12,6 @@ kpartx
 kreversi
 ksudoku
 kuiviewer
-office->patterns-office-office
 patterns-desktop-multimedia
 patterns-games-games
 patterns-kde-kde_pim
