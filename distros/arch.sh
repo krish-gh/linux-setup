@@ -3,7 +3,7 @@
 # shellcheck disable=SC2034
 REFRESH_CMD="sudo pacman -Sy"
 UPDATE_CMD="sudo pacman -Syu --noconfirm"
-INSTALL_CMD="sudo pacman -S --noconfirm --needed"
+INSTALL_CMD="sudo pacman -S --needed --noconfirm"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 
 REQUIREMENTS="curl wget unzip xorg-xrdb dconf jq"

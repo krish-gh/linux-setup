@@ -2,7 +2,7 @@
 
 # shellcheck disable=SC2034
 REFRESH_CMD="sudo dnf check-update --refresh"
-UPDATE_CMD="sudo dnf update -y --refresh"
+UPDATE_CMD="sudo dnf update --refresh -y"
 INSTALL_CMD="sudo dnf install -y"
 UNINSTALL_CMD="sudo dnf autoremove -y"
 
