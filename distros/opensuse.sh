@@ -27,6 +27,7 @@ CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer metatheme-mint-common mint-y-i
 PACKAGES_TO_REMOVE="icewm* totem"
 
 setup_opensuse() {
+    sudo zypper al totem
     echo -e "Setting up community repo (packman)..."
     # shellcheck disable=SC2154
     if [[ $releasever == '' ]]; then
@@ -40,7 +41,6 @@ setup_opensuse() {
     install_pkgs "opi"
     opi codecs -n
     opi vscode -n
-    sudo zypper al totem
     refresh_package_sources
 }
 
