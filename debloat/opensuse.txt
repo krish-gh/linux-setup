@@ -29,6 +29,7 @@ patterns-kde-kde_games
 patterns-kde-kde_pim
 patterns-office-office
 polari
+postfix
 simple-scan
 skanlite
 system-config-printer
