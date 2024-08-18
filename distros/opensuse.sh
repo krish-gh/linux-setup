@@ -39,7 +39,7 @@ setup_opensuse() {
         install_pkgs openSUSE-repos-Leap
         sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/' packman
     fi
-    sudo zypper --gpg-auto-import-keys refresh
+    refresh_package_sources
     sudo zypper dup --from packman --allow-vendor-change -y
 
     echo -e "Installing some stuffs..."

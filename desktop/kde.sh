@@ -31,6 +31,7 @@ setup_kde() {
     $KWRITECONFIG_CMD --file ~/.config/plasmashellrc --group PlasmaViews --group "Panel 2" --group Defaults --key thickness 30
     $KWRITECONFIG_CMD --file ~/.config/plasma-org.kde.plasma.desktop-appletsrc --group Containments --group 2 --group Applets --group 5 --group Configuration --group General \
         --key launchers "preferred://filemanager,applications:org.kde.kwrite.desktop,applications:org.kde.konsole.desktop,preferred://browser"
+    $KWRITECONFIG_CMD --file ~/.config/kactivitymanagerd-pluginsrc --group Plugin-org.kde.ActivityManager.Resources.Scoring --key what-to-remember 2
     $KWRITECONFIG_CMD --file ~/.config/krunnerrc --group Plugins --key baloosearchEnabled false
     $KWRITECONFIG_CMD --file ~/.config/baloofilerc --group "Basic Settings" --key Indexing-Enabled false
     rm -f ~/.local/share/baloo/index
