@@ -37,7 +37,7 @@ setup_opensuse() {
     else
         sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/' packman
     fi
-    sudo zypper dup --from packman --allow-vendor-change
+    sudo zypper dup --from packman --allow-vendor-change -y
 
     echo -e "Installing some stuffs..."
     install_pkgs "opi"
