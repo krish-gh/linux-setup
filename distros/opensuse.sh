@@ -30,11 +30,13 @@ PACKAGES_TO_REMOVE="icewm*"
 
 setup_opensuse() {
     #sudo zypper al totem
-    echo -e "Setting up community repo (packman)..."
+    echo -e "Setting up repo and packman..."
     # shellcheck disable=SC2154
     if [[ $releasever == '' ]]; then
+        install_pkgs openSUSE-repos-Tumbleweed
         sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
     else
+        install_pkgs openSUSE-repos-Leap
         sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/' packman
     fi
     sudo zypper --gpg-auto-import-keys refresh
