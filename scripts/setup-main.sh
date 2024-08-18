@@ -427,7 +427,7 @@ setup_apps() {
 }
 
 debloat_pkgs
-update_packages
+refresh_package_sources
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
 [[ $(type -t setup_"$DISTRO_TYPE") == function ]] && setup_"$DISTRO_TYPE"
@@ -435,6 +435,7 @@ if [[ $(type -t setup_specific_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
     setup_specific_"$DIST_ID"
 fi
+update_packages
 setup_system
 setup_font
 setup_apps
