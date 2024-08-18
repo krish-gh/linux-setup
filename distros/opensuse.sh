@@ -47,6 +47,10 @@ setup_opensuse() {
     opi codecs -n
     opi vscode -n
     refresh_package_sources
+
+    echo -e "Installing zypperoni for faster zypper download..."
+    curl https://raw.githubusercontent.com/pavinjosdev/zypperoni/main/zypperoni | sudo tee /usr/bin/zypperoni >/dev/null
+    sudo chmod 755 /usr/bin/zypperoni
 }
 
 echo -e "Done opensuse.sh..."
