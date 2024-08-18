@@ -12,7 +12,7 @@ INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="xf86-video-vmware xf86-video-qxl open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-tools"
 HYPERV_PACKAGES_TO_INSTALL=""
-FONTS_TO_INSTALL="{liberation,google-noto}-fonts-common google-noto-{emoji,color-emoji}-fonts jetbrains-mono-fonts"
+FONTS_TO_INSTALL="{liberation,dejavu,ubuntu}-fonts google-noto-{coloremoji,sans,serif,sans-mono}-fonts google-roboto-fonts jetbrains-mono-fonts"
 TERM_PACKAGES_TO_INSTALL="bash-completion nano starship fastfetch"
 APP_PACKAGES_TO_INSTALL="firefox{,-langpacks} mozilla-openh264 gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="git make automake gcc gcc-c++ python3-pip shfmt diffutils meld gh code"
@@ -26,8 +26,18 @@ CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} nemo-emblems nemo-f
 PACKAGES_TO_REMOVE=""
 
 setup_fedora() {
-    
+    echo -e "Setting up community repo (packman)..."
+    # shellcheck disable=SC2154
+    if [[ $releasever == '' ]]; then
+        sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
+    else
+        sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/' packman
+    fi
+    sudo zypper dup --from packman --allow-vendor-change
 
+    echo -e "Installing some stuffs..."
+    install_pkgs "opi"
+    opi codecs -n
     refresh_package_sources
 }
 
