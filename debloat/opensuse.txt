@@ -2,6 +2,7 @@
 *libreoffice*
 baobab
 cheese
+cups
 dconf-editor
 drkonqi6
 evolution
