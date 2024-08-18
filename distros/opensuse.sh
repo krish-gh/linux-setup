@@ -15,7 +15,7 @@ VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-tools"
 HYPERV_PACKAGES_TO_INSTALL=""
 FONTS_TO_INSTALL="{liberation,dejavu,ubuntu}-fonts google-noto-{coloremoji,sans,serif,sans-mono}-fonts google-roboto-fonts jetbrains-mono-fonts"
 TERM_PACKAGES_TO_INSTALL="bash-completion nano starship fastfetch"
-APP_PACKAGES_TO_INSTALL="MozillaFirefox{,-translations-common} mozilla-openh264 gnome-keyring seahorse"
+APP_PACKAGES_TO_INSTALL="MozillaFirefox{,-translations-common} mozilla-openh264 gnome-keyring seahorse vlc"
 DEV_PACKAGES_TO_INSTALL="git patterns-devel-base-devel_basis python3-pip shfmt diffutils meld gh"
 GTK_PACKAGES_TO_INSTALL="xdg-desktop-portal-gtk gnome-themes-extra"
 QT_PACKAGES_TO_INSTALL="qt6-wayland"
@@ -24,7 +24,7 @@ GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-d
 GNOME_EXT_MGR_PKG="extension-manager"
 KDE_PACKAGES_TO_INSTALL="patterns-kde-kde_plasma gwenview kcalc kfind kwrite okular spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer metatheme-mint-common mint-y-icon-theme $QT_PATCHES_TO_INSTALL"
-PACKAGES_TO_REMOVE="icewm*"
+PACKAGES_TO_REMOVE="icewm* totem"
 
 setup_opensuse() {
     echo -e "Setting up community repo (packman)..."
@@ -40,6 +40,7 @@ setup_opensuse() {
     install_pkgs "opi"
     opi codecs -n
     opi vscode -n
+    sudo zypper al totem
     refresh_package_sources
 }
 
