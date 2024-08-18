@@ -12,6 +12,7 @@ PKG_MGR=''
 command_exists pacman && PKG_MGR=pacman && DISTRO_TYPE=arch
 command_exists apt && PKG_MGR=apt && DISTRO_TYPE=debian
 command_exists dnf && PKG_MGR=dnf && DISTRO_TYPE=fedora
+command_exists zypper && PKG_MGR=zypper && DISTRO_TYPE=opensuse
 
 if [[ $DISTRO_TYPE == '' ]]; then
     >&2 echo "You are not running supported Linux distrbution..."

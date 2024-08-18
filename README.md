@@ -14,6 +14,7 @@
 |                 | LMDE                    | Cinnamon             |
 |                 | KDE neon                | KDE                  |
 | Fedora          | Fedora (Non-Silverblue) | Gnome, KDE, Cinnamon |
+| OpenSUSE        | Tumbleweed, Leap        | Gnome, KDE           |
 
 ## How
 
