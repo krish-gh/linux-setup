@@ -21,7 +21,7 @@ QT_PACKAGES_TO_INSTALL="qtwayland5 qt6-wayland"
 QT_PATCHES_TO_INSTALL="qt{5,6}-style-kvantum{,-themes} qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-data-server python3-nautilus pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG="gnome-shell-extension-manager"
-KDE_PACKAGES_TO_INSTALL="kde-plasma-desktop gwenview kcalc maliit-keyboard okular kde-spectacle"
+KDE_PACKAGES_TO_INSTALL="kde-plasma-desktop gwenview kcalc kfind kwrite okular kde-spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 

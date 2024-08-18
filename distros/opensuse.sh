@@ -19,9 +19,9 @@ DEV_PACKAGES_TO_INSTALL="git patterns-devel-base-devel_basis python3-pip shfmt d
 GTK_PACKAGES_TO_INSTALL="xdg-desktop-portal-gtk gnome-themes-extra"
 QT_PACKAGES_TO_INSTALL="qt6-wayland"
 QT_PATCHES_TO_INSTALL="kvantum-{manager,qt5,qt6,themes} qt{5,6}ct"
-GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-data-server nautilus-python pipx $QT_PATCHES_TO_INSTALL"
+GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-data-server python3-nautilus python3-pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG="extension-manager"
-KDE_PACKAGES_TO_INSTALL="plasma-workspace{,-x11} gwenview kate kcalc maliit-keyboard okular spectacle"
+KDE_PACKAGES_TO_INSTALL="gwenview kcalc kfind kwrite okular spectacle"
 CINNAMON_PACKAGES_TO_INSTALL=""
 PACKAGES_TO_REMOVE=""
 
