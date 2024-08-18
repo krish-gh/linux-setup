@@ -5,6 +5,7 @@ REFRESH_CMD="sudo apt-get update"
 UPDATE_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"
 INSTALL_CMD="sudo apt-get install -y"
 UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
+UNINSTALL_ONLY_CMD="sudo apt-get purge --ignore-missing -y"
 
 REQUIREMENTS="curl wget unzip dconf-cli jq"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd ibus libnss-mdns mesa-vulkan-drivers firmware-sof-signed alsa-firmware-loaders pipewire-libcamera fprintd libpam-fprintd power-profiles-daemon"

@@ -5,6 +5,7 @@ REFRESH_CMD="sudo dnf check-update --refresh"
 UPDATE_CMD="sudo dnf update --refresh -y"
 INSTALL_CMD="sudo dnf install -y"
 UNINSTALL_CMD="sudo dnf autoremove -y"
+UNINSTALL_ONLY_CMD="sudo dnf remove -y"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd-efi ibus nss-mdns mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware} pipewire-plugin-libcamera fprintd fprintd-pam power-profiles-daemon"

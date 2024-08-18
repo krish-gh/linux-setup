@@ -34,5 +34,6 @@ system-config-printer
 transmission*
 vinagre
 wacomtablet-kcm6
+xclock
 xscreensaver
 xterm

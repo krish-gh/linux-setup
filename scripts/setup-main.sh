@@ -41,10 +41,11 @@ echo -e "#################################################################"
 cat /etc/os-release
 echo -e "#################################################################"
 
-REFRESH_CMD=""   #override from DISTRO_TYPE specific script
-UPDATE_CMD=""    #override from DISTRO_TYPE specific script
-INSTALL_CMD=""   #override from DISTRO_TYPE specific script
-UNINSTALL_CMD="" #override from DISTRO_TYPE specific script
+REFRESH_CMD=""        #override from DISTRO_TYPE specific script
+UPDATE_CMD=""         #override from DISTRO_TYPE specific script
+INSTALL_CMD=""        #override from DISTRO_TYPE specific script
+UNINSTALL_CMD=""      #override from DISTRO_TYPE specific script
+UNINSTALL_ONLY_CMD="" #override from DISTRO_TYPE specific script
 
 FLATPAK_INSTALL_CMD="flatpak install --assumeyes flathub" #override from DISTRO_TYPE specific script
 
@@ -109,6 +110,13 @@ uninstall_pkgs() {
     for i in "${pkgs[@]}"; do eval "$UNINSTALL_CMD $i"; done
 }
 
+uninstall_only_pkgs() {
+    #doing in loop to avoid abort in case something is wrong
+    # shellcheck disable=SC2207
+    pkgs=($(eval echo "$1"))
+    for i in "${pkgs[@]}"; do eval "$UNINSTALL_ONLY_CMD $i"; done
+}
+
 debloat_pkgs() {
     echo -e "Debloating..."
     copy_file $TEMP_DIR/$DISTRO_TYPE.txt ${BASE_REPO_LOCATION}debloat/$DISTRO_TYPE.txt
@@ -119,7 +127,7 @@ debloat_pkgs() {
 
     if [[ $PACKAGES_TO_REMOVE != "" ]]; then
         echo -e "Removing additional packages..."
-        uninstall_pkgs "$PACKAGES_TO_REMOVE"
+        uninstall_only_pkgs "$PACKAGES_TO_REMOVE"
     fi
 }
 

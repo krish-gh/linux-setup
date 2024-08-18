@@ -5,6 +5,7 @@ REFRESH_CMD="sudo pacman -Sy"
 UPDATE_CMD="sudo pacman -Syu --noconfirm"
 INSTALL_CMD="sudo pacman -S --needed --noconfirm"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
+UNINSTALL_ONLY_CMD="sudo pacman -Rns --noconfirm"
 
 REQUIREMENTS="curl wget unzip xorg-xrdb dconf jq"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd ibus nss-mdns vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-firmware pipewire-libcamera fprintd power-profiles-daemon"
@@ -36,7 +37,7 @@ setup_arch() {
             echo -e 'FONT="eurlatgr"' | sudo tee -a /etc/vconsole.conf
         fi
     fi
-    
+
     echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
     sudo sed -i "/^#Color/c\Color\nILoveCandy
         /^#VerbosePkgLists/c\VerbosePkgLists
