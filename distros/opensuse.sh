@@ -14,8 +14,8 @@ VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-tools"
 HYPERV_PACKAGES_TO_INSTALL=""
 FONTS_TO_INSTALL="{liberation,dejavu,ubuntu}-fonts google-noto-{coloremoji,sans,serif,sans-mono}-fonts google-roboto-fonts jetbrains-mono-fonts"
 TERM_PACKAGES_TO_INSTALL="bash-completion nano starship fastfetch"
-APP_PACKAGES_TO_INSTALL="firefox{,-langpacks} mozilla-openh264 gnome-keyring seahorse vlc"
-DEV_PACKAGES_TO_INSTALL="git make automake gcc gcc-c++ python3-pip shfmt diffutils meld gh code"
+APP_PACKAGES_TO_INSTALL="MozillaFirefox{,-translations-common} mozilla-openh264 gnome-keyring seahorse"
+DEV_PACKAGES_TO_INSTALL="git base-devel python3-pip shfmt diffutils meld gh"
 GTK_PACKAGES_TO_INSTALL="xdg-desktop-portal-gtk gnome-themes-extra"
 QT_PACKAGES_TO_INSTALL="qt{5,6}-qtwayland"
 QT_PATCHES_TO_INSTALL="kvantum{,-qt5} qt{5,6}ct"
@@ -38,6 +38,7 @@ setup_fedora() {
     echo -e "Installing some stuffs..."
     install_pkgs "opi"
     opi codecs -n
+    opi vscode -n
     refresh_package_sources
 }
 
