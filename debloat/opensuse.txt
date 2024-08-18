@@ -8,6 +8,7 @@ evolution
 gnome-characters
 gnome-clocks
 gnome-contacts
+gnome-disk-utility
 gnome-maps
 gnome-music
 gnome-photos
@@ -25,7 +26,9 @@ patterns-desktop-imaging
 patterns-desktop-multimedia
 patterns-games-games
 patterns-gnome-gnome_games
+patterns-gnome-gnome_multimedia
 patterns-kde-kde_games
+patterns-kde-kde_multimedia
 patterns-kde-kde_pim
 patterns-office-office
 polari
