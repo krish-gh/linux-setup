@@ -39,3 +39,4 @@ wacomtablet-kcm6
 xclock
 xscreensaver
 xterm
+yelp

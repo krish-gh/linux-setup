@@ -25,7 +25,7 @@ apps=['software-properties-drivers.desktop', 'snap-store_snap-store.desktop', 'f
 name='ubuntu'
 
 [org/gnome/desktop/app-folders/folders/stuffs]
-apps=['org.manjaro.pamac.manager.desktop', 'org.mageia.dnfdragora.desktop', 'org.folkswithhats.fedy.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.eog.desktop', 'im-config.desktop', 'gnome-language-selector.desktop', 'org.gnome.Meld.desktop', 'software-properties-gtk.desktop', 'synaptic.desktop', 'gnome-session-properties.desktop', 'gnome-system-monitor.desktop', 'org.gnome.SystemMonitor.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop']
+apps=['org.manjaro.pamac.manager.desktop', 'org.mageia.dnfdragora.desktop', 'org.folkswithhats.fedy.desktop', 'com.mattjakeman.ExtensionManager.desktop', 'org.gnome.Extensions.desktop', 'org.gnome.Calculator.desktop', 'org.gnome.eog.desktop', 'org.gnome.Logs.desktop', 'im-config.desktop', 'gnome-language-selector.desktop', 'org.gnome.Meld.desktop', 'software-properties-gtk.desktop', 'synaptic.desktop', 'gpk-prefs.desktop', 'org.gnome.PackageUpdater.desktop', 'gnome-session-properties.desktop', 'gnome-system-monitor.desktop', 'org.gnome.SystemMonitor.desktop', 'gnome-nettool.desktop', 'org.gnome.PowerStats.desktop', 'org.pulseaudio.pavucontrol.desktop', 'org.gnome.Totem.desktop']
 name='Stuffs'
 
 [org/gnome/desktop/app-folders/folders/zzz]
