@@ -26,7 +26,7 @@ KDE_PACKAGES_TO_INSTALL="patterns-kde-kde_plasma gwenview kcalc kfind kwrite oku
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer metatheme-mint-common mint-y-icon-theme $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE="icewm*"
 
-setup_fedora() {
+setup_opensuse() {
     echo -e "Setting up community repo (packman)..."
     # shellcheck disable=SC2154
     if [[ $releasever == '' ]]; then
