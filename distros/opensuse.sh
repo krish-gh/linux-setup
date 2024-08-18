@@ -7,6 +7,8 @@ INSTALL_CMD="sudo zypper install -y"
 UNINSTALL_CMD="sudo zypper remove --clean-deps -y"
 UNINSTALL_ONLY_CMD="sudo zypper remove -y"
 
+FLATPAK_INSTALL_CMD="sudo flatpak install --assumeyes flathub" #override from DISTRO_TYPE specific script
+
 REQUIREMENTS="curl wget unzip xrdb dconf jq"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd ibus nss-mdns Mesa-vulkan-{device-select,overlay} alsa-firmware sof-firmware fprintd fprintd-pam power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
