@@ -20,9 +20,9 @@ GTK_PACKAGES_TO_INSTALL="xdg-desktop-portal-gtk gnome-themes-extra"
 QT_PACKAGES_TO_INSTALL="qt6-wayland"
 QT_PATCHES_TO_INSTALL="kvantum-{manager,qt5,qt6,themes} qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-data-server nautilus-python pipx $QT_PATCHES_TO_INSTALL"
-GNOME_EXT_MGR_PKG=""
+GNOME_EXT_MGR_PKG="extension-manager"
 KDE_PACKAGES_TO_INSTALL="plasma-workspace{,-x11} gwenview kate kcalc maliit-keyboard okular spectacle"
-CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} nemo-emblems nemo-fileroller nemo-preview nemo-python mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
+CINNAMON_PACKAGES_TO_INSTALL=""
 PACKAGES_TO_REMOVE=""
 
 setup_fedora() {
