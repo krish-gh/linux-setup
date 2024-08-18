@@ -23,7 +23,7 @@ QT_PATCHES_TO_INSTALL="kvantum-{manager,qt5,qt6,themes} qt{5,6}ct"
 GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-data-server python3-nautilus python3-pipx $QT_PATCHES_TO_INSTALL"
 GNOME_EXT_MGR_PKG="extension-manager"
 KDE_PACKAGES_TO_INSTALL="patterns-kde-kde_plasma gwenview kcalc kfind kwrite okular spectacle"
-CINNAMON_PACKAGES_TO_INSTALL=""
+CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer metatheme-mint-common mint-y-icon-theme $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE="icewm*"
 
 setup_fedora() {
