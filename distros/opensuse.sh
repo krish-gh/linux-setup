@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # shellcheck disable=SC2034
-REFRESH_CMD="sudo zypper refresh"
+REFRESH_CMD="sudo zypper --gpg-auto-import-keys refresh"
 UPDATE_CMD="sudo zypper dup --allow-vendor-change -y"
 INSTALL_CMD="sudo zypper install -y"
 UNINSTALL_CMD="sudo zypper remove --clean-deps -y"
@@ -37,6 +37,7 @@ setup_opensuse() {
     else
         sudo zypper ar -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Leap_$releasever/' packman
     fi
+    sudo zypper --gpg-auto-import-keys refresh
     sudo zypper dup --from packman --allow-vendor-change -y
 
     echo -e "Installing some stuffs..."
