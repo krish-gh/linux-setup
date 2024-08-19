@@ -25,6 +25,7 @@ event-sounds=false
 volume-sound-enabled=false
 
 [org/cinnamon/desktop/wm/preferences]
+audible-bell=false
 num-workspaces=1
 
 [org/cinnamon/settings-daemon/plugins/power]

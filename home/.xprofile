@@ -11,3 +11,5 @@ export EDITOR=nano
 export SUDO_EDITOR=nano
 export VISUAL=nano
 export DIFFPROG=meld
+
+xset -b
