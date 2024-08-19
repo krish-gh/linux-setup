@@ -28,6 +28,7 @@ hexchat
 kdeconnect
 libreoffice-{fresh,still}
 mpv
+parole
 redshift
 rhythmbox
 shotwell
@@ -36,4 +37,5 @@ snapshot
 thunderbird
 totem
 vim
+xfburn
 yelp
