@@ -442,6 +442,14 @@ setup_font
 setup_apps
 [[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
 setup_common_ui
+if [[ $(type -t setup_"$DISTRO_TYPE"_"$DESKTOP") == function ]]; then
+    echo -e "Executing additional $DISTRO_TYPE $DESKTOP specific script..."
+    setup_"$DISTRO_TYPE"_"$DESKTOP"
+fi
+if [[ $(type -t setup_specific_"$DIST_ID"_"$DESKTOP") == function ]]; then
+    echo -e "Executing additional $DIST_ID $DESKTOP specific script..."
+    setup_specific_"$DIST_ID"_"$DESKTOP"
+fi
 setup_terminal
 update_packages
 
