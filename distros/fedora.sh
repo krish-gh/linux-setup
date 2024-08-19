@@ -24,6 +24,7 @@ GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-d
 GNOME_EXT_MGR_PKG=""
 KDE_PACKAGES_TO_INSTALL="plasma-workspace{,-x11} gwenview kate kcalc kfind kwrite okular spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} nemo-emblems nemo-fileroller nemo-preview nemo-python mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
+XFCE_PACKAGES_TO_INSTALL="$QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
 setup_fedora() {
