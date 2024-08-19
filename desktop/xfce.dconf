@@ -1,0 +1,23 @@
+[org/xfce/mousepad/preferences/file]
+add-last-end-of-line=true
+autosave-timer=uint32 0
+session-restore='never'
+
+[org/xfce/mousepad/preferences/view]
+color-scheme='catppuccin-mocha'
+match-braces=true
+show-line-numbers=true
+
+[org/xfce/mousepad/preferences/window]
+remember-position=true
+remember-size=true
+remember-state=true
+
+[org/xfce/mousepad/state/search]
+history-size=uint32 10
+
+[org/xfce/mousepad/state/window]
+fullscreen=false
+height=uint32 1000
+maximized=false
+width=uint32 1200
