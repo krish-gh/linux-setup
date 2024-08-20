@@ -5,8 +5,10 @@ session-restore='never'
 
 [org/xfce/mousepad/preferences/view]
 color-scheme='catppuccin-mocha'
+font-name='JetBrainsMono Nerd Font 12'
 match-braces=true
 show-line-numbers=true
+use-default-monospace-font=false
 
 [org/xfce/mousepad/preferences/window]
 remember-position=true
