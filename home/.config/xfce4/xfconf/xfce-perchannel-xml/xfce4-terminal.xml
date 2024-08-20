@@ -19,6 +19,6 @@
   <property name="color-use-theme" type="bool" value="false"/>
   <property name="tab-activity-color" type="string" value="#fab387"/>
   <property name="misc-show-unsafe-paste-dialog" type="bool" value="false"/>
-  <property name="misc-default-geometry" type="string" value="80x24"/>
+  <property name="misc-default-geometry" type="string" value="100x30"/>
   <property name="overlay-scrolling" type="bool" value="true"/>
 </channel>
