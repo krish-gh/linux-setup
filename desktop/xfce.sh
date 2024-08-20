@@ -14,6 +14,8 @@ setup_xfce() {
     xfconf-query -c xsettings -v --create -p /Xft/RGBA -t string -s rgb
     xfconf-query -c xsettings -v --create -p /Xfce/LastCustomDPI -t int -s 136
     xfconf-query -c xsettings -v --create -p /Xfce/SyncThemes -t bool -s true 
+    xfconf-query -c xfce4-session -v --create -p /general/SaveOnExit -t bool -s false 
+    xfconf-query -c xfce4-session -v --create -p /compat/LaunchGNOME -t bool -s true 
 
     # xfce4-terminal
     mkdir -p ~/.local/share/xfce4/terminal/colorschemes
