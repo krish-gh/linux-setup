@@ -9,6 +9,7 @@ font-name='JetBrainsMono Nerd Font 12'
 match-braces=true
 show-line-numbers=true
 use-default-monospace-font=false
+word-wrap=true
 
 [org/xfce/mousepad/preferences/window]
 remember-position=true
