@@ -19,6 +19,12 @@ send-software-usage-stats=false
 event-sounds=false
 input-feedback-sounds=false
 
+[org/gnome/meld]
+highlight-syntax=true
+prefer-dark-theme=true
+show-line-numbers=true
+style-scheme='catppuccin-mocha'
+
 [org/gnome/nm-applet]
 disable-connected-notifications=true
 
@@ -29,3 +35,25 @@ sort-directories-first=true
 [org/gtk/settings/file-chooser]
 show-hidden=true
 sort-directories-first=true
+
+[org/onboard]
+theme='/usr/share/onboard/themes/Droid.theme'
+
+[org/onboard/keyboard]
+input-event-source='GTK'
+
+[org/onboard/window]
+docking-edge='bottom'
+docking-enabled=true
+docking-shrink-workarea=false
+
+[org/onboard/window/landscape]
+dock-expand=false
+
+[org/onboard/window/portrait]
+dock-expand=false
+
+[yad/sourceview]
+brackets=true
+line-num=true
+theme='catppuccin-mocha'

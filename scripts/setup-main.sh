@@ -369,9 +369,9 @@ setup_common_ui() {
         gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
     fi
 
-    copy_file $TEMP_DIR/gtk.dconf ${BASE_REPO_LOCATION}desktop/gtk.dconf
-    dconf load / <$TEMP_DIR/gtk.dconf
-    rm -f $TEMP_DIR/gtk.dconf
+    copy_file $TEMP_DIR/common.dconf ${BASE_REPO_LOCATION}desktop/common.dconf
+    dconf load / <$TEMP_DIR/common.dconf
+    rm -f $TEMP_DIR/common.dconf
 
     mkdir -p ~/.config/gtk-{3,4}.0
     if [[ ! -f ~/.config/gtk-3.0/settings.ini ]]; then
@@ -407,30 +407,11 @@ setup_apps() {
     install_pkgs "$DEV_PACKAGES_TO_INSTALL"
     #python -m pip install --user --upgrade pip
 
-    # meld
-    gsettings set org.gnome.meld prefer-dark-theme true
-    gsettings set org.gnome.meld show-line-numbers true
-    gsettings set org.gnome.meld style-scheme catppuccin-mocha
-    gsettings set org.gnome.meld highlight-syntax true
-
     # vlc
     mkdir -p ~/.config/vlc
     copy_file ~/.config/vlc/vlcrc ${BASE_REPO_LOCATION}home/.config/vlc/vlcrc
 
-    # onboard
-    if command_exists onboard; then
-        gsettings set org.onboard theme '/usr/share/onboard/themes/Droid.theme'
-        gsettings set org.onboard.window docking-enabled true
-        gsettings set org.onboard.window docking-edge bottom
-        gsettings set org.onboard.window docking-shrink-workarea false
-        gsettings set org.onboard.window.landscape dock-expand false
-        gsettings set org.onboard.window.portrait dock-expand false
-    fi
-
     if command_exists yad; then
-        gsettings set yad.sourceview line-num true
-        gsettings set yad.sourceview brackets true
-        gsettings set yad.sourceview theme catppuccin-mocha
         gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
     fi
 
