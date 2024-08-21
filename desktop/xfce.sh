@@ -22,6 +22,7 @@ setup_xfce() {
     xfconf-query -c xfce4-screensaver -v -n -p /lock/enabled -t bool -s false 
     xfconf-query -c xfwm4 -v -n -p /general/workspace_count -t int -s 1
     xfconf-query -c xfce4-keyboard-shortcuts -v -n -p /commands/custom/Super_L -t string -s xfce4-popup-whiskermenu
+    xfconf-query -c xfce4-keyboard-shortcuts -v -n -p /commands/custom/Super_R -t string -s xfce4-popup-whiskermenu
 
     # panel
     xfconf-query -c xfce4-panel -v -n -p /panels/dark-mode -t bool -s true
