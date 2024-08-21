@@ -17,6 +17,9 @@ setup_xfce() {
     xfconf-query -c xfce4-session -v -n -p /general/SaveOnExit -t bool -s false 
     xfconf-query -c xfce4-session -v -n -p /compat/LaunchGNOME -t bool -s true 
 
+    # panel
+    xfconf-query -c xfce4-panel -v -n -p /panels/dark-mode -t bool -s true
+
     # xfce4-terminal
     mkdir -p ~/.local/share/xfce4/terminal/colorschemes
     copy_file ~/.local/share/xfce4/terminal/colorschemes/catppuccin-mocha.theme https://raw.githubusercontent.com/catppuccin/xfce4-terminal/main/themes/catppuccin-mocha.theme
@@ -32,6 +35,11 @@ setup_xfce() {
     copy_file "$TEMP_DIR"/xfce.dconf "${BASE_REPO_LOCATION}"desktop/xfce.dconf
     dconf load / <"$TEMP_DIR"/xfce.dconf
     rm -f "$TEMP_DIR"/xfce.dconf
+}
+
+setup_xfce_panel() {
+    echo -e "Configuring xfce panel from scratch..."
+    xfce4-panel --restart
 }
 
 echo -e "Done xfce.sh..."
