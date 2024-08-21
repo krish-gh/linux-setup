@@ -161,34 +161,48 @@ rm -f $TEMP_DIR/"$DESKTOP".sh
 setup_system() {
     install_pkgs "virt-what"
     SYSTEM_TO_SETUP=$(sudo virt-what)
-    echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 
-    case $SYSTEM_TO_SETUP in
+    if [[ $SYSTEM_TO_SETUP != '' ]]; then
+        echo -e "SYSTEM=$SYSTEM_TO_SETUP"
 
-    intel)
-        install_pkgs "$INTEL_PACKAGES_TO_INSTALL"
-        ;;
+        case $SYSTEM_TO_SETUP in
 
-    vmware)
-        install_pkgs "$VMWARE_PACKAGES_TO_INSTALL"
-        sudo systemctl enable --now vmtoolsd.service
-        #sudo systemctl disable --now vmware-vmblock-fuse.service
-        ;;
+        vmware)
+            install_pkgs "$VMWARE_PACKAGES_TO_INSTALL"
+            sudo systemctl enable --now vmtoolsd.service
+            #sudo systemctl disable --now vmware-vmblock-fuse.service
+            ;;
 
-    virtualbox)
-        install_pkgs "$VBOX_PACKAGES_TO_INSTALL"
-        sudo systemctl enable --now vboxservice.service
-        ;;
+        virtualbox)
+            install_pkgs "$VBOX_PACKAGES_TO_INSTALL"
+            sudo systemctl enable --now vboxservice.service
+            ;;
 
-    hyperv)
-        install_pkgs "$HYPERV_PACKAGES_TO_INSTALL"
-        sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
-        ;;
+        hyperv)
+            install_pkgs "$HYPERV_PACKAGES_TO_INSTALL"
+            sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
+            ;;
 
-    *)
-        echo "Ahh! Taking a note..."
-        ;;
-    esac
+        *)
+            echo "Ahh! Taking a note..."
+            ;;
+        esac
+    else
+        # TODO detect bare metal
+        SYSTEM_TO_SETUP=intel   
+        echo -e "SYSTEM=$SYSTEM_TO_SETUP"
+
+        case $SYSTEM_TO_SETUP in
+
+        intel)
+            install_pkgs "$INTEL_PACKAGES_TO_INSTALL"
+            ;;
+
+        *)
+            echo "Ahh! Taking a note..."
+            ;;
+        esac 
+    fi
 
     install_pkgs "$SYSTEM_PACKAGES_TO_INSTALL"
 
