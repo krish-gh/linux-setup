@@ -34,6 +34,9 @@ setup_xfce() {
     xfconf-query -c thunar -v -n -p /last-show-hidden -t bool -s true
     xfconf-query -c thunar -v -n -p /misc-thumbnail-mode -t string -s THUNAR_THUMBNAIL_MODE_NEVER
     xfconf-query -c thunar -v -n -p /misc-thumbnail-max-file-size -t uint64 -s 1
+    xfconf-query -c thunar -v -n -p /last-window-width -t int -s 1200
+    xfconf-query -c thunar -v -n -p /last-window-height -t int -s 1000
+    xfconf-query -c thunar -v -n -p /last-window-maximized -t bool -s false
     xfconf-query -c thunar-volman -v -n -p /automount-drives/enabled -t bool -s false
     xfconf-query -c thunar-volman -v -n -p /automount-media/enabled -t bool -s false
 
