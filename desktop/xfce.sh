@@ -57,4 +57,9 @@ setup_xfce_panel() {
     xfce4-panel &
 }
 
+set_wallpaper() {
+    # shellcheck disable=SC2046
+    xfconf-query -c xfce4-desktop -p $(xfconf-query -c xfce4-desktop -l | grep "workspace0/last-image") -s "$1"
+}
+
 echo -e "Done xfce.sh..."
