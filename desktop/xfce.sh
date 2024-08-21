@@ -49,13 +49,14 @@ setup_xfce() {
 setup_xfce_panel() {
     echo -e "Configuring xfce panel from scratch..."
     xfce4-panel --quit
+    pkill xfconfd
     rm -rf ~/.config/xfce4/panel/launcher-*
     mkdir -p ~/.config/xfce4/panel/launcher-{2,3,4}
     copy_file ~/.config/xfce4/panel/launcher-2/FileManager.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-2/FileManager.desktop
     copy_file ~/.config/xfce4/panel/launcher-3/TerminalEmulator.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-3/TerminalEmulator.desktop
     copy_file ~/.config/xfce4/panel/launcher-4/WebBrowser.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-4/WebBrowser.desktop
     copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "${BASE_REPO_LOCATION}"home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-    #xfce4-panel &
+    xfce4-panel &
 }
 
 set_wallpaper() {
