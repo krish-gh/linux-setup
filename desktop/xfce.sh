@@ -20,6 +20,7 @@ setup_xfce() {
     xfconf-query -c xfce4-screensaver -v -n -p /saver/mode -t int -s 0 
     xfconf-query -c xfce4-screensaver -v -n -p /saver/enabled -t bool -s false 
     xfconf-query -c xfce4-screensaver -v -n -p /lock/enabled -t bool -s false 
+    xfconf-query -c xfwm4 -v -n -p /general/workspace_count -t int -s 1
 
     # panel
     xfconf-query -c xfce4-panel -v -n -p /panels/dark-mode -t bool -s true
