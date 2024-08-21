@@ -16,6 +16,10 @@ setup_xfce() {
     xfconf-query -c xsettings -v -n -p /Xfce/SyncThemes -t bool -s true 
     xfconf-query -c xfce4-session -v -n -p /general/SaveOnExit -t bool -s false 
     xfconf-query -c xfce4-session -v -n -p /compat/LaunchGNOME -t bool -s true 
+    xfconf-query -c xfce4-power-manager -v -n -p /xfce4-power-manager/dpms-enabled -t bool -s false 
+    xfconf-query -c xfce4-screensaver -v -n -p /saver/mode -t int -s 0 
+    xfconf-query -c xfce4-screensaver -v -n -p /saver/enabled -t bool -s false 
+    xfconf-query -c xfce4-screensaver -v -n -p /lock/enabled -t bool -s false 
 
     # panel
     xfconf-query -c xfce4-panel -v -n -p /panels/dark-mode -t bool -s true
