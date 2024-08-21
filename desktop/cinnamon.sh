@@ -22,4 +22,12 @@ setup_cinnamon() {
     [[ -f ~/.local/share/backgrounds/wallpaper ]] && gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"
 }
 
+setup_cinnamon_theme() {
+    gsettings set org.gnome.desktop.interface gtk-theme Mint-Y-Dark-Blue
+    gsettings set org.gnome.desktop.interface icon-theme Mint-Y-Blue
+    gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark-Blue
+    gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y-Blue
+    gsettings set org.cinnamon.theme name Mint-Y-Dark-Blue
+}
+
 echo -e "Done cinnamon.sh..."
