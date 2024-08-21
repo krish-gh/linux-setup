@@ -8,6 +8,7 @@ setup_specific_arch_xfce() {
     xfconf-query -c xsettings -v -n -p /Net/ThemeName -t string -s Materia-dark
     xfconf-query -c xsettings -v -n -p /Net/IconThemeName -t string -s Papirus-Dark
     xfconf-query -c xfwm4 -v -n -p /general/theme -t string -s Default-hdpi
+    set_wallpaper "/usr/share/backgrounds/xfce/Aquarius.svg"
 }
 
 echo -e "Done arch.sh..."
