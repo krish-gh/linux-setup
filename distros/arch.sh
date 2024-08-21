@@ -89,4 +89,12 @@ setup_arch() {
     done
 }
 
+setup_arch_cinnamon() {
+    gsettings set org.gnome.desktop.interface gtk-theme Mint-Y-Dark-Blue
+    gsettings set org.gnome.desktop.interface icon-theme Mint-Y-Blue
+    gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark-Blue
+    gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y-Blue
+    gsettings set org.cinnamon.theme name Mint-Y-Dark-Blue
+}
+
 echo -e "Done arch.sh..."
