@@ -18,8 +18,6 @@ setup_cinnamon() {
     gwlconfigfile=$(ls ~/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json)
     gwlconfig="$(jq '(."pinned-apps".value) |= [ "nemo.desktop", "xed.desktop", "org.gnome.Terminal.desktop", "firefox.desktop" ]' "$gwlconfigfile")" &&
         echo -E "${gwlconfig}" >"$gwlconfigfile"
-
-    [[ -f ~/.local/share/backgrounds/wallpaper ]] && gsettings set org.cinnamon.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"
 }
 
 setup_cinnamon_theme() {
@@ -28,6 +26,11 @@ setup_cinnamon_theme() {
     gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark-Blue
     gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y-Blue
     gsettings set org.cinnamon.theme name Mint-Y-Dark-Blue
+}
+
+set_wallpaper() {
+    # shellcheck disable=SC2046
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$1"
 }
 
 echo -e "Done cinnamon.sh..."

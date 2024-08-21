@@ -48,11 +48,12 @@ setup_gnome() {
     copy_file "$TEMP_DIR"/gnome.dconf "${BASE_REPO_LOCATION}"desktop/gnome.dconf
     dconf load / <"$TEMP_DIR"/gnome.dconf
     rm -f "$TEMP_DIR"/gnome.dconf
+}
 
-    if [[ -f ~/.local/share/backgrounds/wallpaper ]]; then
-        gsettings set org.gnome.desktop.background picture-uri "file://$HOME/.local/share/backgrounds/wallpaper"
-        gsettings set org.gnome.desktop.background picture-uri-dark "file://$HOME/.local/share/backgrounds/wallpaper"
-    fi
+set_wallpaper() {
+    # shellcheck disable=SC2046
+    gsettings set org.gnome.desktop.background picture-uri "file://$1"
+    gsettings set org.gnome.desktop.background picture-uri-dark "file://$1"
 }
 
 echo -e "Done gnome.sh..."
