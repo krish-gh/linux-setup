@@ -50,7 +50,7 @@ setup_gnome() {
     rm -f "$TEMP_DIR"/gnome.dconf
 }
 
-set_wallpaper() {
+set_gnome_wallpaper() {
     # shellcheck disable=SC2046
     gsettings set org.gnome.desktop.background picture-uri "file://$1"
     gsettings set org.gnome.desktop.background picture-uri-dark "file://$1"

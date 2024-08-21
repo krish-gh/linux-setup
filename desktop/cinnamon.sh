@@ -28,7 +28,7 @@ setup_cinnamon_theme() {
     gsettings set org.cinnamon.theme name Mint-Y-Dark-Blue
 }
 
-set_wallpaper() {
+set_cinnamon_wallpaper() {
     # shellcheck disable=SC2046
     gsettings set org.cinnamon.desktop.background picture-uri "file://$1"
 }
