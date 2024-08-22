@@ -10,7 +10,7 @@
 |                 | EndeavourOS             | Gnome, KDE, Cinnamon       |
 | Debian          | Debian                  | Gnome                      |
 |                 | Ubuntu                  | Gnome                      |
-|                 | Mint                    | Cinnamon                   |
+|                 | Mint                    | Cinnamon, XFCE             |
 |                 | LMDE                    | Cinnamon                   |
 |                 | KDE neon                | KDE                        |
 | Fedora          | Fedora (Non-Silverblue) | Gnome, KDE, Cinnamon       |
