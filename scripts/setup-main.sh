@@ -144,6 +144,12 @@ fi
 source $TEMP_DIR/"$DISTRO_TYPE".sh
 rm -f $TEMP_DIR/"$DISTRO_TYPE".sh
 
+# desktop environment specific stuffs
+copy_file $TEMP_DIR/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
+# shellcheck disable=SC1090
+[[ -f $TEMP_DIR/"$DESKTOP".sh ]] && source $TEMP_DIR/"$DESKTOP".sh
+rm -f $TEMP_DIR/"$DESKTOP".sh
+
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
     copy_file $TEMP_DIR/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
@@ -151,12 +157,6 @@ if [[ $DIST_ID != '' ]]; then
     [[ -f $TEMP_DIR/"$DIST_ID".sh ]] && source $TEMP_DIR/"$DIST_ID".sh
     rm -f $TEMP_DIR/"$DIST_ID".sh
 fi
-
-# desktop environment specific stuffs
-copy_file $TEMP_DIR/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
-# shellcheck disable=SC1090
-[[ -f $TEMP_DIR/"$DESKTOP".sh ]] && source $TEMP_DIR/"$DESKTOP".sh
-rm -f $TEMP_DIR/"$DESKTOP".sh
 
 setup_system() {
     install_pkgs "virt-what"
