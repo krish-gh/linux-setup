@@ -18,6 +18,11 @@ setup_cinnamon() {
     gwlconfigfile=$(ls ~/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json)
     gwlconfig="$(jq '(."pinned-apps".value) |= [ "nemo.desktop", "xed.desktop", "org.gnome.Terminal.desktop", "firefox.desktop" ]' "$gwlconfigfile")" &&
         echo -E "${gwlconfig}" >"$gwlconfigfile"
+
+    # menu
+    mconfigfile=$(ls ~/.config/cinnamon/spices/menu@cinnamon.org/*.json)
+    mconfig="$(jq '(."popup-height".value) |= 600' "$mconfigfile")" &&
+        echo -E "${mconfig}" >"$mconfigfile"
 }
 
 setup_cinnamon_theme() {
