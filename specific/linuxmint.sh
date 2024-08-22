@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# shellcheck disable=SC2034
+GUI_TEXT_EDITOR=xed.desktop
+
 setup_specific_linuxmint() {
     sudo sed -i "s/http:\/\/packages.linuxmint.com/https:\/\/fastly.linuxmint.io/g" /etc/apt/sources.list.d/official-package-repositories.list
     refresh_package_sources
