@@ -15,6 +15,7 @@ cups{,-common,-daemon,-server-common}
 drawing
 epiphany
 evolution
+exfalso
 gedit
 gimp
 gnome-boxes
@@ -41,6 +42,7 @@ konqueror
 mintchat
 mpv
 orca
+parole
 pix
 shotwell
 simple-scan
@@ -51,4 +53,5 @@ totem
 vim
 warpinator
 webapp-manager
+xsane
 zutty
