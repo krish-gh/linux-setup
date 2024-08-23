@@ -13,7 +13,7 @@ INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"
 VMWARE_PACKAGES_TO_INSTALL="xf86-video-vmware xf86-input-vmmouse xf86-video-qxl gtkmm gtkmm3 open-vm-tools"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-utils"
 HYPERV_PACKAGES_TO_INSTALL="hyperv"
-FONTS_TO_INSTALL="noto-fonts{,-emoji} ttf-{liberation,dejavu,roboto,ubuntu-font-family,jetbrains-mono-nerd}"
+FONTS_TO_INSTALL="noto-fonts{,-emoji} ttf-{liberation,dejavu,droid,roboto,ubuntu-font-family,jetbrains-mono-nerd}"
 TERM_PACKAGES_TO_INSTALL="bash-completion nano-syntax-highlighting starship fastfetch"
 APP_PACKAGES_TO_INSTALL="pacman-contrib firefox{,-i18n-en-gb,-i18n-en-us} gnome-keyring seahorse vlc onboard yay rate-mirrors reflector-simple"
 DEV_PACKAGES_TO_INSTALL="git base-devel python-pip shfmt diffutils meld github-cli visual-studio-code-bin"
@@ -24,7 +24,7 @@ GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-d
 GNOME_EXT_MGR_PKG="extension-manager"
 KDE_PACKAGES_TO_INSTALL="plasma-meta gwenview kcalc kfind kwrite okular spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
-XFCE_PACKAGES_TO_INSTALL="xfce4-whiskermenu-plugin $QT_PATCHES_TO_INSTALL"
+XFCE_PACKAGES_TO_INSTALL="xfce4-whiskermenu-plugin light-locker $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
 setup_arch() {

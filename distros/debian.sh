@@ -24,7 +24,7 @@ GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-d
 GNOME_EXT_MGR_PKG="gnome-shell-extension-manager"
 KDE_PACKAGES_TO_INSTALL="kde-plasma-desktop gwenview kcalc kfind kwrite okular kde-spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
-XFCE_PACKAGES_TO_INSTALL="xfce4 xfce4-whiskermenu-plugin $QT_PATCHES_TO_INSTALL"
+XFCE_PACKAGES_TO_INSTALL="xfce4 xfce4-whiskermenu-plugin light-locker $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE=""
 
 setup_debian() {
