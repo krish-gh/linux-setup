@@ -70,4 +70,8 @@ setup_debian() {
     sudo mv -f "$TEMP_DIR"/synaptic.conf /root/.synaptic/
 }
 
+setup_debian_cinnamon() {
+    setup_cinnamon_theme
+}
+
 echo -e "Done debian.sh..."
