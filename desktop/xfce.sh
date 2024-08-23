@@ -29,6 +29,12 @@ setup_xfce() {
 
     # panel
     xfconf-query -c xfce4-panel -v -n -p /panels/dark-mode -t bool -s true
+    xfconf-query -c xfce4-panel -v -n -p /plugins/plugin-1/view-mode -t int -s 2
+    xfconf-query -c xfce4-panel -v -n -p /plugins/plugin-1/menu-width -t int -s 600
+    xfconf-query -c xfce4-panel -v -n -p /plugins/plugin-1/menu-height -t int -s 700
+    xfconf-query -c xfce4-panel -v -n -p /plugins/plugin-1/position-categories-alternate -t bool -s true
+    xfconf-query -c xfce4-panel -v -n -p /plugins/plugin-1/recent-items-max -t int -s 0
+    xfconf-query -c xfce4-panel -v -n -p /plugins/plugin-1/hover-switch-category -t bool -s true    
 
     # xfce4-terminal
     mkdir -p ~/.local/share/xfce4/terminal/colorschemes
