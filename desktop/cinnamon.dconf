@@ -2,8 +2,6 @@
 favorite-apps=['cinnamon-settings.desktop', 'mintinstall.desktop', 'nemo.desktop', 'xed.desktop', 'org.gnome.Terminal.desktop', 'firefox.desktop']
 
 [org/cinnamon/desktop/interface]
-#gtk-theme='Mint-Y-Dark-Blue'
-#icon-theme='Mint-Y-Blue'
 text-scaling-factor=1.25
 toolkit-accessibility=false
 
@@ -48,13 +46,6 @@ switch-enabled=false
 tile-enabled=false
 unmaximize-enabled=false
 unplug-enabled=false
-
-#[org/cinnamon/theme]
-#name='Mint-Y-Dark-Blue'
-#
-#[org/gnome/desktop/interface]
-#gtk-theme='Mint-Y-Dark-Blue'
-#icon-theme='Mint-Y-Blue'
 
 [org/gnome/gnome-system-monitor]
 show-dependencies=true
