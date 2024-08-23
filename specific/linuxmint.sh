@@ -14,4 +14,12 @@ setup_specific_linuxmint() {
     rm -f "$TEMP_DIR"/linuxmint.dconf
 }
 
+setup_specific_linuxmint_xfce() {
+    gsettings set org.gnome.desktop.interface gtk-theme Mint-Y-Dark-Aqua
+    gsettings set org.gnome.desktop.interface icon-theme Mint-Y-Aqua
+    xfconf-query -c xsettings -v -n -p /Net/ThemeName -t string -s Mint-Y-Dark-Aqua
+    xfconf-query -c xsettings -v -n -p /Net/IconThemeName -t string -s Mint-Y-Aqua
+    xfconf-query -c xfwm4 -v -n -p /general/theme -t string -s Mint-Y-Dark-Aqua
+}
+
 echo -e "Done linuxmint.sh..."
