@@ -40,6 +40,7 @@ setup_xfce() {
     mkdir -p ~/.local/share/xfce4/terminal/colorschemes
     copy_file ~/.local/share/xfce4/terminal/colorschemes/catppuccin-mocha.theme https://raw.githubusercontent.com/catppuccin/xfce4-terminal/main/themes/catppuccin-mocha.theme
     copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml "${BASE_REPO_LOCATION}"home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml
+    copy_file ~/.config/xfce4/terminal/terminalrc "${BASE_REPO_LOCATION}"home/.config/xfce4/terminal/terminalrc
 
     # thunar
     xfconf-query -c thunar -v -n -p /last-show-hidden -t bool -s true
