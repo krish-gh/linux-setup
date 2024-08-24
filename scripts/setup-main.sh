@@ -217,8 +217,8 @@ setup_system() {
     mkdir -p ~/.config/environment.d
     copy_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_LOCATION}home/.config/environment.d/10-defaults.conf
 
-    mkdir -p ~/.config/systemd/user/service.d
-    copy_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
+    #mkdir -p ~/.config/systemd/user/service.d
+    #copy_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
 
     profileAppend="$(
         grep "~custom-setup~" ~/.profile >/dev/null 2>&1
