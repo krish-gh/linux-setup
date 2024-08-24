@@ -314,8 +314,10 @@ setup_terminal() {
     fi
 
     # if fastfetch not found at this point fallback to neofetch, otherwise remove neofetch
-    if ! command_exists fastfetch; then
+    if ! which fastfetch; then
         install_pkgs neofetch
+    else
+        uninstall_pkgs neofetch
     fi
 
     # fastfetch
