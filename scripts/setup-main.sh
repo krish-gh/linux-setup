@@ -256,8 +256,10 @@ setup_system() {
     echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
 
     if [[ -f /etc/lightdm/lightdm.conf ]]; then
-        sudo sed -i "/greeter-hide-users=true/c\greeter-hide-users=false
-            /greeter-hide-users = true/c\greeter-hide-users = false" /etc/lightdm/lightdm.conf
+        echo -e "Configuring lightdm stuffs..."
+        grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm \
+        | xargs sudo sed -i "/greeter-hide-users=true/c\greeter-hide-users=false
+            /greeter-hide-users = true/c\greeter-hide-users = false"
     fi
 
     systemctl is-enabled casper-md5check.service && sudo systemctl disable casper-md5check.service
