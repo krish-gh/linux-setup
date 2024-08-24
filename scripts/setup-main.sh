@@ -236,6 +236,14 @@ setup_system() {
         copy_content ${BASE_REPO_LOCATION}home/.xprofile >>~/.xprofile
     fi
 
+    xsessionrcAppend="$(
+        grep "~custom-setup~" ~/.xsessionrc >/dev/null 2>&1
+        echo $?
+    )"
+    if [[ "${xsessionrcAppend}" -ne 0 ]]; then
+        copy_content ${BASE_REPO_LOCATION}home/.xsessionrc >>~/.xsessionrc
+    fi
+
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
     copy_file ~/.local/share/keyrings/Default_keyring.keyring ${BASE_REPO_LOCATION}home/.local/share/keyrings/Default_keyring.keyring
