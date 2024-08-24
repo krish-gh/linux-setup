@@ -59,8 +59,8 @@ setup_xfce() {
 
 setup_xfce_panel() {
     echo -e "Configuring xfce panel from scratch..."
-    #xfce4-panel --quit
-    #pkill xfconfd
+    xfce4-panel --quit
+    pkill xfconfd
     rm -rf ~/.config/xfce4/panel/launcher-*
     mkdir -p ~/.config/xfce4/panel/launcher-{2,3,4,5}
     copy_file ~/.config/xfce4/panel/launcher-2/FileManager.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-2/FileManager.desktop
@@ -69,7 +69,7 @@ setup_xfce_panel() {
     copy_file ~/.config/xfce4/panel/launcher-5/WebBrowser.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-5/WebBrowser.desktop
     copy_file ~/.config/xfce4/panel/whiskermenu-1.rc "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/whiskermenu-1.rc
     copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "${BASE_REPO_LOCATION}"home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-    #xfce4-panel 2>/dev/null &
+    xfce4-panel > /dev/null 2>&1 & disown
 }
 
 setup_xfce_theme() {

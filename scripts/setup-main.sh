@@ -465,4 +465,4 @@ update_packages
 
 echo -e ""
 echo -e "Done...Reboot..."
-disown -ar
+#disown -ar
