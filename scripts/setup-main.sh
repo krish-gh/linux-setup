@@ -463,6 +463,6 @@ fi
 setup_terminal
 update_packages
 
-disown -ar
 echo -e ""
 echo -e "Done...Reboot..."
+disown -ar
