@@ -39,8 +39,6 @@
       <property name="menu-width" type="int" value="600"/>
       <property name="menu-height" type="int" value="700"/>
       <property name="position-categories-alternate" type="bool" value="true"/>
-      <property name="position-search-alternate" type="bool" value="false"/>
-      <property name="position-commands-alternate" type="bool" value="false"/>
       <property name="recent-items-max" type="int" value="0"/>
       <property name="hover-switch-category" type="bool" value="true"/>
       <property name="favorites" type="array">

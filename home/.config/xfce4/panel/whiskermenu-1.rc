@@ -1,0 +1,7 @@
+favorites=xfce4-file-manager.desktop,org.xfce.mousepad.desktop,xfce4-terminal-emulator.desktop,xfce4-web-browser.desktop
+hover-switch-category=true
+view-mode=2
+recent-items-max=0
+position-categories-alternate=true
+menu-width=600
+menu-height=700
