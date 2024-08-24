@@ -26,11 +26,11 @@ setup_cinnamon() {
 }
 
 setup_cinnamon_theme() {
-    gsettings set org.gnome.desktop.interface gtk-theme Mint-Y-Dark-Aqua
-    gsettings set org.gnome.desktop.interface icon-theme Mint-Y-Aqua
-    gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark-Aqua
-    gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y-Aqua
-    gsettings set org.cinnamon.theme name Mint-Y-Dark-Aqua
+    gsettings set org.gnome.desktop.interface gtk-theme Mint-Y-Dark
+    gsettings set org.gnome.desktop.interface icon-theme Mint-Y
+    gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark
+    gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y
+    gsettings set org.cinnamon.theme name Mint-Y-Dark
 }
 
 set_cinnamon_wallpaper() {
