@@ -8,7 +8,7 @@
 | --------------- | ----------------------- | -------------------------- |
 | Arch            | Arch                    | Gnome, KDE, Cinnamon, XFCE |
 |                 | EndeavourOS             | Gnome, KDE, Cinnamon       |
-| Debian          | Debian                  | Gnome                      |
+| Debian          | Debian                  | Gnome, XFCE                |
 |                 | Ubuntu                  | Gnome                      |
 |                 | Mint                    | Cinnamon, XFCE             |
 |                 | LMDE                    | Cinnamon                   |
