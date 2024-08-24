@@ -73,4 +73,8 @@ setup_fedora() {
     refresh_package_sources
 }
 
+setup_fedora_cinnamon() {
+    setup_cinnamon_theme
+}
+
 echo -e "Done fedora.sh..."
