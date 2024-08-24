@@ -1,3 +1,4 @@
+# shellcheck disable=SC2148
 
 # ~custom-setup~
 # Shell customization
@@ -8,6 +9,7 @@ export SYSTEMD_PAGER=
 export PATH="$PATH:~/.local/bin"
 
 # My aliiases
+# shellcheck disable=SC1090
 [[ -f ~/.aliases ]] && . ~/.aliases
 
 # Cool shell prompt

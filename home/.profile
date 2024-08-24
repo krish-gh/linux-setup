@@ -1,3 +1,4 @@
+# shellcheck disable=SC2148
 
 # ~custom-setup~
 #export QT_QPA_PLATFORM=wayland
