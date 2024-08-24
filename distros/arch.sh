@@ -8,7 +8,7 @@ UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 UNINSTALL_ONLY_CMD="sudo pacman -Rns --noconfirm"
 
 REQUIREMENTS="curl wget unzip xorg-xrdb dconf jq"
-SYSTEM_PACKAGES_TO_INSTALL="fwupd nss-mdns vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-firmware pipewire-libcamera fprintd power-profiles-daemon"
+SYSTEM_PACKAGES_TO_INSTALL="fwupd vulkan-{mesa-layers,swrast,icd-loader} sof-firmware alsa-firmware fprintd power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"
 VMWARE_PACKAGES_TO_INSTALL="xf86-video-vmware xf86-input-vmmouse xf86-video-qxl gtkmm gtkmm3 open-vm-tools"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-utils"
