@@ -255,7 +255,7 @@ setup_system() {
     sudo mkdir -p /etc/sudoers.d
     echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
 
-    if [[ -d /etc/lightdm/ ]]; then
+    if command_exists lightdm; then
         echo -e "Configuring lightdm stuffs..."
         grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm \
         | xargs sudo sed -i "/greeter-hide-users=true/c\greeter-hide-users=false
