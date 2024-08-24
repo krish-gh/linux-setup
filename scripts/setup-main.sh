@@ -96,6 +96,7 @@ refresh_package_sources() {
 
 update_packages() {
     eval "$UPDATE_CMD"
+    command_exists flatpak && flatpak update --assumeyes
 }
 
 install_pkgs() {
