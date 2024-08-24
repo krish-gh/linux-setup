@@ -53,5 +53,6 @@ totem
 vim
 warpinator
 webapp-manager
+xfburn
 xsane
 zutty
