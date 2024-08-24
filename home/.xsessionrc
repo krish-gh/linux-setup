@@ -2,4 +2,4 @@
 
 # ~custom-setup~
 # shellcheck disable=SC1090
-[[ -f ~/.profile ]] && . ~/.profile
+if [ -r ~/.profile ]; then . ~/.profile; fi
