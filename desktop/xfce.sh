@@ -37,7 +37,7 @@ setup_xfce() {
     xfconf-query -c xfce4-panel -v -n -p /plugins/plugin-1/hover-switch-category -t bool -s true    
 
     # xfce4-terminal
-    mkdir -p ~/.local/share/xfce4/terminal/colorschemes
+    mkdir -p ~/.local/share/xfce4/terminal/colorschemes ~/.config/xfce4/terminal
     copy_file ~/.local/share/xfce4/terminal/colorschemes/catppuccin-mocha.theme https://raw.githubusercontent.com/catppuccin/xfce4-terminal/main/themes/catppuccin-mocha.theme
     copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml "${BASE_REPO_LOCATION}"home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-terminal.xml
     copy_file ~/.config/xfce4/terminal/terminalrc "${BASE_REPO_LOCATION}"home/.config/xfce4/terminal/terminalrc
