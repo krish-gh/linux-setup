@@ -9,9 +9,11 @@
 *thunderbird*
 *transmission*
 akregator
+asunder
 baobab
 celluloid
 cheese
+claws*
 cups
 digikam
 dragon
@@ -20,6 +22,7 @@ elisa-player
 epiphany
 evolution
 filelight
+geany*
 gedit
 gnome-boxes
 gnome-calendar
@@ -38,6 +41,7 @@ gnome-sound-recorder
 gnome-tour
 gnome-user-docs
 gnome-weather
+gparted
 gthumb
 im-chooser
 k3b
@@ -72,7 +76,9 @@ ktorrent
 mediawriter
 mpv
 neochat
+parole
 plasma-drkonqi
+pragha
 setroubleshoot
 shotwell
 simple-scan

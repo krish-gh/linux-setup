@@ -9,7 +9,6 @@ evolution
 gnome-characters
 gnome-clocks
 gnome-contacts
-gnome-disk-utility
 gnome-maps
 gnome-music
 gnome-photos
