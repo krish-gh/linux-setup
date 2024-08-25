@@ -264,8 +264,8 @@ setup_system() {
     sudo mkdir -p /etc/sudoers.d
     echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
 
-    sudo groupadd -r autologin
-    sudo gpasswd -a "$(whoami)" autologin
+    #sudo groupadd -r autologin
+    #sudo gpasswd -a "$(whoami)" autologin
 
     systemctl is-enabled casper-md5check.service && sudo systemctl disable casper-md5check.service
     sudo systemctl daemon-reload
