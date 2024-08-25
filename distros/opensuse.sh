@@ -54,4 +54,10 @@ setup_opensuse() {
     sudo chmod 755 /usr/bin/zypperoni
 }
 
+setup_opensuse_xfce() {
+    install_pkgs "materia-gtk-theme papirus-icon-theme"
+    setup_xfce_theme
+    setup_xfce_panel
+}
+
 echo -e "Done opensuse.sh..."
