@@ -245,13 +245,13 @@ setup_system() {
         copy_content ${BASE_REPO_LOCATION}home/.xsessionrc >>~/.xsessionrc
     fi
 
-    xinitrcAppend="$(
-        grep "~custom-setup~" ~/.xinitrc >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${xinitrcAppend}" -ne 0 ]]; then
-        copy_content ${BASE_REPO_LOCATION}home/.xinitrc >>~/.xinitrc
-    fi
+    #xinitrcAppend="$(
+    #    grep "~custom-setup~" ~/.xinitrc >/dev/null 2>&1
+    #    echo $?
+    #)"
+    #if [[ "${xinitrcAppend}" -ne 0 ]]; then
+    #    copy_content ${BASE_REPO_LOCATION}home/.xinitrc >>~/.xinitrc
+    #fi
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
