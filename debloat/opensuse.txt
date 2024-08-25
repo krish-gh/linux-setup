@@ -38,7 +38,6 @@ postfix
 pragha
 simple-scan
 skanlite
-system-config-printer
 transmission*
 vinagre
 wacomtablet-kcm6
