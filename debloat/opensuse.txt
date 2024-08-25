@@ -23,7 +23,6 @@ kompare
 konversation
 kpartx
 kuiviewer
-lightdm-slick-greeter
 parole
 patterns-desktop-imaging
 patterns-desktop-multimedia
@@ -45,3 +44,4 @@ wacomtablet-kcm6
 xclock
 xscreensaver
 yelp
+
