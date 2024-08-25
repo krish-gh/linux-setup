@@ -408,7 +408,7 @@ setup_common_ui() {
     #mkdir -p ~/.local/share/backgrounds
     #copy_file ~/.local/share/backgrounds/wallpaper ${BASE_REPO_LOCATION}home/.local/share/backgrounds/wallpaper
 
-    if command_exists lightdm; then
+    if [[ -d /etc/lightdm ]]; then
         echo -e "Configuring lightdm stuffs..."
         grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm \
         | xargs sudo sed -i "/greeter-hide-users=true/c\greeter-hide-users=false
