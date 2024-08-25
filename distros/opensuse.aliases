@@ -3,7 +3,7 @@
 # shellcheck disable=SC3009
 # shellcheck disable=SC3020
 alias sudo='sudo -E -H '
-alias e='systemctl --failed --no-pager; journalctl -p 3 -b'
+alias e='sudo systemctl --failed --no-pager; sudo journalctl -p 3 -b'
 alias cls='clear'
 alias u='sudo zypper refresh && sudo zypper dup --allow-vendor-change; command -v flatpak &> /dev/null && flatpak update; command -v snap &> /dev/null && sudo snap refresh; command -v pipx &> /dev/null && pipx upgrade-all'
 alias uu='sudo zypperoni ref && sudo zypperoni dup --allow-vendor-change'
