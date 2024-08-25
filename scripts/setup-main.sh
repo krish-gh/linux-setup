@@ -245,6 +245,7 @@ setup_system() {
         copy_content ${BASE_REPO_LOCATION}home/.xsessionrc >>~/.xsessionrc
     fi
 
+    # DO NOT have .xinitrc for now due to some problems
     #xinitrcAppend="$(
     #    grep "~custom-setup~" ~/.xinitrc >/dev/null 2>&1
     #    echo $?
