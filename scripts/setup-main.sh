@@ -256,13 +256,6 @@ setup_system() {
     sudo mkdir -p /etc/sudoers.d
     echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
 
-    if command_exists lightdm; then
-        echo -e "Configuring lightdm stuffs..."
-        grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm \
-        | xargs sudo sed -i "/greeter-hide-users=true/c\greeter-hide-users=false
-            /greeter-hide-users = true/c\greeter-hide-users = false"
-    fi
-
     systemctl is-enabled casper-md5check.service && sudo systemctl disable casper-md5check.service
     sudo systemctl daemon-reload
 }
@@ -414,6 +407,13 @@ setup_common_ui() {
     # wallpaper
     #mkdir -p ~/.local/share/backgrounds
     #copy_file ~/.local/share/backgrounds/wallpaper ${BASE_REPO_LOCATION}home/.local/share/backgrounds/wallpaper
+
+    if command_exists lightdm; then
+        echo -e "Configuring lightdm stuffs..."
+        grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm \
+        | xargs sudo sed -i "/greeter-hide-users=true/c\greeter-hide-users=false
+            /greeter-hide-users = true/c\greeter-hide-users = false"
+    fi
 }
 
 setup_apps() {
