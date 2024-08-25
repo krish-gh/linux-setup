@@ -80,8 +80,8 @@ setup_xfce_theme() {
     xfconf-query -c xsettings -v -n -p /Net/ThemeName -t string -s Materia-dark
     xfconf-query -c xsettings -v -n -p /Net/IconThemeName -t string -s Papirus-Dark
     xfconf-query -c xfwm4 -v -n -p /general/theme -t string -s Default-hdpi
-    sudo crudini --set /etc/lightdm/slick-greeter.conf Greeter theme-name Materia-dark
-    sudo crudini --set /etc/lightdm/slick-greeter.conf Greeter icon-theme-name Papirus-Dark
+    sudo crudini --ini-options=nospace --set /etc/lightdm/slick-greeter.conf Greeter theme-name Materia-dark
+    sudo crudini --ini-options=nospace --set /etc/lightdm/slick-greeter.conf Greeter icon-theme-name Papirus-Dark
 }
 
 set_xfce_wallpaper() {
