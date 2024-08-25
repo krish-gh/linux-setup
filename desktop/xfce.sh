@@ -74,6 +74,7 @@ setup_xfce_panel() {
 
 setup_xfce_theme() {
     echo -e "Making xfce look better..."
+    install_pkgs "materia-gtk-theme papirus-icon-theme"
     gsettings set org.gnome.desktop.interface gtk-theme Materia-dark
     gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
     xfconf-query -c xsettings -v -n -p /Net/ThemeName -t string -s Materia-dark

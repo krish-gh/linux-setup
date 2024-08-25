@@ -78,7 +78,6 @@ setup_fedora_cinnamon() {
 }
 
 setup_fedora_xfce() {
-    install_pkgs "materia-gtk-theme papirus-icon-theme"
     setup_xfce_theme
     set_xfce_wallpaper "/usr/share/backgrounds/default-dark.png"
     setup_xfce_panel
