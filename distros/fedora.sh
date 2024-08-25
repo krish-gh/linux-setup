@@ -10,7 +10,7 @@ UNINSTALL_ONLY_CMD="sudo dnf remove -y"
 FLATPAK_INSTALL_CMD="flatpak install --user --assumeyes flathub"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq"
-SYSTEM_PACKAGES_TO_INSTALL="fwupd-efi fuse mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware} fprintd fprintd-pam power-profiles-daemon"
+SYSTEM_PACKAGES_TO_INSTALL="fwupd-efi fuse mesa-vulkan-drivers vulkan-loader alsa-{firmware,sof-firmware,ucm} fprintd fprintd-pam power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="xorg-x11-drv-vmware xorg-x11-drv-qxl open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-additions"
@@ -66,11 +66,6 @@ setup_fedora() {
     sudo sed -i "/name=/c\name=microsoft-vscode" /etc/yum.repos.d/packages.microsoft.com_yumrepos_vscode.repo
     sudo sed -i "/name=/c\name=microsoft-edge" /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo
 
-    #if [[ $SYSTEM_TO_SETUP == vmware ]]; then
-    #    echo -e "Making sound work for vmware"
-    #    sudo dnf swap -y --allowerasing pipewire-pulseaudio pulseaudio
-    #    sudo dnf swap -y wireplumber pipewire-media-session
-    #fi
     command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
         && sudo flatpak remote-modify --disable fedora
 
