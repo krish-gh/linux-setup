@@ -26,7 +26,7 @@ GNOME_PACKAGES_TO_INSTALL="gnome-{menus,tweaks,terminal,text-editor} evolution-d
 GNOME_EXT_MGR_PKG="extension-manager"
 KDE_PACKAGES_TO_INSTALL="patterns-kde-kde_plasma gwenview kcalc kfind kwrite okular spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="xed xreader xviewer metatheme-mint-common mint-y-icon-theme $QT_PATCHES_TO_INSTALL"
-XFCE_PACKAGES_TO_INSTALL="patterns-xfce-xfce{,_basis} xfce4-whiskermenu-plugin xfce4-clipman-plugin xfce4-screenshooter xfce4-taskmanager light-locker $QT_PATCHES_TO_INSTALL"
+XFCE_PACKAGES_TO_INSTALL="patterns-xfce-xfce{,_basis} xfce4-whiskermenu-plugin xfce4-clipman-plugin xfce4-screenshooter xfce4-taskmanager light-locker lightdm-slick-greeter $QT_PATCHES_TO_INSTALL"
 PACKAGES_TO_REMOVE="icewm*"
 
 setup_opensuse() {
@@ -58,8 +58,8 @@ setup_opensuse_xfce() {
     install_pkgs "materia-gtk-theme papirus-icon-theme"
     setup_xfce_theme
     setup_xfce_panel
-    #echo -e "[SeatDefaults]" | sudo tee /usr/share/lightdm/lightdm.conf.d/99-custom.conf
-    #echo -e "greeter-session=slick-greeter" | sudo tee -a /usr/share/lightdm/lightdm.conf.d/99-custom.conf
+    echo -e "[SeatDefaults]" | sudo tee /usr/share/lightdm/lightdm.conf.d/99-custom.conf
+    echo -e "greeter-session=slick-greeter" | sudo tee -a /usr/share/lightdm/lightdm.conf.d/99-custom.conf
 }
 
 echo -e "Done opensuse.sh..."
