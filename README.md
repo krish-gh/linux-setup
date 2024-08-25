@@ -13,7 +13,7 @@
 |                 | Mint                    | Cinnamon, XFCE             |
 |                 | LMDE                    | Cinnamon                   |
 |                 | KDE neon                | KDE                        |
-| Fedora          | Fedora (Non-Silverblue) | Gnome, KDE, Cinnamon       |
+| Fedora          | Fedora (Non-Silverblue) | Gnome, KDE, Cinnamon, XFCE |
 | OpenSUSE        | Tumbleweed, Leap        | Gnome, KDE                 |
 
 ## How
