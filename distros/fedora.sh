@@ -34,6 +34,7 @@ setup_fedora() {
     sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main max_parallel_downloads 10
     sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main fastestmirror True
     sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main clean_requirements_on_remove True
+    sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main skip_if_unavailable True
 
     install_pkgs "fedora-workstation-repositories"
     echo -e "Setting up RPM Fusion..."
