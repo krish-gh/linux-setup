@@ -59,8 +59,7 @@ setup_opensuse_xfce() {
     install_pkgs "materia-gtk-theme papirus-icon-theme"
     setup_xfce_theme
     setup_xfce_panel
-    echo -e "[SeatDefaults]" | sudo tee /usr/share/lightdm/lightdm.conf.d/99-custom.conf
-    echo -e "greeter-session=slick-greeter" | sudo tee -a /usr/share/lightdm/lightdm.conf.d/99-custom.conf
+    sudo crudini --ini-options=nospace --set /usr/share/lightdm/lightdm.conf.d/99-custom.conf SeatDefaults greeter-session slick-greeter
 }
 
 echo -e "Done opensuse.sh..."
