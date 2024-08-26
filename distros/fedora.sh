@@ -30,15 +30,10 @@ XFCE_PACKAGES_TO_INSTALL="xfce4-whiskermenu-plugin xfce4-clipman-plugin xfce4-sc
 PACKAGES_TO_REMOVE=""
 
 setup_fedora() {
-    dnfConfigAppend="$(
-        grep "~custom-setup~" /etc/dnf/dnf.conf >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${dnfConfigAppend}" -ne 0 ]]; then
-        echo "Updating dnf.conf..."
-        echo -e "# ~custom-setup~" | sudo tee -a /etc/dnf/dnf.conf
-        echo -e "max_parallel_downloads=10" | sudo tee -a /etc/dnf/dnf.conf
-    fi
+    echo -e "Updating dnf.conf..."
+    sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main max_parallel_downloads 10
+    sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main fastestmirror True
+    sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main clean_requirements_on_remove True
 
     install_pkgs "fedora-workstation-repositories"
     echo -e "Setting up RPM Fusion..."
