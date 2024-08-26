@@ -26,6 +26,7 @@ GNOME_EXT_MGR_PKG="extension-manager"
 KDE_PACKAGES_TO_INSTALL="plasma-meta gwenview kcalc kfind kwrite okular spectacle"
 CINNAMON_PACKAGES_TO_INSTALL="x-apps nemo-emblems nemo-fileroller nemo-preview nemo-python xviewer{,-plugins} mint-{themes,y-icons} $QT_PATCHES_TO_INSTALL"
 XFCE_PACKAGES_TO_INSTALL="xfce4 xfce4-whiskermenu-plugin xfce4-clipman-plugin xfce4-screenshooter xfce4-taskmanager light-locker lightdm-slick-greeter lightdm-settings $QT_PATCHES_TO_INSTALL"
+XFCE_MENU_LOGO="distributor-logo-archlinux"
 PACKAGES_TO_REMOVE=""
 
 setup_arch() {

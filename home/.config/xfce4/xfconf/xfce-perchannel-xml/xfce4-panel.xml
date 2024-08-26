@@ -35,6 +35,7 @@
   </property>
   <property name="plugins" type="empty">
     <property name="plugin-1" type="string" value="whiskermenu">
+      <property name="button-icon" type="string" value="DISTRO_LOGO"/>
       <property name="view-mode" type="int" value="2"/>
       <property name="menu-width" type="int" value="600"/>
       <property name="menu-height" type="int" value="700"/>

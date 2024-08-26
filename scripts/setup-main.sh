@@ -56,7 +56,7 @@ INTEL_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
 VMWARE_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
 VBOX_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
 HYPERV_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
-VIRT_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
+VIRT_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
 FONTS_TO_INSTALL=""             #override from DISTRO_TYPE specific script
 TERM_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
 APP_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
@@ -69,6 +69,7 @@ GNOME_EXT_MGR_PKG=""            #override from DISTRO_TYPE specific script
 KDE_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 CINNAMON_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
 XFCE_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
+XFCE_MENU_LOGO=""               #override from DISTRO_TYPE specific script
 PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
 
 TERMINAL_TO_INSTALL=none
