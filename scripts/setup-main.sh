@@ -56,6 +56,7 @@ INTEL_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
 VMWARE_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
 VBOX_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
 HYPERV_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
+KVM_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
 FONTS_TO_INSTALL=""             #override from DISTRO_TYPE specific script
 TERM_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
 APP_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
@@ -182,6 +183,10 @@ setup_system() {
         hyperv)
             install_pkgs "$HYPERV_PACKAGES_TO_INSTALL"
             sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
+            ;;
+
+        kvm | qemu)
+            install_pkgs "$KVM_PACKAGES_TO_INSTALL"
             ;;
 
         *)
