@@ -9,7 +9,7 @@ UNINSTALL_ONLY_CMD="sudo dnf remove -y"
 
 FLATPAK_INSTALL_CMD="flatpak install --user --assumeyes flathub"
 
-REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq"
+REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq crudini"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd-efi fuse mesa-vulkan-drivers vulkan-loader alsa-{firmware,ucm,sof-firmware} fprintd fprintd-pam power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="xorg-x11-drv-vmware xorg-x11-drv-qxl open-vm-tools-desktop"

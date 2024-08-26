@@ -7,7 +7,7 @@ INSTALL_CMD="sudo apt-get install -y"
 UNINSTALL_CMD="sudo apt-get purge --ignore-missing --auto-remove -y"
 UNINSTALL_ONLY_CMD="sudo apt-get purge --ignore-missing -y"
 
-REQUIREMENTS="curl wget unzip dconf-cli jq"
+REQUIREMENTS="curl wget unzip dconf-cli jq crudini"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd mesa-vulkan-drivers alsa-{firmware-loaders,ucm-conf} firmware-sof-signed fprintd libpam-fprintd power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-va-driver-non-free va-driver-all"
 VMWARE_PACKAGES_TO_INSTALL="xserver-xorg-video-vmware xserver-xorg-video-qxl open-vm-tools-desktop"

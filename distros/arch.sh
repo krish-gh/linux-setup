@@ -7,7 +7,7 @@ INSTALL_CMD="sudo pacman -S --needed --noconfirm"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 UNINSTALL_ONLY_CMD="sudo pacman -Rns --noconfirm"
 
-REQUIREMENTS="curl wget unzip xorg-xrdb dconf jq"
+REQUIREMENTS="curl wget unzip xorg-xrdb dconf jq crudini"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd vulkan-{mesa-layers,swrast,icd-loader} alsa-{firmware,ucm-conf} sof-firmware fprintd power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"
 VMWARE_PACKAGES_TO_INSTALL="xf86-video-vmware xf86-input-vmmouse xf86-video-qxl gtkmm gtkmm3 open-vm-tools"
