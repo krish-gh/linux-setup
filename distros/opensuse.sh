@@ -10,7 +10,7 @@ UNINSTALL_ONLY_CMD="sudo zypper remove -y"
 FLATPAK_INSTALL_CMD="sudo flatpak install --assumeyes flathub" #override from DISTRO_TYPE specific script
 
 REQUIREMENTS="curl wget unzip xrdb dconf jq crudini"
-SYSTEM_PACKAGES_TO_INSTALL="fwupd Mesa-vulkan-{device-select,overlay} alsa-{firmware,ucm-conf} sof-firmware fprintd fprintd-pam power-profiles-daemon"
+SYSTEM_PACKAGES_TO_INSTALL="fwupd Mesa-vulkan-{device-select,overlay} alsa-{firmware,ucm-conf} sof-firmware fprintd fprintd-pam power-profiles-daemon at-spi2-core"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver"
 VMWARE_PACKAGES_TO_INSTALL="open-vm-tools-desktop"
 VBOX_PACKAGES_TO_INSTALL="virtualbox-guest-tools"
