@@ -71,6 +71,7 @@ setup_xfce_panel() {
     copy_file ~/.config/xfce4/panel/whiskermenu-1.rc "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/whiskermenu-1.rc
     copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "${BASE_REPO_LOCATION}"home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
     sed -i "s/DISTRO_LOGO/$XFCE_MENU_LOGO/g" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    sed -i "s/DISTRO_LOGO/$XFCE_MENU_LOGO/g" ~/.config/xfce4/panel/whiskermenu-1.rc
     xfce4-panel > /dev/null 2>&1 & disown
 }
 
