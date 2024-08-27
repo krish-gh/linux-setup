@@ -1,5 +1,6 @@
 favorites=xfce4-file-manager.desktop,org.xfce.mousepad.desktop,xfce4-terminal-emulator.desktop,xfce4-web-browser.desktop
 button-icon=DISTRO_LOGO
+show-button-title=false
 hover-switch-category=true
 view-mode=2
 recent-items-max=0
