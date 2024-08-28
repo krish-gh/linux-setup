@@ -1,7 +1,7 @@
 #!/bin/bash
 
 setup_specific_debian() {
-    install_pkgs pipewire-audio
+    install_pkgs "pipewire-audio"
 }
 
 setup_specific_debian_xfce() {
