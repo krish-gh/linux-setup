@@ -31,6 +31,8 @@ setup_cinnamon_theme() {
     gsettings set org.cinnamon.desktop.interface gtk-theme Mint-Y-Dark
     gsettings set org.cinnamon.desktop.interface icon-theme Mint-Y
     gsettings set org.cinnamon.theme name Mint-Y-Dark
+    sudo crudini --ini-options=nospace --set /etc/lightdm/slick-greeter.conf Greeter theme-name Mint-Y-Dark
+    sudo crudini --ini-options=nospace --set /etc/lightdm/slick-greeter.conf Greeter icon-theme-name Mint-Y
 }
 
 set_cinnamon_wallpaper() {
