@@ -462,7 +462,7 @@ refresh_package_sources
 echo -e "Installing some needed stuffs..."
 install_pkgs "$REQUIREMENTS"
 [[ $(type -t setup_"$DISTRO_TYPE") == function ]] && setup_"$DISTRO_TYPE"
-install_pkgs "crudini"
+install_pkgs crudini
 if [[ $(type -t setup_specific_"$DIST_ID") == function ]]; then
     echo -e "Executing additional $DIST_ID specific script..."
     setup_specific_"$DIST_ID"

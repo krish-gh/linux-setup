@@ -8,7 +8,7 @@ setup_specific_linuxmint() {
     refresh_package_sources
     # just ensuring this meta package was not uninstalled, it will wait for confirmation if it was
     sudo apt-get install mint-meta-"$DESKTOP" 
-    install_pkgs mint-meta-core mint-meta-codecs
+    install_pkgs "mint-meta-core mint-meta-codecs"
     copy_file "$TEMP_DIR"/linuxmint.dconf "${BASE_REPO_LOCATION}"specific/linuxmint.dconf
     dconf load / <"$TEMP_DIR"/linuxmint.dconf
     rm -f "$TEMP_DIR"/linuxmint.dconf
