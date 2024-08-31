@@ -11,8 +11,8 @@ eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/s
 ## option #2
 git clone https://github.com/krish-gh/linux-setup.git
 cd linux-setup
-timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
 chmod +x scripts/setup-main.sh
+timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
 . scripts/setup-main.sh 2>&1 | tee setup-"$timestamp".log
 cd ..
 rm -r linux-setup

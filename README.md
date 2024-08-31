@@ -31,10 +31,10 @@ Run by cloning this repo. It uses files from clone path.
 
 ```
 git clone https://github.com/krish-gh/linux-setup.git
-cd linux-setup || exit
-timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
+cd linux-setup
 chmod +x scripts/setup-main.sh
+timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
 . scripts/setup-main.sh 2>&1 | tee setup-"$timestamp".log
-cd .. || exit
+cd ..
 rm -r linux-setup
 ```
