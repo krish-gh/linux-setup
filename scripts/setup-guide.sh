@@ -9,6 +9,10 @@ timestamp=$(date '+%Y-%m-%d-%H:%M:%S') &&
 eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-main.sh?"$timestamp")" 2>&1 | tee ~/setup-"$timestamp".log
 
 ## option #2
+git clone https://github.com/krish-gh/linux-setup.git &&
+. linux-setup/setup.sh
+
+## option #3
 current=$PWD &&
 git clone https://github.com/krish-gh/linux-setup.git &&
 cd linux-setup &&
