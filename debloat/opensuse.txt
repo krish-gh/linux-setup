@@ -1,12 +1,16 @@
 *akonadi*
+*hexchat*
 *libreoffice*
+*rhythmbox*
 baobab
+celluloid
 cheese
 cups
 dconf-editor
 drkonqi6
 evolution
 gigolo
+gnome-calendar
 gnome-characters
 gnome-clocks
 gnome-contacts
@@ -16,6 +20,7 @@ gnome-photos
 gnome-remote-desktop
 gnome-user-docs
 gnome-weather
+gnote
 kcharselect
 kmag
 kmousetool
@@ -33,6 +38,7 @@ patterns-kde-kde_games
 patterns-kde-kde_multimedia
 patterns-kde-kde_pim
 patterns-office-office
+pix
 polari
 postfix
 pragha
