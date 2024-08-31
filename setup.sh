@@ -12,4 +12,5 @@ cd linux-setup || exit
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
 chmod +x scripts/setup-main.sh
 . scripts/setup-main.sh 2>&1 | tee setup-"$timestamp".log
+cd .. || exit
 rm -r linux-setup

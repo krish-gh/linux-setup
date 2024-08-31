@@ -137,7 +137,7 @@ uninstall_only_pkgs() {
 
 debloat_pkgs() {
     echo -e "Debloating..."
-    copy_file $TEMP_DIR/$DISTRO_TYPE.txt ${BASE_REPO_LOCATION}debloat/$DISTRO_TYPE.txt
+    copy_file $TEMP_DIR/$DISTRO_TYPE.txt "${BASE_REPO_LOCATION}"debloat/$DISTRO_TYPE.txt
     while read -r pkg; do
         uninstall_pkgs "$pkg"
     done <$TEMP_DIR/$DISTRO_TYPE.txt
@@ -151,7 +151,7 @@ debloat_pkgs() {
 
 # override with DISTRO_TYPE specific stuffs
 echo -e "Executing common $DISTRO_TYPE specific script..."
-copy_file $TEMP_DIR/"$DISTRO_TYPE".sh ${BASE_REPO_LOCATION}distros/"$DISTRO_TYPE".sh
+copy_file $TEMP_DIR/"$DISTRO_TYPE".sh "${BASE_REPO_LOCATION}"distros/"$DISTRO_TYPE".sh
 if [[ ! -f $TEMP_DIR/"$DISTRO_TYPE".sh ]]; then
     >&2 echo "Error: $DISTRO_TYPE specific script not found!"
     exit 3
@@ -161,14 +161,14 @@ source $TEMP_DIR/"$DISTRO_TYPE".sh
 rm -f $TEMP_DIR/"$DISTRO_TYPE".sh
 
 # desktop environment specific stuffs
-copy_file $TEMP_DIR/"$DESKTOP".sh ${BASE_REPO_LOCATION}desktop/"$DESKTOP".sh
+copy_file $TEMP_DIR/"$DESKTOP".sh "${BASE_REPO_LOCATION}"desktop/"$DESKTOP".sh
 # shellcheck disable=SC1090
 [[ -f $TEMP_DIR/"$DESKTOP".sh ]] && source $TEMP_DIR/"$DESKTOP".sh
 rm -f $TEMP_DIR/"$DESKTOP".sh
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [[ $DIST_ID != '' ]]; then
-    copy_file $TEMP_DIR/"$DIST_ID".sh ${BASE_REPO_LOCATION}specific/"$DIST_ID".sh
+    copy_file $TEMP_DIR/"$DIST_ID".sh "${BASE_REPO_LOCATION}"specific/"$DIST_ID".sh
     # shellcheck disable=SC1090
     [[ -f $TEMP_DIR/"$DIST_ID".sh ]] && source $TEMP_DIR/"$DIST_ID".sh
     rm -f $TEMP_DIR/"$DIST_ID".sh
@@ -228,14 +228,14 @@ setup_system() {
 
     echo -e "Tweaking some system stuffs..."
     sudo mkdir -p /etc/sysctl.d /etc/systemd/{journald.conf.d,coredump.conf.d}
-    copy_content ${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf | sudo tee /etc/sysctl.d/999-sysctl.conf
-    copy_content ${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf | sudo tee /etc/systemd/journald.conf.d/00-journal-size.conf
+    copy_content "${BASE_REPO_LOCATION}"system/etc/sysctl.d/999-sysctl.conf | sudo tee /etc/sysctl.d/999-sysctl.conf
+    copy_content "${BASE_REPO_LOCATION}"system/etc/systemd/journald.conf.d/00-journal-size.conf | sudo tee /etc/systemd/journald.conf.d/00-journal-size.conf
     sudo journalctl --rotate --vacuum-size=10M
-    copy_content ${BASE_REPO_LOCATION}system/etc/systemd/coredump.conf.d/custom.conf | sudo tee /etc/systemd/coredump.conf.d/custom.conf
+    copy_content "${BASE_REPO_LOCATION}"system/etc/systemd/coredump.conf.d/custom.conf | sudo tee /etc/systemd/coredump.conf.d/custom.conf
 
     # env var
     mkdir -p ~/.config/environment.d
-    copy_file ~/.config/environment.d/10-defaults.conf ${BASE_REPO_LOCATION}home/.config/environment.d/10-defaults.conf
+    copy_file ~/.config/environment.d/10-defaults.conf "${BASE_REPO_LOCATION}"home/.config/environment.d/10-defaults.conf
 
     #mkdir -p ~/.config/systemd/user/service.d
     #copy_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
@@ -245,7 +245,7 @@ setup_system() {
         echo $?
     )"
     if [[ "${profileAppend}" -ne 0 ]]; then
-        copy_content ${BASE_REPO_LOCATION}home/.profile >>~/.profile
+        copy_content "${BASE_REPO_LOCATION}"home/.profile >>~/.profile
     fi
 
     xprofileAppend="$(
@@ -253,7 +253,7 @@ setup_system() {
         echo $?
     )"
     if [[ "${xprofileAppend}" -ne 0 ]]; then
-        copy_content ${BASE_REPO_LOCATION}home/.xprofile >>~/.xprofile
+        copy_content "${BASE_REPO_LOCATION}"home/.xprofile >>~/.xprofile
     fi
 
     xsessionrcAppend="$(
@@ -261,7 +261,7 @@ setup_system() {
         echo $?
     )"
     if [[ "${xsessionrcAppend}" -ne 0 ]]; then
-        copy_content ${BASE_REPO_LOCATION}home/.xsessionrc >>~/.xsessionrc
+        copy_content "${BASE_REPO_LOCATION}"home/.xsessionrc >>~/.xsessionrc
     fi
 
     # DO NOT have .xinitrc for now due to some problems
@@ -275,8 +275,8 @@ setup_system() {
 
     echo -e "Setting up keyring..."
     mkdir -p ~/.local/share/keyrings/
-    copy_file ~/.local/share/keyrings/Default_keyring.keyring ${BASE_REPO_LOCATION}home/.local/share/keyrings/Default_keyring.keyring
-    copy_file ~/.local/share/keyrings/default ${BASE_REPO_LOCATION}home/.local/share/keyrings/default
+    copy_file ~/.local/share/keyrings/Default_keyring.keyring "${BASE_REPO_LOCATION}"home/.local/share/keyrings/Default_keyring.keyring
+    copy_file ~/.local/share/keyrings/default "${BASE_REPO_LOCATION}"home/.local/share/keyrings/default
     chmod og= ~/.local/share/keyrings/
     chmod og= ~/.local/share/keyrings/Default_keyring.keyring
 
@@ -297,9 +297,9 @@ setup_font() {
     install_pkgs "$FONTS_TO_INSTALL"
     echo -e "Making font look better..."
     mkdir -p ~/.config/fontconfig/conf.d
-    copy_file ~/.config/fontconfig/fonts.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/fonts.conf
-    copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf ${BASE_REPO_LOCATION}home/.config/fontconfig/conf.d/20-no-embedded.conf
-    copy_file ~/.Xresources ${BASE_REPO_LOCATION}home/.Xresources
+    copy_file ~/.config/fontconfig/fonts.conf "${BASE_REPO_LOCATION}"home/.config/fontconfig/fonts.conf
+    copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf "${BASE_REPO_LOCATION}"home/.config/fontconfig/conf.d/20-no-embedded.conf
+    copy_file ~/.Xresources "${BASE_REPO_LOCATION}"home/.Xresources
     xrdb -merge ~/.Xresources
     [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
     sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
@@ -324,18 +324,18 @@ setup_terminal() {
         curl -fsS https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin
     fi
     #starship preset no-nerd-font -o ~/.config/starship.toml
-    copy_file ~/.aliases ${BASE_REPO_LOCATION}distros/$DISTRO_TYPE.aliases
+    copy_file ~/.aliases "${BASE_REPO_LOCATION}"distros/$DISTRO_TYPE.aliases
     bashrcAppend="$(
         grep "~custom-setup~" ~/.bashrc >/dev/null 2>&1
         echo $?
     )"
     if [[ "${bashrcAppend}" -ne 0 ]]; then
-        copy_content ${BASE_REPO_LOCATION}home/.bashrc >>~/.bashrc
+        copy_content "${BASE_REPO_LOCATION}"home/.bashrc >>~/.bashrc
     fi
 
     # nano
     mkdir -p ~/.config/nano
-    copy_file ~/.config/nano/nanorc ${BASE_REPO_LOCATION}home/.config/nano/nanorc
+    copy_file ~/.config/nano/nanorc "${BASE_REPO_LOCATION}"home/.config/nano/nanorc
     if [[ -d /usr/share/nano-syntax-highlighting/ ]]; then
         nanorcAppend="$(
             grep "nano-syntax-highlighting" ~/.config/nano/nanorc >/dev/null 2>&1
@@ -364,20 +364,20 @@ setup_terminal() {
         install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/alacritty
         copy_file ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
-        copy_file ~/.config/alacritty/alacritty.toml ${BASE_REPO_LOCATION}home/.config/alacritty/alacritty.toml
+        copy_file ~/.config/alacritty/alacritty.toml "${BASE_REPO_LOCATION}"home/.config/alacritty/alacritty.toml
         ;;
 
     kitty)
         install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/kitty
         copy_file ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
-        copy_file ~/.config/kitty/kitty.conf ${BASE_REPO_LOCATION}home/.config/kitty/kitty.conf
+        copy_file ~/.config/kitty/kitty.conf "${BASE_REPO_LOCATION}"home/.config/kitty/kitty.conf
         ;;
 
     wezterm)
         install_pkgs $TERMINAL_TO_INSTALL
         mkdir -p ~/.config/wezterm
-        copy_file ~/.config/wezterm/wezterm.lua ${BASE_REPO_LOCATION}home/.config/wezterm/wezterm.lua
+        copy_file ~/.config/wezterm/wezterm.lua "${BASE_REPO_LOCATION}"home/.config/wezterm/wezterm.lua
         ;;
 
     *)
@@ -388,7 +388,7 @@ setup_terminal() {
     # gnome terminal
     if command_exists gnome-terminal; then
         tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
-        copy_file $TEMP_DIR/gterm.dconf ${BASE_REPO_LOCATION}desktop/gterm.dconf
+        copy_file $TEMP_DIR/gterm.dconf "${BASE_REPO_LOCATION}"desktop/gterm.dconf
         sed -i "s/DEFAULT_PROFILE/$tprofileid/g" $TEMP_DIR/gterm.dconf
         dconf load /org/gnome/terminal/ <$TEMP_DIR/gterm.dconf
         rm -f $TEMP_DIR/gterm.dconf
@@ -410,7 +410,7 @@ setup_common_ui() {
         gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
     fi
 
-    copy_file $TEMP_DIR/common.dconf ${BASE_REPO_LOCATION}desktop/common.dconf
+    copy_file $TEMP_DIR/common.dconf "${BASE_REPO_LOCATION}"desktop/common.dconf
     dconf load / <$TEMP_DIR/common.dconf
     rm -f $TEMP_DIR/common.dconf
 
@@ -431,9 +431,9 @@ setup_common_ui() {
 
     echo -e "Setting up QT apps to look like GTK.."
     mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
-    copy_file ~/.config/Kvantum/kvantum.kvconfig ${BASE_REPO_LOCATION}home/.config/Kvantum/kvantum.kvconfig
+    copy_file ~/.config/Kvantum/kvantum.kvconfig "${BASE_REPO_LOCATION}"home/.config/Kvantum/kvantum.kvconfig
     for i in 5 6; do
-        copy_file ~/.config/qt${i}ct/qt${i}ct.conf ${BASE_REPO_LOCATION}home/.config/qt${i}ct/qt${i}ct.conf
+        copy_file ~/.config/qt${i}ct/qt${i}ct.conf "${BASE_REPO_LOCATION}"home/.config/qt${i}ct/qt${i}ct.conf
     done
 
     # wallpaper
@@ -457,14 +457,14 @@ setup_apps() {
 
     # vlc
     mkdir -p ~/.config/vlc
-    copy_file ~/.config/vlc/vlcrc ${BASE_REPO_LOCATION}home/.config/vlc/vlcrc
+    copy_file ~/.config/vlc/vlcrc "${BASE_REPO_LOCATION}"home/.config/vlc/vlcrc
 
     if command_exists yad; then
         gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
     fi
 
     echo -e "Setting up file associations..."
-    copy_file ~/.config/mimeapps.list ${BASE_REPO_LOCATION}home/.config/mimeapps.list
+    copy_file ~/.config/mimeapps.list "${BASE_REPO_LOCATION}"home/.config/mimeapps.list
     sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
