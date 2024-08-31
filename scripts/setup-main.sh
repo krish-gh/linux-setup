@@ -1,9 +1,11 @@
 #!/bin/bash
 # shellcheck disable=SC2034
 
-if [[ -d .git ]]; then
+if [[ -d .git && -f scripts/setup-main.sh ]]; then
+    echo -e "Running from local clone..."
     BASE_REPO_LOCATION=$PWD/
 else
+    echo -e "Running from remote on the fly..."
     BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 fi
 
