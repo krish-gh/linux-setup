@@ -101,7 +101,7 @@ copy_file() {
 
 # arg1 = source path
 copy_content() {
-    if [[ $2 == http* ]]; then
+    if [[ $1 == http* ]]; then
         curl -f "$1?$(date +%s)"
         curl_exit_status=$?
         [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
