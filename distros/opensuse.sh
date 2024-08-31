@@ -56,6 +56,10 @@ setup_opensuse() {
     sudo chmod 755 /usr/bin/zypperoni
 }
 
+setup_opensuse_cinnamon() {
+    setup_cinnamon_theme
+}
+
 setup_opensuse_xfce() {
     install_pkgs "materia-gtk-theme papirus-icon-theme"
     setup_xfce_theme
