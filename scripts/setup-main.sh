@@ -1,7 +1,11 @@
 #!/bin/bash
-
 # shellcheck disable=SC2034
-BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
+
+if [[ -d .git ]]; then
+    BASE_REPO_LOCATION=$PWD/
+else
+    BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
+fi
 
 command_exists() {
     command -v "$1" >/dev/null 2>&1
@@ -33,6 +37,7 @@ DESKTOP=$(echo ${XDG_CURRENT_DESKTOP##*:} | tr '[:upper:]' '[:lower:]' | sed 's/
 CURRENT_TERMINAL=$(ps -p $PPID -o comm= | sed 's/-$//')
 
 echo -e "#################################################################"
+echo -e "BASE_REPO_LOCATION=$BASE_REPO_LOCATION"
 echo -e "DISTRO_TYPE=$DISTRO_TYPE"
 echo -e "PACKAGE_MANAGER=$PKG_MGR"
 echo -e "DESKTOP=$DESKTOP"
@@ -80,16 +85,24 @@ mkdir -p $TEMP_DIR
 
 # arg1 = destination path, arg2 = source path
 copy_file() {
-    curl -f -o "$1" "$2?$(date +%s)"
-    curl_exit_status=$?
-    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
+    if [[ $2 == http* ]]; then
+        curl -f -o "$1" "$2?$(date +%s)"
+        curl_exit_status=$?
+        [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
+    else
+        cp "$2" "$1"
+    fi
 }
 
 # arg1 = source path
 copy_content() {
-    curl -f "$1?$(date +%s)"
-    curl_exit_status=$?
-    [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
+    if [[ $2 == http* ]]; then
+        curl -f "$1?$(date +%s)"
+        curl_exit_status=$?
+        [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
+    else
+        cat "$1"
+    fi
 }
 
 refresh_package_sources() {
