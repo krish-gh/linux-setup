@@ -29,20 +29,7 @@ eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/s
 ### Option #2
 Run by cloning this repo. It uses files from clone path.
 
-Manually clone and run setup.sh
 ```
 git clone https://github.com/krish-gh/linux-setup.git
 . linux-setup/setup.sh
-```
-
-Or, do it all at once
-```
-current=$PWD &&
-git clone https://github.com/krish-gh/linux-setup.git &&
-cd linux-setup &&
-chmod +x scripts/setup-main.sh &&
-timestamp=$(date '+%Y-%m-%d-%H:%M:%S') &&
-. scripts/setup-main.sh 2>&1 | tee ~/setup-"$timestamp".log &&
-cd "$current" &&
-rm -rf linux-setup
 ```
