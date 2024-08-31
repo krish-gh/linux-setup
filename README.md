@@ -31,5 +31,6 @@ Run by cloning this repo. It uses files from clone path.
 
 ```
 git clone https://github.com/krish-gh/linux-setup.git &&
-. linux-setup/setup.sh
+. linux-setup/setup.sh &&
+rm -rf linux-setup
 ```
