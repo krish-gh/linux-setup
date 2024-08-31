@@ -1,9 +1,12 @@
 #!/bin/bash
 # shellcheck disable=SC2034
 
-if [[ -d .git && -f scripts/setup-main.sh ]]; then
+# shellcheck disable=SC2128
+scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
+repoDir="$(dirname "$scriptDir")"
+if [[ -d $repoDir/.git && -f $repoDir/scripts/setup-main.sh ]]; then
     echo -e "Running from local clone..."
-    BASE_REPO_LOCATION=$PWD/
+    BASE_REPO_LOCATION=$repoDir/
 else
     echo -e "Running from remote on the fly..."
     BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
