@@ -22,6 +22,6 @@
 Run without cloning this repo. Fully remote. It downloads required files when required.
 
 `
-timestamp=$(date '+%Y-%m-%d-%H:%M:%S') 
+timestamp=$(date '+%Y-%m-%d-%H:%M:%S') \
 eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-main.sh?"$timestamp")" 2>&1 | tee setup-"$timestamp".log
 `
