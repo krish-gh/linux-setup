@@ -5,7 +5,6 @@
 baobab
 celluloid
 cheese
-cups
 dconf-editor
 drkonqi6
 evolution
