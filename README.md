@@ -29,6 +29,14 @@ eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/s
 ### Option #2
 Run by cloning this repo. It uses files from clone path.
 
+Manually clone and run setup.sh
+```
+git clone https://github.com/krish-gh/linux-setup.git
+cd linux-setup
+. setup.sh
+```
+
+Or, do it all at once
 ```
 current=$PWD &&
 git clone https://github.com/krish-gh/linux-setup.git &&
