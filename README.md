@@ -19,7 +19,7 @@
 ## How
 
 ### Option #1
-Run without cloning this repo. Fully remote. It downloads required files when required.
+Run without cloning this repo. It downloads required files when required.
 
 ```
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S') 
