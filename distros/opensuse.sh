@@ -7,7 +7,8 @@ INSTALL_CMD="sudo zypper install -y"
 UNINSTALL_CMD="sudo zypper remove --clean-deps -y"
 UNINSTALL_ONLY_CMD="sudo zypper remove -y"
 
-FLATPAK_INSTALL_CMD="sudo flatpak install --assumeyes flathub" #override from DISTRO_TYPE specific script
+FLATPAK_INSTALL_CMD="sudo flatpak install --assumeyes flathub" 
+FLATPAK_UPDATE_CMD="sudo flatpak update --assumeyes"
 
 REQUIREMENTS="curl wget unzip xrdb dconf jq crudini"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd Mesa-vulkan-{device-select,overlay} alsa-{firmware,ucm-conf} sof-firmware fprintd fprintd-pam power-profiles-daemon at-spi2-core"
