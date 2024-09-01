@@ -93,7 +93,7 @@ copy_file() {
         curl_exit_status=$?
         [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
     else
-        cp "$2" "$1"
+        cp -f "$2" "$1"
     fi
 }
 
