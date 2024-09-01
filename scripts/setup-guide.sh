@@ -5,7 +5,7 @@
 # shellcheck disable=SC2103
 
 ## option #1
-curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | sh
+curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | bash
 
 ## option #2
 git clone https://github.com/krish-gh/linux-setup.git &&

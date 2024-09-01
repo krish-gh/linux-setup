@@ -22,7 +22,7 @@
 Run without cloning this repo. It downloads required files when required.
 
 ```
-curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | sh
+curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | bash
 ```
 
 ### Option #2
