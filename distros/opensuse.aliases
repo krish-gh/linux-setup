@@ -17,7 +17,7 @@ alias r='sudo zypper remove --clean-deps'
 #alias rr='sudo zypper remove --clean-deps'
 alias b='zypper search --installed-only > pkglist.txt'
 alias c='zypper packages --orphaned && sudo zypper clean --all'
-#alias cc='zypper packages --orphaned && sudo zypper clean --all'
+alias cc='sudo zypper purge-kernels'
 alias x='exit'
 command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
 if command -v fastfetch &> /dev/null; then
