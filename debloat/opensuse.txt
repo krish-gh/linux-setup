@@ -33,7 +33,6 @@ kmag
 kmousetool
 kompare
 konversation
-kpartx
 kuiviewer
 parole
 patterns-desktop-imaging
