@@ -56,7 +56,7 @@ sleep-inactive-battery-timeout=900
 #--------------- Session ----------------
 [org/gnome/desktop/session]
 #----------------------------------------
-idle-delay=0
+idle-delay=uint32 0
 
 #------------- Night Light --------------
 [org/gnome/settings-daemon/plugins/color]

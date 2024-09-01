@@ -50,7 +50,7 @@ speed=1.0
 disable-external=true
 
 [org/gnome/desktop/session]
-idle-delay=0
+idle-delay=uint32 0
 
 [org/gnome/desktop/sound]
 event-sounds=false
