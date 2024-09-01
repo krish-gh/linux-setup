@@ -34,6 +34,7 @@ rhythmbox
 shotwell
 simple-scan
 snapshot
+system-config-printer
 thunderbird
 totem
 vim
