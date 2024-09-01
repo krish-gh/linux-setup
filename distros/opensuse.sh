@@ -34,6 +34,7 @@ PACKAGES_TO_REMOVE="icewm*"
 setup_opensuse() {
     #sudo zypper al totem
     echo -e "Setting up repo and packman..."
+    sudo zypper rr packman
     # shellcheck disable=SC2154
     if [[ $releasever == '' ]]; then
         install_pkgs openSUSE-repos-Tumbleweed
