@@ -5,8 +5,7 @@
 # shellcheck disable=SC2103
 
 ## option #1
-timestamp=$(date '+%Y-%m-%d-%H:%M:%S') &&
-eval "$(curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-main.sh?"$timestamp")" 2>&1 | tee ~/setup-"$timestamp".log
+curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | sh
 
 ## option #2
 git clone https://github.com/krish-gh/linux-setup.git &&
