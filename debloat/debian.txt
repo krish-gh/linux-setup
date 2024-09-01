@@ -1,3 +1,4 @@
+
 *brasero*
 *hexchat*
 *libreoffice*
@@ -48,6 +49,7 @@ shotwell
 simple-scan
 snapshot
 sticky
+system-config-printer*
 thingy
 totem
 vim

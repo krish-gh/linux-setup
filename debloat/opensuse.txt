@@ -50,7 +50,7 @@ postfix
 pragha
 simple-scan
 skanlite
-system-config-printer
+system-config-printer*
 transmission*
 vinagre
 wacomtablet-kcm6

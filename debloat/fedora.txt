@@ -84,6 +84,7 @@ shotwell
 simple-scan
 skanpage
 snapshot
+system-config-printer*
 totem
 vim
 xawtv*
