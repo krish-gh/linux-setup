@@ -500,6 +500,7 @@ if [[ $(type -t setup_specific_"$DIST_ID"_"$DESKTOP") == function ]]; then
 fi
 setup_terminal
 update_packages
+alias reboot='sudo reboot'
 
 echo -e ""
 echo -e "Done...Reboot..."
