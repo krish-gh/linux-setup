@@ -4,7 +4,7 @@
 
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
-if [[ -d $scriptDir/.git && -f $scriptDir/scripts/setup-main.sh ]]; then
+if [[ -d "$scriptDir"/.git && -f "$scriptDir"/scripts/setup-main.sh ]]; then
     echo -e "Running from local clone..."
     . "$scriptDir"/scripts/setup-main.sh 2>&1 | tee ~/setup-"$timestamp".log 
 else
