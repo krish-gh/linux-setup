@@ -40,10 +40,10 @@ setup_opensuse() {
     # shellcheck disable=SC2154
     if [[ $releasever == '' ]]; then
         install_pkgs openSUSE-repos-Tumbleweed
-        sudo zypper ar -cfp 90 'https://ftp.fau.de/packman/suse/openSUSE_Tumbleweed/' packman
+        sudo zypper ar -cfp 90 'http://mirror.karneval.cz/pub/linux/packman/suse/openSUSE_Tumbleweed/' packman
     else
         install_pkgs openSUSE-repos-Leap
-        sudo zypper ar -cfp 90 'https://ftp.fau.de/packman/suse/openSUSE_Leap_$releasever/' packman
+        sudo zypper ar -cfp 90 'http://mirror.karneval.cz/pub/linux/packman/suse/openSUSE_Leap_$releasever/' packman
     fi
     refresh_package_sources
     sudo zypper dup --from packman --allow-vendor-change -y
