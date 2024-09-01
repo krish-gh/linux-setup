@@ -34,6 +34,7 @@ PACKAGES_TO_REMOVE="icewm*"
 setup_opensuse() {
     #sudo zypper al totem
     echo -e "Setting up repo and packman..."
+    # https://en.opensuse.org/Additional_package_repositories
     sudo zypper rr packman
     # shellcheck disable=SC2154
     if [[ $releasever == '' ]]; then
