@@ -7,7 +7,6 @@
 *remmina*
 *rhythmbox*
 *thunderbird*
-*timeshift*
 *transmission*
 baobab
 celluloid
