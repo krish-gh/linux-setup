@@ -31,45 +31,35 @@ PACKAGES_TO_REMOVE=""
 
 setup_arch() {
     if [[ -f /etc/vconsole.conf ]]; then
-        vsconsoleAppend="$(
-            grep "FONT=" /etc/vconsole.conf >/dev/null 2>&1
-            echo $?
-        )"
-        if [[ "${vsconsoleAppend}" -ne 0 ]]; then
-            echo -e "FONT is not set in vconsole.conf, updating..."
-            echo -e 'FONT="eurlatgr"' | sudo tee -a /etc/vconsole.conf
+        if ! grep -q "FONT=" /etc/vconsole.conf; then
+            printf 'FONT is not set in vconsole.conf, updating...\n'
+            printf 'FONT="eurlatgr"\n' | sudo tee -a /etc/vconsole.conf >/dev/null
         fi
     fi
 
-    echo -e "Doing some cool stuffs in /etc/pacman.conf ..."
-    sudo sed -i "/^#Color/c\Color\nILoveCandy
-        /^#VerbosePkgLists/c\VerbosePkgLists
-        /^#ParallelDownloads/c\ParallelDownloads = 5" /etc/pacman.conf
+    printf 'Doing some cool stuff in /etc/pacman.conf...\n'
+    sudo sed -i "/^#Color/c\\Color\\nILoveCandy" /etc/pacman.conf
+    sudo sed -i "/^#VerbosePkgLists/c\\VerbosePkgLists" /etc/pacman.conf
+    sudo sed -i "/^#ParallelDownloads/c\\ParallelDownloads = 5" /etc/pacman.conf
     sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 
     # https://aur.chaotic.cx/docs
     if [[ ! -f /etc/pacman.d/chaotic-mirrorlist ]]; then
-        echo -e "Configuring Chaotic-AUR..."
-        sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
-        sudo pacman-key --lsign-key 3056513887B78AEB
-        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
-        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+        printf 'Configuring Chaotic-AUR...\n'
+        sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com 2>/dev/null || printf 'Warning: Failed to receive key\n' >&2
+        sudo pacman-key --lsign-key 3056513887B78AEB 2>/dev/null || printf 'Warning: Failed to sign key\n' >&2
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 2>/dev/null || printf 'Warning: Failed to install chaotic-keyring\n' >&2
+        sudo pacman -U --noconfirm 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst' 2>/dev/null || printf 'Warning: Failed to install chaotic-mirrorlist\n' >&2
     fi
 
-    chaoticAurAppend="$(
-        grep "chaotic-aur" /etc/pacman.conf >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${chaoticAurAppend}" -ne 0 ]]; then
-        echo "Appending Chaotic-AUR in pacman.conf..."
-        echo -e | sudo tee -a /etc/pacman.conf
-        echo -e "[chaotic-aur]" | sudo tee -a /etc/pacman.conf
-        echo -e "Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -a /etc/pacman.conf
+    if ! grep -q "chaotic-aur" /etc/pacman.conf; then
+        printf 'Appending Chaotic-AUR in pacman.conf...\n'
+        printf '\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n' | sudo tee -a /etc/pacman.conf >/dev/null
     fi
 
     refresh_package_sources
 
-    echo -e "Installing some stuffs..."
+    printf 'Installing some packages...\n'
     [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
 
     pamacvar='aur'
@@ -79,15 +69,12 @@ setup_arch() {
     install_pkgs "pamac-${pamacvar}"
 
     # Configure pamac
-    sudo sed -i "/RemoveUnrequiredDeps/s/^#//g
-        /NoUpdateHideIcon/s/^#//g
-        /KeepNumPackages/c\KeepNumPackages = 1
-        /RefreshPeriod/c\RefreshPeriod = 0" /etc/pamac.conf
+    sudo sed -i "/RemoveUnrequiredDeps/s/^#//g; /NoUpdateHideIcon/s/^#//g; /KeepNumPackages/c\\KeepNumPackages = 1; /RefreshPeriod/c\\RefreshPeriod = 0" /etc/pamac.conf 2>/dev/null || true
 
     # misc
     flagstocopy=(code electron chromium chrome microsoft-edge-stable)
     for i in "${flagstocopy[@]}"; do
-        copy_file ~/.config/"${i}"-flags.conf "${BASE_REPO_LOCATION}"home/.config/"${i}"-flags.conf
+        copy_file ~/.config/"${i}"-flags.conf "${BASE_REPO_LOCATION}home/.config/${i}-flags.conf" || true
     done
 }
 
@@ -95,4 +82,4 @@ setup_arch_cinnamon() {
     setup_cinnamon_theme
 }
 
-echo -e "Done arch.sh..."
+printf 'Done arch.sh...\n'
