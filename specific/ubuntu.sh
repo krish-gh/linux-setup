@@ -12,4 +12,4 @@ setup_specific_ubuntu() {
     sudo apt-get install ubuntu-desktop-minimal 
 }
 
-echo -e "Done ubuntu.sh..."
+printf 'Done ubuntu.sh...\n'

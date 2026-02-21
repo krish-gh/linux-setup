@@ -32,17 +32,15 @@ XFCE_MENU_LOGO="distributor-logo-fedora"
 PACKAGES_TO_REMOVE=""
 
 setup_fedora() {
-    echo -e "Updating dnf.conf..."
+    printf 'Updating dnf.conf...\n'
     sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main max_parallel_downloads 10
     sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main fastestmirror True
     sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main clean_requirements_on_remove True
     sudo crudini --ini-options=nospace --set /etc/dnf/dnf.conf main skip_if_unavailable True
 
     install_pkgs "fedora-workstation-repositories"
-    echo -e "Setting up RPM Fusion..."
-    # https://rpmfusion.org/Configuration
-    # shellcheck disable=SC2046
-    sudo dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    printf 'Setting up RPM Fusion...\n'
+    sudo dnf install -y "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
     sudo dnf config-manager --enable fedora-cisco-openh264
     sudo dnf update -y @core
     sudo dnf update -y @multimedia --setopt="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
@@ -51,10 +49,10 @@ setup_fedora() {
     #sudo dnf swap mesa-va-drivers mesa-va-drivers-freeworld --allowerasing
     #sudo dnf swap mesa-vdpau-drivers mesa-vdpau-drivers-freeworld --allowerasing
 
-    echo -e "Disabling some not needed repos..."
+    printf 'Disabling some not needed repos...\n'
     sudo dnf config-manager --disable *PyCharm* *nvidia* *steam*
 
-    echo -e "Adding some needed repos..."
+    printf 'Adding some needed repos...\n'
     # google
     sudo dnf config-manager --enable google-chrome
     # microsoft
@@ -64,8 +62,8 @@ setup_fedora() {
     sudo sed -i "/name=/c\name=microsoft-vscode" /etc/yum.repos.d/packages.microsoft.com_yumrepos_vscode.repo
     sudo sed -i "/name=/c\name=microsoft-edge" /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo
 
-    command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo \
-        && sudo flatpak remote-modify --disable fedora
+    command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && \
+        sudo flatpak remote-modify --disable fedora
 
     #install_pkgs dnfdragora-gui
 
@@ -87,4 +85,4 @@ setup_fedora_xfce() {
     setup_xfce_panel
 }
 
-echo -e "Done fedora.sh..."
+printf 'Done fedora.sh...\n'

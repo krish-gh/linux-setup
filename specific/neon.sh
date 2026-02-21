@@ -5,4 +5,4 @@ setup_specific_neon() {
     sudo apt-get install neon-desktop neon-essentials-desktop ubuntu-minimal 
 }
 
-echo -e "Done neon.sh..."
+printf 'Done neon.sh...\n'

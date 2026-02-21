@@ -30,7 +30,7 @@ XFCE_MENU_LOGO="distributor-logo-debian"
 PACKAGES_TO_REMOVE=""
 
 setup_debian() {
-    echo -e "Setting up apt..."
+    printf 'Setting up apt...\n'
     install_pkgs "software-properties-common python3-launchpadlib nala gpg apt-transport-https"
 
     sudo apt-add-repository contrib -y
@@ -41,20 +41,20 @@ setup_debian() {
     sudo mkdir -p -m 755 /etc/apt/keyrings
 
     # microsoft
-    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor >packages.microsoft.gpg
+    wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
     sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-    echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
-    echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" | sudo tee /etc/apt/sources.list.d/microsoft-edge.list >/dev/null
+    printf "deb [arch=%s signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main\n" "$(dpkg --print-architecture)" | sudo tee /etc/apt/sources.list.d/vscode.list >/dev/null
+    printf "deb [arch=%s signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/edge stable main\n" "$(dpkg --print-architecture)" | sudo tee /etc/apt/sources.list.d/microsoft-edge.list >/dev/null
     rm -f packages.microsoft.gpg
 
     # google
     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/google.gpg >/dev/null
-    echo -e "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/google.gpg] https://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google-chrome.list >/dev/null
+    printf "deb [arch=%s signed-by=/etc/apt/keyrings/google.gpg] https://dl.google.com/linux/chrome/deb/ stable main\n" "$(dpkg --print-architecture)" | sudo tee /etc/apt/sources.list.d/google-chrome.list >/dev/null
 
     # github
-    wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null &&
+    wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg >/dev/null && \
         sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
+    printf "deb [arch=%s signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\n" "$(dpkg --print-architecture)" | sudo tee /etc/apt/sources.list.d/github-cli.list >/dev/null
 
     rm -f .wget-hsts
 
@@ -68,12 +68,12 @@ setup_debian() {
 
     # synaptic
     sudo mkdir -p /root/.synaptic/
-    copy_file "$TEMP_DIR"/synaptic.conf "${BASE_REPO_LOCATION}"system/root/.synaptic/synaptic.conf
-    sudo mv -f "$TEMP_DIR"/synaptic.conf /root/.synaptic/
+    copy_file "$TEMP_DIR/synaptic.conf" "${BASE_REPO_LOCATION}system/root/.synaptic/synaptic.conf"
+    sudo mv -f "$TEMP_DIR/synaptic.conf" /root/.synaptic/
 }
 
 setup_debian_cinnamon() {
     setup_cinnamon_theme
 }
 
-echo -e "Done debian.sh..."
+printf 'Done debian.sh...\n'

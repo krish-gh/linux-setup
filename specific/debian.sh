@@ -10,4 +10,4 @@ setup_specific_debian_xfce() {
     setup_xfce_panel
 }
 
-echo -e "Done debian.sh..."
+printf 'Done debian.sh...\n'

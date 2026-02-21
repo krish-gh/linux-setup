@@ -34,28 +34,28 @@ PACKAGES_TO_REMOVE="icewm*"
 
 setup_opensuse() {
     #sudo zypper al totem
-    echo -e "Setting up repo and packman..."
+    printf 'Setting up repo and packman...\n'
     # https://en.opensuse.org/Additional_package_repositories
     # http://packman.links2linux.org/mirrors
     sudo zypper rr packman
     # shellcheck disable=SC2154
-    if [[ $releasever == '' ]]; then
+    if [[ -z "$releasever" ]]; then
         install_pkgs openSUSE-repos-Tumbleweed
         sudo zypper ar -cfp 90 'http://mirror.karneval.cz/pub/linux/packman/suse/openSUSE_Tumbleweed/' packman
     else
         install_pkgs openSUSE-repos-Leap
-        sudo zypper ar -cfp 90 'http://mirror.karneval.cz/pub/linux/packman/suse/openSUSE_Leap_$releasever/' packman
+        sudo zypper ar -cfp 90 "http://mirror.karneval.cz/pub/linux/packman/suse/openSUSE_Leap_${releasever}/" packman
     fi
     refresh_package_sources
     sudo zypper dup --from packman --allow-vendor-change -y
 
-    echo -e "Installing some stuffs..."
+    printf 'Installing some stuffs...\n'
     install_pkgs "opi"
     opi codecs -n
     opi vscode -n
     refresh_package_sources
 
-    echo -e "Installing zypperoni for faster zypper download..."
+    printf 'Installing zypperoni for faster zypper download...\n'
     curl https://raw.githubusercontent.com/pavinjosdev/zypperoni/main/zypperoni | sudo tee /usr/bin/zypperoni >/dev/null
     sudo chmod 755 /usr/bin/zypperoni
 }
@@ -71,4 +71,4 @@ setup_opensuse_xfce() {
     sudo crudini --ini-options=nospace --set /usr/share/lightdm/lightdm.conf.d/99-custom.conf SeatDefaults greeter-session slick-greeter
 }
 
-echo -e "Done opensuse.sh..."
+printf 'Done opensuse.sh...\n'

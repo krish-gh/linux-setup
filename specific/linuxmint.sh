@@ -9,9 +9,9 @@ setup_specific_linuxmint() {
     # just ensuring this meta package was not uninstalled, it will wait for confirmation if it was
     sudo apt-get install mint-meta-"$DESKTOP" 
     install_pkgs "mint-meta-core mint-meta-codecs"
-    copy_file "$TEMP_DIR"/linuxmint.dconf "${BASE_REPO_LOCATION}"specific/linuxmint.dconf
-    dconf load / <"$TEMP_DIR"/linuxmint.dconf
-    rm -f "$TEMP_DIR"/linuxmint.dconf
+    copy_file "$TEMP_DIR/linuxmint.dconf" "${BASE_REPO_LOCATION}specific/linuxmint.dconf"
+    dconf load / < "$TEMP_DIR/linuxmint.dconf" 2>/dev/null || printf 'Warning: Failed to load dconf settings\n' >&2
+    rm -f "$TEMP_DIR/linuxmint.dconf"
 }
 
 setup_specific_linuxmint_xfce() {
@@ -22,4 +22,4 @@ setup_specific_linuxmint_xfce() {
     xfconf-query -c xfwm4 -v -n -p /general/theme -t string -s Mint-Y-Dark
 }
 
-echo -e "Done linuxmint.sh..."
+printf 'Done linuxmint.sh...\n'
