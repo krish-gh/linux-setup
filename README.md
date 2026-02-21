@@ -16,6 +16,18 @@ Automated post-installation setup script for Linux desktop environments. This pr
 - **Hardware Support**: Installs drivers for Intel, VMware, VirtualBox, Hyper-V, and QEMU
 - **System Customization**: Applies kernel parameters, journald, and core dump configurations
 
+## Code Quality & Best Practices
+
+This project emphasizes reliability and security:
+
+- **Error Handling**: Comprehensive error checking on all critical operations with clear diagnostics
+- **Secure Temp Files**: Uses `mktemp` for secure temporary directories with automatic cleanup via trap handlers
+- **Safe Quoting**: Proper variable quoting throughout to prevent word splitting and glob expansion
+- **Portable**: Uses `printf` instead of `echo -e` for better portability across shell implementations
+- **Fail-Safe**: Non-critical failures don't halt the entire setup—the script continues gracefully
+- **No eval**: Avoids dangerous `eval` for remote script execution; uses safe alternatives instead
+- **Validation**: All shell scripts pass strict syntax validation with `bash -n`
+
 ## Prerequisites
 
 - A supported Linux distribution (see [Supported Scenarios](#supported-scenario))
@@ -181,12 +193,15 @@ cat ~/setup-*.log
 tail -f ~/setup-*.log  # Follow in real-time
 ```
 
+**Error Handling**: The script logs warnings for non-critical failures and continues execution. Check the log file to see if any operations failed. The setup log is timestamped so you can keep history of multiple runs.
+
 ## Notes and Limitations
 
-- **KDE Plasmi**: KDE's configuration system is complex and mostly UI-driven. The automation covers basic packages and themes only. Manual configuration of many settings is still required.
+- **KDE Plasma**: KDE's configuration system is complex and mostly UI-driven. The automation covers basic packages and themes only. Manual configuration of many settings is still required.
 - **GDM Configuration**: Commented out in the main setup—uncomment `/desktop/gnome.sh` if you need to customize the login screen.
-- **Waylan d/Xorg**: The script detects your current session; some settings may not apply if switching between Wayland and Xorg.
-- **Interactive Setup**: The script includes interactive checks and may pause for confirmation on some steps.
+- **Wayland/Xorg**: The script detects your current session; some settings may not apply if switching between Wayland and Xorg.
+- **Error Recovery**: Some operations may fail gracefully (logged as warnings) and continue; check the setup log for details.
+- **Package Availability**: Not all packages may be available in every distribution version; installation failures are logged but don't halt the setup.
 
 ## Requirements
 
