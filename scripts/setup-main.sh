@@ -1,5 +1,4 @@
 #!/bin/sh
-set -o pipefail
 
 scriptDir=$(cd -- "$(dirname -- "$0")" && pwd) || { printf 'Failed to determine script directory\n' >&2; exit 1; }
 repoDir="$(dirname "$scriptDir")"
@@ -57,7 +56,7 @@ if [ -f /etc/os-release ]; then
     DIST_ID="${ID:-}"
 fi
 
-DESKTOP=$(printf '%s\n' "${XDG_CURRENT_DESKTOP##*:}" | tr '[:upper:]' '[:lower:]' | sed 's/^x-//')
+DESKTOP=$(printf '%s\n' "$XDG_CURRENT_DESKTOP" | sed 's/.*://; s/^x-//; y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/')
 CURRENT_TERMINAL=$(ps -p "$PPID" -o comm= | sed 's/-$//')
 
 printf '#################################################################\n'
@@ -129,13 +128,13 @@ copy_content() {
 }
 
 refresh_package_sources() {
-    eval "$REFRESH_CMD" || { printf 'Error refreshing package sources\n' >&2; return 1; }
+    sh -c "$REFRESH_CMD" || { printf 'Error refreshing package sources\n' >&2; return 1; }
 }
 
 update_packages() {
-    eval "$UPDATE_CMD" || { printf 'Error updating packages\n' >&2; return 1; }
+    sh -c "$UPDATE_CMD" || { printf 'Error updating packages\n' >&2; return 1; }
     if command_exists flatpak; then
-        eval "$FLATPAK_UPDATE_CMD" || printf 'Warning: flatpak update failed\n' >&2
+        sh -c "$FLATPAK_UPDATE_CMD" || printf 'Warning: flatpak update failed\n' >&2
     fi
 }
 
@@ -143,21 +142,21 @@ install_pkgs() {
     # Install packages one by one to avoid aborting on individual failures
     # Use word splitting instead of bash arrays for POSIX compatibility
     for pkg in $1; do
-        eval "$INSTALL_CMD $pkg" || printf 'Warning: Failed to install %s\n' "$pkg" >&2
+        sh -c "$INSTALL_CMD $pkg" || printf 'Warning: Failed to install %s\n' "$pkg" >&2
     done
 }
 
 uninstall_pkgs() {
     # Uninstall packages one by one to avoid aborting on individual failures
     for pkg in $1; do
-        eval "$UNINSTALL_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
+        sh -c "$UNINSTALL_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
     done
 }
 
 uninstall_only_pkgs() {
     # Uninstall packages (without dependencies) one by one to avoid aborting on individual failures
     for pkg in $1; do
-        eval "$UNINSTALL_ONLY_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
+        sh -c "$UNINSTALL_ONLY_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
     done
 }
 

@@ -8,7 +8,7 @@ setup_gnome() {
 
     printf 'Installing some extensions...\n'
     if command_exists flatpak; then
-        eval "$FLATPAK_INSTALL_CMD" com.mattjakeman.ExtensionManager || printf 'Warning: Failed to install extension manager\n' >&2
+        sh -c "$FLATPAK_INSTALL_CMD com.mattjakeman.ExtensionManager" || printf 'Warning: Failed to install extension manager\n' >&2
     else
         install_pkgs "$GNOME_EXT_MGR_PKG"
     fi

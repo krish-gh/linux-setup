@@ -1,5 +1,4 @@
 #!/bin/sh
-set -o pipefail
 
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
 scriptDir=$(cd -- "$(dirname -- "$0")" && pwd) || { printf 'Error: Failed to determine script directory\n' >&2; exit 1; }
