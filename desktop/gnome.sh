@@ -28,19 +28,19 @@ setup_gnome() {
     exts[3]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
     exts[4]=xwayland-indicator@swsnr.de
     exts[5]=apps-menu@gnome-shell-extensions.gcampax.github.com
-    [[ "$DIST_ID" != "ubuntu" ]] && exts[6]=appindicatorsupport@rgcjonas.gmail.com
-    [[ "$DIST_ID" != "ubuntu" ]] && exts[7]=dash-to-dock@micxgx.gmail.com
-    [[ "$DISTRO_TYPE" == "arch" ]] && exts[arch]=arch-update@RaphaelRochet
-    [[ "$DISTRO_TYPE" == "debian" ]] && exts[debian]=debian-updates-indicator@glerro.pm.me
-    [[ "$DISTRO_TYPE" == "fedora" ]] && exts[fedora]=update-extension@purejava.org
+    [ "$DIST_ID" != "ubuntu" ] && exts[6]=appindicatorsupport@rgcjonas.gmail.com
+    [ "$DIST_ID" != "ubuntu" ] && exts[7]=dash-to-dock@micxgx.gmail.com
+    [ "$DISTRO_TYPE" = "arch" ] && exts[arch]=arch-update@RaphaelRochet
+    [ "$DISTRO_TYPE" = "debian" ] && exts[debian]=debian-updates-indicator@glerro.pm.me
+    [ "$DISTRO_TYPE" = "fedora" ] && exts[fedora]=update-extension@purejava.org
 
     local extdir=~/.local/share/gnome-shell/extensions
     for i in "${exts[@]}"; do
         ~/.local/bin/gnome-extensions-cli --filesystem install "$i" 2>/dev/null || printf 'Warning: Failed to install extension %s\n' "$i" >&2
-        [[ -d "$extdir/$i/schemas" ]] && glib-compile-schemas "$extdir/$i/schemas/" 2>/dev/null || true
+        [ -d "$extdir/$i/schemas" ] && glib-compile-schemas "$extdir/$i/schemas/" 2>/dev/null || true
     done
 
-    if [[ "$TERMINAL_TO_INSTALL" != "none" ]]; then
+    if [ "$TERMINAL_TO_INSTALL" != "none" ]; then
         python -m pip install --user --upgrade nautilus-open-any-terminal 2>/dev/null || printf 'Warning: Failed to install nautilus-open-any-terminal\n' >&2
         glib-compile-schemas ~/.local/share/glib-2.0/schemas/ 2>/dev/null || true
         gsettings set com.github.stunkymonkey.nautilus-open-any-terminal terminal "$TERMINAL_TO_INSTALL" 2>/dev/null || true

@@ -7,6 +7,17 @@ INSTALL_CMD="sudo pacman -S --needed --noconfirm"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 UNINSTALL_ONLY_CMD="sudo pacman -Rns --noconfirm"
 
+# Portable sed -i that works on both GNU and BSD systems
+sed_i() {
+    if sed --version >/dev/null 2>&1; then
+        # GNU sed
+        sed -i "$@"
+    else
+        # BSD sed requires an empty string for in-place editing
+        sed -i '' "$@"
+    fi
+}
+
 REQUIREMENTS="curl wget unzip xorg-xrdb dconf jq crudini"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd vulkan-{mesa-layers,swrast,icd-loader} alsa-{firmware,ucm-conf} sof-firmware fprintd power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"
@@ -30,7 +41,7 @@ XFCE_MENU_LOGO="distributor-logo-archlinux"
 PACKAGES_TO_REMOVE=""
 
 setup_arch() {
-    if [[ -f /etc/vconsole.conf ]]; then
+    if [ -f /etc/vconsole.conf ]; then
         if ! grep -q "FONT=" /etc/vconsole.conf; then
             printf 'FONT is not set in vconsole.conf, updating...\n'
             printf 'FONT="eurlatgr"\n' | sudo tee -a /etc/vconsole.conf >/dev/null
@@ -38,13 +49,13 @@ setup_arch() {
     fi
 
     printf 'Doing some cool stuff in /etc/pacman.conf...\n'
-    sudo sed -i "/^#Color/c\\Color\\nILoveCandy" /etc/pacman.conf
-    sudo sed -i "/^#VerbosePkgLists/c\\VerbosePkgLists" /etc/pacman.conf
-    sudo sed -i "/^#ParallelDownloads/c\\ParallelDownloads = 5" /etc/pacman.conf
-    sudo sed -i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
+    sudo sed_i "/^#Color/c\\Color\\nILoveCandy" /etc/pacman.conf
+    sudo sed_i "/^#VerbosePkgLists/c\\VerbosePkgLists" /etc/pacman.conf
+    sudo sed_i "/^#ParallelDownloads/c\\ParallelDownloads = 5" /etc/pacman.conf
+    sudo sed_i '/^#\[multilib\]/,+1 s/^#//' /etc/pacman.conf
 
     # https://aur.chaotic.cx/docs
-    if [[ ! -f /etc/pacman.d/chaotic-mirrorlist ]]; then
+    if [ ! -f /etc/pacman.d/chaotic-mirrorlist ]; then
         printf 'Configuring Chaotic-AUR...\n'
         sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com 2>/dev/null || printf 'Warning: Failed to receive key\n' >&2
         sudo pacman-key --lsign-key 3056513887B78AEB 2>/dev/null || printf 'Warning: Failed to sign key\n' >&2
@@ -60,7 +71,7 @@ setup_arch() {
     refresh_package_sources
 
     printf 'Installing some packages...\n'
-    [[ -f /etc/mkinitcpio.conf ]] && install_pkgs "mkinitcpio-firmware"
+    [ -f /etc/mkinitcpio.conf ] && install_pkgs "mkinitcpio-firmware"
 
     pamacvar='aur'
     if command_exists flatpak; then
@@ -69,7 +80,7 @@ setup_arch() {
     install_pkgs "pamac-${pamacvar}"
 
     # Configure pamac
-    sudo sed -i "/RemoveUnrequiredDeps/s/^#//g; /NoUpdateHideIcon/s/^#//g; /KeepNumPackages/c\\KeepNumPackages = 1; /RefreshPeriod/c\\RefreshPeriod = 0" /etc/pamac.conf 2>/dev/null || true
+    sudo sed_i "/RemoveUnrequiredDeps/s/^#//g; /NoUpdateHideIcon/s/^#//g; /KeepNumPackages/c\\KeepNumPackages = 1; /RefreshPeriod/c\\RefreshPeriod = 0" /etc/pamac.conf 2>/dev/null || true
 
     # misc
     flagstocopy=(code electron chromium chrome microsoft-edge-stable)

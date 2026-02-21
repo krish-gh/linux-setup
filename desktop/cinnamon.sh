@@ -14,14 +14,14 @@ setup_cinnamon() {
 
     # pinned apps
     gwlconfigfile=$(ls ~/.config/cinnamon/spices/grouped-window-list@cinnamon.org/*.json 2>/dev/null)
-    if [[ -n "$gwlconfigfile" ]]; then
+    if [ -n "$gwlconfigfile" ]; then
         gwlconfig="$(jq '(."pinned-apps".value) |= [ "nemo.desktop", "xed.desktop", "org.gnome.Terminal.desktop", "firefox.desktop" ]' "$gwlconfigfile")" && \
             printf '%s\n' "$gwlconfig" > "$gwlconfigfile"
     fi
 
     # menu
     mconfigfile=$(ls ~/.config/cinnamon/spices/menu@cinnamon.org/*.json 2>/dev/null)
-    if [[ -n "$mconfigfile" ]]; then
+    if [ -n "$mconfigfile" ]; then
         mconfig="$(jq '(."popup-height".value) |= 600' "$mconfigfile")" && \
             printf '%s\n' "$mconfig" > "$mconfigfile"
     fi

@@ -7,6 +7,17 @@ INSTALL_CMD="sudo dnf install -y"
 UNINSTALL_CMD="sudo dnf autoremove -y"
 UNINSTALL_ONLY_CMD="sudo dnf remove -y"
 
+# Portable sed -i that works on both GNU and BSD systems
+sed_i() {
+    if sed --version >/dev/null 2>&1; then
+        # GNU sed
+        sed -i "$@"
+    else
+        # BSD sed requires an empty string for in-place editing
+        sed -i '' "$@"
+    fi
+}
+
 FLATPAK_INSTALL_CMD="flatpak install --user --assumeyes flathub"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq crudini"
@@ -59,8 +70,8 @@ setup_fedora() {
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/vscode
     sudo dnf config-manager --add-repo https://packages.microsoft.com/yumrepos/edge
-    sudo sed -i "/name=/c\name=microsoft-vscode" /etc/yum.repos.d/packages.microsoft.com_yumrepos_vscode.repo
-    sudo sed -i "/name=/c\name=microsoft-edge" /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo
+    sudo sed_i "/name=/c\\name=microsoft-vscode" /etc/yum.repos.d/packages.microsoft.com_yumrepos_vscode.repo
+    sudo sed_i "/name=/c\\name=microsoft-edge" /etc/yum.repos.d/packages.microsoft.com_yumrepos_edge.repo
 
     command_exists flatpak && flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo && \
         sudo flatpak remote-modify --disable fedora

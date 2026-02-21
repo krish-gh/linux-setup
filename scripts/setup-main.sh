@@ -4,7 +4,7 @@ set -o pipefail
 
 scriptDir=$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")") || { printf 'Failed to determine script directory\n' >&2; exit 1; }
 repoDir="$(dirname "$scriptDir")"
-if [[ -d "$repoDir/.git" && -f "$repoDir/scripts/setup-main.sh" ]]; then
+if [ -d "$repoDir/.git" ] && [ -f "$repoDir/scripts/setup-main.sh" ]; then
     BASE_REPO_LOCATION="$repoDir/"
 else
     BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
@@ -12,6 +12,17 @@ fi
 
 command_exists() {
     command -v "$1" >/dev/null 2>&1
+}
+
+# Portable sed -i that works on both GNU and BSD systems
+sed_i() {
+    if sed --version >/dev/null 2>&1; then
+        # GNU sed
+        sed -i "$@"
+    else
+        # BSD sed requires an empty string for in-place editing
+        sed -i '' "$@"
+    fi
 }
 
 DISTRO_TYPE=''
@@ -31,7 +42,7 @@ elif command_exists zypper; then
     DISTRO_TYPE=opensuse
 fi
 
-if [[ -z "$DISTRO_TYPE" ]]; then
+if [ -z "$DISTRO_TYPE" ]; then
     printf 'Error: Unsupported Linux distribution\n' >&2
     exit 1
 fi
@@ -42,9 +53,9 @@ if ! command_exists curl; then
 fi
 
 DIST_ID=''
-if [[ -f /etc/os-release ]]; then
+if [ -f /etc/os-release ]; then
     # shellcheck disable=SC1091
-    source /etc/os-release
+    . /etc/os-release
     DIST_ID="${ID:-}"
 fi
 
@@ -102,7 +113,7 @@ trap 'rm -rf "$TEMP_DIR"' EXIT
 # arg1 = destination path, arg2 = source path
 copy_file() {
     local dest="$1" src="$2"
-    if [[ "$src" == http* ]]; then
+    if echo "$src" | grep -q '^http'; then
         curl -f -o "$dest" "$src?$(date +%s)" || { printf 'Error downloading %s\n' "$src" >&2; return 1; }
     else
         cp -f "$src" "$dest" || { printf 'Error copying %s\n' "$src" >&2; return 1; }
@@ -112,7 +123,7 @@ copy_file() {
 # arg1 = source path
 copy_content() {
     local src="$1"
-    if [[ "$src" == http* ]]; then
+    if echo "$src" | grep -q '^http'; then
         curl -f "$src?$(date +%s)" || { printf 'Error downloading %s\n' "$src" >&2; return 1; }
     else
         cat "$src" || { printf 'Error reading %s\n' "$src" >&2; return 1; }
@@ -168,12 +179,12 @@ debloat_pkgs() {
     local debloat_file="$TEMP_DIR/$DISTRO_TYPE.txt"
     copy_file "$debloat_file" "${BASE_REPO_LOCATION}debloat/$DISTRO_TYPE.txt" || { printf 'Warning: Could not download debloat list\n' >&2; return; }
     while IFS= read -r pkg; do
-        [[ -z "$pkg" || "$pkg" == \#* ]] && continue
+        [ -z "$pkg" ] || echo "$pkg" | grep -q '^#' && continue
         uninstall_pkgs "$pkg"
     done < "$debloat_file"
     rm -f "$debloat_file"
 
-    if [[ -n "$PACKAGES_TO_REMOVE" ]]; then
+    if [ -n "$PACKAGES_TO_REMOVE" ]; then
         printf 'Removing additional packages...\n'
         uninstall_only_pkgs "$PACKAGES_TO_REMOVE"
     fi
@@ -182,25 +193,25 @@ debloat_pkgs() {
 # override with DISTRO_TYPE specific stuffs
 printf 'Executing common %s specific script...\n' "$DISTRO_TYPE"
 copy_file "$TEMP_DIR/$DISTRO_TYPE.sh" "${BASE_REPO_LOCATION}distros/$DISTRO_TYPE.sh" || { printf 'Error: Failed to download %s specific script\n' "$DISTRO_TYPE" >&2; exit 3; }
-if [[ ! -f "$TEMP_DIR/$DISTRO_TYPE.sh" ]]; then
+if [ ! -f "$TEMP_DIR/$DISTRO_TYPE.sh" ]; then
     printf 'Error: %s specific script not found!\n' "$DISTRO_TYPE" >&2
     exit 3
 fi
 # shellcheck disable=SC1090
-source "$TEMP_DIR/$DISTRO_TYPE.sh" || { printf 'Error: Failed to source %s specific script\n' "$DISTRO_TYPE" >&2; exit 3; }
+. "$TEMP_DIR/$DISTRO_TYPE.sh" || { printf 'Error: Failed to source %s specific script\n' "$DISTRO_TYPE" >&2; exit 3; }
 rm -f "$TEMP_DIR/$DISTRO_TYPE.sh"
 
 # desktop environment specific stuffs
 copy_file "$TEMP_DIR/$DESKTOP.sh" "${BASE_REPO_LOCATION}desktop/$DESKTOP.sh"
 # shellcheck disable=SC1090
-[[ -f "$TEMP_DIR/$DESKTOP.sh" ]] && source "$TEMP_DIR/$DESKTOP.sh"
+[ -f "$TEMP_DIR/$DESKTOP.sh" ] && . "$TEMP_DIR/$DESKTOP.sh"
 rm -f "$TEMP_DIR/$DESKTOP.sh"
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
-if [[ -n "$DIST_ID" ]]; then
+if [ -n "$DIST_ID" ]; then
     copy_file "$TEMP_DIR/$DIST_ID.sh" "${BASE_REPO_LOCATION}specific/$DIST_ID.sh"
     # shellcheck disable=SC1090
-    [[ -f "$TEMP_DIR/$DIST_ID.sh" ]] && source "$TEMP_DIR/$DIST_ID.sh"
+    [ -f "$TEMP_DIR/$DIST_ID.sh" ] && . "$TEMP_DIR/$DIST_ID.sh"
     rm -f "$TEMP_DIR/$DIST_ID.sh"
 fi
 
@@ -208,7 +219,7 @@ setup_system() {
     install_pkgs "virt-what"
     SYSTEM_TO_SETUP=$(sudo virt-what 2>/dev/null)
 
-    if [[ -n "$SYSTEM_TO_SETUP" ]]; then
+    if [ -n "$SYSTEM_TO_SETUP" ]; then
         printf 'SYSTEM=%s\n' "$SYSTEM_TO_SETUP"
 
         case "$SYSTEM_TO_SETUP" in
@@ -306,11 +317,11 @@ setup_font() {
     copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf "${BASE_REPO_LOCATION}home/.config/fontconfig/conf.d/20-no-embedded.conf" || true
     copy_file ~/.Xresources "${BASE_REPO_LOCATION}home/.Xresources" || true
     xrdb -merge ~/.Xresources 2>/dev/null || true
-    [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
+    [ -f /etc/profile.d/freetype2.sh ] && sudo sed_i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
     sudo ln -sf /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/ 2>/dev/null
     sudo ln -sf /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/ 2>/dev/null
     sudo ln -sf /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/ 2>/dev/null
-    [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]] && sudo ln -sf /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/ 2>/dev/null
+    [ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ] && sudo ln -sf /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/ 2>/dev/null
     if ! fc-list | grep -qi "JetBrainsMono Nerd"; then
         printf 'Installing Nerd Font manually as not found...\n'
         mkdir -p ~/.local/bin
@@ -334,7 +345,7 @@ setup_terminal() {
     # nano
     mkdir -p ~/.config/nano
     copy_file ~/.config/nano/nanorc "${BASE_REPO_LOCATION}home/.config/nano/nanorc" || true
-    if [[ -d /usr/share/nano-syntax-highlighting/ ]]; then
+    if [ -d /usr/share/nano-syntax-highlighting/ ]; then
         append_if_missing ~/.config/nano/nanorc "nano-syntax-highlighting" "include \"/usr/share/nano-syntax-highlighting/*.nanorc\""
     fi
 
@@ -377,7 +388,7 @@ setup_terminal() {
     if command_exists gnome-terminal; then
         tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default 2>/dev/null | tr -d "'" || echo "default")
         copy_file "$TEMP_DIR/gterm.dconf" "${BASE_REPO_LOCATION}desktop/gterm.dconf" && {
-            sed -i "s/DEFAULT_PROFILE/$tprofileid/g" "$TEMP_DIR/gterm.dconf"
+            sed_i "s/DEFAULT_PROFILE/$tprofileid/g" "$TEMP_DIR/gterm.dconf"
             dconf load /org/gnome/terminal/ < "$TEMP_DIR/gterm.dconf" 2>/dev/null || printf 'Warning: Failed to load dconf settings\n' >&2
             rm -f "$TEMP_DIR/gterm.dconf"
         }
@@ -401,11 +412,11 @@ setup_common_ui() {
     }
 
     mkdir -p ~/.config/{gtk-3.0,gtk-4.0}
-    if [[ ! -f ~/.config/gtk-3.0/settings.ini ]]; then
+    if [ ! -f ~/.config/gtk-3.0/settings.ini ]; then
         printf '[Settings]\n' > ~/.config/gtk-3.0/settings.ini
         printf '#gtk-application-prefer-dark-theme=true\n' >> ~/.config/gtk-3.0/settings.ini
     fi
-    if [[ ! -f ~/.config/gtk-4.0/settings.ini ]]; then
+    if [ ! -f ~/.config/gtk-4.0/settings.ini ]; then
         cp ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/ || true
         printf 'gtk-hint-font-metrics=1\n' >> ~/.config/gtk-4.0/settings.ini
     fi
@@ -423,10 +434,10 @@ setup_common_ui() {
         copy_file ~/.config/qt"${i}"ct/qt"${i}"ct.conf "${BASE_REPO_LOCATION}home/.config/qt${i}ct/qt${i}ct.conf" || true
     done
 
-    if [[ -d /etc/lightdm ]]; then
+    if [ -d /etc/lightdm ]; then
         printf 'Configuring lightdm stuff...\n'
         grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm 2>/dev/null | \
-        xargs -r sudo sed -i "/greeter-hide-users=true/c\\greeter-hide-users=false" 2>/dev/null || true
+        xargs -r sudo sed_i "/greeter-hide-users=true/c\\greeter-hide-users=false" 2>/dev/null || true
     fi
 }
 
@@ -446,7 +457,7 @@ setup_apps() {
 
     printf 'Setting up file associations...\n'
     copy_file ~/.config/mimeapps.list "${BASE_REPO_LOCATION}home/.config/mimeapps.list" || true
-    [[ -f ~/.config/mimeapps.list ]] && sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
+    [ -f ~/.config/mimeapps.list ] && sed_i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
     ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list 2>/dev/null || true
 }
@@ -455,11 +466,11 @@ debloat_pkgs
 refresh_package_sources
 printf 'Installing required packages...\n'
 install_pkgs "$REQUIREMENTS"
-if [[ "$(type -t setup_"$DISTRO_TYPE")" == "function" ]]; then
+if (command -v setup_"$DISTRO_TYPE" >/dev/null 2>&1); then
     setup_"$DISTRO_TYPE"
 fi
 install_pkgs crudini
-if [[ "$(type -t setup_specific_"$DIST_ID")" == "function" ]]; then
+if (command -v setup_specific_"$DIST_ID" >/dev/null 2>&1); then
     printf 'Executing additional %s specific script...\n' "$DIST_ID"
     setup_specific_"$DIST_ID"
 fi
@@ -467,15 +478,15 @@ update_packages
 setup_system
 setup_font
 setup_apps
-if [[ "$(type -t setup_"$DESKTOP")" == "function" ]]; then
+if (command -v setup_"$DESKTOP" >/dev/null 2>&1); then
     setup_"$DESKTOP"
 fi
 setup_common_ui
-if [[ "$(type -t setup_"$DISTRO_TYPE"_"$DESKTOP")" == "function" ]]; then
+if (command -v setup_"$DISTRO_TYPE"_"$DESKTOP" >/dev/null 2>&1); then
     printf 'Executing additional %s %s specific script...\n' "$DISTRO_TYPE" "$DESKTOP"
     setup_"$DISTRO_TYPE"_"$DESKTOP"
 fi
-if [[ "$(type -t setup_specific_"$DIST_ID"_"$DESKTOP")" == "function" ]]; then
+if (command -v setup_specific_"$DIST_ID"_"$DESKTOP" >/dev/null 2>&1); then
     printf 'Executing additional %s %s specific script...\n' "$DIST_ID" "$DESKTOP"
     setup_specific_"$DIST_ID"_"$DESKTOP"
 fi

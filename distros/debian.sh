@@ -59,7 +59,7 @@ setup_debian() {
     rm -f .wget-hsts
 
     # add some ppa if ubuntu based
-    if [[ $DIST_ID == *ubuntu* || $ID_LIKE == *ubuntu* ]]; then
+    if echo "$DIST_ID" | grep -q 'ubuntu' || echo "$ID_LIKE" | grep -q 'ubuntu'; then
         sudo add-apt-repository ppa:papirus/papirus -y # for qt6-style-kvantum
         sudo add-apt-repository ppa:zhangsongcui3371/fastfetch -y
     fi

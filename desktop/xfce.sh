@@ -3,6 +3,17 @@
 # shellcheck disable=SC2034
 GUI_TEXT_EDITOR=org.xfce.mousepad.desktop
 
+# Portable sed -i that works on both GNU and BSD systems
+sed_i() {
+    if sed --version >/dev/null 2>&1; then
+        # GNU sed
+        sed -i "$@"
+    else
+        # BSD sed requires an empty string for in-place editing
+        sed -i '' "$@"
+    fi
+}
+
 setup_xfce() {
     printf 'Configuring xfce stuffs...\n'
     install_pkgs "$XFCE_PACKAGES_TO_INSTALL"
@@ -71,8 +82,8 @@ setup_xfce_panel() {
     copy_file ~/.config/xfce4/panel/launcher-5/WebBrowser.desktop "${BASE_REPO_LOCATION}home/.config/xfce4/panel/launcher-5/WebBrowser.desktop"
     copy_file ~/.config/xfce4/panel/whiskermenu-1.rc "${BASE_REPO_LOCATION}home/.config/xfce4/panel/whiskermenu-1.rc"
     copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "${BASE_REPO_LOCATION}home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
-    sed -i "s/DISTRO_LOGO/${XFCE_MENU_LOGO}/g" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-    sed -i "s/DISTRO_LOGO/${XFCE_MENU_LOGO}/g" ~/.config/xfce4/panel/whiskermenu-1.rc
+    sed_i "s/DISTRO_LOGO/${XFCE_MENU_LOGO}/g" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    sed_i "s/DISTRO_LOGO/${XFCE_MENU_LOGO}/g" ~/.config/xfce4/panel/whiskermenu-1.rc
     xfce4-panel > /dev/null 2>&1 & disown
 }
 

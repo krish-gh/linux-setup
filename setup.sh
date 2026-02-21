@@ -3,12 +3,12 @@
 set -o pipefail
 
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
-scriptDir=$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")") || { printf 'Error: Failed to determine script directory\n' >&2; exit 1; }
+scriptDir=$(cd -- "$(dirname -- "$0")" && pwd) || { printf 'Error: Failed to determine script directory\n' >&2; exit 1; }
 
-if [[ -d "$scriptDir/.git" && -f "$scriptDir/scripts/setup-main.sh" ]]; then
+if [ -d "$scriptDir/.git" ] && [ -f "$scriptDir/scripts/setup-main.sh" ]; then
     printf 'Running from local clone...\n'
     # shellcheck disable=SC1090
-    source "$scriptDir/scripts/setup-main.sh" 2>&1 | tee ~/setup-"$timestamp".log
+    . "$scriptDir/scripts/setup-main.sh" 2>&1 | tee ~/setup-"$timestamp".log
 else
     printf 'Running from remote sources...\n'
     # Download and execute the main setup script
