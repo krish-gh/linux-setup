@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # This is example documentation - shellcheck not applied
 
 ## option #1

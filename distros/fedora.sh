@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 REFRESH_CMD="sudo dnf check-update --refresh"
 UPDATE_CMD="sudo dnf update --refresh -y"

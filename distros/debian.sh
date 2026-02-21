@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 REFRESH_CMD="sudo apt-get update"
 UPDATE_CMD="sudo apt-get update && sudo apt-get full-upgrade -y"

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 REFRESH_CMD="sudo pacman -Sy"
 UPDATE_CMD="sudo pacman -Syu --noconfirm"

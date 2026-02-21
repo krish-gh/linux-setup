@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 setup_specific_debian() {
     install_pkgs "pipewire-audio"

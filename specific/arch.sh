@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 setup_specific_arch_xfce() {
     install_pkgs "materia-gtk-theme papirus-icon-theme"

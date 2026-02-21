@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -o pipefail
 
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S')

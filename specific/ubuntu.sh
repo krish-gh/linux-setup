@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 setup_specific_ubuntu() {
     # echo -e "Replacing snap version of firefox with native one..."

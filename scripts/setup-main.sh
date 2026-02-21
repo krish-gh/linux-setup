@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -o pipefail
 
 scriptDir=$(cd -- "$(dirname -- "$0")" && pwd) || { printf 'Failed to determine script directory\n' >&2; exit 1; }

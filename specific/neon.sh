@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 setup_specific_neon() {
     # just ensuring this meta package was not uninstalled, it will wait for confirmation if it was

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 GUI_TEXT_EDITOR=org.gnome.TextEditor.desktop
 

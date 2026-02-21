@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 REFRESH_CMD="sudo zypper --gpg-auto-import-keys refresh"
 UPDATE_CMD="sudo zypper dup --allow-vendor-change -y"
