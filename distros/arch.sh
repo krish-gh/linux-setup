@@ -83,8 +83,8 @@ setup_arch() {
     sudo sed_i "/RemoveUnrequiredDeps/s/^#//g; /NoUpdateHideIcon/s/^#//g; /KeepNumPackages/c\\KeepNumPackages = 1; /RefreshPeriod/c\\RefreshPeriod = 0" /etc/pamac.conf 2>/dev/null || true
 
     # misc
-    flagstocopy=(code electron chromium chrome microsoft-edge-stable)
-    for i in "${flagstocopy[@]}"; do
+    flagstocopy='code electron chromium chrome microsoft-edge-stable'
+    for i in $flagstocopy; do
         copy_file ~/.config/"${i}"-flags.conf "${BASE_REPO_LOCATION}home/.config/${i}-flags.conf" || true
     done
 }

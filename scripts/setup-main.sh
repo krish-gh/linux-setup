@@ -2,7 +2,7 @@
 # shellcheck disable=SC2034,SC2128
 set -o pipefail
 
-scriptDir=$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")") || { printf 'Failed to determine script directory\n' >&2; exit 1; }
+scriptDir=$(cd -- "$(dirname -- "$0")" && pwd) || { printf 'Failed to determine script directory\n' >&2; exit 1; }
 repoDir="$(dirname "$scriptDir")"
 if [ -d "$repoDir/.git" ] && [ -f "$repoDir/scripts/setup-main.sh" ]; then
     BASE_REPO_LOCATION="$repoDir/"
@@ -143,33 +143,22 @@ update_packages() {
 
 install_pkgs() {
     # Install packages one by one to avoid aborting on individual failures
-    local pkgs
-    # shellcheck disable=SC2206
-    pkgs=($1)
-    local pkg
-    for pkg in "${pkgs[@]}"; do
+    # Use word splitting instead of bash arrays for POSIX compatibility
+    for pkg in $1; do
         eval "$INSTALL_CMD $pkg" || printf 'Warning: Failed to install %s\n' "$pkg" >&2
     done
 }
 
 uninstall_pkgs() {
     # Uninstall packages one by one to avoid aborting on individual failures
-    local pkgs
-    # shellcheck disable=SC2206
-    pkgs=($1)
-    local pkg
-    for pkg in "${pkgs[@]}"; do
+    for pkg in $1; do
         eval "$UNINSTALL_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
     done
 }
 
 uninstall_only_pkgs() {
     # Uninstall packages (without dependencies) one by one to avoid aborting on individual failures
-    local pkgs
-    # shellcheck disable=SC2206
-    pkgs=($1)
-    local pkg
-    for pkg in "${pkgs[@]}"; do
+    for pkg in $1; do
         eval "$UNINSTALL_ONLY_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
     done
 }
@@ -402,7 +391,7 @@ setup_common_ui() {
     gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'" || echo "")
     printf 'CURRENT_GTK_THEME=%s\n' "$gtktheme"
     # make it dark
-    if [[ -n "$gtktheme" && ! "$gtktheme" =~ -dark$ ]]; then
+    if [ -n "$gtktheme" ] && ! echo "$gtktheme" | grep -q -- '-dark$'; then
         gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme-dark" 2>/dev/null || true
     fi
 

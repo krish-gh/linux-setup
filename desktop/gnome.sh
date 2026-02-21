@@ -22,20 +22,23 @@ setup_gnome() {
         return
     fi
 
-    declare -A exts
-    exts[1]=AlphabeticalAppGrid@stuarthayhurst
-    exts[2]=clipboard-indicator@tudmotu.com
-    exts[3]=status-area-horizontal-spacing@mathematical.coffee.gmail.com
-    exts[4]=xwayland-indicator@swsnr.de
-    exts[5]=apps-menu@gnome-shell-extensions.gcampax.github.com
-    [ "$DIST_ID" != "ubuntu" ] && exts[6]=appindicatorsupport@rgcjonas.gmail.com
-    [ "$DIST_ID" != "ubuntu" ] && exts[7]=dash-to-dock@micxgx.gmail.com
-    [ "$DISTRO_TYPE" = "arch" ] && exts[arch]=arch-update@RaphaelRochet
-    [ "$DISTRO_TYPE" = "debian" ] && exts[debian]=debian-updates-indicator@glerro.pm.me
-    [ "$DISTRO_TYPE" = "fedora" ] && exts[fedora]=update-extension@purejava.org
+    # POSIX-compatible extension list (using space-separated string instead of associative array)
+    exts='AlphabeticalAppGrid@stuarthayhurst clipboard-indicator@tudmotu.com status-area-horizontal-spacing@mathematical.coffee.gmail.com xwayland-indicator@swsnr.de apps-menu@gnome-shell-extensions.gcampax.github.com'
+    
+    if [ "$DIST_ID" != "ubuntu" ]; then
+        exts="$exts appindicatorsupport@rgcjonas.gmail.com dash-to-dock@micxgx.gmail.com"
+    fi
+    
+    if [ "$DISTRO_TYPE" = "arch" ]; then
+        exts="$exts arch-update@RaphaelRochet"
+    elif [ "$DISTRO_TYPE" = "debian" ]; then
+        exts="$exts debian-updates-indicator@glerro.pm.me"
+    elif [ "$DISTRO_TYPE" = "fedora" ]; then
+        exts="$exts update-extension@purejava.org"
+    fi
 
-    local extdir=~/.local/share/gnome-shell/extensions
-    for i in "${exts[@]}"; do
+    extdir=~/.local/share/gnome-shell/extensions
+    for i in $exts; do
         ~/.local/bin/gnome-extensions-cli --filesystem install "$i" 2>/dev/null || printf 'Warning: Failed to install extension %s\n' "$i" >&2
         [ -d "$extdir/$i/schemas" ] && glib-compile-schemas "$extdir/$i/schemas/" 2>/dev/null || true
     done
