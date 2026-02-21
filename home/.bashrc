@@ -7,7 +7,7 @@ export SYSTEMD_PAGER=
 export PATH="$PATH:~/.local/bin"
 
 # My aliiases
-[[ -f ~/.aliases ]] && . ~/.aliases
+[ -f ~/.aliases ] && . ~/.aliases
 
 # Cool shell prompt
-command -v starship &> /dev/null && eval "$(starship init bash)"
+command -v starship >/dev/null 2>&1 && eval "$(starship init bash)"

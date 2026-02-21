@@ -2,7 +2,7 @@
 alias sudo='sudo -E -H '
 alias e='sudo systemctl --failed --no-pager; sudo journalctl -p 3 -b'
 alias cls='clear'
-alias u='sudo pacman -Syu; command -v flatpak &> /dev/null && flatpak update; command -v snap &> /dev/null && sudo snap refresh; command -v pipx &> /dev/null && pipx upgrade-all'
+alias u='sudo pacman -Syu; command -v flatpak >/dev/null 2>&1 && flatpak update; command -v snap >/dev/null 2>&1 && sudo snap refresh; command -v pipx >/dev/null 2>&1 && pipx upgrade-all'
 alias uu='yay -Syu'
 alias i='sudo pacman -S --needed'
 alias ii='yay -S --needed'
@@ -14,8 +14,8 @@ alias rr='yay -Rns'
 alias b='pacman -Qqen > pkglist.txt && echo >> pkglist.txt && pacman -Qm >> pkglist.txt && echo >> pkglist.txt'
 alias c='paccache -r; yay -Yc; yay -Sc; yay -Rns $(yay -Qtdq)'
 alias x='exit'
-command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
-if command -v fastfetch &> /dev/null; then
+command -v gnome-text-editor >/dev/null 2>&1 && alias gte='gnome-text-editor' && alias gted='gnome-text-editor'
+if command -v fastfetch >/dev/null 2>&1; then
     alias neofetch='fastfetch'
 else
     alias fastfetch='neofetch'
@@ -28,7 +28,7 @@ alias ff='fastfetch'
 alias ua-drop-caches='sudo paccache -rk1; yay -Sc --aur --noconfirm'
 alias ua-rate='sudo true; \
        rate-mirrors --disable-comments-in-file --protocol=https arch --max-delay=120 | sudo tee /etc/pacman.d/mirrorlist; \
-      [[ -f /etc/pacman.d/endeavouros-mirrorlist ]] && rate-mirrors --disable-comments-in-file --protocol=https endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist; \
-      [[ -f /etc/pacman.d/chaotic-mirrorlist ]] && rate-mirrors --disable-comments-in-file --protocol=https chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist; \
+      [ -f /etc/pacman.d/endeavouros-mirrorlist ] && rate-mirrors --disable-comments-in-file --protocol=https endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist; \
+      [ -f /etc/pacman.d/chaotic-mirrorlist ] && rate-mirrors --disable-comments-in-file --protocol=https chaotic-aur | sudo tee /etc/pacman.d/chaotic-mirrorlist; \
       ua-drop-caches; yay -Syyu --noconfirm'
 
