@@ -26,7 +26,7 @@ This project emphasizes reliability and security:
 - **Portable**: Uses `printf` instead of `echo -e` for better portability across shell implementations
 - **Fail-Safe**: Non-critical failures don't halt the entire setup—the script continues gracefully
 - **No eval**: Avoids dangerous `eval` for remote script execution; uses safe alternatives instead
-- **Validation**: All shell scripts pass strict syntax validation with `bash -n`
+- **Validation**: All shell scripts are POSIX sh-compatible and pass strict syntax validation with `sh -n`
 
 ## Prerequisites
 
@@ -220,14 +220,14 @@ This project is provided as-is for personal use and customization.
 ### Quick Start - Option #1 (Remote)
 Run without cloning this repo. It downloads required files when needed:
 
-```bash
-curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | bash
+```sh
+curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | sh
 ```
 
 ### Option #2 (Local Clone)
 Clone the repo first and run from local files:
 
-```bash
+```sh
 git clone https://github.com/krish-gh/linux-setup.git &&
 . linux-setup/setup.sh &&
 rm -rf linux-setup

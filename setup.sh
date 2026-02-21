@@ -10,7 +10,7 @@ if [ -d "$scriptDir/.git" ] && [ -f "$scriptDir/scripts/setup-main.sh" ]; then
 else
     printf 'Running from remote sources...\n'
     # Download and execute the main setup script
-    if ! curl -fsSL "https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-main.sh?$timestamp" | bash 2>&1 | tee ~/setup-"$timestamp".log; then
+    if ! curl -fsSL "https://raw.githubusercontent.com/krish-gh/linux-setup/main/scripts/setup-main.sh?$timestamp" | sh 2>&1 | tee ~/setup-"$timestamp".log; then
         printf 'Error: Failed to download or execute setup script\n' >&2
         exit 1
     fi
