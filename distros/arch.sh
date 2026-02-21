@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# shellcheck disable=SC2034
 REFRESH_CMD="sudo pacman -Sy"
 UPDATE_CMD="sudo pacman -Syu --noconfirm"
 INSTALL_CMD="sudo pacman -S --needed --noconfirm"

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# shellcheck disable=SC2034
 REFRESH_CMD="sudo zypper --gpg-auto-import-keys refresh"
 UPDATE_CMD="sudo zypper dup --allow-vendor-change -y"
 INSTALL_CMD="sudo zypper install -y"

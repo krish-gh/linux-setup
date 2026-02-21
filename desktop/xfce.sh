@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# shellcheck disable=SC2034
 GUI_TEXT_EDITOR=org.xfce.mousepad.desktop
 
 # Portable sed -i that works on both GNU and BSD systems
