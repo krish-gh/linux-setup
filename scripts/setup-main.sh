@@ -53,7 +53,6 @@ fi
 
 DIST_ID=''
 if [ -f /etc/os-release ]; then
-    # shellcheck disable=SC1091
     . /etc/os-release
     DIST_ID="${ID:-}"
 fi
@@ -185,20 +184,17 @@ if [ ! -f "$TEMP_DIR/$DISTRO_TYPE.sh" ]; then
     printf 'Error: %s specific script not found!\n' "$DISTRO_TYPE" >&2
     exit 3
 fi
-# shellcheck disable=SC1090
 . "$TEMP_DIR/$DISTRO_TYPE.sh" || { printf 'Error: Failed to source %s specific script\n' "$DISTRO_TYPE" >&2; exit 3; }
 rm -f "$TEMP_DIR/$DISTRO_TYPE.sh"
 
 # desktop environment specific stuffs
 copy_file "$TEMP_DIR/$DESKTOP.sh" "${BASE_REPO_LOCATION}desktop/$DESKTOP.sh"
-# shellcheck disable=SC1090
 [ -f "$TEMP_DIR/$DESKTOP.sh" ] && . "$TEMP_DIR/$DESKTOP.sh"
 rm -f "$TEMP_DIR/$DESKTOP.sh"
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
 if [ -n "$DIST_ID" ]; then
     copy_file "$TEMP_DIR/$DIST_ID.sh" "${BASE_REPO_LOCATION}specific/$DIST_ID.sh"
-    # shellcheck disable=SC1090
     [ -f "$TEMP_DIR/$DIST_ID.sh" ] && . "$TEMP_DIR/$DIST_ID.sh"
     rm -f "$TEMP_DIR/$DIST_ID.sh"
 fi

@@ -1,5 +1,4 @@
 #!/bin/bash
-# shellcheck disable=SC1091
 set -o pipefail
 
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S')
@@ -7,7 +6,6 @@ scriptDir=$(cd -- "$(dirname -- "$0")" && pwd) || { printf 'Error: Failed to det
 
 if [ -d "$scriptDir/.git" ] && [ -f "$scriptDir/scripts/setup-main.sh" ]; then
     printf 'Running from local clone...\n'
-    # shellcheck disable=SC1090
     . "$scriptDir/scripts/setup-main.sh" 2>&1 | tee ~/setup-"$timestamp".log
 else
     printf 'Running from remote sources...\n'

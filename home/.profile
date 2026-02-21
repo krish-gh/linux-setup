@@ -1,5 +1,3 @@
-# shellcheck disable=SC2148
-
 # ~custom-setup~
 #export QT_QPA_PLATFORM=wayland
 export QT_QPA_PLATFORMTHEME=qt5ct

@@ -1,7 +1,4 @@
 #!/bin/sh
-# shellcheck disable=SC2139
-# shellcheck disable=SC3009
-# shellcheck disable=SC3020
 alias sudo='sudo -E -H '
 alias e='sudo systemctl --failed --no-pager; sudo journalctl -p 3 -b'
 alias cls='clear'

@@ -1,5 +1,3 @@
-# shellcheck disable=SC2148
-
 # ~custom-setup~
 # Shell customization
 HISTSIZE=20
@@ -9,7 +7,6 @@ export SYSTEMD_PAGER=
 export PATH="$PATH:~/.local/bin"
 
 # My aliiases
-# shellcheck disable=SC1090
 [[ -f ~/.aliases ]] && . ~/.aliases
 
 # Cool shell prompt
