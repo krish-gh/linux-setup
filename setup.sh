@@ -1,5 +1,5 @@
 #!/bin/bash
-# shellcheck disable=SC1091,SC2128
+# shellcheck disable=SC1091
 set -o pipefail
 
 timestamp=$(date '+%Y-%m-%d-%H:%M:%S')

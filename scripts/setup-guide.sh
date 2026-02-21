@@ -1,8 +1,5 @@
 #!/bin/bash
-# shellcheck disable=SC2046
-# shellcheck disable=SC1091
-# shellcheck disable=SC2164
-# shellcheck disable=SC2103
+# This is example documentation - shellcheck not applied
 
 ## option #1
 curl -fsSL https://raw.githubusercontent.com/krish-gh/linux-setup/main/setup.sh | bash

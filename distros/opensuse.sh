@@ -38,7 +38,6 @@ setup_opensuse() {
     # https://en.opensuse.org/Additional_package_repositories
     # http://packman.links2linux.org/mirrors
     sudo zypper rr packman
-    # shellcheck disable=SC2154
     if [ -z "$releasever" ]; then
         install_pkgs openSUSE-repos-Tumbleweed
         sudo zypper ar -cfp 90 'http://mirror.karneval.cz/pub/linux/packman/suse/openSUSE_Tumbleweed/' packman
