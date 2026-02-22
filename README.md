@@ -30,25 +30,21 @@ This project emphasizes reliability and security:
 
 ## Prerequisites
 
-- A supported Linux distribution (see [Supported Scenarios](#supported-scenario))
+- A supported Linux distribution (see [Supported Scenarios](#supported-scenarios))
 - Sudo access for system-level configuration
 - Internet connection to download packages and resources
 - `curl` command-line tool (required)
 
-## Supported scenario
+## Supported Scenarios
 
-> **_NOTE:_** KDE's config system is all over the places and many things are only possible from UI. So, I could automate only few things. That's one of the reasons I don't like KDE.
+> **_NOTE:_** KDE Plasma configuration is complex due to its scattered configuration system. The setup automates package installation and basic theming only; many settings require manual configuration through the System Settings GUI.
 
-| Distrution Type | Specific                | Desktop Environment        |
-| --------------- | ----------------------- | -------------------------- |
-| Arch            | Arch                    | Gnome, KDE, Cinnamon, XFCE |
-|                 | EndeavourOS             | Gnome, KDE, Cinnamon       |
-| Debian          | Debian                  | Gnome, XFCE                |
-|                 | Ubuntu                  | Gnome                      |
-|                 | Mint                    | Cinnamon, XFCE             |
-|                 | LMDE                    | Cinnamon                   |
-| Fedora          | Fedora (Non-Silverblue) | Gnome, KDE, Cinnamon, XFCE |
-| OpenSUSE        | Tumbleweed, Leap        | Gnome, KDE, Cinnamon, XFCE |
+| Distribution Type | Specific Variant        | Desktop Environment    |
+| --- | --- | --- |
+| **Arch-based** | Arch Linux, EndeavourOS | GNOME, KDE, Cinnamon, XFCE |
+| **Debian-based** | Debian, Ubuntu, Linux Mint, LMDE | GNOME, Cinnamon, XFCE |
+| **Fedora** | Fedora (non-Silverblue) | GNOME, KDE, Cinnamon, XFCE |
+| **OpenSUSE** | Tumbleweed, Leap | GNOME, KDE, Cinnamon, XFCE |
 
 ## Project Structure
 
@@ -102,19 +98,40 @@ Distribution-specific setup and package lists. Each distro has:
 
 ### `/home`
 User home directory configuration files and templates:
-- `.bashrc` - Bash initialization (custom functions, sourcing from .aliases)
-- `.profile` - Shell login profile environment setup
-- `.xinitrc` - X11 initialization (for startx)
+
+**Shell & X11:**
+- `.bashrc` - Bash initialization with custom functions and aliases
+- `.profile` - Shell login profile and environment variables
+- `.xinitrc` - X11 initialization for startx
 - `.xprofile` - X11 session startup profile
 - `.xsessionrc` - X11 session configuration
-- `.Xresources` - X11 resource database (font DPI, colors, etc.)
-- `.config/` - Desktop environment and application configs
-- `.local/` - User-local binaries and data files
-- `.config/fontconfig/fonts.conf` - Font rendering configuration
-- `.config/nano/nanorc` - Nano editor configuration
-- `.config/alacritty/alacritty.toml` - Alacritty terminal emulator config
-- `.config/kitty/kitty.conf` - Kitty terminal emulator config
-- `.local/share/keyrings/` - GNOME Keyring files
+- `.Xresources` - X11 resource database (font DPI, colors)
+
+**Terminal Emulators:**
+- `.config/alacritty/alacritty.toml` - Alacritty terminal configuration and themes
+- `.config/kitty/kitty.conf` - Kitty terminal configuration
+- `.config/wezterm/wezterm.lua` - WezTerm terminal configuration (Lua-based)
+
+**System & App Configs:**
+- `.config/fontconfig/fonts.conf` - Font rendering and hinting configuration
+- `.config/nano/nanorc` - Nano editor configuration with syntax highlighting
+- `.config/fastfetch/config.jsonc` - System info display configuration
+- `.config/mimeapps.list` - Default applications for file types
+- `.config/xfce4/` - XFCE-specific panel and window manager settings
+- `.config/Kvantum/` - KDE Qt application theming
+- `.config/qt5ct/` & `.config/qt6ct/` - Qt5/Qt6 theme configuration
+- `.config/vlc/` - VLC media player preferences
+- `.config/environment.d/` - User environment variables
+- `.config/systemd/` - User systemd service configurations
+
+**Application Flags:**
+- `.config/chrome-flags.conf`, `.config/chromium-flags.conf` - Chromium-based browser flags
+- `.config/code-flags.conf` - Visual Studio Code startup flags
+- `.config/electron-flags.conf` - Electron application flags
+- `.config/microsoft-edge-stable-flags.conf` - Microsoft Edge flags
+
+**User Data:**
+- `.local/share/keyrings/` - GNOME Keyring files and SSH key storage
 
 ### `/specific`
 Fine-grained, distro-version specific configurations:
@@ -126,17 +143,17 @@ Fine-grained, distro-version specific configurations:
 - `neon.sh` - KDE Neon-specific setup hooks
 
 ### `/system`
-System-level configuration files (require sudo):
+System-level configuration files for machine-wide settings (require sudo to apply):
 
-**Kernel and System Parameters:**
-- `etc/sysctl.d/999-sysctl.conf` - Kernel parameters (network, memory, security)
+**Kernel and Sysctl Parameters:**
+- `etc/sysctl.d/999-sysctl.conf` - Kernel tuning (network performance, memory management, security hardening)
 
 **Systemd Services:**
-- `etc/systemd/journald.conf.d/00-journal-size.conf` - Journal size and retention policy
-- `etc/systemd/coredump.conf.d/custom.conf` - Core dump handling configuration
+- `etc/systemd/journald.conf.d/00-journal-size.conf` - Journal storage policy and size limits
+- `etc/systemd/coredump.conf.d/custom.conf` - Core dump handling and storage configuration
 
-**Display Manager:**
-- `etc/dconf/db/gdm.d/95-gdm-settings` - GNOME Display Manager (GDM) login screen settings
+**Display Manager (GNOME GDM):**
+- `etc/dconf/db/gdm.d/95-gdm-settings` - Login screen appearance and behavior (currently commented out in main setup)
 
 ## Customization
 
@@ -144,72 +161,78 @@ System-level configuration files (require sudo):
 
 To customize which packages are installed/removed:
 
-1. **For your specific distribution**, edit `/distros/{arch,debian,fedora,opensuse}.sh`:
-   - Modify `*_PACKAGES_TO_INSTALL` variables to add/remove packages
-   - Update `UNINSTALL_CMD` options for removal behavior
+1. **General distribution packages** - Edit `/distros/{arch,debian,fedora,opensuse}.sh`:
+   - Modify category variables like `*_PACKAGES_TO_INSTALL` to add/remove packages
+   - Adjust package manager command options in `INSTALL_CMD`, `REMOVE_CMD`, etc.
 
-2. **For debloating**, edit `/debloat/{arch,debian,fedora,opensuse}.txt`:
-   - Add or remove one package name per line
-   - Comment out lines starting with `#` to skip removal
+2. **Debloat lists** - Edit `/debloat/{arch,debian,fedora,opensuse}.txt`:
+   - One package name per line to remove during setup
+   - Prefix with `#` to comment out and skip removal of specific packages
 
-3. **For your specific distro version**, edit `/specific/{arch,debian,ubuntu,linuxmint,neon}.sh`:
-   - Add distro-specific hooks and configurations
-   - Override variables from `/distros` scripts if needed
+3. **Version-specific configurations** - Edit `/specific/{arch,debian,ubuntu,linuxmint,neon}.sh`:
+   - Add distro-variant hooks before or after main installation
+   - Override or append to variables from `/distros` for custom behavior
 
 ### Customizing Desktop Environment Settings
 
 Edit the relevant dconf file in `/desktop/`:
-- **GNOME**: Modify `gnome.dconf` (keybindings, schema settings, appearance)
-- **XFCE**: Modify `xfce.dconf` (panel, window manager, workspace)
-- **Cinnamon**: Modify `cinnamon.dconf` (animations, themes, effects)
-- **Common**: Modify `common.dconf` (settings applied to all DEs)
+- **GNOME**: Modify `gnome.dconf` for keybindings, workspaces, appearance, and extensions
+- **XFCE**: Modify `xfce.dconf` for panel layout, window manager behavior, and workspaces
+- **Cinnamon**: Modify `cinnamon.dconf` for animations, panel settings, and theme effects
+- **KDE**: `kde.sh` handles automatable settings (KDE config is mostly UI-driven)
+- **Common**: Modify `common.dconf` for settings applied across all desktop environments
+- **GNOME Terminal**: Edit `gterm.dconf` for color schemes and terminal appearance
+- **Linux Mint**: Edit `linuxmint.dconf` for Mint-specific settings
 
-DConf files use a simple key=value format. See [DConf documentation](https://wiki.gnome.org/Projects/dconf) for details.
+DConf files use `key=value` format (one setting per line). See [DConf documentation](https://wiki.gnome.org/Projects/dconf) for schema details and valid value types.
 
 ### Terminal Emulator Configuration
 
-Configure terminal theme and appearance:
+Configure your preferred terminal emulator:
 
-- **Alacritty** (`.config/alacritty/alacritty.toml`): Edit for font, colors, padding
-- **Kitty** (`.config/kitty/kitty.conf`): Edit for font, opacity, keybindings  
-- **WezTerm** (`.config/wezterm/wezterm.lua`): Configure with Lua scripting
+- **Alacritty** (`.config/alacritty/alacritty.toml`): TOML format for font, colors, window padding, and opacity
+- **Kitty** (`.config/kitty/kitty.conf`): INI format for fonts, keybindings, colors, and transparency
+- **WezTerm** (`.config/wezterm/wezterm.lua`): Lua scripting for full terminal customization
 
-Themes are downloaded from upstream projects (Catppuccin by default).
+Color themes are automatically downloaded from upstream projects (Catppuccin Mocha by default). Customize fonts, enable ligatures, and adjust colors by editing the appropriate config file.
 
 ### Shell Aliases and Functions
 
-Customize `/distros/{distro}.aliases` to add your own shell aliases sourced at login.
+Distribution-specific aliases are defined in `/distros/{distro}.aliases` and automatically sourced by `.bashrc`. Add your own custom aliases to these files or directly to `.bashrc`.
 
 ## Logging and Debugging
 
-The setup script creates a log file in your home directory for each run:
-```
-~/setup-2026-02-21-14:30:45.log
-```
-
-View the log:
+**Log File Location:** Each run creates a timestamped log in your home directory:
 ```bash
-cat ~/setup-*.log
-tail -f ~/setup-*.log  # Follow in real-time
+ls -la ~/setup-*.log              # List all setup logs
+cat ~/setup-*.log                 # View latest log
+tail -100 ~/setup-*.log           # View last 100 lines
+tail -f ~/setup-*.log             # Follow in real-time (for actively running setup)
 ```
 
-**Error Handling**: The script logs warnings for non-critical failures and continues execution. Check the log file to see if any operations failed. The setup log is timestamped so you can keep history of multiple runs.
+**Error Handling:** The script:
+- Logs all warnings and non-critical failures without stopping the setup
+- Continues executing subsequent steps even if some operations fail
+- Timestamps logs so you can compare multiple runs and track changes over time
+- Check the log file if unexpected behavior occurs or if some packages didn't install
 
 ## Notes and Limitations
 
-- **KDE Plasma**: KDE's configuration system is complex and mostly UI-driven. The automation covers basic packages and themes only. Manual configuration of many settings is still required.
-- **GDM Configuration**: Commented out in the main setup—uncomment `/desktop/gnome.sh` if you need to customize the login screen.
-- **Wayland/Xorg**: The script detects your current session; some settings may not apply if switching between Wayland and Xorg.
-- **Error Recovery**: Some operations may fail gracefully (logged as warnings) and continue; check the setup log for details.
-- **Package Availability**: Not all packages may be available in every distribution version; installation failures are logged but don't halt the setup.
+- **KDE Plasma**: KDE's configuration is mostly UI-driven (`~/.config/kdedefaults/`). Automation handles only packages, themes, and a few key settings. Many customizations require manual configuration through the System Settings GUI.
+- **GDM Login Screen**: GNOME Display Manager configuration is intentionally commented out in the main setup. Uncomment the relevant section in `setup-main.sh` if you want to customize the login screen.
+- **Wayland vs Xorg**: The script auto-detects your session type. Some settings (especially DE-specific dconf values) may not apply correctly when switching between Wayland and Xorg—re-run the setup after switching.
+- **Error Recovery**: Non-critical failures are logged as warnings and don't stop the setup. Check the setup log to identify which operations failed.
+- **Package Availability**: Package availability varies across distro versions. Installation failures are logged but ignore; the setup continues with remaining packages.
+- **File Conflicts**: If customization files exist before setup, they may be overwritten. Back up important configs in `.config/` before running the setup.
 
 ## Requirements
 
-- **Supported Distributions**: Arch, Debian, Fedora, OpenSUSE (and their derivatives)
-- **Sudo Access**: Required for system-level configuration
-- **Internet Connection**: Needed for downloading packages and resources
-- **curl**: Required for downloading remote files
-- **jq**: JSON parser (installed during setup if not present)
+- **Supported Distributions**: Arch, Debian, Fedora, OpenSUSE (and official derivatives)
+- **Sudo Access**: Required for system-level package installation and configuration
+- **Internet Connection**: Essential for downloading packages, themes, and fonts
+- **curl**: Command-line tool for downloading remote scripts and packages
+- **jq**: JSON query tool (auto-installed during setup if missing)
+- **bash or sh**: POSIX-compatible shell (script is compatible with both)
 
 ## License
 
