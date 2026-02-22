@@ -56,7 +56,7 @@ setup_gnome() {
 
 set_gnome_wallpaper() {
     # Set both light and dark wallpaper
-    local wallpaper_uri="file://$1"
+    wallpaper_uri="file://$1"
     gsettings set org.gnome.desktop.background picture-uri "$wallpaper_uri" 2>/dev/null || true
     gsettings set org.gnome.desktop.background picture-uri-dark "$wallpaper_uri" 2>/dev/null || true
 }

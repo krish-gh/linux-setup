@@ -329,7 +329,9 @@ setup_terminal() {
     mkdir -p ~/.config/nano
     copy_file ~/.config/nano/nanorc "${BASE_REPO_LOCATION}home/.config/nano/nanorc" || true
     if [ -d /usr/share/nano-syntax-highlighting/ ]; then
-        append_if_missing ~/.config/nano/nanorc "nano-syntax-highlighting" "include \"/usr/share/nano-syntax-highlighting/*.nanorc\""
+        if ! grep -q "nano-syntax-highlighting" ~/.config/nano/nanorc 2>/dev/null; then
+            printf '%s\n' 'include "/usr/share/nano-syntax-highlighting/*.nanorc"' >> ~/.config/nano/nanorc
+        fi
     fi
 
     # if fastfetch not found at this point fallback to neofetch, otherwise remove neofetch
@@ -419,8 +421,10 @@ setup_common_ui() {
 
     if [ -d /etc/lightdm ]; then
         printf 'Configuring lightdm stuff...\n'
-        grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm 2>/dev/null | \
-        xargs -r sudo sed_i "/greeter-hide-users=true/c\\greeter-hide-users=false" 2>/dev/null || true
+        lightdm_files=$(grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm 2>/dev/null) || true
+        if [ -n "$lightdm_files" ]; then
+            printf '%s\n' "$lightdm_files" | xargs sudo sed_i "/greeter-hide-users=true/c\\greeter-hide-users=false" 2>/dev/null || true
+        fi
     fi
 }
 
