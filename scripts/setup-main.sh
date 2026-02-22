@@ -12,17 +12,6 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Portable sed -i that works on both GNU and BSD systems
-sed_i() {
-    if sed --version >/dev/null 2>&1; then
-        # GNU sed
-        sed -i "$@"
-    else
-        # BSD sed requires an empty string for in-place editing
-        sed -i '' "$@"
-    fi
-}
-
 DISTRO_TYPE=''
 PKG_MGR=''
 
@@ -106,6 +95,18 @@ GUI_TEXT_EDITOR=""
 
 TEMP_DIR=$(mktemp -d) || { printf 'Failed to create temp directory\n' >&2; exit 1; }
 trap 'rm -rf "$TEMP_DIR"' EXIT
+
+# Portable sed -i that works on both GNU and BSD systems
+sed_i() {
+    if sed --version >/dev/null 2>&1; then
+        # GNU sed
+        sed -i "$@"
+    else
+        # BSD sed requires an empty string for in-place editing
+        sed -i '' "$@"
+    fi
+}
+export -f sed_i
 
 # arg1 = destination path, arg2 = source path
 copy_file() {
