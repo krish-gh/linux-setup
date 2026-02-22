@@ -2,17 +2,6 @@
 
 GUI_TEXT_EDITOR=org.xfce.mousepad.desktop
 
-# Portable sed -i that works on both GNU and BSD systems
-sed_i() {
-    if sed --version >/dev/null 2>&1; then
-        # GNU sed
-        sed -i "$@"
-    else
-        # BSD sed requires an empty string for in-place editing
-        sed -i '' "$@"
-    fi
-}
-
 setup_xfce() {
     printf 'Configuring xfce stuffs...\n'
     install_pkgs "$XFCE_PACKAGES_TO_INSTALL"

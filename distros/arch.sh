@@ -6,17 +6,6 @@ INSTALL_CMD="sudo pacman -S --needed --noconfirm"
 UNINSTALL_CMD="sudo pacman -Rns --noconfirm"
 UNINSTALL_ONLY_CMD="sudo pacman -Rns --noconfirm"
 
-# Portable sed -i that works on both GNU and BSD systems
-sed_i() {
-    if sed --version >/dev/null 2>&1; then
-        # GNU sed
-        sed -i "$@"
-    else
-        # BSD sed requires an empty string for in-place editing
-        sed -i '' "$@"
-    fi
-}
-
 REQUIREMENTS="curl wget unzip xorg-xrdb dconf jq crudini"
 SYSTEM_PACKAGES_TO_INSTALL="fwupd vulkan-mesa-layers vulkan-swrast vulkan-icd-loader alsa-firmware alsa-ucm-conf sof-firmware fprintd power-profiles-daemon"
 INTEL_PACKAGES_TO_INSTALL="intel-media-driver vulkan-intel"

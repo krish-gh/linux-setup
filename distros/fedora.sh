@@ -6,17 +6,6 @@ INSTALL_CMD="sudo dnf install -y"
 UNINSTALL_CMD="sudo dnf autoremove -y"
 UNINSTALL_ONLY_CMD="sudo dnf remove -y"
 
-# Portable sed -i that works on both GNU and BSD systems
-sed_i() {
-    if sed --version >/dev/null 2>&1; then
-        # GNU sed
-        sed -i "$@"
-    else
-        # BSD sed requires an empty string for in-place editing
-        sed -i '' "$@"
-    fi
-}
-
 FLATPAK_INSTALL_CMD="flatpak install --user --assumeyes flathub"
 
 REQUIREMENTS="curl wget2-wget unzip xrdb dconf jq crudini"
