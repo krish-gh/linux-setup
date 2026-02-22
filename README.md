@@ -24,7 +24,7 @@ This project emphasizes reliability and security:
 - **Secure Temp Files**: Uses `mktemp` for secure temporary directories with automatic cleanup via trap handlers
 - **Safe Quoting**: Proper variable quoting throughout to prevent word splitting and glob expansion
 - **Portable**: Uses `printf` instead of `echo -e` for better portability across shell implementations
-- **Fail-Safe**: Non-critical failures don't halt the entire setup—the script continues gracefully
+- **Fail-Safe**: Non-critical failures don't halt the entire setup--the script continues gracefully
 - **No eval**: Avoids dangerous `eval` for remote script execution; uses safe alternatives instead
 - **Validation**: All shell scripts are POSIX sh-compatible and pass strict syntax validation with `sh -n`
 
@@ -220,7 +220,7 @@ tail -f ~/setup-*.log             # Follow in real-time (for actively running se
 
 - **KDE Plasma**: KDE's configuration is mostly UI-driven (`~/.config/kdedefaults/`). Automation handles only packages, themes, and a few key settings. Many customizations require manual configuration through the System Settings GUI.
 - **GDM Login Screen**: GNOME Display Manager configuration is intentionally commented out in the main setup. Uncomment the relevant section in `setup-main.sh` if you want to customize the login screen.
-- **Wayland vs Xorg**: The script auto-detects your session type. Some settings (especially DE-specific dconf values) may not apply correctly when switching between Wayland and Xorg—re-run the setup after switching.
+- **Wayland vs Xorg**: The script auto-detects your session type. Some settings (especially DE-specific dconf values) may not apply correctly when switching between Wayland and Xorg--re-run the setup after switching.
 - **Error Recovery**: Non-critical failures are logged as warnings and don't stop the setup. Check the setup log to identify which operations failed.
 - **Package Availability**: Package availability varies across distro versions. Installation failures are logged but ignore; the setup continues with remaining packages.
 - **File Conflicts**: If customization files exist before setup, they may be overwritten. Back up important configs in `.config/` before running the setup.
