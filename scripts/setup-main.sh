@@ -219,7 +219,9 @@ setup_system() {
 
         hyperv)
             install_pkgs "$HYPERV_PACKAGES_TO_INSTALL"
-            sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service 2>/dev/null || true
+            for _svc in hv_fcopy_daemon hv_kvp_daemon hv_vss_daemon; do
+                sudo systemctl enable --now "${_svc}.service" 2>/dev/null || true
+            done
             ;;
 
         qemu | kvm | xen | virt)
@@ -250,7 +252,7 @@ setup_system() {
     install_pkgs "$SYSTEM_PACKAGES_TO_INSTALL"
 
     printf 'Tweaking some system stuffs...\n'
-    sudo mkdir -p /etc/sysctl.d /etc/systemd/{journald.conf.d,coredump.conf.d}
+    sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d /etc/systemd/coredump.conf.d
     copy_content "${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf" | sudo tee /etc/sysctl.d/999-sysctl.conf >/dev/null
     copy_content "${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf" | sudo tee /etc/systemd/journald.conf.d/00-journal-size.conf >/dev/null
     sudo journalctl --rotate --vacuum-size=10M 2>/dev/null || true
@@ -396,7 +398,7 @@ setup_common_ui() {
         rm -f "$TEMP_DIR/common.dconf"
     }
 
-    mkdir -p ~/.config/{gtk-3.0,gtk-4.0}
+    mkdir -p ~/.config/gtk-3.0 ~/.config/gtk-4.0
     if [ ! -f ~/.config/gtk-3.0/settings.ini ]; then
         printf '[Settings]\n' > ~/.config/gtk-3.0/settings.ini
         printf '#gtk-application-prefer-dark-theme=true\n' >> ~/.config/gtk-3.0/settings.ini
@@ -406,14 +408,14 @@ setup_common_ui() {
         printf 'gtk-hint-font-metrics=1\n' >> ~/.config/gtk-4.0/settings.ini
     fi
 
-    mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
+    mkdir -p ~/.local/share/gtksourceview-3.0/styles ~/.local/share/gtksourceview-4/styles ~/.local/share/gtksourceview-5/styles
     copy_file ~/.local/share/gtksourceview-3.0/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml || true
-    for i in ~/.local/share/gtksourceview-{4,5}/styles; do
-        cp -sf ~/.local/share/gtksourceview-3.0/styles/mocha.xml "$i" 2>/dev/null || true
+    for _gv in ~/.local/share/gtksourceview-4/styles ~/.local/share/gtksourceview-5/styles; do
+        cp -sf ~/.local/share/gtksourceview-3.0/styles/mocha.xml "$_gv" 2>/dev/null || true
     done
 
     printf 'Setting up QT apps to look like GTK...\n'
-    mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
+    mkdir -p ~/.config/Kvantum ~/.config/qt5ct ~/.config/qt6ct
     copy_file ~/.config/Kvantum/kvantum.kvconfig "${BASE_REPO_LOCATION}home/.config/Kvantum/kvantum.kvconfig" || true
     for i in 5 6; do
         copy_file ~/.config/qt"${i}"ct/qt"${i}"ct.conf "${BASE_REPO_LOCATION}home/.config/qt${i}ct/qt${i}ct.conf" || true
