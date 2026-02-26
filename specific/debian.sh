@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 setup_specific_debian() {
     install_pkgs "pipewire-audio"
@@ -10,4 +10,4 @@ setup_specific_debian_xfce() {
     setup_xfce_panel
 }
 
-echo -e "Done debian.sh..."
+printf 'Done debian.sh...\n'

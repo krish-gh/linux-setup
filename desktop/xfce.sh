@@ -1,10 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 
-# shellcheck disable=SC2034
 GUI_TEXT_EDITOR=org.xfce.mousepad.desktop
 
 setup_xfce() {
-    echo -e "Configuring xfce stuffs..."
+    printf 'Configuring xfce stuffs...\n'
     install_pkgs "$XFCE_PACKAGES_TO_INSTALL"
 
     # config
@@ -53,30 +52,31 @@ setup_xfce() {
     xfconf-query -c thunar-volman -v -n -p /automount-drives/enabled -t bool -s false
     xfconf-query -c thunar-volman -v -n -p /automount-media/enabled -t bool -s false
 
-    copy_file "$TEMP_DIR"/xfce.dconf "${BASE_REPO_LOCATION}"desktop/xfce.dconf
-    dconf load / <"$TEMP_DIR"/xfce.dconf
-    rm -f "$TEMP_DIR"/xfce.dconf
+    copy_file "$TEMP_DIR/xfce.dconf" "${BASE_REPO_LOCATION}desktop/xfce.dconf" && {
+        dconf load / < "$TEMP_DIR/xfce.dconf" 2>/dev/null || printf 'Warning: Failed to load dconf settings\n' >&2
+        rm -f "$TEMP_DIR/xfce.dconf"
+    }
 }
 
 setup_xfce_panel() {
-    echo -e "Configuring xfce panel from scratch..."
+    printf 'Configuring xfce panel from scratch...\n'
     xfce4-panel --quit
     pkill xfconfd
     rm -rf ~/.config/xfce4/panel/launcher-*
-    mkdir -p ~/.config/xfce4/panel/launcher-{2,3,4,5}
-    copy_file ~/.config/xfce4/panel/launcher-2/FileManager.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-2/FileManager.desktop
-    copy_file ~/.config/xfce4/panel/launcher-3/TextEditor.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-3/TextEditor.desktop
-    copy_file ~/.config/xfce4/panel/launcher-4/TerminalEmulator.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-4/TerminalEmulator.desktop
-    copy_file ~/.config/xfce4/panel/launcher-5/WebBrowser.desktop "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/launcher-5/WebBrowser.desktop
-    copy_file ~/.config/xfce4/panel/whiskermenu-1.rc "${BASE_REPO_LOCATION}"home/.config/xfce4/panel/whiskermenu-1.rc
-    copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "${BASE_REPO_LOCATION}"home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-    sed -i "s/DISTRO_LOGO/$XFCE_MENU_LOGO/g" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
-    sed -i "s/DISTRO_LOGO/$XFCE_MENU_LOGO/g" ~/.config/xfce4/panel/whiskermenu-1.rc
+    mkdir -p ~/.config/xfce4/panel/launcher-2 ~/.config/xfce4/panel/launcher-3 ~/.config/xfce4/panel/launcher-4 ~/.config/xfce4/panel/launcher-5
+    copy_file ~/.config/xfce4/panel/launcher-2/FileManager.desktop "${BASE_REPO_LOCATION}home/.config/xfce4/panel/launcher-2/FileManager.desktop"
+    copy_file ~/.config/xfce4/panel/launcher-3/TextEditor.desktop "${BASE_REPO_LOCATION}home/.config/xfce4/panel/launcher-3/TextEditor.desktop"
+    copy_file ~/.config/xfce4/panel/launcher-4/TerminalEmulator.desktop "${BASE_REPO_LOCATION}home/.config/xfce4/panel/launcher-4/TerminalEmulator.desktop"
+    copy_file ~/.config/xfce4/panel/launcher-5/WebBrowser.desktop "${BASE_REPO_LOCATION}home/.config/xfce4/panel/launcher-5/WebBrowser.desktop"
+    copy_file ~/.config/xfce4/panel/whiskermenu-1.rc "${BASE_REPO_LOCATION}home/.config/xfce4/panel/whiskermenu-1.rc"
+    copy_file ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml "${BASE_REPO_LOCATION}home/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
+    sed_i "s/DISTRO_LOGO/${XFCE_MENU_LOGO}/g" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml
+    sed_i "s/DISTRO_LOGO/${XFCE_MENU_LOGO}/g" ~/.config/xfce4/panel/whiskermenu-1.rc
     xfce4-panel > /dev/null 2>&1 & disown
 }
 
 setup_xfce_theme() {
-    echo -e "Making xfce look better..."
+    printf 'Making xfce look better...\n'
     gsettings set org.gnome.desktop.interface gtk-theme Materia-dark
     gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
     xfconf-query -c xsettings -v -n -p /Net/ThemeName -t string -s Materia-dark
@@ -87,8 +87,7 @@ setup_xfce_theme() {
 }
 
 set_xfce_wallpaper() {
-    # shellcheck disable=SC2046
-    xfconf-query -c xfce4-desktop -p $(xfconf-query -c xfce4-desktop -l | grep "workspace0/last-image") -t string -s "$1"
+    xfconf-query -c xfce4-desktop -p "$(xfconf-query -c xfce4-desktop -l | grep 'workspace0/last-image')" -t string -s "$1"
 }
 
-echo -e "Done xfce.sh..."
+printf 'Done xfce.sh...\n'

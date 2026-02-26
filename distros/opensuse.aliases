@@ -1,11 +1,8 @@
 #!/bin/sh
-# shellcheck disable=SC2139
-# shellcheck disable=SC3009
-# shellcheck disable=SC3020
 alias sudo='sudo -E -H '
 alias e='sudo systemctl --failed --no-pager; sudo journalctl -p 3 -b'
 alias cls='clear'
-alias u='sudo zypper refresh && sudo zypper dup --allow-vendor-change; command -v flatpak &> /dev/null && flatpak update; command -v snap &> /dev/null && sudo snap refresh; command -v pipx &> /dev/null && pipx upgrade-all'
+alias u='sudo zypper refresh && sudo zypper dup --allow-vendor-change; command -v flatpak >/dev/null 2>&1 && flatpak update; command -v snap >/dev/null 2>&1 && sudo snap refresh; command -v pipx >/dev/null 2>&1 && pipx upgrade-all'
 alias uu='sudo zypperoni ref && sudo zypperoni dup --allow-vendor-change'
 alias zu='(curl https://raw.githubusercontent.com/pavinjosdev/zypperoni/main/zypperoni | sudo tee /usr/bin/zypperoni > /dev/null) && sudo chmod 755 /usr/bin/zypperoni'
 alias i='sudo zypper install'
@@ -19,8 +16,8 @@ alias b='zypper search --installed-only > pkglist.txt'
 alias c='zypper packages --orphaned && sudo zypper clean --all'
 alias cc='sudo zypper purge-kernels'
 alias x='exit'
-command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
-if command -v fastfetch &> /dev/null; then
+command -v gnome-text-editor >/dev/null 2>&1 && alias gte='gnome-text-editor' && alias gted='gnome-text-editor'
+if command -v fastfetch >/dev/null 2>&1; then
     alias neofetch='fastfetch'
 else
     alias fastfetch='neofetch'

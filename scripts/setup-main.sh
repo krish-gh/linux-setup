@@ -1,11 +1,9 @@
-#!/bin/bash
-# shellcheck disable=SC2034
+#!/bin/sh
 
-# shellcheck disable=SC2128
-scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
+scriptDir=$(cd -- "$(dirname -- "$0")" && pwd) || { printf 'Failed to determine script directory\n' >&2; exit 1; }
 repoDir="$(dirname "$scriptDir")"
-if [[ -d $repoDir/.git && -f $repoDir/scripts/setup-main.sh ]]; then
-    BASE_REPO_LOCATION=$repoDir/
+if [ -d "$repoDir/.git" ] && [ -f "$repoDir/scripts/setup-main.sh" ]; then
+    BASE_REPO_LOCATION="$repoDir/"
 else
     BASE_REPO_LOCATION="https://raw.githubusercontent.com/krish-gh/linux-setup/main/"
 fi
@@ -16,191 +14,215 @@ command_exists() {
 
 DISTRO_TYPE=''
 PKG_MGR=''
-command_exists pacman && PKG_MGR=pacman && DISTRO_TYPE=arch
-command_exists apt && PKG_MGR=apt && DISTRO_TYPE=debian
-command_exists dnf && PKG_MGR=dnf && DISTRO_TYPE=fedora
-command_exists zypper && PKG_MGR=zypper && DISTRO_TYPE=opensuse
 
-if [[ $DISTRO_TYPE == '' ]]; then
-    >&2 echo "You are not running supported Linux distrbution..."
+if command_exists pacman; then
+    PKG_MGR=pacman
+    DISTRO_TYPE=arch
+elif command_exists apt; then
+    PKG_MGR=apt
+    DISTRO_TYPE=debian
+elif command_exists dnf; then
+    PKG_MGR=dnf
+    DISTRO_TYPE=fedora
+elif command_exists zypper; then
+    PKG_MGR=zypper
+    DISTRO_TYPE=opensuse
+fi
+
+if [ -z "$DISTRO_TYPE" ]; then
+    printf 'Error: Unsupported Linux distribution\n' >&2
     exit 1
 fi
 
 if ! command_exists curl; then
-    >&2 echo "curl required, but not found..."
+    printf 'Error: curl is required but not found\n' >&2
     exit 2
 fi
 
 DIST_ID=''
-# shellcheck disable=SC1091
-[[ -f /etc/os-release ]] && source /etc/os-release && DIST_ID=$ID
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    DIST_ID="${ID:-}"
+fi
 
-# shellcheck disable=SC2086
-DESKTOP=$(echo ${XDG_CURRENT_DESKTOP##*:} | tr '[:upper:]' '[:lower:]' | sed 's/^x-//')
-CURRENT_TERMINAL=$(ps -p $PPID -o comm= | sed 's/-$//')
+DESKTOP=$(printf '%s\n' "$XDG_CURRENT_DESKTOP" | sed 's/.*://; s/^x-//; y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/')
+CURRENT_TERMINAL=$(ps -p "$PPID" -o comm= | sed 's/-$//')
 
-echo -e "#################################################################"
-echo -e "BASE_REPO_LOCATION=$BASE_REPO_LOCATION"
-echo -e "DISTRO_TYPE=$DISTRO_TYPE"
-echo -e "PACKAGE_MANAGER=$PKG_MGR"
-echo -e "DESKTOP=$DESKTOP"
-echo -e "TERMINAL=$CURRENT_TERMINAL"
-echo -e "DISTRO_ID=$DIST_ID"
-echo -e "#################################################################"
+printf '#################################################################\n'
+printf 'BASE_REPO_LOCATION=%s\n' "$BASE_REPO_LOCATION"
+printf 'DISTRO_TYPE=%s\n' "$DISTRO_TYPE"
+printf 'PACKAGE_MANAGER=%s\n' "$PKG_MGR"
+printf 'DESKTOP=%s\n' "$DESKTOP"
+printf 'TERMINAL=%s\n' "$CURRENT_TERMINAL"
+printf 'DISTRO_ID=%s\n' "$DIST_ID"
+printf '#################################################################\n'
 cat /etc/os-release
-echo -e "#################################################################"
+printf '#################################################################\n'
 
-REFRESH_CMD=""        #override from DISTRO_TYPE specific script
-UPDATE_CMD=""         #override from DISTRO_TYPE specific script
-INSTALL_CMD=""        #override from DISTRO_TYPE specific script
-UNINSTALL_CMD=""      #override from DISTRO_TYPE specific script
-UNINSTALL_ONLY_CMD="" #override from DISTRO_TYPE specific script
+REFRESH_CMD=""
+UPDATE_CMD=""
+INSTALL_CMD=""
+UNINSTALL_CMD=""
+UNINSTALL_ONLY_CMD=""
 
-FLATPAK_INSTALL_CMD="flatpak install --assumeyes flathub" #override from DISTRO_TYPE specific script
-FLATPAK_UPDATE_CMD="flatpak update --assumeyes" #override from DISTRO_TYPE specific script
+FLATPAK_INSTALL_CMD="flatpak install --assumeyes flathub"
+FLATPAK_UPDATE_CMD="flatpak update --assumeyes"
 
-REQUIREMENTS=""                 #override from DISTRO_TYPE specific script
-SYSTEM_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
-INTEL_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
-VMWARE_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
-VBOX_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
-HYPERV_PACKAGES_TO_INSTALL=""   #override from DISTRO_TYPE specific script
-VIRT_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
-FONTS_TO_INSTALL=""             #override from DISTRO_TYPE specific script
-TERM_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
-APP_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
-DEV_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
-GTK_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
-QT_PACKAGES_TO_INSTALL=""       #override from DISTRO_TYPE specific script
-QT_PATCHES_TO_INSTALL=""        #override from DISTRO_TYPE specific script
-GNOME_PACKAGES_TO_INSTALL=""    #override from DISTRO_TYPE specific script
-GNOME_EXT_MGR_PKG=""            #override from DISTRO_TYPE specific script
-KDE_PACKAGES_TO_INSTALL=""      #override from DISTRO_TYPE specific script
-CINNAMON_PACKAGES_TO_INSTALL="" #override from DISTRO_TYPE specific script
-XFCE_PACKAGES_TO_INSTALL=""     #override from DISTRO_TYPE specific script
-XFCE_MENU_LOGO=""               #override from DISTRO_TYPE specific script
-PACKAGES_TO_REMOVE=""           #override from DISTRO_TYPE specific script
+REQUIREMENTS=""
+SYSTEM_PACKAGES_TO_INSTALL=""
+INTEL_PACKAGES_TO_INSTALL=""
+VMWARE_PACKAGES_TO_INSTALL=""
+VBOX_PACKAGES_TO_INSTALL=""
+HYPERV_PACKAGES_TO_INSTALL=""
+VIRT_PACKAGES_TO_INSTALL=""
+FONTS_TO_INSTALL=""
+TERM_PACKAGES_TO_INSTALL=""
+APP_PACKAGES_TO_INSTALL=""
+DEV_PACKAGES_TO_INSTALL=""
+GTK_PACKAGES_TO_INSTALL=""
+QT_PACKAGES_TO_INSTALL=""
+QT_PATCHES_TO_INSTALL=""
+GNOME_PACKAGES_TO_INSTALL=""
+GNOME_EXT_MGR_PKG=""
+KDE_PACKAGES_TO_INSTALL=""
+CINNAMON_PACKAGES_TO_INSTALL=""
+XFCE_PACKAGES_TO_INSTALL=""
+XFCE_MENU_LOGO=""
+PACKAGES_TO_REMOVE=""
 
 TERMINAL_TO_INSTALL=none
-GUI_TEXT_EDITOR="" #override from desktop specific script
+GUI_TEXT_EDITOR=""
 
-TEMP_DIR=/tmp/linux-setup
-mkdir -p $TEMP_DIR
+TEMP_DIR=$(mktemp -d) || { printf 'Failed to create temp directory\n' >&2; exit 1; }
+trap 'rm -rf "$TEMP_DIR"' EXIT
+
+# Portable sed -i that works on both GNU and BSD systems
+sed_i() {
+    if sed --version >/dev/null 2>&1; then
+        # GNU sed
+        sed -i "$@"
+    else
+        # BSD sed requires an empty string for in-place editing
+        sed -i '' "$@"
+    fi
+}
+export -f sed_i
 
 # arg1 = destination path, arg2 = source path
 copy_file() {
-    if [[ $2 == http* ]]; then
-        curl -f -o "$1" "$2?$(date +%s)"
-        curl_exit_status=$?
-        [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $2"
+    local dest="$1" src="$2"
+    if echo "$src" | grep -q '^http'; then
+        curl -f -o "$dest" "$src?$(date +%s)" || { printf 'Error downloading %s\n' "$src" >&2; return 1; }
     else
-        cp -f "$2" "$1"
+        cp -f "$src" "$dest" || { printf 'Error copying %s\n' "$src" >&2; return 1; }
     fi
 }
 
 # arg1 = source path
 copy_content() {
-    if [[ $1 == http* ]]; then
-        curl -f "$1?$(date +%s)"
-        curl_exit_status=$?
-        [[ $curl_exit_status != 0 ]] && >&2 echo -e "Error downloading $1"
+    local src="$1"
+    if echo "$src" | grep -q '^http'; then
+        curl -f "$src?$(date +%s)" || { printf 'Error downloading %s\n' "$src" >&2; return 1; }
     else
-        cat "$1"
+        cat "$src" || { printf 'Error reading %s\n' "$src" >&2; return 1; }
     fi
 }
 
 refresh_package_sources() {
-    eval "$REFRESH_CMD"
+    sh -c "$REFRESH_CMD" || { printf 'Error refreshing package sources\n' >&2; return 1; }
 }
 
 update_packages() {
-    eval "$UPDATE_CMD"
-    command_exists flatpak && $FLATPAK_UPDATE_CMD
+    sh -c "$UPDATE_CMD" || { printf 'Error updating packages\n' >&2; return 1; }
+    if command_exists flatpak; then
+        sh -c "$FLATPAK_UPDATE_CMD" || printf 'Warning: flatpak update failed\n' >&2
+    fi
 }
 
 install_pkgs() {
-    #doing in loop to avoid abort in case something is wrong
-    # shellcheck disable=SC2207
-    pkgs=($(eval echo "$1"))
-    for i in "${pkgs[@]}"; do eval "$INSTALL_CMD $i"; done
+    # Install packages one by one to avoid aborting on individual failures
+    # Use word splitting instead of bash arrays for POSIX compatibility
+    for pkg in $1; do
+        sh -c "$INSTALL_CMD $pkg" || printf 'Warning: Failed to install %s\n' "$pkg" >&2
+    done
 }
 
 uninstall_pkgs() {
-    #doing in loop to avoid abort in case something is wrong
-    # shellcheck disable=SC2207
-    pkgs=($(eval echo "$1"))
-    for i in "${pkgs[@]}"; do eval "$UNINSTALL_CMD $i"; done
+    # Uninstall packages one by one to avoid aborting on individual failures
+    for pkg in $1; do
+        sh -c "$UNINSTALL_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
+    done
 }
 
 uninstall_only_pkgs() {
-    #doing in loop to avoid abort in case something is wrong
-    # shellcheck disable=SC2207
-    pkgs=($(eval echo "$1"))
-    for i in "${pkgs[@]}"; do eval "$UNINSTALL_ONLY_CMD $i"; done
+    # Uninstall packages (without dependencies) one by one to avoid aborting on individual failures
+    for pkg in $1; do
+        sh -c "$UNINSTALL_ONLY_CMD $pkg" || printf 'Warning: Failed to uninstall %s\n' "$pkg" >&2
+    done
 }
 
 debloat_pkgs() {
-    echo -e "Debloating..."
-    copy_file $TEMP_DIR/$DISTRO_TYPE.txt "${BASE_REPO_LOCATION}"debloat/$DISTRO_TYPE.txt
-    while read -r pkg; do
+    printf 'Debloating...\n'
+    local debloat_file="$TEMP_DIR/$DISTRO_TYPE.txt"
+    copy_file "$debloat_file" "${BASE_REPO_LOCATION}debloat/$DISTRO_TYPE.txt" || { printf 'Warning: Could not download debloat list\n' >&2; return; }
+    while IFS= read -r pkg; do
+        [ -z "$pkg" ] || echo "$pkg" | grep -q '^#' && continue
         uninstall_pkgs "$pkg"
-    done <$TEMP_DIR/$DISTRO_TYPE.txt
-    rm -f $TEMP_DIR/$DISTRO_TYPE.txt
+    done < "$debloat_file"
+    rm -f "$debloat_file"
 
-    if [[ $PACKAGES_TO_REMOVE != "" ]]; then
-        echo -e "Removing additional packages..."
+    if [ -n "$PACKAGES_TO_REMOVE" ]; then
+        printf 'Removing additional packages...\n'
         uninstall_only_pkgs "$PACKAGES_TO_REMOVE"
     fi
 }
 
 # override with DISTRO_TYPE specific stuffs
-echo -e "Executing common $DISTRO_TYPE specific script..."
-copy_file $TEMP_DIR/"$DISTRO_TYPE".sh "${BASE_REPO_LOCATION}"distros/"$DISTRO_TYPE".sh
-if [[ ! -f $TEMP_DIR/"$DISTRO_TYPE".sh ]]; then
-    >&2 echo "Error: $DISTRO_TYPE specific script not found!"
+printf 'Executing common %s specific script...\n' "$DISTRO_TYPE"
+copy_file "$TEMP_DIR/$DISTRO_TYPE.sh" "${BASE_REPO_LOCATION}distros/$DISTRO_TYPE.sh" || { printf 'Error: Failed to download %s specific script\n' "$DISTRO_TYPE" >&2; exit 3; }
+if [ ! -f "$TEMP_DIR/$DISTRO_TYPE.sh" ]; then
+    printf 'Error: %s specific script not found!\n' "$DISTRO_TYPE" >&2
     exit 3
 fi
-# shellcheck disable=SC1090
-source $TEMP_DIR/"$DISTRO_TYPE".sh
-rm -f $TEMP_DIR/"$DISTRO_TYPE".sh
+. "$TEMP_DIR/$DISTRO_TYPE.sh" || { printf 'Error: Failed to source %s specific script\n' "$DISTRO_TYPE" >&2; exit 3; }
+rm -f "$TEMP_DIR/$DISTRO_TYPE.sh"
 
 # desktop environment specific stuffs
-copy_file $TEMP_DIR/"$DESKTOP".sh "${BASE_REPO_LOCATION}"desktop/"$DESKTOP".sh
-# shellcheck disable=SC1090
-[[ -f $TEMP_DIR/"$DESKTOP".sh ]] && source $TEMP_DIR/"$DESKTOP".sh
-rm -f $TEMP_DIR/"$DESKTOP".sh
+copy_file "$TEMP_DIR/$DESKTOP.sh" "${BASE_REPO_LOCATION}desktop/$DESKTOP.sh"
+[ -f "$TEMP_DIR/$DESKTOP.sh" ] && . "$TEMP_DIR/$DESKTOP.sh"
+rm -f "$TEMP_DIR/$DESKTOP.sh"
 
 # execute exact distro specic stuffs if exists e.g. linux mint, ubuntu, manjaro etc. Optional.
-if [[ $DIST_ID != '' ]]; then
-    copy_file $TEMP_DIR/"$DIST_ID".sh "${BASE_REPO_LOCATION}"specific/"$DIST_ID".sh
-    # shellcheck disable=SC1090
-    [[ -f $TEMP_DIR/"$DIST_ID".sh ]] && source $TEMP_DIR/"$DIST_ID".sh
-    rm -f $TEMP_DIR/"$DIST_ID".sh
+if [ -n "$DIST_ID" ]; then
+    copy_file "$TEMP_DIR/$DIST_ID.sh" "${BASE_REPO_LOCATION}specific/$DIST_ID.sh"
+    [ -f "$TEMP_DIR/$DIST_ID.sh" ] && . "$TEMP_DIR/$DIST_ID.sh"
+    rm -f "$TEMP_DIR/$DIST_ID.sh"
 fi
 
 setup_system() {
     install_pkgs "virt-what"
-    SYSTEM_TO_SETUP=$(sudo virt-what)
+    SYSTEM_TO_SETUP=$(sudo virt-what 2>/dev/null)
 
-    if [[ $SYSTEM_TO_SETUP != '' ]]; then
-        echo -e "SYSTEM=$SYSTEM_TO_SETUP"
+    if [ -n "$SYSTEM_TO_SETUP" ]; then
+        printf 'SYSTEM=%s\n' "$SYSTEM_TO_SETUP"
 
-        case $SYSTEM_TO_SETUP in
+        case "$SYSTEM_TO_SETUP" in
 
         vmware)
             install_pkgs "$VMWARE_PACKAGES_TO_INSTALL"
-            sudo systemctl enable --now vmtoolsd.service
-            #sudo systemctl disable --now vmware-vmblock-fuse.service
+            sudo systemctl enable --now vmtoolsd.service 2>/dev/null || true
             ;;
 
         virtualbox)
             install_pkgs "$VBOX_PACKAGES_TO_INSTALL"
-            sudo systemctl enable --now vboxservice.service
+            sudo systemctl enable --now vboxservice.service 2>/dev/null || true
             ;;
 
         hyperv)
             install_pkgs "$HYPERV_PACKAGES_TO_INSTALL"
-            sudo systemctl enable --now hv_{fcopy,kvp,vss}_daemon.service
+            for _svc in hv_fcopy_daemon hv_kvp_daemon hv_vss_daemon; do
+                sudo systemctl enable --now "${_svc}.service" 2>/dev/null || true
+            done
             ;;
 
         qemu | kvm | xen | virt)
@@ -208,300 +230,258 @@ setup_system() {
             ;;
 
         *)
-            echo "Ahh! Taking a note..."
+            printf 'Ahh! Taking a note...\n'
             ;;
         esac
     else
         # TODO detect bare metal
-        SYSTEM_TO_SETUP=intel   
-        echo -e "SYSTEM=$SYSTEM_TO_SETUP"
+        SYSTEM_TO_SETUP=intel
+        printf 'SYSTEM=%s\n' "$SYSTEM_TO_SETUP"
 
-        case $SYSTEM_TO_SETUP in
+        case "$SYSTEM_TO_SETUP" in
 
         intel)
             install_pkgs "$INTEL_PACKAGES_TO_INSTALL"
             ;;
 
         *)
-            echo "Ahh! Taking a note..."
+            printf 'Ahh! Taking a note...\n'
             ;;
-        esac 
+        esac
     fi
 
     install_pkgs "$SYSTEM_PACKAGES_TO_INSTALL"
 
-    echo -e "Tweaking some system stuffs..."
-    sudo mkdir -p /etc/sysctl.d /etc/systemd/{journald.conf.d,coredump.conf.d}
-    copy_content "${BASE_REPO_LOCATION}"system/etc/sysctl.d/999-sysctl.conf | sudo tee /etc/sysctl.d/999-sysctl.conf
-    copy_content "${BASE_REPO_LOCATION}"system/etc/systemd/journald.conf.d/00-journal-size.conf | sudo tee /etc/systemd/journald.conf.d/00-journal-size.conf
-    sudo journalctl --rotate --vacuum-size=10M
-    copy_content "${BASE_REPO_LOCATION}"system/etc/systemd/coredump.conf.d/custom.conf | sudo tee /etc/systemd/coredump.conf.d/custom.conf
+    printf 'Tweaking some system stuffs...\n'
+    sudo mkdir -p /etc/sysctl.d /etc/systemd/journald.conf.d /etc/systemd/coredump.conf.d
+    copy_content "${BASE_REPO_LOCATION}system/etc/sysctl.d/999-sysctl.conf" | sudo tee /etc/sysctl.d/999-sysctl.conf >/dev/null
+    copy_content "${BASE_REPO_LOCATION}system/etc/systemd/journald.conf.d/00-journal-size.conf" | sudo tee /etc/systemd/journald.conf.d/00-journal-size.conf >/dev/null
+    sudo journalctl --rotate --vacuum-size=10M 2>/dev/null || true
+    copy_content "${BASE_REPO_LOCATION}system/etc/systemd/coredump.conf.d/custom.conf" | sudo tee /etc/systemd/coredump.conf.d/custom.conf >/dev/null
 
     # env var
     mkdir -p ~/.config/environment.d
-    copy_file ~/.config/environment.d/10-defaults.conf "${BASE_REPO_LOCATION}"home/.config/environment.d/10-defaults.conf
+    copy_file ~/.config/environment.d/10-defaults.conf "${BASE_REPO_LOCATION}home/.config/environment.d/10-defaults.conf" || true
 
-    #mkdir -p ~/.config/systemd/user/service.d
-    #copy_file ~/.config/systemd/user/service.d/env.conf ${BASE_REPO_LOCATION}home/.config/systemd/user/service.d/env.conf
+    # Helper function for appending to config files
+    append_if_missing() {
+        local file="$1" marker="$2" content_source="$3"
+        if ! grep -q "$marker" "$file" 2>/dev/null; then
+            copy_content "$content_source" >> "$file" || printf 'Warning: Failed to append to %s\n' "$file" >&2
+        fi
+    }
 
-    profileAppend="$(
-        grep "~custom-setup~" ~/.profile >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${profileAppend}" -ne 0 ]]; then
-        copy_content "${BASE_REPO_LOCATION}"home/.profile >>~/.profile
-    fi
+    append_if_missing ~/.profile "~custom-setup~" "${BASE_REPO_LOCATION}home/.profile"
+    append_if_missing ~/.xprofile "~custom-setup~" "${BASE_REPO_LOCATION}home/.xprofile"
+    append_if_missing ~/.xsessionrc "~custom-setup~" "${BASE_REPO_LOCATION}home/.xsessionrc"
 
-    xprofileAppend="$(
-        grep "~custom-setup~" ~/.xprofile >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${xprofileAppend}" -ne 0 ]]; then
-        copy_content "${BASE_REPO_LOCATION}"home/.xprofile >>~/.xprofile
-    fi
-
-    xsessionrcAppend="$(
-        grep "~custom-setup~" ~/.xsessionrc >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${xsessionrcAppend}" -ne 0 ]]; then
-        copy_content "${BASE_REPO_LOCATION}"home/.xsessionrc >>~/.xsessionrc
-    fi
-
-    # DO NOT have .xinitrc for now due to some problems
-    #xinitrcAppend="$(
-    #    grep "~custom-setup~" ~/.xinitrc >/dev/null 2>&1
-    #    echo $?
-    #)"
-    #if [[ "${xinitrcAppend}" -ne 0 ]]; then
-    #    copy_content ${BASE_REPO_LOCATION}home/.xinitrc >>~/.xinitrc
-    #fi
-
-    echo -e "Setting up keyring..."
+    printf 'Setting up keyring...\n'
     mkdir -p ~/.local/share/keyrings/
-    copy_file ~/.local/share/keyrings/Default_keyring.keyring "${BASE_REPO_LOCATION}"home/.local/share/keyrings/Default_keyring.keyring
-    copy_file ~/.local/share/keyrings/default "${BASE_REPO_LOCATION}"home/.local/share/keyrings/default
-    chmod og= ~/.local/share/keyrings/
-    chmod og= ~/.local/share/keyrings/Default_keyring.keyring
+    copy_file ~/.local/share/keyrings/Default_keyring.keyring "${BASE_REPO_LOCATION}home/.local/share/keyrings/Default_keyring.keyring" || true
+    copy_file ~/.local/share/keyrings/default "${BASE_REPO_LOCATION}home/.local/share/keyrings/default" || true
+    chmod og= ~/.local/share/keyrings/ 2>/dev/null || true
+    chmod og= ~/.local/share/keyrings/Default_keyring.keyring 2>/dev/null || true
 
-    echo -e "Updating some sudo stuffs..."
+    printf 'Updating some sudo stuff...\n'
     sudo mkdir -p /etc/sudoers.d
-    echo -e Defaults:"$(whoami)" \!authenticate | sudo tee /etc/sudoers.d/99-custom
+    printf 'Defaults:%s !authenticate\n' "$(whoami)" | sudo tee /etc/sudoers.d/99-custom >/dev/null
 
     # autologin capability
-    sudo groupadd -r autologin
-    sudo gpasswd -a "$(whoami)" autologin
+    sudo groupadd -r autologin 2>/dev/null || true
+    sudo gpasswd -a "$(whoami)" autologin 2>/dev/null || true
 
-    systemctl is-enabled casper-md5check.service && sudo systemctl disable casper-md5check.service
+    systemctl is-enabled casper-md5check.service 2>/dev/null && sudo systemctl disable casper-md5check.service
     sudo systemctl daemon-reload
 }
 
 setup_font() {
-    echo -e "Installing fonts..."
+    printf 'Installing fonts...\n'
     install_pkgs "$FONTS_TO_INSTALL"
-    echo -e "Making font look better..."
+    printf 'Making font look better...\n'
     mkdir -p ~/.config/fontconfig/conf.d
-    copy_file ~/.config/fontconfig/fonts.conf "${BASE_REPO_LOCATION}"home/.config/fontconfig/fonts.conf
-    copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf "${BASE_REPO_LOCATION}"home/.config/fontconfig/conf.d/20-no-embedded.conf
-    copy_file ~/.Xresources "${BASE_REPO_LOCATION}"home/.Xresources
-    xrdb -merge ~/.Xresources
-    [[ -f /etc/profile.d/freetype2.sh ]] && sudo sed -i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
-    sudo ln -s /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/
-    sudo ln -s /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/
-    sudo ln -s /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/
-    [[ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ]] && sudo ln -s /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/
-    if [[ $(fc-list | grep -i "JetBrainsMono Nerd") == "" ]]; then
-        echo -e "Installing Nerd Font manually as not found..."
+    copy_file ~/.config/fontconfig/fonts.conf "${BASE_REPO_LOCATION}home/.config/fontconfig/fonts.conf" || true
+    copy_file ~/.config/fontconfig/conf.d/20-no-embedded.conf "${BASE_REPO_LOCATION}home/.config/fontconfig/conf.d/20-no-embedded.conf" || true
+    copy_file ~/.Xresources "${BASE_REPO_LOCATION}home/.Xresources" || true
+    xrdb -merge ~/.Xresources 2>/dev/null || true
+    [ -f /etc/profile.d/freetype2.sh ] && sudo sed_i '/export FREETYPE_PROPERTIES=/s/^#//g' /etc/profile.d/freetype2.sh
+    sudo ln -sf /usr/share/fontconfig/conf.avail/10-sub-pixel-rgb.conf /etc/fonts/conf.d/ 2>/dev/null
+    sudo ln -sf /usr/share/fontconfig/conf.avail/10-hinting-slight.conf /etc/fonts/conf.d/ 2>/dev/null
+    sudo ln -sf /usr/share/fontconfig/conf.avail/11-lcdfilter-default.conf /etc/fonts/conf.d/ 2>/dev/null
+    [ -f /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf ] && sudo ln -sf /usr/share/fontconfig/conf.avail/10-nerd-font-symbols.conf /etc/fonts/conf.d/ 2>/dev/null
+    if ! fc-list | grep -qi "JetBrainsMono Nerd"; then
+        printf 'Installing Nerd Font manually as not found...\n'
         mkdir -p ~/.local/bin
-        curl -fs https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin
-        ~/.local/bin/oh-my-posh font install JetBrainsMono
+        curl -fsS https://ohmyposh.dev/install.sh | bash -s -- -d ~/.local/bin || printf 'Warning: Failed to install oh-my-posh\n' >&2
+        ~/.local/bin/oh-my-posh font install JetBrainsMono 2>/dev/null || printf 'Warning: Failed to install JetBrainsMono font\n' >&2
     fi
-    sudo fc-cache -fv
-    fc-cache -fv
+    sudo fc-cache -fv >/dev/null || printf 'Warning: fc-cache failed\n' >&2
+    fc-cache -fv >/dev/null || printf 'Warning: fc-cache failed\n' >&2
 }
 
 setup_terminal() {
-    echo -e "Configuring shell stuffs..."
+    printf 'Configuring shell stuff...\n'
     install_pkgs "$TERM_PACKAGES_TO_INSTALL"
     if ! command_exists starship; then
         mkdir -p ~/.local/bin
-        curl -fsS https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin
+        curl -fsS https://starship.rs/install.sh | sh -s -- -y --bin-dir ~/.local/bin || printf 'Warning: starship installation failed\n' >&2
     fi
-    #starship preset no-nerd-font -o ~/.config/starship.toml
-    copy_file ~/.aliases "${BASE_REPO_LOCATION}"distros/$DISTRO_TYPE.aliases
-    bashrcAppend="$(
-        grep "~custom-setup~" ~/.bashrc >/dev/null 2>&1
-        echo $?
-    )"
-    if [[ "${bashrcAppend}" -ne 0 ]]; then
-        copy_content "${BASE_REPO_LOCATION}"home/.bashrc >>~/.bashrc
-    fi
+    copy_file ~/.aliases "${BASE_REPO_LOCATION}distros/$DISTRO_TYPE.aliases" || true
+    append_if_missing ~/.bashrc "~custom-setup~" "${BASE_REPO_LOCATION}home/.bashrc"
 
     # nano
     mkdir -p ~/.config/nano
-    copy_file ~/.config/nano/nanorc "${BASE_REPO_LOCATION}"home/.config/nano/nanorc
-    if [[ -d /usr/share/nano-syntax-highlighting/ ]]; then
-        nanorcAppend="$(
-            grep "nano-syntax-highlighting" ~/.config/nano/nanorc >/dev/null 2>&1
-            echo $?
-        )"
-        if [[ "${nanorcAppend}" -ne 0 ]]; then
-            echo -e 'include "/usr/share/nano-syntax-highlighting/*.nanorc"' >>~/.config/nano/nanorc
+    copy_file ~/.config/nano/nanorc "${BASE_REPO_LOCATION}home/.config/nano/nanorc" || true
+    if [ -d /usr/share/nano-syntax-highlighting/ ]; then
+        if ! grep -q "nano-syntax-highlighting" ~/.config/nano/nanorc 2>/dev/null; then
+            printf '%s\n' 'include "/usr/share/nano-syntax-highlighting/*.nanorc"' >> ~/.config/nano/nanorc
         fi
     fi
 
     # if fastfetch not found at this point fallback to neofetch, otherwise remove neofetch
-    if ! which fastfetch; then
+    if ! command_exists fastfetch; then
         install_pkgs neofetch
     else
         uninstall_pkgs neofetch
     fi
 
-    # fastfetch
-    #mkdir p ~/.config/fastfetch
-    #copy_file ~/.config/fastfetch/config.jsonc ${BASE_REPO_LOCATION}home/.config/fastfetch/config.jsonc
-
-    echo -e "Installing terminal $TERMINAL_TO_INSTALL..."
-    case $TERMINAL_TO_INSTALL in
+    printf 'Installing terminal %s...\n' "$TERMINAL_TO_INSTALL"
+    case "$TERMINAL_TO_INSTALL" in
 
     alacritty)
-        install_pkgs $TERMINAL_TO_INSTALL
+        install_pkgs "$TERMINAL_TO_INSTALL"
         mkdir -p ~/.config/alacritty
-        copy_file ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml
-        copy_file ~/.config/alacritty/alacritty.toml "${BASE_REPO_LOCATION}"home/.config/alacritty/alacritty.toml
+        copy_file ~/.config/alacritty/catppuccin-mocha.toml https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-mocha.toml || true
+        copy_file ~/.config/alacritty/alacritty.toml "${BASE_REPO_LOCATION}home/.config/alacritty/alacritty.toml" || true
         ;;
 
     kitty)
-        install_pkgs $TERMINAL_TO_INSTALL
+        install_pkgs "$TERMINAL_TO_INSTALL"
         mkdir -p ~/.config/kitty
-        copy_file ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf
-        copy_file ~/.config/kitty/kitty.conf "${BASE_REPO_LOCATION}"home/.config/kitty/kitty.conf
+        copy_file ~/.config/kitty/mocha.conf https://raw.githubusercontent.com/catppuccin/kitty/main/themes/mocha.conf || true
+        copy_file ~/.config/kitty/kitty.conf "${BASE_REPO_LOCATION}home/.config/kitty/kitty.conf" || true
         ;;
 
     wezterm)
-        install_pkgs $TERMINAL_TO_INSTALL
+        install_pkgs "$TERMINAL_TO_INSTALL"
         mkdir -p ~/.config/wezterm
-        copy_file ~/.config/wezterm/wezterm.lua "${BASE_REPO_LOCATION}"home/.config/wezterm/wezterm.lua
+        copy_file ~/.config/wezterm/wezterm.lua "${BASE_REPO_LOCATION}home/.config/wezterm/wezterm.lua" || true
         ;;
 
     *)
-        echo -e "No additional terminal installed..."
+        printf 'No additional terminal installed...\n'
         ;;
     esac
 
     # gnome terminal
     if command_exists gnome-terminal; then
-        tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default | tr -d "'")
-        copy_file $TEMP_DIR/gterm.dconf "${BASE_REPO_LOCATION}"desktop/gterm.dconf
-        sed -i "s/DEFAULT_PROFILE/$tprofileid/g" $TEMP_DIR/gterm.dconf
-        dconf load /org/gnome/terminal/ <$TEMP_DIR/gterm.dconf
-        rm -f $TEMP_DIR/gterm.dconf
+        tprofileid=$(gsettings get org.gnome.Terminal.ProfilesList default 2>/dev/null | tr -d "'" || echo "default")
+        copy_file "$TEMP_DIR/gterm.dconf" "${BASE_REPO_LOCATION}desktop/gterm.dconf" && {
+            sed_i "s/DEFAULT_PROFILE/$tprofileid/g" "$TEMP_DIR/gterm.dconf"
+            dconf load /org/gnome/terminal/ < "$TEMP_DIR/gterm.dconf" 2>/dev/null || printf 'Warning: Failed to load dconf settings\n' >&2
+            rm -f "$TEMP_DIR/gterm.dconf"
+        }
     fi
-
-    #source ~/.bashrc
 }
 
 setup_common_ui() {
     install_pkgs "$GTK_PACKAGES_TO_INSTALL"
     install_pkgs "$QT_PACKAGES_TO_INSTALL"
 
-    gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme | tr -d \'\")
-    echo -e "CURRENT_GTK_THEME=$gtktheme"
-    # shellcheck disable=SC2086
-    # shellcheck disable=SC2143
+    gtktheme=$(gsettings get org.gnome.desktop.interface gtk-theme 2>/dev/null | tr -d "'" || echo "")
+    printf 'CURRENT_GTK_THEME=%s\n' "$gtktheme"
     # make it dark
-    if [[ $gtktheme != '' && ! $(echo $gtktheme | grep -i dark) ]]; then
-        gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme"-dark
+    if [ -n "$gtktheme" ] && ! echo "$gtktheme" | grep -q -- '-dark$'; then
+        gsettings set org.gnome.desktop.interface gtk-theme "$gtktheme-dark" 2>/dev/null || true
     fi
 
-    copy_file $TEMP_DIR/common.dconf "${BASE_REPO_LOCATION}"desktop/common.dconf
-    dconf load / <$TEMP_DIR/common.dconf
-    rm -f $TEMP_DIR/common.dconf
+    copy_file "$TEMP_DIR/common.dconf" "${BASE_REPO_LOCATION}desktop/common.dconf" && {
+        dconf load / < "$TEMP_DIR/common.dconf" 2>/dev/null || printf 'Warning: Failed to load dconf settings\n' >&2
+        rm -f "$TEMP_DIR/common.dconf"
+    }
 
-    mkdir -p ~/.config/gtk-{3,4}.0
-    if [[ ! -f ~/.config/gtk-3.0/settings.ini ]]; then
-        echo -e "[Settings]" >~/.config/gtk-3.0/settings.ini && echo -e "#gtk-application-prefer-dark-theme=true" >>~/.config/gtk-3.0/settings.ini
+    mkdir -p ~/.config/gtk-3.0 ~/.config/gtk-4.0
+    if [ ! -f ~/.config/gtk-3.0/settings.ini ]; then
+        printf '[Settings]\n' > ~/.config/gtk-3.0/settings.ini
+        printf '#gtk-application-prefer-dark-theme=true\n' >> ~/.config/gtk-3.0/settings.ini
     fi
-    if [[ ! -f ~/.config/gtk-4.0/settings.ini ]]; then
-        cp ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/
-        echo -e "gtk-hint-font-metrics=1" >>~/.config/gtk-4.0/settings.ini
+    if [ ! -f ~/.config/gtk-4.0/settings.ini ]; then
+        cp ~/.config/gtk-3.0/settings.ini ~/.config/gtk-4.0/ || true
+        printf 'gtk-hint-font-metrics=1\n' >> ~/.config/gtk-4.0/settings.ini
     fi
 
-    mkdir -p ~/.local/share/gtksourceview-{3.0,4,5}/styles
-    copy_file ~/.local/share/gtksourceview-3.0/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml
-    for i in ~/.local/share/gtksourceview-{4,5}/styles; do
-        cp -s -f ~/.local/share/gtksourceview-3.0/styles/mocha.xml "$i"
+    mkdir -p ~/.local/share/gtksourceview-3.0/styles ~/.local/share/gtksourceview-4/styles ~/.local/share/gtksourceview-5/styles
+    copy_file ~/.local/share/gtksourceview-3.0/styles/mocha.xml https://raw.githubusercontent.com/catppuccin/xed/main/src/mocha.xml || true
+    for _gv in ~/.local/share/gtksourceview-4/styles ~/.local/share/gtksourceview-5/styles; do
+        cp -sf ~/.local/share/gtksourceview-3.0/styles/mocha.xml "$_gv" 2>/dev/null || true
     done
 
-    echo -e "Setting up QT apps to look like GTK.."
-    mkdir -p ~/.config/Kvantum ~/.config/qt{5,6}ct
-    copy_file ~/.config/Kvantum/kvantum.kvconfig "${BASE_REPO_LOCATION}"home/.config/Kvantum/kvantum.kvconfig
+    printf 'Setting up QT apps to look like GTK...\n'
+    mkdir -p ~/.config/Kvantum ~/.config/qt5ct ~/.config/qt6ct
+    copy_file ~/.config/Kvantum/kvantum.kvconfig "${BASE_REPO_LOCATION}home/.config/Kvantum/kvantum.kvconfig" || true
     for i in 5 6; do
-        copy_file ~/.config/qt${i}ct/qt${i}ct.conf "${BASE_REPO_LOCATION}"home/.config/qt${i}ct/qt${i}ct.conf
+        copy_file ~/.config/qt"${i}"ct/qt"${i}"ct.conf "${BASE_REPO_LOCATION}home/.config/qt${i}ct/qt${i}ct.conf" || true
     done
 
-    # wallpaper
-    #mkdir -p ~/.local/share/backgrounds
-    #copy_file ~/.local/share/backgrounds/wallpaper ${BASE_REPO_LOCATION}home/.local/share/backgrounds/wallpaper
-
-    if [[ -d /etc/lightdm ]]; then
-        echo -e "Configuring lightdm stuffs..."
-        grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm \
-        | xargs sudo sed -i "/greeter-hide-users=true/c\greeter-hide-users=false
-            /greeter-hide-users = true/c\greeter-hide-users = false"
+    if [ -d /etc/lightdm ]; then
+        printf 'Configuring lightdm stuff...\n'
+        lightdm_files=$(grep -rl greeter-hide-users /etc/lightdm /usr/share/lightdm 2>/dev/null) || true
+        if [ -n "$lightdm_files" ]; then
+            printf '%s\n' "$lightdm_files" | xargs sudo sed_i "/greeter-hide-users=true/c\\greeter-hide-users=false" 2>/dev/null || true
+        fi
     fi
 }
 
 setup_apps() {
-    echo -e "Installing some apps..."
+    printf 'Installing some apps...\n'
     install_pkgs "$APP_PACKAGES_TO_INSTALL"
-    echo -e "Installing some dev stuffs..."
+    printf 'Installing some dev stuff...\n'
     install_pkgs "$DEV_PACKAGES_TO_INSTALL"
-    #python -m pip install --user --upgrade pip
 
     # vlc
     mkdir -p ~/.config/vlc
-    copy_file ~/.config/vlc/vlcrc "${BASE_REPO_LOCATION}"home/.config/vlc/vlcrc
+    copy_file ~/.config/vlc/vlcrc "${BASE_REPO_LOCATION}home/.config/vlc/vlcrc" || true
 
     if command_exists yad; then
-        gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"'
+        gsettings set yad.settings terminal "$CURRENT_TERMINAL"' -e "%s"' 2>/dev/null || true
     fi
 
-    echo -e "Setting up file associations..."
-    copy_file ~/.config/mimeapps.list "${BASE_REPO_LOCATION}"home/.config/mimeapps.list
-    sed -i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
+    printf 'Setting up file associations...\n'
+    copy_file ~/.config/mimeapps.list "${BASE_REPO_LOCATION}home/.config/mimeapps.list" || true
+    [ -f ~/.config/mimeapps.list ] && sed_i "s/DEFAULT_TEXT_EDITOR/$GUI_TEXT_EDITOR/g" ~/.config/mimeapps.list
     mkdir -p ~/.local/share/applications
-    ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list
+    ln -sf ~/.config/mimeapps.list ~/.local/share/applications/mimeapps.list 2>/dev/null || true
 }
 
 debloat_pkgs
 refresh_package_sources
-echo -e "Installing some needed stuffs..."
+printf 'Installing required packages...\n'
 install_pkgs "$REQUIREMENTS"
-[[ $(type -t setup_"$DISTRO_TYPE") == function ]] && setup_"$DISTRO_TYPE"
+if (command -v setup_"$DISTRO_TYPE" >/dev/null 2>&1); then
+    setup_"$DISTRO_TYPE"
+fi
 install_pkgs crudini
-if [[ $(type -t setup_specific_"$DIST_ID") == function ]]; then
-    echo -e "Executing additional $DIST_ID specific script..."
+if (command -v setup_specific_"$DIST_ID" >/dev/null 2>&1); then
+    printf 'Executing additional %s specific script...\n' "$DIST_ID"
     setup_specific_"$DIST_ID"
 fi
 update_packages
 setup_system
 setup_font
 setup_apps
-[[ $(type -t setup_"$DESKTOP") == function ]] && setup_"$DESKTOP"
+if (command -v setup_"$DESKTOP" >/dev/null 2>&1); then
+    setup_"$DESKTOP"
+fi
 setup_common_ui
-if [[ $(type -t setup_"$DISTRO_TYPE"_"$DESKTOP") == function ]]; then
-    echo -e "Executing additional $DISTRO_TYPE $DESKTOP specific script..."
+if (command -v setup_"$DISTRO_TYPE"_"$DESKTOP" >/dev/null 2>&1); then
+    printf 'Executing additional %s %s specific script...\n' "$DISTRO_TYPE" "$DESKTOP"
     setup_"$DISTRO_TYPE"_"$DESKTOP"
 fi
-if [[ $(type -t setup_specific_"$DIST_ID"_"$DESKTOP") == function ]]; then
-    echo -e "Executing additional $DIST_ID $DESKTOP specific script..."
+if (command -v setup_specific_"$DIST_ID"_"$DESKTOP" >/dev/null 2>&1); then
+    printf 'Executing additional %s %s specific script...\n' "$DIST_ID" "$DESKTOP"
     setup_specific_"$DIST_ID"_"$DESKTOP"
 fi
 setup_terminal
 update_packages
-alias reboot='sudo reboot'
 
-echo -e ""
-echo -e "Done...Reboot..."
-#disown -ar
+printf '\n%s\n' "Setup complete! Please reboot your system."
+

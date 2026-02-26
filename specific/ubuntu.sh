@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 setup_specific_ubuntu() {
     # echo -e "Replacing snap version of firefox with native one..."
@@ -12,4 +12,4 @@ setup_specific_ubuntu() {
     sudo apt-get install ubuntu-desktop-minimal 
 }
 
-echo -e "Done ubuntu.sh..."
+printf 'Done ubuntu.sh...\n'

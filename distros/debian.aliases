@@ -1,11 +1,8 @@
 #!/bin/sh
-# shellcheck disable=SC2139
-# shellcheck disable=SC3009
-# shellcheck disable=SC3020
 alias sudo='sudo -E -H '
 alias e='sudo systemctl --failed --no-pager; sudo journalctl -p 3 -b'
 alias cls='clear'
-alias u='sudo apt update && sudo apt full-upgrade; command -v flatpak &> /dev/null && flatpak update; command -v snap &> /dev/null && sudo snap refresh; command -v pipx &> /dev/null && pipx upgrade-all'
+alias u='sudo apt update && sudo apt full-upgrade; command -v flatpak >/dev/null 2>&1 && flatpak update; command -v snap >/dev/null 2>&1 && sudo snap refresh; command -v pipx >/dev/null 2>&1 && pipx upgrade-all'
 alias uu='sudo nala update && sudo nala upgrade'
 alias i='sudo apt install'
 alias ii='sudo nala install'
@@ -18,8 +15,8 @@ alias b='apt list --installed | cut -d'/' -f1 | uniq > pkglist.txt'
 alias c='sudo apt autoremove && sudo apt autopurge && sudo apt clean'
 alias cc='sudo nala autoremove && sudo nala autopurge && sudo nala clean'
 alias x='exit'
-command -v gnome-text-editor &> /dev/null && alias {gte,gted}='gnome-text-editor'
-if command -v fastfetch &> /dev/null; then
+command -v gnome-text-editor >/dev/null 2>&1 && alias gte='gnome-text-editor' && alias gted='gnome-text-editor'
+if command -v fastfetch >/dev/null 2>&1; then
     alias neofetch='fastfetch'
 else
     alias fastfetch='neofetch'

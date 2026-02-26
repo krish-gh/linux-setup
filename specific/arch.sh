@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 setup_specific_arch_xfce() {
     install_pkgs "materia-gtk-theme papirus-icon-theme"
@@ -7,4 +7,4 @@ setup_specific_arch_xfce() {
     setup_xfce_panel
 }
 
-echo -e "Done arch.sh..."
+printf 'Done arch.sh...\n'
